@@ -42,6 +42,16 @@ export class AppComponent implements OnInit {
       title: 'Spam',
       url: '/folder/Spam',
       icon: 'warning'
+    },
+    {
+      title: 'Nosotros',
+      url: '/folder/Nosotros',
+      icon: 'paper-plane'
+    },
+    {
+      title: 'Cerrar Sesión',
+      url: '/folder/Logout',
+      icon: 'paper-plane'
     }
   ];
   public labels = ['V.0.0.1'];
@@ -57,11 +67,11 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString("#6D4C41");
+      this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();
       //----
-      if(0){ //if not login
-        this.router.navigateByUrl('/login');
+      if(1){ //if not login
+        this.router.navigateByUrl('/home');
       }else{
         this.router.navigateByUrl('/dashboard');
       }
