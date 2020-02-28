@@ -1,12 +1,18 @@
 # banca-por-internet
-Banca Internet
 
-#Install Dependecies npm
+## Getting started
 
-´npm i´
+Clone the project:
 
-#Run local 
+    $ git clone https://github.com/InfotecMexico/banca-por-internet.git
 
-´ionic serve´
+Install dependencies:
 
+    $ cd banca-por-internet
+    
+    $ npm install
+
+Run development web-server:
+
+    $ ionic serve
 
