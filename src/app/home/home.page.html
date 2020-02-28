@@ -5,23 +5,24 @@
       <ion-img src="../../assets/MifosX_logo.png"></ion-img>
     </ion-card>
 
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
       <ion-item>
         <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-input placeholder="Nombre de Usuario" clearInput></ion-input>
+        <ion-input formControlName="username" placeholder="Nombre de Usuario" clearInput></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input [type]="type" [(ngModel)]="login.password" name="password" placeholder="Contraseña" clearInput></ion-input>
+          <ion-input formControlName="password" [type]="type" placeholder="Contraseña" clearInput></ion-input>
           <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
           <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
-      </ion-item>      
+      </ion-item>  
+      <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">Sign In</ion-button>    
     </form>
 
     <ion-row>
       <ion-col align-self-center>
-        <ion-button [routerLink]="['/login']" expand="block" color="primary">Sign In</ion-button>
         <ion-button [routerLink]="['/registration']" expand="block" fill="clear">Register</ion-button>
+        <a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a>
       </ion-col>
     </ion-row>
   </ion-grid>
