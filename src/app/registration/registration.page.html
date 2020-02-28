@@ -1,38 +1,61 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">First name</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+  <ion-grid>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Last name</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+    <ion-card>
+      <ion-img src="../../assets/MifosX_logo.png"></ion-img>
+    </ion-card>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registro</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="accountNumber" placeholder="Número de Cuenta" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="username" placeholder="Nombre de Usuario" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="name" placeholder="Nombre (s)" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="lastName" placeholder="Apellido (s)" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="phoneNumber" placeholder="Número de Telefóno" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-input formControlName="email" placeholder="Correo Electrónico" clearInput></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input formControlName="password" [type]="type" placeholder="Contraseña" clearInput></ion-input>
+              <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
+              <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
+          </ion-item>  
+          <ion-item>
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input formControlName="confirmPassword" [type]="type" placeholder="Confirmar contraseña" clearInput></ion-input>
+              <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
+              <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
+          </ion-item>
+          <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">Registrar</ion-button>    
+        </form>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="danger" expand="block">Sign Up</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+
+
+
+  </ion-grid>
 </ion-content>

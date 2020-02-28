@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
 
   signIn(){
     console.log("Inicia sesión")
-    this.router.navigateByUrl('/second-login');
+    this.router.navigateByUrl('/dashboard'); //second-login
   }
 
   viewPassword(){
