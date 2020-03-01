@@ -9,5 +9,42 @@
 
 <ion-content>
 <h1>Hi Codi</h1>
+
+<form [formGroup]="codiForm" (ngSubmit)="createQr()">
+  <ion-item>
+    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-input type="number" formControlName="payment" placeholder="Cuánto Quieres Cobrar" clearInput></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-input type="text" formControlName="concept" placeholder="Concepto" clearInput></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-input type="text" formControlName="reference" placeholder="Referencia" clearInput></ion-input>
+  </ion-item>
+  <ion-button type="submit" [disabled]="!codiForm.valid" expand="block" color="primary">Create Qr</ion-button>    
+</form>
+
+<ion-segment [(ngModel)]="elementType">
+  <ion-segment-button value="canvas">
+<ion-label>Canvas</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="img">
+    <ion-label>Image</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="url">
+        <ion-label>Url</ion-label>
+          </ion-segment-button>
+
+</ion-segment>
+
+<ngx-qrcode
+    [qrc-element-type]="elementType"
+    [qrc-value]="qrData">
+</ngx-qrcode>
+
+<ion-button (click)="scanCode()" expand="block" fill="clear">Scanner</ion-button>
+
 </ion-content>
 
