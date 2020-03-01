@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   }
 
   signIn(){
-    console.log("Inicia sesión")
+    console.log("Inicia sesión");
     this.router.navigateByUrl('/dashboard'); //second-login
   }
 

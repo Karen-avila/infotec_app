@@ -14,44 +14,54 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Dashboard',
+      title: 'Inicio',
       url: '/dashboard',
-      icon: 'mail'
+      icon: 'home-outline'
     },
     {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
+      title: 'Cuentas',
+      url: '/folder/Cuentas',
+      icon: 'journal-outline'
     },
     {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
+      title: 'Movimientos',
+      url: '/folder/Movimientos',
+      icon: 'trail-sign-outline'
     },
     {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
+      title: 'Transferencias',
+      url: '/codi',
+      icon: 'swap-horizontal-outline'
     },
     {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
+      title: 'Beneficiarios',
+      url: '/folder/Beneficiarios',
+      icon: 'people-outline'
     },
     {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
+      title: 'Ajustes',
+      url: '/folder/Ajustes',
+      icon: 'settings-outline'
     },
     {
       title: 'Nosotros',
       url: '/folder/Nosotros',
-      icon: 'paper-plane'
+      icon: 'information-circle-outline'
+    },
+    {
+      title: 'Ayuda',
+      url: '/folder/Ayuda',
+      icon: 'help-circle-outline'
+    },
+    {
+      title: 'Compartir',
+      url: '/folder/Compartir',
+      icon: 'share-social-outline'
     },
     {
       title: 'Cerrar Sesión',
       url: '/folder/Logout',
-      icon: 'paper-plane'
+      icon: 'log-out-outline'
     }
   ];
   public labels = ['V.0.0.1'];
