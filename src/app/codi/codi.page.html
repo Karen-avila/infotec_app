@@ -26,21 +26,10 @@
   <ion-button type="submit" [disabled]="!codiForm.valid" expand="block" color="primary">Create Qr</ion-button>    
 </form>
 
-<ion-segment [(ngModel)]="elementType">
-  <ion-segment-button value="canvas">
-<ion-label>Canvas</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="img">
-    <ion-label>Image</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="url">
-        <ion-label>Url</ion-label>
-          </ion-segment-button>
 
-</ion-segment>
 
 <ngx-qrcode
-    [qrc-element-type]="elementType"
+    qrc-element-type="canvas"
     [qrc-value]="qrData">
 </ngx-qrcode>
 
