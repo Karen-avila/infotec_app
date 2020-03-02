@@ -22,7 +22,7 @@ export class RegistrationPage implements OnInit {
         Validators.required, 
         Validators.minLength(5)
       ])],
-      password : ["", Validators.compose([
+      password: ["", Validators.compose([
         Validators.required, 
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])],

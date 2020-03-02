@@ -30,6 +30,11 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Transferencias',
+      url: '/tranfers',
+      icon: 'swap-horizontal-outline'
+    },
+    {
+      title: 'Codi',
       url: '/codi',
       icon: 'swap-horizontal-outline'
     },

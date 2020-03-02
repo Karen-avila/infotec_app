@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'codi',
     loadChildren: () => import('./codi/codi.module').then( m => m.CodiPageModule)
+  },
+  {
+    path: 'tranfers',
+    loadChildren: () => import('./tranfers/tranfers.module').then( m => m.TranfersPageModule)
   }
 ];
 
