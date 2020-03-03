@@ -12,15 +12,15 @@
 
 <form [formGroup]="codiForm" (ngSubmit)="createQr()">
   <ion-item>
-    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-icon name="cash-outline" slot="start"></ion-icon>
     <ion-input type="number" formControlName="payment" placeholder="Cuánto Quieres Cobrar" clearInput></ion-input>
   </ion-item>
   <ion-item>
-    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-icon name="bulb-outline" slot="start"></ion-icon>
     <ion-input type="text" formControlName="concept" placeholder="Concepto" clearInput></ion-input>
   </ion-item>
   <ion-item>
-    <ion-icon name="person-outline" slot="start"></ion-icon>
+    <ion-icon name="pricetag-outline" slot="start"></ion-icon>
     <ion-input type="text" formControlName="reference" placeholder="Referencia" clearInput></ion-input>
   </ion-item>
   <ion-button type="submit" [disabled]="!codiForm.valid" expand="block" color="primary">Create Qr</ion-button>    
