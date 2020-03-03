@@ -1,0 +1,11 @@
+{
+    "title": "Banca Móvil - Banco del Bienestar",
+    "login.signin": "Iniciar sesión",
+    "login.password": "Contraseña",
+    "login.username": "Usuario",
+    "login.register": "Registrarse",
+    "login.forgot-password": "Olvidaste tu contraseña",
+    "forgot-password.title": "Recuperar contraseña",
+    "forgot-password.email": "Correo",
+    "forgot-password.recover": "Recuperar"    
+}

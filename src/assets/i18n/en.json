@@ -1,0 +1,11 @@
+{
+    "title": "Mobile banking - Banco del Bienestar",
+    "login.signin": "Sign in",
+    "login.password": "Password",
+    "login.username": "Username",
+    "login.register": "Register",
+    "login.forgot-password": "Forgot Password",
+    "forgot-password.title": "Recover Password",
+    "forgot-password.email": "Email",
+    "forgot-password.recover": "Recover" 
+}
