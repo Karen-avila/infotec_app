@@ -1,8 +1,20 @@
 .btn {
     display:block;
-    height: 300px;
-    width: 300px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
     border: 1px solid var(--ion-color-primary);
     
   }
+
+  img{
+    border-radius: 50%;
+  }
+
+  .contentName{
+    background-color: var(--ion-color-primary-tint);
+    height: 25%;
+    width: 100%;
+  }
+
+
