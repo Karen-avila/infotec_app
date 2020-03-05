@@ -9,9 +9,11 @@ import { CodiPageRoutingModule } from './codi-routing.module';
 import { CodiPage } from './codi.page';
 
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
+    TranslateModule ,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { TranfersPageRoutingModule } from './tranfers-routing.module';
 
 import { TranfersPage } from './tranfers.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
+    TranslateModule,
     CommonModule,
     FormsModule,
     IonicModule,
