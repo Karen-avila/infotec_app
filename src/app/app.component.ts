@@ -41,9 +41,14 @@ export class AppComponent implements OnInit {
       icon: 'swap-horizontal-outline'
     },
     {
-      title: 'Beneficiarios',
-      url: '/folder/Beneficiarios',
+      title: 'Terceros',
+      url: '/folder/Terceros',
       icon: 'people-outline'
+    },
+    {
+      title: 'Servicios',
+      url: '/folder/Servicios',
+      icon: 'pricetags-outline'
     },
     {
       title: 'Ajustes',

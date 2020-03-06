@@ -3,42 +3,48 @@
     <ion-buttons slot="start">
       <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Transfers</ion-title>
+    <ion-title class="ion-text-center">{{ 'tranfers.transfers' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h2 class="with-button">Cuenta Origen</h2>
+
+  <ion-title class="ion-text-center">Origen</ion-title>
       
       <!-- 
          card-slides: triggers some sass options
          slidesPerView: defines the "ammount" of visible slides. the trick = decimal numbers
          spaceBetween: is basically the margin between each slide in px
     -->
-    <ion-slides card-slides slidesPerView="1.18" spaceBetween="10">
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            Debi Cuenta
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            Mi Cochinito
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
+    
 
-          
-        
-    </ion-slides>
+    <ion-slides card-slides slidesPerView="1.18" spaceBetween="1">
+        <ion-slide>
+        <ion-card>
+          <ion-card-header>
+           Tarjeta del Bienestar
+          </ion-card-header>
+          <ion-card-content>
+            Saldo disponible
+          </ion-card-content>
+        </ion-card>
+        </ion-slide>
+        <ion-slide>
+        <ion-card>
+          <ion-card-header>
+            Mi Cochinito
+          </ion-card-header>
+          <ion-card-content>
+            Saldo disponible
+          </ion-card-content>
+        </ion-card>
+         </ion-slide>
+         </ion-slides>
   
     
-    <h2>Cuenta Destino</h2>
+    <ion-title class="ion-text-center">Destino</ion-title>
     
-    <ion-slides card-slides slidesPerView="2.18" spaceBetween="2">
+    <ion-slides card-slides slidesPerView="1.18" spaceBetween="1">
         <ion-slide>
         <ion-card>
         <ion-card-header>
@@ -78,7 +84,36 @@
             BanCoppel
           </ion-card-content>
         </ion-card>
-        </ion-slide>	    
-        
+        </ion-slide>	     
     </ion-slides>
-</ion-content>
+    </ion-content>
+    
+    <ion-content>
+
+      <ion-title class="ion-text-center">Completar</ion-title>
+      <form>
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-input type="text" placeholder="Importe"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="text" placeholder="Concepto"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input type="text" placeholder="Referencia"></ion-input>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </form>
+
+      <ion-row>
+        <ion-col align-self-center>
+          <ion-button type="submit" expand="block" color="primary">Finalizar</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-content>
+   
+     
+

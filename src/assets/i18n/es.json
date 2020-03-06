@@ -6,6 +6,29 @@
     "login.register": "Registrarse",
     "login.forgot-password": "Olvidaste tu contraseña",
     "forgot-password.title": "Recuperar contraseña",
-    "forgot-password.email": "Correo",
-    "forgot-password.recover": "Recuperar"    
+    "forgot-password.email": "Correo electrónico",
+    "forgot-password.recover": "Recuperar" ,
+    "dashboard.title":"Inicio",  
+    "codi.payment":"Cuanto quieres cobrar",
+    "codi.concept":"Concepto",
+    "codi.reference":"Referencia",
+    "codi.createqr":"Crear QR",
+    "codi.scanner":"Escanear",
+    "codi.download":"Descargar QR",
+    "codi.title":"Hola Codi",
+    "folder.saving":"Ahorro",
+    "folder.loan":"Préstamo",
+    "folder.investment":"Inversión",
+    "registration.register":"Registro",
+    "registration.accountnumber":"Número de cuenta",
+    "registration.name":"Nombre (s)",
+    "registration.lastname":"Apellido (s)",
+    "registration.phonenumber":"Número de teléfono",
+    "registration.email":"Correo electrónico",
+    "registration.confirmpassword":"Confirmar Contraseña",
+    "registration.registers":"Registrar",
+    "registration.cancel":"Cancelar",
+    "tranfers.transfers":"Enviar Dinero"
+    
+
 }
