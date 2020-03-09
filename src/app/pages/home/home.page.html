@@ -23,6 +23,8 @@
       <ion-col align-self-center>
         <ion-button [routerLink]="['/registration']" routerDirection="forward" expand="block" fill="clear">{{ 'login.register' | translate }}</ion-button>
         <a [routerLink]="['/forgot-password']" class="small-text">{{ 'login.forgot-password' | translate }}?</a>
+        <br>
+        <a [routerLink]="['/dashboard']" class="small-text">Go Dashboard</a>
       </ion-col>
     </ion-row>
   </ion-grid>

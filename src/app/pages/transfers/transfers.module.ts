@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TranfersPageRoutingModule } from './tranfers-routing.module';
+import { TranfersPageRoutingModule } from './transfers-routing.module';
 
-import { TranfersPage } from './tranfers.page';
+import { TransfersPage } from './transfers.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -17,6 +17,6 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     TranfersPageRoutingModule
   ],
-  declarations: [TranfersPage]
+  declarations: [TransfersPage]
 })
-export class TranfersPageModule {}
+export class TransfersPageModule {}

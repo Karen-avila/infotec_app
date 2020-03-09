@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       icon: 'swap-horizontal-outline'
     },
     {
-      title: 'Codi',
+      title: 'CoDi',
       url: '/codi',
       icon: 'swap-horizontal-outline'
     },
@@ -98,13 +98,6 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();
-      //----
-      if(1){ //if not login
-        this.router.navigateByUrl('/home');
-      }else{
-        this.router.navigateByUrl('/dashboard');
-      }
-      //----
     });
   }
 

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tranfers',
-  templateUrl: './tranfers.page.html',
-  styleUrls: ['./tranfers.page.scss'],
+  templateUrl: './transfers.page.html',
+  styleUrls: ['./transfers.page.scss'],
 })
-export class TranfersPage implements OnInit {
+export class TransfersPage implements OnInit {
 
   constructor() { }
 
