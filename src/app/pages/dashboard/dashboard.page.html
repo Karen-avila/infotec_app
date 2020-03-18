@@ -1,31 +1,62 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+<ion-header class="ion-no-border">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button color="light"></ion-menu-button>
+      <ion-menu-button style="color: #AD915F;"></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ 'dashboard.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button style="color: #AD915F;">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <div class="ion-text-center">
+    <ion-text style="color: #A3976A; font-size: small;">Último ingreso 14 ene. 2020 10:30:06 a.m.</ion-text>
+  </div>
+
+  <br>
+
+  <app-card-account [accounts]="accounts"></app-card-account>
+
   <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="savings">
+
+    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.6rem;" fill="clear" shape="round" size="small">
+      <ion-icon slot="icon-only" name="chevron-up"></ion-icon>
+    </ion-button>
+
+    <ion-img (click)="scannerQRCode()" style="width: 4rem; height: 4rem; margin: auto; margin-bottom: -1rem; z-index: 2;" src="./assets/btn-codi.png"></ion-img>
+
+    <ion-tab-bar slot="bottom" style="z-index: 1;">
+  
+      <ion-tab-button tab="schedule">
+        <ion-icon src="assets/icon/clipboard.svg"></ion-icon>
+        <ion-label>Movimientos</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon src="assets/icon/transaction.svg"></ion-icon>
+        <ion-label>Transferir</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="speakers">
         <ion-icon name="wallet"></ion-icon>
-        <ion-label>Ahorro</ion-label>
+        <ion-label>Cartera</ion-label>
       </ion-tab-button>
-  
-      <ion-tab-button tab="loans">
-        <ion-icon name="card"></ion-icon>
-        <ion-label>Préstamo</ion-label>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon src="assets/icon/posponer.svg"></ion-icon>
+        <ion-label>Pospuestos</ion-label>
       </ion-tab-button>
-  
-      <ion-tab-button tab="investments">
-        <ion-icon name="bar-chart"></ion-icon>
-        <ion-label>Inversión</ion-label>
-      </ion-tab-button>
+
     </ion-tab-bar>
+
+    
   </ion-tabs>
-  
+
 </ion-content>
+
+
+

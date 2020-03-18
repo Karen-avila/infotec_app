@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: TransfersPage
+  },
+  {
+    path: 'manage-account',
+    loadChildren: () => import('./components/manage-account/manage-account.module').then( m => m.ManageAccountPageModule)
   }
 ];
 

@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'tranfers',
     canActivate: [AuthGuard],
     loadChildren: () => import('@pages/transfers/transfers.module').then( m => m.TransfersPageModule)
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   }
 ];
 

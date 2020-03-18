@@ -1,119 +1,127 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+<ion-header>
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button color="light"></ion-menu-button>
+      <ion-menu-button style="color: #AD915F;"></ion-menu-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">{{ 'tranfers.transfers' | translate }}</ion-title>
+    <ion-title style="color: #AD915F;">{{ 'tranfers.transfers' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen id="content">
 
-  <ion-title class="ion-text-center">Origen</ion-title>
-      
-      <!-- 
-         card-slides: triggers some sass options
-         slidesPerView: defines the "ammount" of visible slides. the trick = decimal numbers
-         spaceBetween: is basically the margin between each slide in px
-    -->
-    
-
-    <ion-slides card-slides slidesPerView="1.18" spaceBetween="1">
-        <ion-slide>
-        <ion-card>
-          <ion-card-header>
-           Tarjeta del Bienestar
-          </ion-card-header>
-          <ion-card-content>
-            Saldo disponible
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
-        <ion-slide>
-        <ion-card>
-          <ion-card-header>
-            Mi Cochinito
-          </ion-card-header>
-          <ion-card-content>
-            Saldo disponible
-          </ion-card-content>
-        </ion-card>
-         </ion-slide>
-         </ion-slides>
+  <div style="height: 100%;width: 100%;">
+    <div>
+      <br>
   
-    
-    <ion-title class="ion-text-center">Destino</ion-title>
-    
-    <ion-slides card-slides slidesPerView="1.18" spaceBetween="1">
-        <ion-slide>
-        <ion-card>
-        <ion-card-header>
-        Banco Azteca
+      <div style="text-align: center;"> <b style="color: #AD915F; font-size: medium;">Cuenta Origen</b></div>
+  
+      <app-card-account [accounts]="accounts" [settings]="settings"></app-card-account>
+  
+    </div>
+  
+    <div> 
+
+      <ion-fab horizontal="end" edge>
+        <ion-fab-button (click)="onMangeAccount()" size="medium">
+          <ion-icon name="add"></ion-icon>
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-fab-button>
+      </ion-fab>
+  
+      <div style="text-align: center; margin-top: 1.6rem;"> <b style="color: #AD915F; font-size: medium;">Cuenta Destino</b></div>
+  
+      <div style="color: #AD915F; font-size: 0.7rem;font-weight: bold; margin-left: 1.3rem;margin-top: 1rem; margin-bottom: 0.4rem;">CUENTAS GUARDADAS</div>
+  
+      <ion-list style="max-height: 10rem; overflow: auto;">
+  
+        <ion-item-sliding *ngFor="let item of savedAccounts; index as index; trackBy: identify">
+  
+          <ion-item-options side="start">
+            <ion-item-option (click)="onDelete()" color="danger">
+              <ion-icon style="font-size: 1.5rem; margin: auto 10px;" name="trash-outline"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+      
+          <ion-item (click)="selectAccount(index, item)" [color]="item.color">
+            <ion-label>
+              <h3>{{ item.owner }}</h3>
+              <h4 style="color: rgb(92, 92, 92);">{{ item.bankTitle }}</h4>
+              <h5 style="font-size: x-small; color: grey;">{{ item.accountNo }}</h5>
+            </ion-label>
+          </ion-item>
+      
+          <ion-item-options side="end">
+            <ion-item-option style="background-color: #3880ff;">
+              <ion-icon style="font-size: 1.5rem; margin: auto 10px;" name="pencil"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+        
+      </ion-list>
+  
+  </div>
+
+</div>
+
+<div *ngIf="isAccountSelected" style="width: 100%; height: 100%;">
+
+  <div style="margin: auto;">
+    <br>
+
+    <div style="text-align: center;"> <b style="color: #AD915F; font-size: medium;">Completar</b></div>
+
+    <ion-card>
+
+      <ion-card-header>
+        <div style="text-align: center;">
+          <ion-item>
+            <ion-label style="text-align: center;"> <ion-icon color="secondary" style="font-size: 2.1rem;" src="assets/icon/clipboardv2.svg"></ion-icon></ion-label>
+          </ion-item>
+        </div>
       </ion-card-header>
-          <ion-card-content>
-            Gustavo Espindola
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            Bancomer
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            Banamex
-         
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            Santander
-         
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>	    
-        <ion-slide>
-        <ion-card>
-          <ion-card-content>
-            BanCoppel
-          </ion-card-content>
-        </ion-card>
-        </ion-slide>	     
-    </ion-slides>
-    </ion-content>
+
     
-    <ion-content>
-
-      <ion-title class="ion-text-center">Completar</ion-title>
+      <ion-card-content>
       <form>
-        <ion-card>
-          <ion-card-content>
-            <ion-item>
-              <ion-input type="text" placeholder="Importe"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input type="text" placeholder="Concepto"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input type="text" placeholder="Referencia"></ion-input>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
+        <ion-list>
+          
+          <ion-item>
+            <ion-label position="stacked">Monto <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required inputmode="decimal" type="number"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label position="stacked">Concepto <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required inputmode="text" type="text"></ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label position="stacked">Referencia</ion-label>
+            <ion-input inputmode="text" type="text"></ion-input>
+          </ion-item>
+    
+        </ion-list>
+    
+        <br>
+    
+        <div class="ion-padding">
+          <ion-button expand="block" type="submit" class="ion-no-margin">Confirmar</ion-button>
+        </div>
       </form>
+  
+      <br>
+      </ion-card-content>
 
-      <ion-row>
-        <ion-col align-self-center>
-          <ion-button type="submit" expand="block" color="primary">Finalizar</ion-button>
-        </ion-col>
-      </ion-row>
+    </ion-card>
+  </div>
 
-    </ion-content>
+
+    
+</div>
+
+    
+  
+</ion-content>
    
      
 

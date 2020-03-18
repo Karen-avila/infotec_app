@@ -7,16 +7,22 @@ import { IonicModule } from '@ionic/angular';
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { MovementsPageModule } from './components/movements/movements.module';
+import { CardAccountModule } from '@components/card-account/card-account.module';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   imports: [
-    TranslateModule,
     CommonModule,
     FormsModule,
     IonicModule,
-    DashboardPageRoutingModule
+    DashboardPageRoutingModule,
+    MovementsPageModule,
+    CardAccountModule,
+    NgxQRCodeModule
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage],
+  providers: [BarcodeScanner]
 })
 export class DashboardPageModule {}

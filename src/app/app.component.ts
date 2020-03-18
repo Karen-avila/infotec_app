@@ -21,16 +21,6 @@ export class AppComponent implements OnInit {
       icon: 'home-outline'
     },
     {
-      title: 'Cuentas',
-      url: '/folder/Cuentas',
-      icon: 'journal-outline'
-    },
-    {
-      title: 'Movimientos',
-      url: '/folder/Movimientos',
-      icon: 'trail-sign-outline'
-    },
-    {
       title: 'Transferencias',
       url: '/tranfers',
       icon: 'swap-horizontal-outline'
@@ -39,16 +29,6 @@ export class AppComponent implements OnInit {
       title: 'CoDi',
       url: '/codi',
       icon: 'swap-horizontal-outline'
-    },
-    {
-      title: 'Terceros',
-      url: '/folder/Terceros',
-      icon: 'people-outline'
-    },
-    {
-      title: 'Servicios',
-      url: '/folder/Servicios',
-      icon: 'pricetags-outline'
     },
     {
       title: 'Ajustes',
@@ -82,7 +62,6 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private router: Router,
     private translate: TranslateService,
     private titleService: Title
   ) {

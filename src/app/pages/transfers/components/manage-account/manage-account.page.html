@@ -1,0 +1,122 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title color="secondary">Crear Cuenta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" (click)="dismissModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+      <div style="text-align: center;">
+        <ion-item>
+          <ion-label style="text-align: center;"> <ion-icon color="secondary" style="font-size: 2.1rem;" src="assets/icon/clipboardv2.svg"></ion-icon></ion-label>
+        </ion-item>
+      </div>
+    </ion-card-header>
+
+  
+    <ion-card-content>
+    <form>
+      <ion-list>
+
+        <ion-item>
+          <ion-label position="stacked">No. de tarjeta / Cuenta / CLABE <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required inputmode="numeric" type="number"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="stacked">Nombre del beneficiario <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required inputmode="text" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Tipo de producto <ion-text color="danger">*</ion-text></ion-label>
+          <ion-select cancel-text="Cancelar" [interfaceOptions]="{header: 'Tipo de producto'}" interface="action-sheet" placeholder="Selecciona una opción">
+            <ion-select-option value="red">Tarjeta de Débito</ion-select-option>
+            <ion-select-option value="purple">Tarjeta de Crédito</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Banco / Institución <ion-text color="danger">*</ion-text></ion-label>
+          <ion-select cancel-text="Cancelar" [interfaceOptions]="{header: 'Banco / Institución'}" interface="action-sheet" placeholder="Selecciona una opción">
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="purple">HSBC</ion-select-option>
+            <ion-select-option value="purple">Santander</ion-select-option>
+            <ion-select-option value="purple">Scotiabank</ion-select-option>
+            <ion-select-option value="purple">Banorte</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+      </ion-list>
+  
+      <br>
+  
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin">Guardar</ion-button>
+      </div>
+    </form>
+
+    <br>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
