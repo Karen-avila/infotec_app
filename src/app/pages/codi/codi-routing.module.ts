@@ -7,7 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: CodiPage
+  },  {
+    path: 'pay-codi',
+    loadChildren: () => import('./components/pay-codi/pay-codi.module').then( m => m.PayCodiPageModule)
+  },
+  {
+    path: 'collect-codi',
+    loadChildren: () => import('./components/collect-codi/collect-codi.module').then( m => m.CollectCodiPageModule)
   }
+
 ];
 
 @NgModule({

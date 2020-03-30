@@ -39,6 +39,16 @@ const routes: Routes = [
     loadChildren: () => import('@pages/codi/codi.module').then( m => m.CodiPageModule)
   },
   {
+    path: 'pay-codi/:payload',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@pages/codi/components/pay-codi/pay-codi.module').then( m => m.PayCodiPageModule)
+  },
+  {
+    path: 'collect-codi',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@pages/codi/components/collect-codi/collect-codi.module').then( m => m.CollectCodiPageModule)
+  },
+  {
     path: 'tranfers',
     canActivate: [AuthGuard],
     loadChildren: () => import('@pages/transfers/transfers.module').then( m => m.TransfersPageModule)

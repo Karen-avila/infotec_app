@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="secondary">Pagar con CoDi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+
+  <br><br>
+
+  <ion-img style="width: 70%;margin: auto;" src="assets/MifosX_logo.png"></ion-img>
+  
+  <br><br>
+
+  <p class="ion-text-center">
+    <b>
+      ¿Desear realizar el siguiente pago?
+    </b>
+  </p>
+
+  <div style="margin: 2rem">
+    <p> <b>Beneficiario:</b> <br> Emiliano Zapata Salazar </p> 
+    <p> <b>Concepto:</b> <br> Pago por prestamos a la patria </p> 
+    <p> <b>Referencia:</b> <br> El Caudillo del Sur </p> 
+  </div>
+
+  <div style="font-size: xx-large; text-align: center;">
+    $1,500.50
+  </div>
+
+  <br>
+
+  <pre style="text-align: center;">
+    {{ payload | json }}
+  </pre>
+
+  <div style="width: 80%; margin: auto;margin-top: 2rem;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
+            <ion-icon style="color:red; font-size: 28px; margin-top: 11px; margin-left: 11px;" src="assets/icon/close.svg"></ion-icon>
+          </div>
+          <div style="text-align: center;margin-top: 0.4rem;">
+            Rechazar
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
+            <ion-icon style="color: #FFC000; font-size: 50px" name="add"></ion-icon>
+          </div>
+          <div style="text-align: center;margin-top: 0.4rem;">
+            Posponer
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
+            <ion-icon style="color:green; font-size: 36px; margin-top: 7px; margin-left: 7px;" src="assets/icon/tick.svg"></ion-icon>
+          </div>
+          <div style="text-align: center;margin-top: 0.4rem;">
+            Pagar
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+
+</ion-content>
