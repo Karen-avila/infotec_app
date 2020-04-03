@@ -44,17 +44,6 @@ export class CardAccountComponent implements OnInit {
 
   ngOnInit() {}
 
-  get _accounts(): ICardAccount[] {
-    return this.accounts.map( item => {
-      let balance = this.currencyPipe.transform(item.balance);
-      const len = balance.length;
-      const decimals = balance.substring(len - 2, len);
-      balance = balance.substring(0, len - 2);
-
-      return ({...item, balance, decimals});
-    } );
-  }
-
   protected slideChanged(slides: IonSlides) {
     slides.getActiveIndex().then((index: number) => {
      console.log(index);

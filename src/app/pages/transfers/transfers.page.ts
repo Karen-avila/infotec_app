@@ -3,12 +3,16 @@ import { ICardAccount, ISettings } from '@components/card-account/card-account.c
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManageAccountPage } from './components/manage-account/manage-account.page';
+import { HelpersService } from '@services/helpers/helpers.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 
 export interface ISavedAccount {
   owner: string;
   accountNo: string;
   bankTitle: string;
+  bankId: string;
   color: ''|'light';
   selected: boolean;
 }
@@ -38,7 +42,7 @@ export class TransfersPage implements OnInit {
   protected settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
-    cardWidth: '75%',
+    cardWidth: '80%',
     spaceBetween: 0,
     orientation: 'horizontal'
   };
@@ -48,6 +52,7 @@ export class TransfersPage implements OnInit {
       owner: 'Fernando Jimenez Santiago',
       accountNo: '5546 5454 3223 8922',
       bankTitle: 'Cuenta BBVA Bancomer',
+      bankId: 'bbva',
       selected: false,
       color: ''
     },
@@ -55,6 +60,7 @@ export class TransfersPage implements OnInit {
       owner: 'Didier Gomez Oliver',
       accountNo: '5546 5454 3223 8922',
       bankTitle: 'Cuenta HSBC',
+      bankId: 'hsbc',
       selected: false,
       color: ''
     },
@@ -62,6 +68,7 @@ export class TransfersPage implements OnInit {
       owner: 'Eduardo Moreno Palacios',
       accountNo: '5546 5454 3223 8922',
       bankTitle: 'Cuenta Banorte',
+      bankId: 'banorte',
       selected: false,
       color: ''
     },
@@ -69,6 +76,7 @@ export class TransfersPage implements OnInit {
       owner: 'Edgar Arturo Dominguez Narvaez',
       accountNo: '5546 5454 3223 8922',
       bankTitle: 'Cuenta Santander',
+      bankId: 'santander',
       selected: false,
       color: ''
     },
@@ -81,7 +89,10 @@ export class TransfersPage implements OnInit {
   constructor(
       public formBuilder: FormBuilder,
       public alertController: AlertController,
-      public modalController: ModalController
+      public modalController: ModalController,
+      protected helpersService: HelpersService,
+      protected translate: TranslateService,
+      protected router: Router
     ) {
     this.transferForm = formBuilder.group({
       username: ['', Validators.required],
@@ -100,16 +111,44 @@ export class TransfersPage implements OnInit {
     return item.accountNo;
   }
 
+  protected onEdit() {
+    
+  }
+
+
   async onMangeAccount(index?: number) {
-    const modal = await this.modalController.create({
-      component: ManageAccountPage,
-      componentProps: {
-        'firstName': 'Douglas',
-        'lastName': 'Adams',
-        'middleInitial': 'N'
-      }
-    });
-    return await modal.present();
+    console.log(index);
+
+    if (index === undefined) {
+      const modal = await this.modalController.create({
+        component: ManageAccountPage,
+        componentProps: {
+          'type': 'Create'
+        }
+      });
+      return await modal.present();
+    } else {
+      this.translate.get([
+        'Update', 
+        'Do you want to update the bank account?'
+      ]).subscribe( (resp: any) => {
+        this.helpersService
+          .showAlert(resp.Update, resp['Do you want to update the bank account?'])
+          .then( async () => {
+            const modal = await this.modalController.create({
+              component: ManageAccountPage,
+              componentProps: {
+                'type': 'Update',
+                ...this.savedAccounts[index]
+              }
+            });
+            return await modal.present();
+          } );
+      } )
+    }
+    
+    
+    
   }
 
   async onDelete() {

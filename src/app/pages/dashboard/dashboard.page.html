@@ -4,7 +4,7 @@
       <ion-menu-button style="color: #AD915F;"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button style="color: #AD915F;">
+      <ion-button [routerLink]="['/notifications']" style="color: #AD915F;">
         <ion-icon name="notifications"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -19,7 +19,7 @@
 
   <br>
 
-  <app-card-account [accounts]="accounts"></app-card-account>
+  <app-card-account style="margin: auto" [accounts]="accounts"></app-card-account>
 
   <ion-tabs>
 
@@ -31,24 +31,24 @@
 
     <ion-tab-bar slot="bottom" style="z-index: 1;">
   
-      <ion-tab-button tab="schedule">
+      <ion-tab-button (click)="presentModal()">
         <ion-icon src="assets/icon/clipboard.svg"></ion-icon>
-        <ion-label>Movimientos</ion-label>
+        <ion-label translate>Movements</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="speakers">
+      <ion-tab-button [routerLink]="['/transfers']">
         <ion-icon src="assets/icon/transaction.svg"></ion-icon>
-        <ion-label>Transferir</ion-label>
+        <ion-label translate>Transfer</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button tab="speakers">
+      <ion-tab-button [routerLink]="['/collect-codi']">
         <ion-icon name="wallet"></ion-icon>
-        <ion-label>Cartera</ion-label>
+        <ion-label translate>Charge</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="speakers">
+      <ion-tab-button [routerLink]="['/postponed']">
         <ion-icon src="assets/icon/posponer.svg"></ion-icon>
-        <ion-label>Pospuestos</ion-label>
+        <ion-label translate>Postponed</ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

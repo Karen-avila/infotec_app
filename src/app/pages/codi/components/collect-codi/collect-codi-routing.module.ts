@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CollectCodiPage
+  },
+  {
+    path: 'genarate-qr',
+    loadChildren: () => import('./components/collect-codi-qr/collect-codi-qr.module').then( m => m.CollectCodiQrPageModule)
   }
 ];
 

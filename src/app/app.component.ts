@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 
@@ -22,14 +21,14 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Transferencias',
-      url: '/tranfers',
+      url: '/transfers',
       icon: 'swap-horizontal-outline'
     },
-    {
-      title: 'CoDi',
-      url: '/codi',
-      icon: 'swap-horizontal-outline'
-    },
+    // {
+    //   title: 'CoDi',
+    //   url: '/codi',
+    //   icon: 'swap-horizontal-outline'
+    // },
     {
       title: 'Ajustes',
       url: '/folder/Ajustes',

@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title color="secondary">Crear Cuenta</ion-title>
+    <ion-title color="secondary" translate>{{ type }} Account</ion-title>
     <ion-buttons slot="end">
       <ion-button color="secondary" (click)="dismissModal()">
         <ion-icon name="close-outline"></ion-icon>
@@ -20,88 +20,37 @@
         </ion-item>
       </div>
     </ion-card-header>
-
   
     <ion-card-content>
-    <form>
+    <form [formGroup]="formGroup">
       <ion-list>
 
         <ion-item>
           <ion-label position="stacked">No. de tarjeta / Cuenta / CLABE <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required inputmode="numeric" type="number"></ion-input>
+          <ion-input formControlName="accountNo" required inputmode="numeric" type="number"></ion-input>
         </ion-item>
         
         <ion-item>
           <ion-label position="stacked">Nombre del beneficiario <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required inputmode="text" type="text"></ion-input>
+          <ion-input formControlName="owner" required inputmode="text" type="text"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Tipo de producto <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select cancel-text="Cancelar" [interfaceOptions]="{header: 'Tipo de producto'}" interface="action-sheet" placeholder="Selecciona una opción">
-            <ion-select-option value="red">Tarjeta de Débito</ion-select-option>
-            <ion-select-option value="purple">Tarjeta de Crédito</ion-select-option>
+          <ion-select formControlName="productType" cancel-text="Cancelar" [interfaceOptions]="{header: 'Tipo de producto'}" interface="action-sheet" placeholder="Selecciona una opción">
+            <ion-select-option value="debit">Tarjeta de Débito</ion-select-option>
+            <ion-select-option value="credit">Tarjeta de Crédito</ion-select-option>
           </ion-select>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Banco / Institución <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select cancel-text="Cancelar" [interfaceOptions]="{header: 'Banco / Institución'}" interface="action-sheet" placeholder="Selecciona una opción">
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
-            <ion-select-option value="red">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="purple">HSBC</ion-select-option>
-            <ion-select-option value="purple">Santander</ion-select-option>
-            <ion-select-option value="purple">Scotiabank</ion-select-option>
-            <ion-select-option value="purple">Banorte</ion-select-option>
+          <ion-select formControlName="bankId" cancel-text="Cancelar" [interfaceOptions]="{header: 'Banco / Institución'}" interface="action-sheet" placeholder="Selecciona una opción">
+            <ion-select-option value="bbva">BBVA Bancomer</ion-select-option>
+            <ion-select-option value="hsbc">HSBC</ion-select-option>
+            <ion-select-option value="santander">Santander</ion-select-option>
+            <ion-select-option value="scotianbak">Scotiabank</ion-select-option>
+            <ion-select-option value="banorte">Banorte</ion-select-option>
           </ion-select>
         </ion-item>
   
