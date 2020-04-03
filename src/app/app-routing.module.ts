@@ -49,14 +49,22 @@ const routes: Routes = [
     loadChildren: () => import('@pages/codi/components/collect-codi/collect-codi.module').then( m => m.CollectCodiPageModule)
   },
   {
-    path: 'tranfers',
+    path: 'transfers',
     canActivate: [AuthGuard],
     loadChildren: () => import('@pages/transfers/transfers.module').then( m => m.TransfersPageModule)
   },
   {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
+  {
+    path: 'postponed',
+    loadChildren: () => import('./pages/postponed/postponed.module').then( m => m.PostponedPageModule)
   }
+
 ];
 
 @NgModule({

@@ -3,28 +3,22 @@
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="secondary">Pagar con CoDi</ion-title>
+    <ion-title color="secondary" translate>Pay with CoDi</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="primary">
 
-  <br><br>
-
-  <ion-img style="width: 70%;margin: auto;" src="assets/MifosX_logo.png"></ion-img>
-  
-  <br><br>
+  <ion-img style="width: 60%;margin: auto; margin-top: 0.8rem;" src="assets/logo_intro.png"></ion-img>
 
   <p class="ion-text-center">
-    <b>
-      ¿Desear realizar el siguiente pago?
-    </b>
+    <b translate>¿Do you want to make the following payment?</b>
   </p>
 
   <div style="margin: 2rem">
-    <p> <b>Beneficiario:</b> <br> Emiliano Zapata Salazar </p> 
-    <p> <b>Concepto:</b> <br> Pago por prestamos a la patria </p> 
-    <p> <b>Referencia:</b> <br> El Caudillo del Sur </p> 
+    <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
+    <p> <b><span translate>Concept</span>:</b> <br> Pago por servicios a la Patria </p> 
+    <p> <b><span translate>Reference</span>:</b> <br> El Caudillo del Sur </p> 
   </div>
 
   <div style="font-size: xx-large; text-align: center;">
@@ -37,36 +31,24 @@
     {{ payload | json }}
   </pre>
 
-  <div style="width: 80%; margin: auto;margin-top: 2rem;">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
-            <ion-icon style="color:red; font-size: 28px; margin-top: 11px; margin-left: 11px;" src="assets/icon/close.svg"></ion-icon>
-          </div>
-          <div style="text-align: center;margin-top: 0.4rem;">
-            Rechazar
-          </div>
-        </ion-col>
-        <ion-col>
-          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
-            <ion-icon style="color: #FFC000; font-size: 50px" name="add"></ion-icon>
-          </div>
-          <div style="text-align: center;margin-top: 0.4rem;">
-            Posponer
-          </div>
-        </ion-col>
-        <ion-col>
-          <div class="card-button" style="margin:auto; width: 50px;height: 50px;background-color: white;border-radius: 10px;">
-            <ion-icon style="color:green; font-size: 36px; margin-top: 7px; margin-left: 7px;" src="assets/icon/tick.svg"></ion-icon>
-          </div>
-          <div style="text-align: center;margin-top: 0.4rem;">
-            Pagar
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <div style="width: 80%; margin: auto;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <app-rounding-button (click)="onCancel()" iconType="close" title="Reject"></app-rounding-button>
+          </ion-col>
+          <ion-col>
+            <app-rounding-button (click)="onPostpone()" iconType="add" title="Postpone"></app-rounding-button>
+          </ion-col>
+          <ion-col>
+            <app-rounding-button (click)="onAccept()" iconType="check" title="Pay"></app-rounding-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-toolbar>
+</ion-footer>

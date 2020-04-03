@@ -1,6 +1,6 @@
 <ion-slides #slides (ionSlideDidChange)="slideChanged(slides)">
 
-  <ion-slide *ngFor="let account of _accounts">
+  <ion-slide *ngFor="let account of accounts">
     <div class="slide">
 
       <p *ngIf="settings.orientation === 'vertical'" class="ion-text-center" style="margin-top: 0;">
@@ -12,7 +12,7 @@
           <ion-text *ngIf="settings.orientation === 'horizontal'" [ngStyle]="{'color': '#A3976A', 'font-size': settings.accountSize}">
             Cta. {{account.account}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </ion-text>
-          {{account.balance}}<span style="font-size: 65%; vertical-align: top;">{{account.decimals}}</span> 
+          <app-money-format [amount]="account.balance"></app-money-format>
         </ion-text> 
       </p>
       

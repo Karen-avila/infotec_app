@@ -1,19 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { CollectCodiPageRoutingModule } from './collect-codi-routing.module';
 
 import { CollectCodiPage } from './collect-codi.page';
+import { TranslateModule } from '@ngx-translate/core';
+import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
+import { InputErrorModule } from '@components/input-error/input-error.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CollectCodiPageRoutingModule
+    CollectCodiPageRoutingModule,
+    TranslateModule,
+    RoundingButtonModule,
+    ReactiveFormsModule,
+    InputErrorModule
   ],
   declarations: [CollectCodiPage]
 })
