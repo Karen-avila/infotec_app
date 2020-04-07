@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
 })
 export class DashboardPage implements OnInit {
 
-  protected tabIdex = 0;
+  public tabIdex = 0;
 
-  protected color = 'success';
+  public color = 'success';
 
-  protected accounts: any = [
+  public accounts: any = [
     {
       account: '0009878554',
       balance: '8650.89',
@@ -57,14 +57,14 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  protected slideChanged(slides: IonSlides) {
+  public slideChanged(slides: IonSlides) {
     slides.getActiveIndex().then((index: number) => {
      console.log(index);
      this.tabIdex = index;
     });
   }
 
-  protected scannerQRCode() {
+  public scannerQRCode() {
 
     let payload: any;
 

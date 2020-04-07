@@ -10,9 +10,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ManageAccountPage implements OnInit {
 
-  protected type: 'Create'|'Update'; 
+  public type: 'Create'|'Update'; 
 
-  protected formGroup: FormGroup;
+  public formGroup: FormGroup;
 
   constructor(
     protected modalController: ModalController,
@@ -46,7 +46,7 @@ export class ManageAccountPage implements OnInit {
     });
   }
 
-  protected dismissModal() {
+  public dismissModal() {
     this.modalController.dismiss();
   }
 

@@ -62,6 +62,15 @@
     "Do you want to update the bank account?": "Deseas actualizar la cuenta de banco?",
     "Update": "Actualizar",
     "Update Account": "Actualizar Cuenta",
-    "Create Account": "Crear Cuenta"
-
+    "Create Account": "Crear Cuenta",
+    "Go Dashboard": "Ir al menú principal",
+    "Registration": "Registro",
+    "The phone number must contain 10 digits": "El número de teléfono debe contener 10 dígitos",
+    "The email format is invalid": "El formato del correo es invalido",
+    "Passwords do not match": "Las contraseñas no coinciden",
+    "Recover password": "Recuperar contraseña",
+    "Skip": "Omitir",
+    "Continue": "Continuar",
+    "Set pin to login": "Establecer pin para iniciar sesión",
+    "Pin confirmation is incorrect": "La confirmación del pin es incorrecta"
 }

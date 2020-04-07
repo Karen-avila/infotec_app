@@ -10,7 +10,7 @@ export class MoneyFormatComponent implements OnInit {
 
   @Input() amount: string;
 
-  protected decimals: string;
+  public decimals: string;
 
   constructor(protected currencyPipe: CurrencyPipe) { }
 

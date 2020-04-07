@@ -11,7 +11,7 @@ import { IAccount } from '../account/account.interface';
 })
 export class InvestmentsPage implements OnInit {
 
-  protected accounts: IAccount[] = [
+  public accounts: IAccount[] = [
     {
       title: 'Inversión creciente',
       number: '*****2442',

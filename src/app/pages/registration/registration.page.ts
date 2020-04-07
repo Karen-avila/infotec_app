@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as CustomValidators from '@globals/custom.validator';
+
 
 @Component({
   selector: 'app-registration',
@@ -24,35 +26,28 @@ export class RegistrationPage implements OnInit {
       ])],
       password: ["", Validators.compose([
         Validators.required, 
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
-      ])],
-      name: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(5)
-      ])],
-      lastName : ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(5)
+        // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])],
       accountNumber: ["", Validators.compose([
         Validators.required, 
         Validators.minLength(9),
-        Validators.pattern('[0-9]')
+        Validators.pattern('[0-9]{9}')
       ])],
       phoneNumber : ["", Validators.compose([
         Validators.required, 
-        Validators.minLength(10),
-        Validators.pattern('[0-9]')
+        CustomValidators.ValidatePhoneNumber
       ])],
       confirmPassword : ["", Validators.compose([
         Validators.required, 
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])],
       email: ["", Validators.compose([
         Validators.required, 
-        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")
+        CustomValidators.ValidateEmail
       ])]
-  });
+    }, {
+      validator: CustomValidators.ValidateMatch('password', 'confirmPassword')
+    });
   }
 
   ngOnInit() {
