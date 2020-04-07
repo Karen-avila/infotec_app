@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: SecondLoginPage
+  },
+  {
+    path: ':type',
+    component: SecondLoginPage
   }
 ];
 

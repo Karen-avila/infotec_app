@@ -3,6 +3,8 @@ import { MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import * as CustomValidators from '@globals/custom.validator';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,7 +23,7 @@ export class ForgotPasswordPage implements OnInit {
     this.forgotForm = formBuilder.group({
       email: ["", Validators.compose([
         Validators.required,
-        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")
+        CustomValidators.ValidateEmail
       ])]
   });
 

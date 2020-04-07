@@ -5,7 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 enum ErrorMessages {
   required = 'This field is required',
   min = 'The minimum number is {{value}}',
-  minlength = 'The minimum length of this field is {{value}}'
+  max = 'The miximum number is {{value}}',
+  minlength = 'The minimum length of this field is {{value}}',
+  phoneNumber = 'The phone number must contain 10 digits',
+  email = 'The email format is invalid',
+  mustMatch = 'Passwords do not match'
 }
 
 @Component({
@@ -15,7 +19,9 @@ enum ErrorMessages {
 })
 export class InputErrorComponent implements OnInit {
 
-  protected params: any = {};
+  public params: any = {};
+
+  @Input() color: string = '#EB445A';
 
   @Input() control: FormControl;
 
@@ -23,6 +29,7 @@ export class InputErrorComponent implements OnInit {
 
   ngOnInit() {
     console.log('control',this.control);
+    this.control.valueChanges.subscribe( () => console.log(this.control) )
   }
 
   get hasError(): any {
@@ -36,13 +43,12 @@ export class InputErrorComponent implements OnInit {
     const keys: string[] = Object.keys(this.control.errors);
 
     switch(keys[0]) {
-      case 'min':
-      case 'max':
-        this.params['value'] = this.control.errors[keys[0]][keys[0]];        
-        break;
-
       case 'minlength':
         this.params['value'] = this.control.errors[keys[0]]['requiredLength'];
+        break;
+
+      default: 
+        this.params['value'] = this.control.errors[keys[0]][keys[0]];        
         break;
     }
 

@@ -1,62 +1,67 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="secondary" translate>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-grid>
 
-    <ion-card>
-      <ion-img src="../../assets/MifosX_logo.png"></ion-img>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ 'registration.register' | translate }}</ion-card-title>
-      </ion-card-header>
+  <ion-card>
     
       <ion-card-content>
         <form [formGroup]="registerForm" (ngSubmit)="register()">
-          <ion-item>
-            <ion-icon name="card-outline" slot="start"></ion-icon>
-            <ion-input type="number" formControlName="accountNumber" placeholder="{{ 'registration.accountnumber' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-            <ion-input type="text" formControlName="username" placeholder="{{ 'login.username' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-            <ion-input type="text" formControlName="name" placeholder="{{ 'registration.name' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="person-outline" slot="start"></ion-icon>
-            <ion-input type="text" formControlName="lastName" placeholder="{{ 'registration.lastname' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="call-outline" slot="start"></ion-icon>
-            <ion-input type="number" formControlName="phoneNumber" placeholder="{{ 'registration.phonenumber' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="mail-outline" slot="start"></ion-icon>
-            <ion-input type="email" formControlName="email" placeholder="{{ 'registration.email' | translate }}" clearInput></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-              <ion-input formControlName="password" [type]="type" placeholder="{{ 'login.password' | translate }}" clearInput></ion-input>
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">{{ 'registration.accountnumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="number" formControlName="accountNumber" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'login.username' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="username" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.username"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'registration.email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="email" formControlName="email" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.email"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="number" formControlName="phoneNumber" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
+
+            <ion-item style="margin-top: 15px;">
+              <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>
               <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
               <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
-          </ion-item>  
-          <ion-item>
-            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-              <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
-              <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
-              <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
-          </ion-item>
-          <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
+            </ion-item>  
+            <app-input-error [control]="registerForm.controls.password"></app-input-error>
+
+            <ion-item style="margin-top: 15px;">
+                <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
+                <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
+                <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.confirmPassword"></app-input-error>
+
+          </ion-list>
+          <br>
+          <div class="ion-padding">
+            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
+            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
+          </div>
         </form>
-        <ion-button [routerLink]="['/home']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
       </ion-card-content>
+  
     </ion-card>
-
-
-
-
-
-  </ion-grid>
-</ion-content>
+  
+  </ion-content>
+  

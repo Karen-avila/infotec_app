@@ -24,7 +24,7 @@ export interface ISavedAccount {
 })
 export class TransfersPage implements OnInit {
 
-  protected accounts: ICardAccount[] = [
+  public accounts: ICardAccount[] = [
     {
       account: '0009878554',
       balance: '8650.25',
@@ -39,7 +39,7 @@ export class TransfersPage implements OnInit {
     }
   ];
 
-  protected settings: ISettings = {
+  public settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
     cardWidth: '80%',
@@ -47,7 +47,7 @@ export class TransfersPage implements OnInit {
     orientation: 'horizontal'
   };
 
-  protected savedAccounts: ISavedAccount[] = [
+  public savedAccounts: ISavedAccount[] = [
     {
       owner: 'Fernando Jimenez Santiago',
       accountNo: '5546 5454 3223 8922',
@@ -82,17 +82,17 @@ export class TransfersPage implements OnInit {
     },
   ];
 
-  protected transferForm: FormGroup;
+  public transferForm: FormGroup;
 
-  protected isAccountSelected = false;
+  public isAccountSelected = false;
 
   constructor(
       public formBuilder: FormBuilder,
       public alertController: AlertController,
       public modalController: ModalController,
-      protected helpersService: HelpersService,
-      protected translate: TranslateService,
-      protected router: Router
+      public helpersService: HelpersService,
+      public translate: TranslateService,
+      public router: Router
     ) {
     this.transferForm = formBuilder.group({
       username: ['', Validators.required],
@@ -111,7 +111,7 @@ export class TransfersPage implements OnInit {
     return item.accountNo;
   }
 
-  protected onEdit() {
+  public onEdit() {
     
   }
 
@@ -169,7 +169,7 @@ export class TransfersPage implements OnInit {
     await alert.present();
   }
 
-  protected selectAccount(index: number, item: ISavedAccount) {
+  public selectAccount(index: number, item: ISavedAccount) {
     console.log('Click Me', index, item);
     const prevSelected = this.savedAccounts.find( (account: ISavedAccount) => account.selected );
     if (prevSelected) {
@@ -182,7 +182,7 @@ export class TransfersPage implements OnInit {
     setTimeout( () => this.content.scrollToBottom(1000), 200);
   }
 
-  protected makeTransfer(): void {
+  public makeTransfer(): void {
 
   }
 

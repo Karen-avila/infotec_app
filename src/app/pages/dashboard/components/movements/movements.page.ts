@@ -13,7 +13,7 @@ export class MovementsPage implements OnInit {
   ngOnInit() {
   }
 
-  protected dismissModal() {
+  public dismissModal() {
     this.modalController.dismiss();
   }
 

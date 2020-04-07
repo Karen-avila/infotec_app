@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CollectCodiPage implements OnInit {
 
-  protected formGroup: FormGroup;
+  public formGroup: FormGroup;
 
   constructor(
     protected formBuilder: FormBuilder, 
@@ -33,7 +33,7 @@ export class CollectCodiPage implements OnInit {
     return this.formGroup.controls;
   }
 
-  protected onCancel(): void {
+  public onCancel(): void {
    
     this.translate.get([
       'Cancel', 
@@ -45,7 +45,7 @@ export class CollectCodiPage implements OnInit {
     } )
   }
 
-  protected onClick(): void {
+  public onClick(): void {
     if (this.formGroup.invalid) {
       return;
     }

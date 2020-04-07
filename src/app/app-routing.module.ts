@@ -63,6 +63,10 @@ const routes: Routes = [
   {
     path: 'postponed',
     loadChildren: () => import('./pages/postponed/postponed.module').then( m => m.PostponedPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
 
 ];

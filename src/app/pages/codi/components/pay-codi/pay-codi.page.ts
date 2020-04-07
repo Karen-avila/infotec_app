@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PayCodiPage implements OnInit {
 
-  protected payload: any;
+  public payload: any;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -26,7 +26,7 @@ export class PayCodiPage implements OnInit {
   ngOnInit() {
   }
 
-  protected onCancel() {
+  public onCancel() {
     this.translate.get([
       'Reject', 
       'Do you want to reject the payment with CoDi?'
@@ -37,7 +37,7 @@ export class PayCodiPage implements OnInit {
     } )
   }
 
-  protected onPostpone() {
+  public onPostpone() {
     this.translate.get([
       'Postpone', 
       'Do you want to postpone payment with CoDi?'
@@ -48,7 +48,7 @@ export class PayCodiPage implements OnInit {
     } )
   }
 
-  protected onAccept() {
+  public onAccept() {
     this.translate.get([
       'Pay', 
       'Do you want to pay with CoDi?'

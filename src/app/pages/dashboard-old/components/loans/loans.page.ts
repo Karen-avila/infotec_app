@@ -11,7 +11,7 @@ import { IAccount } from '../account/account.interface';
 })
 export class LoansPage implements OnInit {
 
-  protected accounts: IAccount[] = [
+  public accounts: IAccount[] = [
     {
       title: 'Crédito del Bienestar',
       number: '*****4553',

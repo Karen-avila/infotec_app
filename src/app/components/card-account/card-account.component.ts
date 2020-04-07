@@ -38,13 +38,13 @@ export class CardAccountComponent implements OnInit {
 
   @Input() accounts: ICardAccount[];
 
-  protected array = Array;
+  public array = Array;
 
   constructor(protected currencyPipe: CurrencyPipe) { }
 
   ngOnInit() {}
 
-  protected slideChanged(slides: IonSlides) {
+  public slideChanged(slides: IonSlides) {
     slides.getActiveIndex().then((index: number) => {
      console.log(index);
      this.tabIndexSelected = index;
