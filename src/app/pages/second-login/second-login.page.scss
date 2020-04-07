@@ -1,0 +1,27 @@
+ion-row {
+    margin-bottom: 20px;
+}
+
+ion-fab-button {
+    margin: auto;
+    --background: white  !important;
+    --color: black;
+    --color-activated: white;
+}
+
+ion-img:active {
+    opacity: 0.6;
+}
+
+.point-password {
+    border-radius: 10px; margin:auto; width: 10px;height: 10px;background-color: grey;
+    margin-top: 10px;
+}
+
+.point-password-outline {
+    border-radius: 10px; margin:auto; width: 10px;height: 10px;background-color: white; 
+    border: solid 2px grey;
+    margin-top: 10px;
+}
+
+

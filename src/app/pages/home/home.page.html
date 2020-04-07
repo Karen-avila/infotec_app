@@ -1,0 +1,31 @@
+<ion-content>
+  <ion-grid>
+
+    <ion-card>
+      <ion-img src="../../assets/MifosX_logo.png"></ion-img>
+    </ion-card>
+
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+      <ion-item>
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        <ion-input formControlName="username" placeholder="{{ 'login.username' | translate }}" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-input formControlName="password" [type]="type" placeholder="{{ 'login.password' | translate }}" clearInput></ion-input>
+          <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
+          <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
+      </ion-item>  
+      <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">{{ 'login.signin' | translate }}</ion-button>    
+    </form>
+
+    <ion-row>
+      <ion-col align-self-center>
+        <ion-button [routerLink]="['/registration']" routerDirection="forward" expand="block" fill="clear">{{ 'login.register' | translate }}</ion-button>
+        <a [routerLink]="['/forgot-password']" class="small-text">{{ 'login.forgot-password' | translate }}?</a>
+        <br>
+        <a [routerLink]="['/dashboard']" class="small-text">Go Dashboard</a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

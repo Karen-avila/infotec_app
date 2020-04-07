@@ -1,0 +1,57 @@
+<ion-content>
+
+  <div class="content-header">
+  
+    <ion-grid>
+      <ion-row>
+        <ion-col size="5">
+          <img id="img-user" src="assets/icon/warren.jpeg" alt="Usuario">
+        </ion-col>
+        <ion-col>
+          <ion-text>
+            <h3 style="margin-top: 2.1rem; color: white; width: 80%;">Hola, Warren Buffet</h3>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </div>
+
+  <div class="btn-circle-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div class="btn-circle">
+            <ion-icon size="large" style="margin-top: 0.6rem;" name="card"></ion-icon>
+
+            <div style="font-size: 0.7rem; margin-top: -5px;">Cuentas</div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="btn-circle">
+            <ion-icon size="large" style="margin-top: 0.6rem;" name="repeat"></ion-icon>
+
+            <div style="font-size: 0.7rem; margin-top: -5px;">Transferir</div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="btn-circle">
+            <ion-icon size="large" style="margin-top: 0.6rem;" name="home"></ion-icon>
+
+            <div style="font-size: 0.7rem; margin-top: -5px;">Solicitar</div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="btn-circle">
+            <ion-icon size="large" style="margin-top: 0.6rem;" name="people"></ion-icon>
+
+            <div style="font-size: 0.7rem; margin-top: -5px;">Terceros</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+  </div>
+
+  <app-account *ngFor="let account of accounts" [data]="account"></app-account>
+ 
+</ion-content>

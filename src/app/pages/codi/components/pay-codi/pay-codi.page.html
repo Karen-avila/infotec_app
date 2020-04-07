@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="secondary" translate>Pay with CoDi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary">
+
+  <ion-img style="width: 60%;margin: auto; margin-top: 0.8rem;" src="assets/logo_intro.png"></ion-img>
+
+  <p class="ion-text-center">
+    <b translate>¿Do you want to make the following payment?</b>
+  </p>
+
+  <div style="margin: 2rem">
+    <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
+    <p> <b><span translate>Concept</span>:</b> <br> Pago por servicios a la Patria </p> 
+    <p> <b><span translate>Reference</span>:</b> <br> El Caudillo del Sur </p> 
+  </div>
+
+  <div style="font-size: xx-large; text-align: center;">
+    $1,500.50
+  </div>
+
+  <br>
+
+  <pre style="text-align: center;">
+    {{ payload | json }}
+  </pre>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <div style="width: 80%; margin: auto;">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <app-rounding-button (click)="onCancel()" iconType="close" title="Reject"></app-rounding-button>
+          </ion-col>
+          <ion-col>
+            <app-rounding-button (click)="onPostpone()" iconType="add" title="Postpone"></app-rounding-button>
+          </ion-col>
+          <ion-col>
+            <app-rounding-button (click)="onAccept()" iconType="check" title="Pay"></app-rounding-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-toolbar>
+</ion-footer>
