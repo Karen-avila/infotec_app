@@ -23,13 +23,18 @@ export class InputErrorComponent implements OnInit {
 
   @Input() color: string = '#EB445A';
 
+  @Input() colorClass: string = null;
+
   @Input() control: FormControl;
 
   constructor(protected translate: TranslateService) { }
 
   ngOnInit() {
     console.log('control',this.control);
-    this.control.valueChanges.subscribe( () => console.log(this.control) )
+    this.control.valueChanges.subscribe( () => console.log(this.control) );
+    if (this.colorClass) {
+      this.color = '';
+    }
   }
 
   get hasError(): any {

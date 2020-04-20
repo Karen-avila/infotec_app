@@ -72,5 +72,14 @@
     "Skip": "Omitir",
     "Continue": "Continuar",
     "Set pin to login": "Establecer pin para iniciar sesión",
-    "Pin confirmation is incorrect": "La confirmación del pin es incorrecta"
+    "Pin confirmation is incorrect": "La confirmación del pin es incorrecta",
+    "Help": "Ayuda",
+    "Frequently asked questions": "Preguntas frecuentes",
+    "Call now": "Llamar",
+    "Leave an email": "Enviar correo",
+    "Find locations": "Secursales",
+    "Answer": "Respuesta",
+    "Do you want to pay with CoDi?": "Desea pagar con CoDi?",
+    "Do you want to postpone payment with CoDi?": "Desea posponer el pago con CoDi?",
+    "Recover": "Recuperar"
 }
