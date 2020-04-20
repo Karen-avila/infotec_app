@@ -25,20 +25,26 @@
           <ion-label position="floating" translate>Amount<ion-text>*</ion-text></ion-label>
           <ion-input formControlName="amount" required inputmode="decimal" type="number"></ion-input>
         </ion-item>
-        <app-input-error [control]="formControls.amount"></app-input-error>
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="warning" [control]="formControls.amount"></app-input-error>
+        </div>
   
         <ion-item>
           <ion-label position="floating" translate>Concept<ion-text>*</ion-text></ion-label>
           <ion-input formControlName="concept" required inputmode="text" type="text"></ion-input>
         </ion-item>
-        <app-input-error [control]="formControls.concept"></app-input-error>
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="warning" [control]="formControls.concept"></app-input-error>
+        </div>
   
         <ion-item>
           <ion-label position="floating" translate>Reference</ion-label>
           <ion-input formControlName="reference" inputmode="text" type="text"></ion-input>
         </ion-item>
-        <app-input-error [control]="formControls.reference"></app-input-error>
-  
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="warning" [control]="formControls.reference"></app-input-error>
+        </div>
+
       </ion-list>
   
     </form>

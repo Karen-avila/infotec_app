@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Ayuda',
-      url: '/folder/Ayuda',
+      url: '/help',
       icon: 'help-circle-outline'
     },
     {

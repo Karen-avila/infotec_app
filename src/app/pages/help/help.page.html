@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button class="text-white"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="text-white" translate="Help"></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <div class="secondary">
+    <br>
+    <ion-img src="./assets/icon/question.svg"></ion-img>
+    <h6 style="text-align: center;color: white; font-weight: bold;" translate="Frequently asked questions"></h6>
+    <br>
+  </div>
+
+  <br>
+  <ion-list>
+    <ion-item routerLink="answer">
+      <ion-label>
+        <h4>¿Como solicitar una nueva cuenta de crédito?</h4>
+      </ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-label>
+        <h4>¿Dónde puedo ver información sobre mi perfil?</h4>
+      </ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-label>
+        <h4>¿Dónde puedo ver las transacciones de mi cuenta de ahorros?</h4>
+      </ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-label>
+        <h4>¿Cuál es el uso de un código QR?</h4>
+      </ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-label>
+        <h4>¿Cómo hacer un pago para una cuenta de crédito?</h4>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button>
+          <ion-icon src="./assets/icon/phone-outline.svg"></ion-icon>
+          <ion-label translate="Call now"></ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="presentAlertPrompt()">
+          <ion-icon src="./assets/icon/mail-outline.svg"></ion-icon>
+          <ion-label translate="Leave an email"></ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button>
+          <ion-icon src="./assets/icon/pin-outline.svg"></ion-icon>
+          <ion-label translate="Find locations"></ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
+   
+     
+

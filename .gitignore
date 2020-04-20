@@ -30,3 +30,8 @@ npm-debug.log*
 /www
 /platforms
 /resources
+/.firebase
+.firebaserc
+firebase.json
+manifest.webmanifest
+ngsw-config.json
