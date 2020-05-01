@@ -36,11 +36,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Nosotros',
-<<<<<<< HEAD
       url: '/about-us',
-=======
-      url: '/about',
->>>>>>> 79eb874893c1bff95bf75e3d35014030f6530f20
       icon: 'information-circle-outline'
     },
     {
