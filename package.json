@@ -35,7 +35,11 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "cordova-android": "^8.1.0",
     "cordova-base64-to-gallery": "^4.1.3",
+<<<<<<< HEAD
     "cordova-ios": "^5.1.1",
+=======
+    "cordova-ios": "^4.5.5",
+>>>>>>> 79eb874893c1bff95bf75e3d35014030f6530f20
     "cordova-plugin-android-permissions": "^1.0.2",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-sqlite-storage": "^5.0.0",
@@ -45,7 +49,13 @@
     "platform": "1.3.5",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-statusbar": "2.4.2",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-ionic-webview": "^4.0.0",
+    "cordova-plugin-ionic-keyboard": "^2.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.20",
