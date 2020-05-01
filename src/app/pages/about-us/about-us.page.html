@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title color="secondary" translate>About us</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div style="margin: auto;width: 70%; margin-top: 3.5rem;text-align: center;">
+    <h4 style="font-weight: bold;">BanBi</h4>
+    <div style="margin-bottom: 0.5rem;">{{ 'Version' | translate }} {{versionNumber}}</div>
+    
+    <ion-img src="./assets/logo-banbi-green.png"></ion-img>
+    <p>
+      © 2018 Banco del Bienestar SNC. Banca Electrónica.
+    </p>
+    <div style="margin-top: 2rem;">{{ 'All rights reserved' | translate }}.</div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;">
+    <a style="text-decoration: none;" href="https://www.gob.mx/aviso_de_privacidad" target="_blank" translate="Privacy policies"></a>
+  </ion-toolbar>
+</ion-footer>
+
+
+

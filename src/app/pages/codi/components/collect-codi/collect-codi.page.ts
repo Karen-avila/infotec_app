@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-collect-codi',
@@ -17,7 +18,8 @@ export class CollectCodiPage implements OnInit {
     protected formBuilder: FormBuilder, 
     protected router: Router, 
     protected helpersService: HelpersService,
-    protected translate: TranslateService
+    protected translate: TranslateService,
+    protected alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -45,8 +47,29 @@ export class CollectCodiPage implements OnInit {
     } )
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '¡Error!',
+      subHeader: 'Información invalida',
+      message: 'No se pudo generar correctamente el código QR.',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+      
+    });
+
+    await alert.present();
+  }
+
   public onClick(): void {
-    if (this.formGroup.invalid) {
+
+    this.presentAlert();
+    if (this.formGroup.invalid || true) {
       return;
     }
 
