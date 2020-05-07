@@ -4,7 +4,7 @@
     "login.password": "Contraseña",
     "login.username": "Usuario",
     "login.register": "Registrarse",
-    "login.forgot-password": "Olvidaste tu contraseña",
+    "login.forgot-password": "¿Olvidó su contraseña?",
     "forgot-password.title": "Recuperar contraseña",
     "forgot-password.email": "Correo electrónico",
     "forgot-password.recover": "Recuperar" ,
@@ -81,5 +81,17 @@
     "Answer": "Respuesta",
     "Do you want to pay with CoDi?": "Desea pagar con CoDi?",
     "Do you want to postpone payment with CoDi?": "Desea posponer el pago con CoDi?",
-    "Recover": "Recuperar"
+    "Recover": "Recuperar",
+    "Confirm pin": "Confirmar pin",
+    "About us": "Nosotros",
+    "All rights reserved": "Derechos reservados",
+    "Privacy policies": "Políticas de privacidad",
+    "Version": "Versión",
+    "Settings": "Ajustes",
+    "Change settings": "Cambiar configuraciones",
+    "Change password": "Cambiar contraseña",
+    "Change": "Cambiar",
+    "New password": "Nueva contraseña",
+    "Confirm password": "Confirmar contraseña",
+    "Current password": "Contraseña actual"
 }

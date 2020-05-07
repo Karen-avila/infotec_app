@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonSlides, ModalController } from '@ionic/angular';
+import { IonSlides, ModalController, AlertController } from '@ionic/angular';
 import { MovementsPage } from './components/movements/movements.page';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -35,7 +35,8 @@ export class DashboardPage implements OnInit {
     private modalController: ModalController,
     private barcodeScanner: BarcodeScanner,
     private androidPermissions: AndroidPermissions,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {
     this.checkPermissions();
   }
@@ -85,10 +86,31 @@ export class DashboardPage implements OnInit {
     }).catch(err => {
         console.log('Error', err);
         payload = JSON.stringify({error: "No se pudo leer correctamente el código"});
+        this.presentAlert();
+        
     }).finally( () => {
-      this.router.navigate(['pay-codi', payload ]);
+      // this.router.navigate(['pay-codi', payload ]);
     });
    
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: '¡Cuidado!',
+      subHeader: 'La cámara del dispositivo no esta disponible',
+      message: 'No se pudo leer correctamente el código QR.',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+      
+    });
+
+    await alert.present();
   }
 
   async presentModal() {

@@ -3,11 +3,11 @@
         <ion-buttons *ngIf="type === 'confirm-pin'" slot="start">
             <ion-back-button color="secondary"></ion-back-button>
         </ion-buttons>
-        <ion-buttons *ngIf="type === 'pin'" slot="end">
+        <!-- <ion-buttons *ngIf="type === 'pin'" slot="end">
             <ion-button  [routerLink]="['/dashboard']" color="primary" translate>
                 Skip
             </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -15,9 +15,10 @@
   
       <div style="width: 80%; margin: auto;">
   
-        <ion-img style="margin-bottom: 1.5rem;" src="./assets/MifosX_logo.png"></ion-img>
+        <ion-img style="margin-bottom: 1.5rem;margin-top: 1rem;" src="./assets/MifosX_logo.png"></ion-img>
 
         <div *ngIf="type === 'pin'" style="text-align: center;margin: 10px;" translate="Set pin to login"></div>
+        <div *ngIf="type === 'confirm-pin' && limitSelected !== lenSelectedNumbers" style="text-align: center;margin: 10px;" translate="Confirm pin"></div>
         <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled" 
             style="text-align: center;margin: 10px;color: red;"
             translate="Pin confirmation is incorrect">

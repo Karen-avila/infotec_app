@@ -14,9 +14,12 @@ import { Base64ToGallery } from '@ionic-native/base64-to-gallery/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';;
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { IonicStorageModule } from '@ionic/storage';
+import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -30,6 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       defaultLanguage: 'es',
       loader: {
@@ -47,7 +51,13 @@ export function createTranslateLoader(http: HttpClient) {
     Base64ToGallery,
     AndroidPermissions,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    AppVersion,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
