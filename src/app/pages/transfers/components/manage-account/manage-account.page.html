@@ -22,7 +22,7 @@
     </ion-card-header>
   
     <ion-card-content>
-    <form [formGroup]="formGroup">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <ion-list>
 
         <ion-item>

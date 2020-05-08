@@ -6,14 +6,17 @@ import { ManageAccountPage } from './components/manage-account/manage-account.pa
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 
-export interface ISavedAccount {
+export class SavedAccount {
+  id: number;
   owner: string;
   accountNo: string;
   bankTitle: string;
   bankId: string;
-  color: ''|'light';
+  productType: string;
+  color: '' | 'light';
   selected: boolean;
 }
 
@@ -47,39 +50,39 @@ export class TransfersPage implements OnInit {
     orientation: 'horizontal'
   };
 
-  public savedAccounts: ISavedAccount[] = [
-    {
-      owner: 'Fernando Jimenez Santiago',
-      accountNo: '5546 5454 3223 8922',
-      bankTitle: 'Cuenta BBVA Bancomer',
-      bankId: 'bbva',
-      selected: false,
-      color: ''
-    },
-    {
-      owner: 'Didier Gomez Oliver',
-      accountNo: '5546 5454 3223 8922',
-      bankTitle: 'Cuenta HSBC',
-      bankId: 'hsbc',
-      selected: false,
-      color: ''
-    },
-    {
-      owner: 'Eduardo Moreno Palacios',
-      accountNo: '5546 5454 3223 8922',
-      bankTitle: 'Cuenta Banorte',
-      bankId: 'banorte',
-      selected: false,
-      color: ''
-    },
-    {
-      owner: 'Edgar Arturo Dominguez Narvaez',
-      accountNo: '5546 5454 3223 8922',
-      bankTitle: 'Cuenta Santander',
-      bankId: 'santander',
-      selected: false,
-      color: ''
-    },
+  public savedAccounts: SavedAccount[] = [
+    // {
+    //   owner: 'Fernando Jimenez Santiago',
+    //   accountNo: '5546 5454 3223 8922',
+    //   bankTitle: 'Cuenta BBVA Bancomer',
+    //   bankId: 'bbva',
+    //   selected: false,
+    //   color: ''
+    // },
+    // {
+    //   owner: 'Didier Gomez Oliver',
+    //   accountNo: '5546 5454 3223 8922',
+    //   bankTitle: 'Cuenta HSBC',
+    //   bankId: 'hsbc',
+    //   selected: false,
+    //   color: ''
+    // },
+    // {
+    //   owner: 'Eduardo Moreno Palacios',
+    //   accountNo: '5546 5454 3223 8922',
+    //   bankTitle: 'Cuenta Banorte',
+    //   bankId: 'banorte',
+    //   selected: false,
+    //   color: ''
+    // },
+    // {
+    //   owner: 'Edgar Arturo Dominguez Narvaez',
+    //   accountNo: '5546 5454 3223 8922',
+    //   bankTitle: 'Cuenta Santander',
+    //   bankId: 'santander',
+    //   selected: false,
+    //   color: ''
+    // }
   ];
 
   public transferForm: FormGroup;
@@ -87,13 +90,14 @@ export class TransfersPage implements OnInit {
   public isAccountSelected = false;
 
   constructor(
-      public formBuilder: FormBuilder,
-      public alertController: AlertController,
-      public modalController: ModalController,
-      public helpersService: HelpersService,
-      public translate: TranslateService,
-      public router: Router
-    ) {
+    public formBuilder: FormBuilder,
+    public alertController: AlertController,
+    public modalController: ModalController,
+    public helpersService: HelpersService,
+    public translate: TranslateService,
+    public router: Router,
+    private http: HttpClient
+  ) {
     this.transferForm = formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -101,18 +105,19 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getBeneficiaries();
   }
 
   get content(): any {
     return document.querySelector('#content') as any;
   }
 
-  identify(index: number, item: ISavedAccount) {
+  identify(index: number, item: SavedAccount) {
     return item.accountNo;
   }
 
   public onEdit() {
-    
+
   }
 
 
@@ -126,15 +131,18 @@ export class TransfersPage implements OnInit {
           'type': 'Create'
         }
       });
+      modal.onDidDismiss().then(() => {
+        this.getBeneficiaries();
+      });
       return await modal.present();
     } else {
       this.translate.get([
-        'Update', 
+        'Update',
         'Do you want to update the bank account?'
-      ]).subscribe( (resp: any) => {
+      ]).subscribe((resp: any) => {
         this.helpersService
           .showAlert(resp.Update, resp['Do you want to update the bank account?'])
-          .then( async () => {
+          .then(async () => {
             const modal = await this.modalController.create({
               component: ManageAccountPage,
               componentProps: {
@@ -142,16 +150,20 @@ export class TransfersPage implements OnInit {
                 ...this.savedAccounts[index]
               }
             });
+            modal.onDidDismiss().then(() => {
+              this.getBeneficiaries();
+            });
             return await modal.present();
-          } );
-      } )
+          });
+      })
     }
-    
-    
-    
+
+
+
   }
 
-  async onDelete() {
+  async onDelete(id) {
+    console.log("ID a borrar", id);
     const alert = await this.alertController.create({
       header: 'Eliminar',
       message: 'Deséa eliminar la cuenta de banco?',
@@ -161,6 +173,7 @@ export class TransfersPage implements OnInit {
           text: 'Aceptar',
           handler: () => {
             console.log('Confirm Ok');
+            this.deleteBeneficiarie(id);
           }
         }
       ]
@@ -169,9 +182,9 @@ export class TransfersPage implements OnInit {
     await alert.present();
   }
 
-  public selectAccount(index: number, item: ISavedAccount) {
+  public selectAccount(index: number, item: SavedAccount) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccounts.find( (account: ISavedAccount) => account.selected );
+    const prevSelected = this.savedAccounts.find((account: SavedAccount) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
@@ -179,11 +192,58 @@ export class TransfersPage implements OnInit {
     item.selected = true;
     item.color = 'light';
     this.isAccountSelected = true;
-    setTimeout( () => this.content.scrollToBottom(1000), 200);
+    setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
   public makeTransfer(): void {
 
+  }
+
+  getBeneficiaries(): void {
+    console.log("trae cuentas");
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json; charset=utf-8",
+      "Fineract-Platform-TenantId": "tebancamos-c9affe7f758",
+      "authorization": "Basic " + btoa("mifos:password")
+    })
+
+    this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1?genericResultSet=true",
+      { headers: headers }).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.savedAccounts = [];
+          let data = res.data;
+          data.forEach(element => {
+            let cuenta: SavedAccount = new SavedAccount();
+            cuenta.id = element.row[0];
+            cuenta.accountNo = element.row[2];
+            cuenta.owner = element.row[3];
+            cuenta.productType = element.row[4];
+            cuenta.bankId = element.row[5];
+            this.savedAccounts.push(cuenta);
+          });
+        }, (err: any) => {
+          console.log(err);
+        }
+      );
+  }
+
+  deleteBeneficiarie(id): void {
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json; charset=utf-8",
+      "Fineract-Platform-TenantId": "tebancamos-c9affe7f758",
+      "authorization": "Basic " + btoa("mifos:password")
+    })
+
+    this.http.delete("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1/" + id + "/?genericResultSet=true",
+      { headers: headers }).subscribe(
+        (res: any) => {
+          console.log(res);
+          this.getBeneficiaries();
+        }, (err: any) => {
+          console.log(err);
+        }
+      );
   }
 
 }
