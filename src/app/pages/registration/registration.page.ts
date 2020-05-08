@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CustomValidators from '@globals/custom.validator';
@@ -18,7 +18,12 @@ export class RegistrationPage implements OnInit {
   reType:string='password';
   registerForm: FormGroup;
 
-  constructor(private router:Router, public formBuilder: FormBuilder, public menuCtrl: MenuController) { 
+  constructor(
+      private router:Router, 
+      public formBuilder: FormBuilder, 
+      public menuCtrl: MenuController, 
+      private alertController: AlertController
+    ) { 
     this.registerForm = formBuilder.group({
       username: ["", Validators.compose([
         Validators.required, 
@@ -30,8 +35,7 @@ export class RegistrationPage implements OnInit {
       ])],
       accountNumber: ["", Validators.compose([
         Validators.required, 
-        Validators.minLength(9),
-        Validators.pattern('[0-9]{9}')
+        Validators.pattern('[0-9]{9,9}$')
       ])],
       phoneNumber : ["", Validators.compose([
         Validators.required, 
@@ -57,7 +61,8 @@ export class RegistrationPage implements OnInit {
 
   register(){
     console.log("hacer peticion de registro")
-    this.router.navigateByUrl('/dashboard'); //second-login
+    //this.router.navigateByUrl('/dashboard'); //second-login
+    this.presentAlertPrompt();
   }
 
   viewRePassword(){
@@ -82,6 +87,42 @@ export class RegistrationPage implements OnInit {
       this.icon=true;
       this.type="password";
     }
+  }
+
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
+      header: 'Solo un paso más',
+      subHeader: '¡Revisa tu correo!',
+      message: 'Para completar el registro, revisa tu correo, te deberá haber llegado un código de activación (sí el código no te llego selecciona la opción de reenviar) que deberás proporcionar a continuación. ',
+      inputs: [
+        {
+          name: 'codigoActivacion',
+          type: 'text',
+          placeholder: 'Código de activación'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Reenviar',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

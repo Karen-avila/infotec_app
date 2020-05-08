@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
     // },
     {
       title: 'Ajustes',
-      url: '/folder/Ajustes',
+      url: '/settings',
       icon: 'settings-outline'
     },
     {
       title: 'Nosotros',
-      url: '/about',
+      url: '/about-us',
       icon: 'information-circle-outline'
     },
     {
