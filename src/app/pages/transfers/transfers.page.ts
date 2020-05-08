@@ -202,12 +202,10 @@ export class TransfersPage implements OnInit {
   getBeneficiaries(): void {
     console.log("trae cuentas");
     let headers = new HttpHeaders({
-      "Content-Type": "application/json; charset=utf-8",
-      "Fineract-Platform-TenantId": "tebancamos-c9affe7f758",
       "authorization": "Basic " + btoa("mifos:password")
     })
 
-    this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1?genericResultSet=true",
+    this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1?genericResultSet=true",
       { headers: headers }).subscribe(
         (res: any) => {
           console.log(res);
@@ -230,8 +228,6 @@ export class TransfersPage implements OnInit {
 
   deleteBeneficiarie(id): void {
     let headers = new HttpHeaders({
-      "Content-Type": "application/json; charset=utf-8",
-      "Fineract-Platform-TenantId": "tebancamos-c9affe7f758",
       "authorization": "Basic " + btoa("mifos:password")
     })
 

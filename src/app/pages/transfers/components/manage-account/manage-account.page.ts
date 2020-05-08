@@ -69,8 +69,6 @@ export class ManageAccountPage implements OnInit {
     }
 
     let headers = new HttpHeaders({
-      "Content-Type": "application/json; charset=utf-8",
-      "Fineract-Platform-TenantId": "tebancamos-c9affe7f758",
       "authorization": "Basic " + btoa("mifos:password")
     })
 
