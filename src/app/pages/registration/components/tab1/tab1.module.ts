@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ChangePinPageRoutingModule } from './change-pin-routing.module';
+import { Tab1PageRoutingModule } from './tab1-routing.module';
 
-import { ChangePinPage } from './change-pin.page';
+import { Tab1Page } from './tab1.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 
@@ -15,11 +15,11 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ChangePinPageRoutingModule,
+    Tab1PageRoutingModule,
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule
   ],
-  declarations: [ChangePinPage]
+  declarations: [Tab1Page]
 })
-export class ChangePinPageModule {}
+export class Tab1PageModule {}

@@ -14,13 +14,42 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
+            <ion-item *ngIf="p.url; else elseTemplate" (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
               detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon" [md]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
               <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
             </ion-item>
+
+            <ng-template #elseTemplate>
+              <ion-item (click)="p.funtion(); selectedIndex = i" routerDirection="root" lines="none"
+                detail="false" [class.selected]="selectedIndex == i">
+                <ion-icon slot="start" [ios]="p.icon" [md]="p.icon"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+                <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+              </ion-item>
+            </ng-template>
+            
           </ion-menu-toggle>
+
+          <!-- <ion-menu-toggle auto-hide="false">
+            <ion-item (click)="selectedIndex = 5" routerDirection="root" lines="none"
+              detail="false" [class.selected]="selectedIndex == 5">
+              <ion-icon slot="start" [ios]="'share-social-outline'" [md]="'share-social-outline'"></ion-icon>
+              <ion-label>Compartir</ion-label>
+              <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item (click)="logout()" routerDirection="root" lines="none"
+              detail="false" [class.selected]="selectedIndex == 6">
+              <ion-icon slot="start" [ios]="'log-out-outline'" [md]="'log-out-outline'"></ion-icon>
+              <ion-label>Cerrar Sesión</ion-label>
+              <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-item>
+          </ion-menu-toggle> -->
+          
         </ion-list>
 
       </ion-content>

@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { HelpersService } from '@services/helpers/helpers.service';
+import { Router } from '@angular/router';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +27,6 @@ export class AppComponent implements OnInit {
       url: '/transfers',
       icon: 'swap-horizontal-outline'
     },
-    // {
-    //   title: 'CoDi',
-    //   url: '/codi',
-    //   icon: 'swap-horizontal-outline'
-    // },
     {
       title: 'Ajustes',
       url: '/settings',
@@ -46,13 +44,13 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Compartir',
-      url: '/folder/Compartir',
+      funtion: this.share.bind(this),
       icon: 'share-social-outline'
     },
     {
       title: 'Cerrar Sesión',
-      url: '/folder/Logout',
-      icon: 'log-out-outline'
+      funtion: this.logout.bind(this),
+      icon: 'log-out-outline',
     }
   ];
   public labels = ['V.0.0.1'];
@@ -62,7 +60,10 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private translate: TranslateService,
-    private titleService: Title
+    private titleService: Title,
+    private helpersService: HelpersService,
+    private router: Router,
+    private socialSharing: SocialSharing
   ) {
     this.initializeApp();
   }
@@ -78,6 +79,22 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
     });
   }
+
+  public share(): void {
+    this.socialSharing.share('message', 'subject', null, 'https://www.gob.mx/bancodelbienestar');
+  }
+
+  public logout(): void {
+    this.selectedIndex = 6;
+    this.translate.get([
+      'Sign off', 
+      'Do you want to exit the app?'
+    ]).subscribe( (resp: any) => {
+      this.helpersService
+        .showAlert(resp.Reject, resp['Do you want to exit the app?'])
+        .then( () => this.router.navigate(['/login']) );
+    } )
+  } 
 
   ngOnInit() {
 

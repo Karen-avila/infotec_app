@@ -86,10 +86,10 @@ export class DashboardPage implements OnInit {
     }).catch(err => {
         console.log('Error', err);
         payload = JSON.stringify({error: "No se pudo leer correctamente el código"});
-        this.presentAlert();
+        // this.presentAlert();
         
     }).finally( () => {
-      // this.router.navigate(['pay-codi', payload ]);
+      this.router.navigate(['pay-codi', payload ]);
     });
    
   }

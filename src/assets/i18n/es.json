@@ -93,5 +93,18 @@
     "Change": "Cambiar",
     "New password": "Nueva contraseña",
     "Confirm password": "Confirmar contraseña",
-    "Current password": "Contraseña actual"
+    "Current password": "Contraseña actual",
+    "Sign off": "Cerrar sesión",
+    "Do you want to exit the app?": "Desea salir de la aplicación?",
+    "Change pin": "Cambiar pin",
+    "Current pin": "Pin actual",
+    "New pin": "Nuevo pin",
+    "Change phone": "Cambiar teléfono",
+    "Phone number": "Número de teléfono",
+    "Next": "Siguiente",
+    "Birthdate": "Fecha de nacimiento",
+    "The curp is invalid": "La CURP no es valida",
+    "Offices": "Sucursales",
+    "Change email": "Cambiar correo",
+    "Email": "Correo"
 }

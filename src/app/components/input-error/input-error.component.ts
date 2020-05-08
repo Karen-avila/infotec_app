@@ -9,7 +9,8 @@ enum ErrorMessages {
   minlength = 'The minimum length of this field is {{value}}',
   phoneNumber = 'The phone number must contain 10 digits',
   email = 'The email format is invalid',
-  mustMatch = 'Passwords do not match'
+  mustMatch = 'Passwords do not match',
+  curp = 'The curp is invalid',
 }
 
 @Component({

@@ -38,31 +38,33 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  signIn(){
+  signIn() {
+
+    this.router.navigate(['/second-login', 'pin']);
    
-    const form = {...this.loginForm.value};
+    // const form = {...this.loginForm.value};
 
-    this.storage.remove('token');
+    // this.storage.remove('token');
 
-    this.userService.login(form)
-      .toPromise()
-      .then( login => {
-        console.log(login.base64EncodedAuthenticationKey);
+    // this.userService.login(form)
+    //   .toPromise()
+    //   .then( login => {
+    //     console.log(login.base64EncodedAuthenticationKey);
         
-        return this.storage.set('token', login.base64EncodedAuthenticationKey)
-          .then( () => {
-            console.log('<here>');
-            return this.clientsService.getClient('1').toPromise();
+    //     return this.storage.set('token', login.base64EncodedAuthenticationKey)
+    //       .then( () => {
+    //         console.log('<here>');
+    //         return this.clientsService.getClient('1').toPromise();
             
-          } );
-      } )
-      .then( client => {
-        this.storage.set('personal-info', client);
-        this.router.navigate(['/second-login', 'pin']); //second-login
-      } )
-      .catch( err => {
-        console.log(err);
-      } );
+    //       } );
+    //   } )
+    //   .then( client => {
+    //     this.storage.set('personal-info', client);
+    //     this.router.navigate(['/second-login', 'pin']); //second-login
+    //   } )
+    //   .catch( err => {
+    //     console.log(err);
+    //   } );
     
   }
 

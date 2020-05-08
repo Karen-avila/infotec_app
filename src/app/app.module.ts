@@ -20,6 +20,9 @@ import { environment } from '../environments/environment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -52,6 +55,9 @@ export function createTranslateLoader(http: HttpClient) {
     AndroidPermissions,
     SplashScreen,
     AppVersion,
+    CallNumber,
+    Geolocation,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

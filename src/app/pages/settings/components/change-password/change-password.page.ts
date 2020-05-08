@@ -17,7 +17,7 @@ export class ChangePasswordPage implements OnInit {
   reType:string='password';
   form: FormGroup;
 
-  constructor(private router:Router, public formBuilder: FormBuilder, public menuCtrl: MenuController) { 
+  constructor(private router:Router, public formBuilder: FormBuilder) { 
     this.form = formBuilder.group({
       password: ["", Validators.required],
       newPassword: ["", Validators.required],
@@ -28,8 +28,6 @@ export class ChangePasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    this.menuCtrl.enable(false);
-    this.menuCtrl.swipeGesture(false);
   }
 
   register(){
