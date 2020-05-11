@@ -76,7 +76,7 @@ export class ManageAccountPage implements OnInit {
       alert("faltan cosas");
     } else if (this.formGroup.value.id > 0) {
       let body = JSON.stringify(cuenta);
-      this.http.put("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1/" + this.formGroup.value.id + "?genericResultSet=true",
+      this.http.put("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1/" + this.formGroup.value.id + "?genericResultSet=true",
         body, { headers: headers }).subscribe(
           (res: any) => {
             console.log(res);
@@ -87,7 +87,7 @@ export class ManageAccountPage implements OnInit {
         )
     } else {
       let body = JSON.stringify(cuenta);
-      this.http.post("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1?genericResultSet=true",
+      this.http.post("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1?genericResultSet=true",
         body, { headers: headers }).subscribe(
           (res: any) => {
             console.log(res);

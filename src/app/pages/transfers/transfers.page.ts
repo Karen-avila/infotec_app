@@ -231,7 +231,7 @@ export class TransfersPage implements OnInit {
       "authorization": "Basic " + btoa("mifos:password")
     })
 
-    this.http.delete("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Cuentas/1/" + id + "/?genericResultSet=true",
+    this.http.delete("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1/" + id + "/?genericResultSet=true",
       { headers: headers }).subscribe(
         (res: any) => {
           console.log(res);
