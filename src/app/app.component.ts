@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
+import { Sim } from '@ionic-native/sim/ngx';
+
 
 @Component({
   selector: 'app-root',
@@ -62,7 +64,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private translate: TranslateService,
-    private titleService: Title
+    private titleService: Title,
+    private sim: Sim
   ) {
     this.initializeApp();
   }
@@ -76,6 +79,18 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();
+      // this.sim.requestReadPermission().then(
+      //   () => alert('Permission granted'),
+      //   () => alert('Permission denied')
+      // );
+      // this.sim.getSimInfo().then(
+      //   (info) => 	alert(JSON.stringify(info, null, 4)),
+      //   (err) => alert(JSON.stringify(err, null, 4))
+      // );
+      // this.sim.hasReadPermission().then(
+      //   (info) => 	alert(JSON.stringify(info, null, 4))
+      // );
+      
     });
   }
 

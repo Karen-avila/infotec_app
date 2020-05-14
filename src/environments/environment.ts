@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: '/api/v1/self'
+  baseUrl: 'https://mifos.infotec.mx/fineract-provider/api/v1/self'
 };
 
 /*

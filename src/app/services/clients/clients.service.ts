@@ -14,5 +14,12 @@ export class ClientsService {
     return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}`, {
       params: { tenantIdentifier: 'default' },
     });
-  } 
+  }
+
+  public getMovements(clientId: string): Observable<any> {
+
+    return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}/transactions`, {
+      params: { tenantIdentifier: 'default' },
+    });
+  }
 }

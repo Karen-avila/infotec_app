@@ -11,14 +11,28 @@
 
 <ion-content>
   <!-- List of Text Items -->
-  <ion-list>
-    <ion-item>
+ 
+<ion-label *ngIf="!movements || movements.length==0 ">No hay movimientos </ion-label>
+<ion-list>
+    <ion-item *ngFor="let movimiento of movements">
+      <ion-avatar slot="start">
+        
+        <ion-icon [ngStyle]="{'color':movimiento.type.id === 1 ? 'red' : 'green', 'margin-top':'7px','font-size':'x-large' }" src="assets/icon/logout.svg"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h3>Transferencia {{movimiento.type.id===1 ? 'Realizada' : 'Recibida'}}</h3> 
+        <h5 style="font-size: x-small; color: grey;">{{movimiento.type.id===1 ? 'Realizó' : 'Recibió'}} una transferencia por {{movimiento.currency.displaySymbol}}{{movimiento.amount| number : '1.2-2'}}</h5>
+      </ion-label>
+    </ion-item>
+
+
+
+    <!-- <ion-item>
       <ion-avatar slot="start">
         <ion-icon style="margin-top: 7px;color: red; font-size: x-large;" src="assets/icon/logout.svg"></ion-icon>
       </ion-avatar>
       <ion-label>
-        <h3>Transferencia realizada</h3>
-        <!-- <h4 style="color: rgb(92, 92, 92);">Hola Mundo</h4> -->
+        <h3>Transferencia realizada</h3> 
         <h5 style="font-size: x-small; color: grey;">Realizó una transferencia por $5,000.00</h5>
       </ion-label>
     </ion-item>
@@ -28,9 +42,8 @@
       </ion-avatar>
       <ion-label>
         <h3>Transferencia recibida</h3>
-        <!-- <h4 style="color: rgb(92, 92, 92);">Hola Mundo</h4> -->
         <h5 style="font-size: x-small; color: grey;">Recibio una transferencia por $1,500.50</h5>
       </ion-label>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 </ion-content>

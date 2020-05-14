@@ -18,7 +18,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: {
-        'Fineract-Platform-TenantId': 'tebancamos-c9affe7f758',
+        'Fineract-Platform-TenantId': 'default',
         'Content-Type': 'application/json'
       }
     });
