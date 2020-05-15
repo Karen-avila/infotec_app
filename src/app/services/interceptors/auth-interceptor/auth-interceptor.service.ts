@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, from, forkJoin } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

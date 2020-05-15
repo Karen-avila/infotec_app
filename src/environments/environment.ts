@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://mifos.infotec.mx/fineract-provider/api/v1/self'
+  baseUrl: 'https://mifos.infotec.mx/fineract-provider/api/v1/self',
+  commonUrl: '/api/v1'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

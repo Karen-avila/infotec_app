@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { Sim } from '@ionic-native/sim/ngx';
-
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Cerrar Sesión',
-      url: '/folder/Logout',
+      url: '/logout',
       icon: 'log-out-outline'
     }
   ];
@@ -65,7 +65,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private translate: TranslateService,
     private titleService: Title,
-    private sim: Sim
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -79,22 +80,17 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();
-      // this.sim.requestReadPermission().then(
-      //   () => alert('Permission granted'),
-      //   () => alert('Permission denied')
-      // );
-      // this.sim.getSimInfo().then(
-      //   (info) => 	alert(JSON.stringify(info, null, 4)),
-      //   (err) => alert(JSON.stringify(err, null, 4))
-      // );
-      // this.sim.hasReadPermission().then(
-      //   (info) => 	alert(JSON.stringify(info, null, 4))
-      // );
-      
+    });
+
+    this.authenticationService.authState.subscribe(state => {
+      if (state) {
+        this.router.navigate(['dashboard']);
+      } else {
+        this.router.navigate(['login']);
+      }
     });
   }
 
   ngOnInit() {
-
   }
 }

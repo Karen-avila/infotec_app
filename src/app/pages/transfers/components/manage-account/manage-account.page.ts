@@ -3,6 +3,10 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { UserService } from '@services/user/user.service';
+import { ClientsService } from '@services/clients/clients.service';
 
 @Component({
   selector: 'app-manage-account',
@@ -20,7 +24,8 @@ export class ManageAccountPage implements OnInit {
     protected activatedRoute: ActivatedRoute,
     protected navParams: NavParams,
     protected formBuilder: FormBuilder,
-    protected http: HttpClient
+    protected http: HttpClient,
+    private clientsService: ClientsService
   ) { }
 
   ngOnInit() {
@@ -34,7 +39,7 @@ export class ManageAccountPage implements OnInit {
       accountNo: ['', Validators.required],
       owner: ['', Validators.required],
       productType: ['', Validators.required],
-      bankId: ['', Validators.required],
+      bankId: ['', Validators.required]
     });
 
     if (this.type === 'Create') {
@@ -46,7 +51,7 @@ export class ManageAccountPage implements OnInit {
       accountNo: accountNo.replace(/ /gi, ''),
       owner,
       productType,
-      bankId,
+      bankId
     });
   }
 
@@ -54,48 +59,69 @@ export class ManageAccountPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  submit() {
-    console.log(this.formGroup);
-
-    let cuenta = {
-      Banco: this.formGroup.value.bankId,
-      NdeTarjeta: this.formGroup.value.accountNo,
-      NombreDelBeneficiario: this.formGroup.value.owner,
-      TipoDeProducto: this.formGroup.value.productType,
-
-      dateFormat: "dd MMMM yyyy",
-      Fecha: "07 May 2020",
-      locale: "en"
-    }
-
+  getBeneficiareClientId(accountNo?: number): Observable<any> {
     let headers = new HttpHeaders({
       "authorization": "Basic " + btoa("mifos:password")
     })
+    return this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/savingsaccounts/" + accountNo, { headers: headers });
+  }
 
-    if (this.formGroup.invalid) {
-      alert("faltan cosas");
-    } else if (this.formGroup.value.id > 0) {
-      let body = JSON.stringify(cuenta);
-      this.http.put("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1/" + this.formGroup.value.id + "?genericResultSet=true",
-        body, { headers: headers }).subscribe(
-          (res: any) => {
-            console.log(res);
-            this.dismissModal();
-          }, (err: any) => {
-            console.log(err);
-          }
-        )
+  // getOfficeId(clientId?: number): Observable<any> {
+  //   let headers = new HttpHeaders({
+  //     "authorization": "Basic " + btoa("mifos:password")
+  //   })
+  //   return this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/savingsaccounts/" + clientId, { headers: headers });
+  // }
+
+  async submit() {
+
+    if (this.formGroup.invalid) { return }
+
+    // aca chequeamos que el banco a ingresar sea el bienestar
+    if (this.formGroup.value.bankId == 1) {
+      // aca metemos un beneficiario TPT a mifos
+      let tpt = {
+        "locale": "es",
+        "name": this.formGroup.value.owner,
+        "accountNumber": this.formGroup.value.accountNo,
+        "accountType": this.formGroup.value.productType,
+        "transferLimit": 1000000
+      }
+
+
+      this.clientsService.postBeneficiariesTPT(tpt)
+        .toPromise()
+        .then(res => {
+          console.log(res);
+          this.dismissModal();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
     } else {
-      let body = JSON.stringify(cuenta);
-      this.http.post("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1?genericResultSet=true",
-        body, { headers: headers }).subscribe(
-          (res: any) => {
-            console.log(res);
-            this.dismissModal();
-          }, (err: any) => {
-            console.log(err);
-          }
-        );
+      this.saveBeneficiarie();
     }
+  }
+
+  saveBeneficiarie() {
+
+    let cuenta = {
+      bankId: this.formGroup.value.bankId,
+      accountNo: this.formGroup.value.accountNo,
+      owner: this.formGroup.value.owner,
+      productType: this.formGroup.value.productType,
+      locale: "es"
+    }
+
+    this.clientsService.postBeneficiaries(cuenta)
+      .toPromise()
+      .then(res => {
+        console.log(res);
+        this.dismissModal();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { CurrencyPipe } from '@angular/common';
 
-
 export interface ISettings {
   accountSize: string;
   balanceSize: string;

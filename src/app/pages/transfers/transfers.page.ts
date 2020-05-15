@@ -7,7 +7,9 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-
+import { ClientsService } from '@services/clients/clients.service';
+import { Storage } from '@ionic/storage';
+import { BeneficiarieTPT } from '@globals/interfaces/beneficiarie-tpt';
 
 export class SavedAccount {
   id: number;
@@ -16,8 +18,23 @@ export class SavedAccount {
   bankTitle: string;
   bankId: string;
   productType: string;
+  beneficiarieClientId?: number;
   color: '' | 'light';
   selected: boolean;
+}
+
+export class CardAccount implements ICardAccount {
+  account: string;
+  balance: string;
+  clientName: string;
+  cardNumber?: string;
+  [prop: string]: string;
+  constructor(pAccount: string, pBalance: string, pClientName: string, pCardNumber?: string) {
+    this.account = pAccount;
+    this.balance = pBalance;
+    this.clientName = pClientName;
+    this.cardNumber = pCardNumber;
+  }
 }
 
 @Component({
@@ -27,21 +44,6 @@ export class SavedAccount {
 })
 export class TransfersPage implements OnInit {
 
-  public accounts: ICardAccount[] = [
-    {
-      account: '0009878554',
-      balance: '8650.25',
-      clientName: 'Leona Vicario Fernández',
-      cardNumber: ''
-    },
-    {
-      account: '0003893021',
-      balance: '12400.97',
-      clientName: 'Leona Vicario Fernández',
-      cardNumber: ''
-    }
-  ];
-
   public settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
@@ -50,6 +52,23 @@ export class TransfersPage implements OnInit {
     orientation: 'horizontal'
   };
 
+  public accounts: CardAccount[] = [
+    // {
+    //   account: '0009878554',
+    //   balance: '8650.25',
+    //   clientName: 'Leona Vicario Fernández',
+    //   cardNumber: ''
+    // },
+    // {
+    //   account: '0003893021',
+    //   balance: '12400.97',
+    //   clientName: 'Leona Vicario Fernández',
+    //   cardNumber: ''
+    // }
+  ];
+
+  public savedAccountsTPT: SavedAccount[] = [
+  ]
   public savedAccounts: SavedAccount[] = [
     // {
     //   owner: 'Fernando Jimenez Santiago',
@@ -96,7 +115,9 @@ export class TransfersPage implements OnInit {
     public helpersService: HelpersService,
     public translate: TranslateService,
     public router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private clientsService: ClientsService,
+    private storage: Storage
   ) {
     this.transferForm = formBuilder.group({
       username: ['', Validators.required],
@@ -105,7 +126,8 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getBeneficiaries();
+    this.getBeneficiariesTPT();
+    this.getAccounts();
   }
 
   get content(): any {
@@ -132,7 +154,7 @@ export class TransfersPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(() => {
-        this.getBeneficiaries();
+        this.getBeneficiariesTPT();
       });
       return await modal.present();
     } else {
@@ -151,7 +173,7 @@ export class TransfersPage implements OnInit {
               }
             });
             modal.onDidDismiss().then(() => {
-              this.getBeneficiaries();
+              this.getBeneficiariesTPT();
             });
             return await modal.present();
           });
@@ -199,47 +221,85 @@ export class TransfersPage implements OnInit {
 
   }
 
-  getBeneficiaries(): void {
-    console.log("trae cuentas");
-    let headers = new HttpHeaders({
-      "authorization": "Basic " + btoa("mifos:password")
-    })
-
-    this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1?genericResultSet=true",
-      { headers: headers }).subscribe(
-        (res: any) => {
-          console.log(res);
-          this.savedAccounts = [];
-          let data = res.data;
-          data.forEach(element => {
+  private getBeneficiariesTPT(): void {
+    console.log("trae beneficiarios");
+    this.clientsService.getBeneficiariesTPT()
+      .toPromise()
+      .then(
+        (response: BeneficiarieTPT[]) => {
+          console.log(response);
+          this.savedAccountsTPT = [];
+          response.forEach(element => {
             let cuenta: SavedAccount = new SavedAccount();
-            cuenta.id = element.row[0];
-            cuenta.accountNo = element.row[2];
-            cuenta.owner = element.row[3];
-            cuenta.productType = element.row[4];
-            cuenta.bankId = element.row[5];
+            cuenta.id = element.id;
+            //TODO falta poner el bankId correspondiente al de bienestar
+            cuenta.bankId = "1";
+            cuenta.accountNo = element.accountNumber;
+            cuenta.owner = element.clientName;
+            cuenta.productType = element.accountType.id.toString();
             this.savedAccounts.push(cuenta);
-          });
-        }, (err: any) => {
-          console.log(err);
-        }
-      );
+          })
+        })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  // private getBeneficiaries(): void {
+  //   console.log("trae beneficiarios");
+  //   this.clientsService.getBeneficiariesTPT()
+  //     .toPromise().then(
+  //       (response: any) => {
+  //         console.log(response);
+  //         this.savedAccounts = [];
+  //         let data = response.data;
+  //         data.forEach(element => {
+  //           let cuenta: SavedAccount = new SavedAccount();
+  //           cuenta.id = element.row[0];
+  //           cuenta.bankId = element.row[2];
+  //           cuenta.accountNo = element.row[3];
+  //           cuenta.owner = element.row[4];
+  //           cuenta.productType = element.row[5];
+  //           this.savedAccounts.push(cuenta);
+  //         })
+  //       })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+
+  // traemos los accounts del cliente
+  private getAccounts(): void {
+    this.storage.get('clientId')
+      .then(clientId => {
+        return this.clientsService.getAccounts(clientId).toPromise()
+      }
+      )
+      .then((response: any) => {
+        console.log(response);
+        this.accounts = [];
+        let data = response.savingsAccounts;
+
+        data.forEach(element => {
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, "El nombre del cliente debe venir de otro lado", "No se que es el CARD NUMBER");
+          this.accounts.push(account);
+        });
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   deleteBeneficiarie(id): void {
-    let headers = new HttpHeaders({
-      "authorization": "Basic " + btoa("mifos:password")
-    })
 
-    this.http.delete("https://fineract.actionfintech.net/fineract-provider/api/v1/datatables/Beneficiarios/1/" + id + "/?genericResultSet=true",
-      { headers: headers }).subscribe(
-        (res: any) => {
-          console.log(res);
-          this.getBeneficiaries();
-        }, (err: any) => {
-          console.log(err);
-        }
-      );
+    this.clientsService.deleteBeneficiarieTPT(id)
+      .toPromise()
+      .then((response: any) => {
+        console.log(response);
+        this.getBeneficiariesTPT();
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
-
 }
