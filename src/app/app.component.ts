@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/user/authentication.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit {
     }
   ];
   public labels = ['V.0.0.1'];
+ 
 
   constructor(
     private platform: Platform,
@@ -66,8 +68,11 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private titleService: Title,
     private authenticationService: AuthenticationService,
-    private router: Router
-  ) {
+    private router: Router,
+    private storage : Storage
+  ) 
+
+  {
     this.initializeApp();
   }
 
@@ -90,7 +95,16 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
+  personalInfo : any
   ngOnInit() {
+
+  this.storage.get('personal-info')
+  .then(infoPersonal=> {
+
+this.personalInfo=infoPersonal
+console.log(this.personalInfo)
+  }
+   )
+  
   }
 }

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as CustomValidators from '@globals/custom.validator';
+import { UserService } from '@services/user/user.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-change-password',
@@ -17,7 +19,7 @@ export class ChangePasswordPage implements OnInit {
   reType:string='password';
   form: FormGroup;
 
-  constructor(private router:Router, public formBuilder: FormBuilder, public menuCtrl: MenuController) { 
+  constructor(private router:Router, public formBuilder: FormBuilder, public menuCtrl: MenuController,    private userService: UserService) { 
     this.form = formBuilder.group({
       password: ["", Validators.required],
       newPassword: ["", Validators.required],
@@ -48,6 +50,13 @@ export class ChangePasswordPage implements OnInit {
       this.reType="password";
     }
   }
+  changePassword(){
+    const form = { ...this.form.value };
+  this.userService.changePassword(this.form) .toPromise()
+  .then((password: any) => {
+    console.log(password)
+  })
+}
 
   viewPassword(){
     if(this.icon){

@@ -51,7 +51,7 @@ export class AuthenticationService {
       .then(client => {
         this.authState.next(true);
         this.storage.set('personal-info', client);
-        this.router.navigate(['/second-login', 'pin']); //second-login
+        this.router.navigate(['/second-login',  {type: 'pin'}]); //second-login
       })
       .catch(err => {
         console.log(err);
@@ -71,9 +71,11 @@ export class AuthenticationService {
   }
 
   public logout() {
+    this.storage.remove('personal-info')
     this.storage.remove('token').then(() => {
       this.router.navigate(['/login']);
       this.authState.next(false);
+    
     });
   }
 
