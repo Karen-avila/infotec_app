@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ENDPOINTS } from '@globals/endpoints';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient, private storage: Storage) { }
+
+  public changePassword(form: any){
+
+    return this.httpClient.put(`${ENDPOINTS.resetPassword}`,form);
+
+
+
+  }
 
 }
