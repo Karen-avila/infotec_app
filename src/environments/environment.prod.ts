@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: '/api/v1/self'
+  baseUrl: 'https://mifos.infotec.mx/fineract-provider/api/v1/self',
+  commonUrl: '/api/v1'
 };

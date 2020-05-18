@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
-import { UserService } from '@services/user/user.service';
-import { ClientsService } from '@services/clients/clients.service';
 import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
@@ -52,5 +49,4 @@ export class LoginPage implements OnInit {
       this.type = "password";
     }
   }
-
 }

@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
+import { AES256 } from '@ionic-native/aes-256/ngx';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -58,7 +59,8 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    AES256
   ],
   bootstrap: [AppComponent]
 })
