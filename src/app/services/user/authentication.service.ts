@@ -58,10 +58,6 @@ export class AuthenticationService {
       });
   }
 
-  public logged() {
-    this.authState.next(true);
-  }
-
   public ifLoggedIn() {
     this.storage.get('token').then((response) => {
       if (response) {
@@ -78,7 +74,6 @@ export class AuthenticationService {
   }
 
   public isAuthenticated() {
-    console.log(this.authState.value);
     return this.authState.value;
   }
 }
