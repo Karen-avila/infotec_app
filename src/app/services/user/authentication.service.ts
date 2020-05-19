@@ -26,14 +26,16 @@ export class AuthenticationService {
     public toastController: ToastController,
     private clientsService: ClientsService
   ) {
-    this.platform.ready().then(() => {
-      this.ifLoggedIn();
-    });
+    // this.platform.ready().then(() => {
+    //   this.ifLoggedIn();
+    // });
   }
 
-  public login(user: User) {
+  // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
+  public login(user: User, askForPin: boolean) {
 
     this.storage.remove('token');
+    this.storage.remove('personal-info');
 
     this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
@@ -51,8 +53,9 @@ export class AuthenticationService {
       .then(client => {
         this.authState.next(true);
         this.storage.set('personal-info', client);
-        //this.router.navigate(['/second-login', 'pin']); //second-login
-        this.router.navigate(['/second-login',  {type: 'pin', usuario : user.username, password: user.password}]); //second-login
+
+        if (askForPin) this.router.navigate(['/second-login', { type: 'pin', username: user.username, password: user.password }]); //second-login
+        else this.router.navigate(['/dashboard']);
       })
       .catch(err => {
         console.log(err);
@@ -68,10 +71,21 @@ export class AuthenticationService {
   }
 
   public logout() {
-    this.storage.remove('token').then(() => {
-      this.router.navigate(['/login']);
-      this.authState.next(false);
-    });
+    this.storage.remove('personal-info')
+      .then(() => {
+        return this.storage.remove('token')
+      })
+      .then(() => {
+        return this.storage.get('user-hash')
+      })
+      .then(response => {
+        this.authState.next(false);
+        if (response) {
+          this.router.navigate(['/second-login', 'login']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      })
   }
 
   public isAuthenticated() {

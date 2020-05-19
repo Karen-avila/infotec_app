@@ -61,8 +61,8 @@ export class ChangePasswordPage implements OnInit {
 
     this.userService.changePassword(data)
       .toPromise()
-      .then((password: any) => {
-        console.log(password)
+      .then(response => {
+        this.router.navigate(['/logout'])
       })
       .catch(err => {
         console.log(err)

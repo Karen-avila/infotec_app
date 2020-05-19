@@ -59,4 +59,10 @@ export class ClientsService {
     return this.httpClient.get(`${ENDPOINTS.accounts.replace('{clientId}', clientId)}`);
   }
 
+  public getPersonalInfo() {
+    return this.storage.get('personal-info').then((data) => {
+      return data;
+    });
+  }
+  
 }

@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
   signIn() {
     console.log("INICIA LOGIN");
     const form = { ...this.loginForm.value };
-    this.authenticationService.login(form);
+    this.authenticationService.login(form, true);
   }
 
   viewPassword() {
