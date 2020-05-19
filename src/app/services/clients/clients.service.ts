@@ -60,9 +60,7 @@ export class ClientsService {
   }
 
   public getPersonalInfo() {
-    return this.storage.get('personal-info').then((data) => {
-      return data;
-    });
+    return this.storage.get('personal-info');
   }
   
 }

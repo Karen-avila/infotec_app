@@ -21,6 +21,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
 import { AES256 } from '@ionic-native/aes-256/ngx';
+import { MenuModule } from '@components/menu/menu.module';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -33,6 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    MenuModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({

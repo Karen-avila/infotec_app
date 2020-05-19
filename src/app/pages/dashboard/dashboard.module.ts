@@ -27,4 +27,4 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [DashboardPage],
   providers: [BarcodeScanner]
 })
-export class DashboardPageModule {}
+export class DashboardPageModule { }

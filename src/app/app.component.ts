@@ -16,51 +16,6 @@ import { ClientsService } from '@services/clients/clients.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
-  public appPages = [
-    {
-      title: 'Inicio',
-      url: '/dashboard',
-      icon: 'home-outline'
-    },
-    {
-      title: 'Transferencias',
-      url: '/transfers',
-      icon: 'swap-horizontal-outline'
-    },
-    // {
-    //   title: 'CoDi',
-    //   url: '/codi',
-    //   icon: 'swap-horizontal-outline'
-    // },
-    {
-      title: 'Ajustes',
-      url: '/settings',
-      icon: 'settings-outline'
-    },
-    {
-      title: 'Nosotros',
-      url: '/about-us',
-      icon: 'information-circle-outline'
-    },
-    {
-      title: 'Ayuda',
-      url: '/help',
-      icon: 'help-circle-outline'
-    },
-    {
-      title: 'Compartir',
-      url: '/folder/Compartir',
-      icon: 'share-social-outline'
-    },
-    {
-      title: 'Cerrar Sesión',
-      url: '/logout',
-      icon: 'log-out-outline'
-    }
-  ];
-  public labels = ['V.0.0.1'];
-  public personalInfo: any;
 
   constructor(
     private platform: Platform,
@@ -68,10 +23,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private translate: TranslateService,
     private titleService: Title,
-    private authenticationService: AuthenticationService,
     private router: Router,
     private storage: Storage,
-    private clientsService: ClientsService
   ) {
     this.initializeApp();
   }
@@ -103,12 +56,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  public isAuthenticated() {
-    return this.authenticationService.isAuthenticated();
-  }
 
-  public async getPersonalInfo() {
-    this.personalInfo = await this.clientsService.getPersonalInfo();
-    return this.personalInfo.displayName;
-  }
 }
