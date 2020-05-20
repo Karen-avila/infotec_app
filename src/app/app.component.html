@@ -1,7 +1,7 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" type="overlay">
 
+    <ion-menu contentId="main-content" type="overlay" *ngIf="isAuthenticated()">
       <app-menu></app-menu>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

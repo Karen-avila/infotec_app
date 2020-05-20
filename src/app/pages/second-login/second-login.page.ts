@@ -84,7 +84,7 @@ export class SecondLoginPage implements OnInit {
         break;
 
       case 'login':
-        label = 'Ingresar';
+        label = 'Ingresar con PIN';
         break;
     }
 

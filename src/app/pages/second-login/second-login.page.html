@@ -110,6 +110,9 @@
       </div>
     </ion-grid>
   </ion-content>
+
+  <ion-button [routerLink]="['/registration']" routerDirection="forward" expand="block" fill="clear">{{ 'login.register' | translate }}</ion-button>
+  <ion-button [routerLink]="['/login']" routerDirection="forward" expand="block" fill="clear">{{ 'login.signin' | translate }}</ion-button>
   
   <ion-footer class="ion-no-border">
     <ion-toolbar style="text-align: center;">

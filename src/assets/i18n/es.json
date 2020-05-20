@@ -94,5 +94,6 @@
     "Change": "Cambiar",
     "New password": "Nueva contraseña",
     "Confirm password": "Confirmar contraseña",
-    "Current password": "Contraseña actual"
+    "Current password": "Contraseña actual",
+    "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial"
 }

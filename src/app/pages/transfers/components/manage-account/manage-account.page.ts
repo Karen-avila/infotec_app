@@ -3,11 +3,8 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { UserService } from '@services/user/user.service';
 import { ClientsService } from '@services/clients/clients.service';
-import { Storage } from '@ionic/storage';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 
 @Component({
@@ -94,7 +91,7 @@ export class ManageAccountPage implements OnInit {
 
     // TODO falta saber cual es el id del banco bienester
     // aca chequeamos que el banco a ingresar sea el bienestar
-    if (this.formGroup.value.bankId == 1) {
+    if (this.formGroup.value.accountNo.length() == 11) {
       // aca metemos un beneficiario TPT a mifos
       let tpt = {
         "locale": "es",
