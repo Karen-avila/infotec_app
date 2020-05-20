@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICardAccount, ISettings } from '@components/card-account/card-account.component';
+import { ISettings } from '@components/card-account/card-account.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManageAccountPage } from './components/manage-account/manage-account.page';
@@ -10,6 +10,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ClientsService } from '@services/clients/clients.service';
 import { Storage } from '@ionic/storage';
 import { BeneficiarieTPT } from '@globals/interfaces/beneficiarie-tpt';
+import { PersonalInfo } from '@globals/interfaces/personal-info';
+import { CardAccount } from '@globals/classes/card-account';
 
 export class SavedAccount {
   id: number;
@@ -21,20 +23,6 @@ export class SavedAccount {
   beneficiarieClientId?: number;
   color: '' | 'light';
   selected: boolean;
-}
-
-export class CardAccount implements ICardAccount {
-  account: string;
-  balance: string;
-  clientName: string;
-  cardNumber?: string;
-  [prop: string]: string;
-  constructor(pAccount: string, pBalance: string, pClientName: string, pCardNumber?: string) {
-    this.account = pAccount;
-    this.balance = pBalance;
-    this.clientName = pClientName;
-    this.cardNumber = pCardNumber;
-  }
 }
 
 @Component({
@@ -108,6 +96,8 @@ export class TransfersPage implements OnInit {
 
   public isAccountSelected = false;
 
+  public personalInfo: PersonalInfo;
+
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
@@ -123,11 +113,50 @@ export class TransfersPage implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.initializeApp();
   }
 
   ngOnInit() {
-    this.getBeneficiariesTPT();
+    //this.getBeneficiariesTPT();
     this.getAccounts();
+    this.resolveALL();
+  }
+
+  public resolveALL() {
+    Promise.all([
+      this.clientsService.getBeneficiariesTPT().toPromise(),
+      //TODO cambiar para que traiga de get beneficiaries cuando este el self service que consulta a datatable
+      this.clientsService.getBeneficiariesTPT().toPromise()
+      //this.clientsService.getBeneficiarie().toPromise(),
+    ]
+    )
+    .then(res => {
+      console.log(res[0]);
+
+      res[0].forEach(element => {
+        let cuenta: SavedAccount = new SavedAccount();
+        cuenta.id = element.id;
+        //TODO falta poner el bankId correspondiente al de bienestar
+        cuenta.bankId = "1";
+        cuenta.accountNo = element.accountNumber;
+        cuenta.owner = element.clientName;
+        cuenta.productType = element.accountType.id.toString();
+        this.savedAccounts.push(cuenta);
+      })
+
+      console.log(res[1]);
+      res[1].forEach(element => {
+        let cuenta: SavedAccount = new SavedAccount();
+        cuenta.id = element.id;
+        cuenta.bankId = element.bankId;
+        cuenta.accountNo = element.accountNumber;
+        cuenta.owner = element.clientName;
+        cuenta.productType = element.accountType.id.toString();
+        this.savedAccounts.push(cuenta);
+      })
+
+    })
+    .catch(err => console.log(err));
   }
 
   get content(): any {
@@ -273,15 +302,14 @@ export class TransfersPage implements OnInit {
     this.storage.get('clientId')
       .then(clientId => {
         return this.clientsService.getAccounts(clientId).toPromise()
-      }
-      )
+      })
       .then((response: any) => {
         console.log(response);
         this.accounts = [];
         let data = response.savingsAccounts;
 
         data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, "El nombre del cliente debe venir de otro lado", "No se que es el CARD NUMBER");
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, "No se que es el CARD NUMBER");
           this.accounts.push(account);
         });
       })
@@ -290,7 +318,14 @@ export class TransfersPage implements OnInit {
       })
   }
 
-  deleteBeneficiarie(id): void {
+  private initializeApp() {
+    this.clientsService.getPersonalInfo()
+      .then((data: PersonalInfo) => {
+        this.personalInfo = data;
+      });
+  }
+
+  public deleteBeneficiarie(id): void {
 
     this.clientsService.deleteBeneficiarieTPT(id)
       .toPromise()

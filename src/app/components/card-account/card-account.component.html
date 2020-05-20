@@ -4,15 +4,15 @@
     <div class="slide">
 
       <p *ngIf="settings.orientation === 'vertical'" class="ion-text-center" style="margin-top: 0;">
-        <ion-text [ngStyle]="{'color': '#A3976A', 'font-size': settings.accountSize}">Cta. {{account.account}}</ion-text>
+        <ion-text [ngStyle]="{'color': '#A3976A', 'font-size': settings.accountSize}">Cta. {{account.accountNo}}</ion-text>
       </p>
       
       <p class="ion-text-center">
         <ion-text [ngStyle]="{'color': '#AD915F', 'font-size': settings.balanceSize}">
           <ion-text *ngIf="settings.orientation === 'horizontal'" [ngStyle]="{'color': '#A3976A', 'font-size': settings.accountSize}">
-            Cta. {{account.account}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Cta. {{account.accountNo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </ion-text>
-          <app-money-format [amount]="account.balance"></app-money-format>
+          <app-money-format [amount]="account.accountBalance"></app-money-format>
         </ion-text> 
       </p>
       
@@ -21,7 +21,7 @@
       <div [ngStyle]="{'width': settings.cardWidth, 'margin': 'auto', 'position': 'relative'}">
         <img src="./assets/card.jpeg"/>
         <span class="ion-text-uppercase" style="color: #CBC0AE; text-align: left; font-size: small; position: absolute; bottom: 2.5rem; left: 1.3rem;">
-          {{account.clientName}}
+          {{account.displayName}}
         </span>
       </div>
      

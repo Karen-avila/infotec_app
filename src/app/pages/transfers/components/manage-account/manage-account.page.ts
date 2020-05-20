@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UserService } from '@services/user/user.service';
 import { ClientsService } from '@services/clients/clients.service';
+import { Storage } from '@ionic/storage';
+import { PersonalInfo } from '@globals/interfaces/personal-info';
 
 @Component({
   selector: 'app-manage-account',
@@ -19,6 +21,8 @@ export class ManageAccountPage implements OnInit {
 
   public formGroup: FormGroup;
 
+  public personalInfo: PersonalInfo;
+
   constructor(
     protected modalController: ModalController,
     protected activatedRoute: ActivatedRoute,
@@ -26,11 +30,13 @@ export class ManageAccountPage implements OnInit {
     protected formBuilder: FormBuilder,
     protected http: HttpClient,
     private clientsService: ClientsService
-  ) { }
+  ) {
+    this.initializeApp();
+  }
 
   ngOnInit() {
     console.log(this.navParams.data);
-    const { id, type, owner, accountNo, productType, bankId } = this.navParams.data;
+    const { id, type, owner, accountNo, productType, bankId, transferLimit } = this.navParams.data;
 
     this.type = type;
 
@@ -39,7 +45,8 @@ export class ManageAccountPage implements OnInit {
       accountNo: ['', Validators.required],
       owner: ['', Validators.required],
       productType: ['', Validators.required],
-      bankId: ['', Validators.required]
+      bankId: ['', Validators.required],
+      transferLimit: ['', Validators.required]
     });
 
     if (this.type === 'Create') {
@@ -51,15 +58,23 @@ export class ManageAccountPage implements OnInit {
       accountNo: accountNo.replace(/ /gi, ''),
       owner,
       productType,
-      bankId
+      bankId,
+      transferLimit
     });
+  }
+
+  private initializeApp() {
+    this.clientsService.getPersonalInfo()
+      .then((data: PersonalInfo) => {
+        this.personalInfo = data;
+      });
   }
 
   public dismissModal() {
     this.modalController.dismiss();
   }
 
-  getBeneficiareClientId(accountNo?: number): Observable<any> {
+  public getBeneficiareClientId(accountNo?: number): Observable<any> {
     let headers = new HttpHeaders({
       "authorization": "Basic " + btoa("mifos:password")
     })
@@ -77,15 +92,19 @@ export class ManageAccountPage implements OnInit {
 
     if (this.formGroup.invalid) { return }
 
+    // TODO falta saber cual es el id del banco bienester
     // aca chequeamos que el banco a ingresar sea el bienestar
     if (this.formGroup.value.bankId == 1) {
       // aca metemos un beneficiario TPT a mifos
       let tpt = {
         "locale": "es",
+        //TODO este parametro va a venir de un request que nos tiene que pasar alberto
         "name": this.formGroup.value.owner,
+        //TODO este parametro va a venir de un request que nos tiene que pasar alberto
+        "officeName": "Head Office",
         "accountNumber": this.formGroup.value.accountNo,
         "accountType": this.formGroup.value.productType,
-        "transferLimit": 1000000
+        "transferLimit": this.formGroup.value.transferLimit
       }
 
 
@@ -104,14 +123,15 @@ export class ManageAccountPage implements OnInit {
     }
   }
 
-  saveBeneficiarie() {
+  public saveBeneficiarie() {
 
     let cuenta = {
-      bankId: this.formGroup.value.bankId,
-      accountNo: this.formGroup.value.accountNo,
-      owner: this.formGroup.value.owner,
-      productType: this.formGroup.value.productType,
-      locale: "es"
+      "name": this.formGroup.value.owner,
+      "accountNumber": this.formGroup.value.accountNo,
+      "accountType": this.formGroup.value.productType,
+      "transferLimit": this.formGroup.value.transferLimit,
+      "bankId": this.formGroup.value.bankId,
+      "locale": "es"
     }
 
     this.clientsService.postBeneficiaries(cuenta)

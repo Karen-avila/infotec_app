@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { CurrencyPipe } from '@angular/common';
+import { ICardAccount } from '@globals/classes/card-account';
 
 export interface ISettings {
   accountSize: string;
@@ -8,14 +9,6 @@ export interface ISettings {
   cardWidth: string;
   spaceBetween: number;
   orientation: 'vertical'|'horizontal';
-}
-
-export interface ICardAccount {
-  account: string;
-  balance: string;
-  clientName: string;
-  cardNumber?: string;
-  [prop: string]: string;
 }
 
 @Component({
