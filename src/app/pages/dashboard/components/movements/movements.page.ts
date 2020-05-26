@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
 
 @Component({
-  selector: 'app-movements',
+  selector: 'app-nts',
   templateUrl: './movements.page.html',
   styleUrls: ['./movements.page.scss'],
 })

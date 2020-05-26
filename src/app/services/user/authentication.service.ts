@@ -43,6 +43,7 @@ export class AuthenticationService {
         console.log(login.base64EncodedAuthenticationKey);
 
         this.storage.set('token', login.base64EncodedAuthenticationKey)
+        this.storage.set('email', login.email)
 
         return this.storage.set('token', login.base64EncodedAuthenticationKey)
           .then(() => {

@@ -6,6 +6,8 @@ import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
+
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.page.html',
@@ -18,6 +20,8 @@ export class ChangePasswordPage implements OnInit {
   type: string = 'password';
   reType: string = 'password';
   form: FormGroup;
+
+  
 
   constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService) {
     this.form = formBuilder.group({
@@ -66,7 +70,7 @@ export class ChangePasswordPage implements OnInit {
       "repeatPassword": form.confirmPassword
     }
 
-    this.userService.changePassword(data)
+    this.userService.changeData(data)
       .toPromise()
       .then(response => {
         this.router.navigate(['/logout'])

@@ -7,5 +7,6 @@ export const ENDPOINTS = {
     beneficiary: `${environment.baseUrl}/datatable/beneficiaries`,
     codes: `${environment.commonUrl}/codes/{catalogo}/codevalues`,
     accounts: `${environment.baseUrl}/clients/{clientId}/accounts`,
-    resetPassword: `${environment.baseUrl}/user`
+    changeData: `${environment.baseUrl}/user`,
+  
 }
