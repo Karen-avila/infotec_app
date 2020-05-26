@@ -1,0 +1,74 @@
+<!-- <ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="secondary" translate>Registration</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-card>
+    
+      <ion-card-content>
+
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <ion-list>
+            
+
+            <ion-item>
+              <ion-label position="floating">{{ 'First name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="firstName" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Middle name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="lastName" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.lastName"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Last name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="surName" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.surName"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="email" formControlName="email" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.email"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Account number' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="tel" formControlName="accountNumber" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+
+            <ion-item style="margin-top: 15px;">
+              <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>
+              <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
+              <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
+            </ion-item>  
+            <app-input-error [control]="registerForm.controls.password"></app-input-error>
+
+            <ion-item style="margin-top: 15px;">
+                <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
+                <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
+                <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.confirmPassword"></app-input-error>
+
+          </ion-list>
+          <br>
+          <div class="ion-padding">
+            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
+            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+  
+    </ion-card>
+  
+</ion-content>

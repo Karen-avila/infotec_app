@@ -9,6 +9,7 @@ import { RegistrationPageRoutingModule } from './registration-routing.module';
 import { RegistrationPage } from './registration.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+// import { NgxFaceApiJsModule } from 'ngx-face-api-js';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     ReactiveFormsModule,
     IonicModule,
     RegistrationPageRoutingModule,
-    InputErrorModule
+    InputErrorModule,
+    // NgxFaceApiJsModule.forRoot({ modelsUrl: 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights',})
   ],
   declarations: [RegistrationPage]
 })

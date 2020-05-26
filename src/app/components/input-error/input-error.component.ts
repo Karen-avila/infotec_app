@@ -10,6 +10,8 @@ enum ErrorMessages {
   phoneNumber = 'The phone number must contain 10 digits',
   email = 'The email format is invalid',
   mustMatch = 'Passwords do not match',
+  curp = 'The curp is invalid',
+  accountNumber = 'The account number is invalid',
   password = 'The password format is invalid'
 }
 

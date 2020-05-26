@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '@services/user/user.service';
+import { ClientsService } from '@services/clients/clients.service';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
 
@@ -15,10 +18,13 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    public formBuilder: FormBuilder,
-    private storage: Storage,
-    private authenticationService: AuthenticationService
-  ) {
+      private router: Router, 
+      public formBuilder: FormBuilder, 
+      private storage: Storage,
+      private userService: UserService,
+      private clientsService: ClientsService,
+      private authenticationService: AuthenticationService
+    ) {
     this.loginForm = formBuilder.group({
       username: ["", Validators.compose([
         Validators.required,

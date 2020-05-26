@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, from } from 'rxjs';
+import { Observable, throwError, from, forkJoin } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
           return next.handle(request).pipe(
             catchError((err: HttpErrorResponse) => {
-              alert(JSON.stringify(err, null, 4));
+      
               if (err.status === 401) {
                 this.router.navigateByUrl('/login');
               }

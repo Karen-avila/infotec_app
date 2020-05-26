@@ -9,77 +9,18 @@
 
 <ion-content>
 
-  <ion-card>
-    
-      <ion-card-content>
-
-        <div style="width: 190px; height: 190px; margin: 0.7rem auto; border: rgb(199, 198, 198) solid 1px; padding: 10px;">
-          <ion-img style="color: gray;" src="./assets/icon/social-media.svg"></ion-img>
-        </div>
-
-        <p style="text-align: center;">
-          Tómate una selfie*
-        </p>
-
-        <ion-fab horizontal="end" edge>
-          <ion-fab-button color="secondary" size="medium">
-            <ion-icon src="./assets/icon/interface.svg"></ion-icon>
-            <ion-ripple-effect></ion-ripple-effect>
-          </ion-fab-button>
-        </ion-fab>
-
-
-        <br>
-        <form [formGroup]="registerForm" (ngSubmit)="register()">
-          <ion-list>
-            <ion-item>
-              <ion-label position="floating">{{ 'registration.accountnumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="number" formControlName="accountNumber" clearInput></ion-input>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
-
-            <ion-item>
-              <ion-label position="floating">{{ 'login.username' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="username" clearInput></ion-input>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.username"></app-input-error>
-
-            <ion-item>
-              <ion-label position="floating">{{ 'registration.email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="email" formControlName="email" clearInput></ion-input>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.email"></app-input-error>
-
-            <ion-item>
-              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="number" formControlName="phoneNumber" clearInput></ion-input>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
-
-            <ion-item style="margin-top: 15px;">
-              <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>
-              <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
-              <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
-            </ion-item>  
-            <app-input-error [control]="registerForm.controls.password"></app-input-error>
-
-            <ion-item style="margin-top: 15px;">
-                <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
-                <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
-                <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.confirmPassword"></app-input-error>
-
-          </ion-list>
-          <br>
-          <div class="ion-padding">
-            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
-            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
-          </div>
-        </form>
-      </ion-card-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="tab1">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Generales</ion-label>
+      </ion-tab-button>
   
-    </ion-card>
-  
-  </ion-content>
-  
+      <ion-tab-button tab="tab2">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Completar</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
+

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonSlides, ModalController, AlertController } from '@ionic/angular';
+import { IonSlides, ModalController, AlertController, MenuController } from '@ionic/angular';
 import { MovementsPage } from './components/movements/movements.page';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -43,6 +43,7 @@ export class DashboardPage implements OnInit {
     private androidPermissions: AndroidPermissions,
     private router: Router,
     private alertController: AlertController,
+    private menuCtrl: MenuController,
     private clientsService: ClientsService,
     private storage: Storage
   ) {
@@ -52,6 +53,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     console.log('entre a dashboard.ts');
+    this.menuCtrl.enable(true);
   }
 
   protected checkPermissions() {
@@ -93,12 +95,12 @@ export class DashboardPage implements OnInit {
       console.log('Barcode data', barcodeData);
       payload = JSON.stringify(barcodeData);
     }).catch(err => {
-      console.log('Error', err);
-      payload = JSON.stringify({ error: "No se pudo leer correctamente el código" });
-      this.presentAlert();
-
-    }).finally(() => {
-      // this.router.navigate(['pay-codi', payload ]);
+        console.log('Error', err);
+        payload = JSON.stringify({error: "No se pudo leer correctamente el código"});
+        // this.presentAlert();
+        
+    }).finally( () => {
+      this.router.navigate(['pay-codi', payload ]);
     });
 
   }

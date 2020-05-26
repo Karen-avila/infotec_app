@@ -20,6 +20,11 @@ import { environment } from '../environments/environment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { AES256 } from '@ionic-native/aes-256/ngx';
 import { MenuModule } from '@components/menu/menu.module';
 
@@ -55,6 +60,11 @@ export function createTranslateLoader(http: HttpClient) {
     AndroidPermissions,
     SplashScreen,
     AppVersion,
+    CallNumber,
+    Geolocation,
+    SocialSharing,
+    Camera,
+    File,
     Sim,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

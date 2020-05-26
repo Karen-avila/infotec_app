@@ -51,7 +51,7 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button>
+        <ion-tab-button (click)="callToOffice()">
           <ion-icon src="./assets/icon/phone-outline.svg"></ion-icon>
           <ion-label translate="Call now"></ion-label>
         </ion-tab-button>
@@ -61,7 +61,7 @@
           <ion-label translate="Leave an email"></ion-label>
         </ion-tab-button>
     
-        <ion-tab-button>
+        <ion-tab-button routerLink="/help/offices">
           <ion-icon src="./assets/icon/pin-outline.svg"></ion-icon>
           <ion-label translate="Find locations"></ion-label>
         </ion-tab-button>
