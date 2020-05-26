@@ -1,10 +1,8 @@
 <ion-content>
   <ion-grid>
-
-    <div style="width: 85%; margin: auto; margin-top: 5rem;">
-
-      <ion-img style="margin-bottom: 3rem;" src="./assets/MifosX_logo.png"></ion-img>
-
+    <app-svg></app-svg>
+  <ion-img class="profile-photo" src="/assets/Leona.png"></ion-img>
+    <div class="container"> 
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>
           <ion-icon name="person-outline" slot="start"></ion-icon>
@@ -21,23 +19,20 @@
             </ng-template>
         </ion-item>  
         <app-input-error [control]="loginForm.controls.password"></app-input-error>
-
-        <br><br><br>
         <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">{{ 'login.signin' | translate }}</ion-button>    
       </form>
-
       <ion-row>
         <ion-col align-self-center class="text-center">
           <ion-button [routerLink]="['/registration']" routerDirection="forward" expand="block" fill="clear">{{ 'login.register' | translate }}</ion-button>
         </ion-col>
       </ion-row>
-
+      <a style="text-decoration: none;" [routerLink]="['/forgot-password']" class="small-text">{{ 'login.forgot-password' | translate }}?</a>
     </div>
   </ion-grid>
 </ion-content>
 
 <ion-footer class="ion-no-border">
   <ion-toolbar style="text-align: center;">
-    <a style="text-decoration: none;" [routerLink]="['/forgot-password']" class="small-text">{{ 'login.forgot-password' | translate }}?</a>
+    <app-footer></app-footer>
   </ion-toolbar>
 </ion-footer>

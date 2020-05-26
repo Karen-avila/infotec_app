@@ -1,0 +1,66 @@
+/* cambios varios */
+:root {
+    app-about-us{
+        ion-header {
+                height: 123px;
+            ion-menu-button{
+                ion-icon {
+                    .icon-inner {
+                        color: white;
+                    }
+                }
+            }
+            ion-title {
+                // border-radius: 0 0 220% 220%;
+                // padding-bottom: 50px;
+                // background: linear-gradient(90deg, rgba(0,24,20,1) 8%, rgba(39,93,81,1) 50%);
+                text-align: center;
+                color: white;
+                font-weight: 600;
+            }
+            ion-toolbar{
+                --background: linear-gradient(180deg, rgba(5,26,23,1) 0%, rgb(26, 68, 59) 100%);
+            }
+        }
+        ion-footer {
+            height: 38px;
+        }
+    }
+}
+.header-md:after{
+    background-image: none;
+}
+.header-ios ion-toolbar:last-of-type {
+     --border-width: 0px;
+}
+// ion-toolbar {
+//     --background: url('assets/images/myimage.jpg') no-repeat fixed center; 
+// }
+
+// ion-header ion-toolbar {
+//     --background: url('assets/icon/toolbar.svg') no-repeat center / cover;
+// }
+
+@media(max-width:450px) {
+    :root {
+        app-about-us{
+
+            ion-header {
+                height: 140px;
+            }
+        }
+    }
+}
+
+@media(max-width:350px) {
+    :root {
+        app-about-us{
+            ion-footer{
+                height: 34px;
+            }
+            ion-header {
+                height: 140px;
+            }
+        }
+    }
+}
