@@ -81,7 +81,8 @@
     "Do you want to pay with CoDi?": "Desea pagar con CoDi?",
     "Do you want to postpone payment with CoDi?": "Desea posponer el pago con CoDi?",
     "Recover": "Recuperar",
-    "Confirm pin": "Confirmar pin",
+    "Confirm pin": "Confirmar PIN",
+    "Ingresar pin": "Ingresar PIN",
     "About us": "Nosotros",
     "All rights reserved": "Derechos reservados",
     "Privacy policies": "Políticas de privacidad",
@@ -110,5 +111,9 @@
     "Middle name": "Apellido paterno",
     "Last name": "Apellido materno",
     "Account number": "Número de cuenta",
-    "The account number is invalid": "El número de cuenta no es valido"
+    "The account number is invalid": "El número de cuenta no es valido",
+    "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
+    "No movements": "No hay movimientos",
+    "Transfer made": "Transferencia realizada",
+    "Transfer received": "Transferencia recibida"
 }

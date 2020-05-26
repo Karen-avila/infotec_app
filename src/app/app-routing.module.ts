@@ -22,7 +22,6 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [AuthGuard],
     loadChildren: () => import('@pages/home/home.module').then( m => m.HomePageModule)
   },
   {
@@ -80,9 +79,11 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'logout',
+    loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   }
-
-
 ];
 
 @NgModule({

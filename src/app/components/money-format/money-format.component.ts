@@ -16,9 +16,9 @@ export class MoneyFormatComponent implements OnInit {
 
   ngOnInit() {
     let amount = this.currencyPipe.transform(this.amount);
-    const len = amount.length;
-    this.decimals = amount.substring(len - 2, len);
-    this.amount = amount.substring(0, len - 2);
+    const len = amount ? amount.length : 0;
+    this.decimals = amount ? amount.substring(len - 2, len) : '00';
+    this.amount = amount ? amount.substring(0, len - 2) : '0';
   }
 
 }

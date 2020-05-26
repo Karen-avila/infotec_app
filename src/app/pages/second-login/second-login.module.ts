@@ -9,6 +9,8 @@ import { SecondLoginPageRoutingModule } from './second-login-routing.module';
 import { SecondLoginPage } from './second-login.page';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SvgModule } from '@components/svg/svg.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
     SecondLoginPageRoutingModule,
     ReactiveFormsModule,
     InputErrorModule,
-    TranslateModule
+    TranslateModule,
+    SvgModule,
+    FooterModule
   ],
   declarations: [SecondLoginPage]
 })

@@ -7,18 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { ChangeEmailPageRoutingModule } from './change-email-routing.module';
 
 import { ChangeEmailPage } from './change-email.page';
-import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChangeEmailPageRoutingModule,
     ReactiveFormsModule,
     TranslateModule,
-    InputErrorModule
+    InputErrorModule,
+    ChangeEmailPageRoutingModule
   ],
   declarations: [ChangeEmailPage]
 })

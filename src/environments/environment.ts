@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: '/api/v1/self'
+  baseUrl: '/api/v1/self',
+  commonUrl: '/api/v1'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

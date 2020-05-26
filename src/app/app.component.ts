@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { HelpersService } from '@services/helpers/helpers.service';
-import { Router } from '@angular/router';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@services/user/authentication.service';
+import { Storage } from '@ionic/storage';
+import { ClientsService } from '@services/clients/clients.service';
 
 @Component({
   selector: 'app-root',
@@ -62,8 +65,10 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private titleService: Title,
     private helpersService: HelpersService,
+    private socialSharing: SocialSharing,
     private router: Router,
-    private socialSharing: SocialSharing
+    private storage: Storage,
+    private authenticationService: AuthenticationService
   ) {
     this.initializeApp();
   }
@@ -73,11 +78,25 @@ export class AppComponent implements OnInit {
     console.log(navigator.language);
 
     this.translate.setDefaultLang(navigator.language.substring(0, 2));
-    this.translate.get('title').subscribe((res: string) => this.titleService.setTitle(res) );
+    this.translate.get('title').subscribe((res: string) => this.titleService.setTitle(res));
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();
     });
+
+    //this.router.navigate(['/dashboard']);
+
+    this.storage.get('user-hash')
+      .then(response => {
+        if (response) {
+          this.router.navigate(['/second-login', 'login']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   public share(): void {
@@ -97,6 +116,11 @@ export class AppComponent implements OnInit {
   } 
 
   ngOnInit() {
-
   }
+
+  public isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
+  }
+
+
 }
