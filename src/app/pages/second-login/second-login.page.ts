@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
@@ -8,7 +8,7 @@ var CryptoJS = require("crypto-js");
 @Component({
   selector: 'app-second-login',
   templateUrl: './second-login.page.html',
-  styleUrls: ['./second-login.page.scss'],
+  styleUrls: ['./second-login.page.scss']
 })
 export class SecondLoginPage implements OnInit {
 

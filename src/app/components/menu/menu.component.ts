@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { AuthenticationService } from '@services/user/authentication.service';
 import { ClientsService } from '@services/clients/clients.service';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 

@@ -12,7 +12,9 @@
 <ion-content>
   <!-- List of Text Items -->
 
-  <ion-label *ngIf="!movements || movements.length==0 ">  <h3>No hay movimientos</h3> </ion-label>
+  <ion-label *ngIf="!movements || movements.length==0 ">
+    <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
+  </ion-label>
   <ion-list>
     <ion-item *ngFor="let movimiento of movements">
       <ion-avatar slot="start">
@@ -21,7 +23,7 @@
           src="assets/icon/logout.svg"></ion-icon>
       </ion-avatar>
       <ion-label>
-        <h3>Transferencia {{movimiento.type.id===1 ? 'Realizada' : 'Recibida'}}</h3>
+        <h3> {{movimiento.type.id===1 ? 'Transfer made' : 'Transfer received' | translate}}</h3>
         <h5 style="font-size: x-small; color: grey;">{{movimiento.type.id===1 ? 'Realizó' : 'Recibió'}} una
           transferencia por {{movimiento.currency.displaySymbol}}{{movimiento.amount| number : '1.2-2'}}</h5>
       </ion-label>

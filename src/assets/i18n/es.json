@@ -95,5 +95,8 @@
     "New password": "Nueva contraseña",
     "Confirm password": "Confirmar contraseña",
     "Current password": "Contraseña actual",
-    "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial"
+    "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
+    "No movements": "No hay movimientos",
+    "Transfer made": "Transferencia realizada",
+    "Transfer received": "Transferencia recibida"
 }

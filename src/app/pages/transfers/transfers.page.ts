@@ -117,9 +117,8 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
-    //this.getBeneficiariesTPT();
     this.getAccounts();
-    this.resolveALL();
+    //this.resolveALL();
   }
 
   public resolveALL() {

@@ -41,6 +41,8 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
     });
 
+    //this.router.navigate(['/dashboard']);
+
     this.storage.get('user-hash')
       .then(response => {
         if (response) {
