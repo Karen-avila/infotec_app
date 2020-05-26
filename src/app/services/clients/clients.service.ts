@@ -37,15 +37,12 @@ export class ClientsService {
   //#region beneficiaries externos
   // aca tenemos los metodos para manejar un beneficiario externo guardado en DATATABLE
   public getBeneficiarie(): Observable<any> {
-    return this.httpClient.get(`${ENDPOINTS.beneficiary}`, {
-      params: { tenantIdentifier: 'default' },
-    });
+    return this.httpClient.get(`https://mifos.infotec.mx/fineract-provider/api/v1/datatables/Beneficiaries/1`);
+    //return this.httpClient.get(`${ENDPOINTS.beneficiary}`);
   }
 
   public postBeneficiaries(data: any): Observable<any> {
-    return this.httpClient.post(`${ENDPOINTS.beneficiary}`, data, {
-      params: { tenantIdentifier: 'default' },
-    });
+    return this.httpClient.post(`${ENDPOINTS.beneficiary}`, data);
   }
   //#endregion
 

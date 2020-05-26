@@ -13,9 +13,10 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 export class MenuComponent implements OnInit {
 
   constructor(
-    private authenticationService: AuthenticationService,
     private clientsService: ClientsService
-  ) { }
+  ) {
+    this.getPersonalInfo();
+  }
 
   public selectedIndex = 0;
   public appPages = [
@@ -60,11 +61,6 @@ export class MenuComponent implements OnInit {
   public personalInfo: PersonalInfo;
 
   ngOnInit() {
-    this.getPersonalInfo();
-  }
-
-  public isAuthenticated() {
-    return this.authenticationService.isAuthenticated();
   }
 
   public getPersonalInfo() {
@@ -74,5 +70,4 @@ export class MenuComponent implements OnInit {
         console.log(data);
       });
   }
-
 }

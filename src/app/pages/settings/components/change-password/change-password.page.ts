@@ -22,7 +22,12 @@ export class ChangePasswordPage implements OnInit {
   constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService) {
     this.form = formBuilder.group({
       password: ["", Validators.required],
-      newPassword: ["", Validators.required],
+      newPassword: ["",
+        Validators.compose([
+          Validators.required,
+          CustomValidators.ValidatePassword
+        ])
+      ],
       confirmPassword: ["", Validators.required]
     }, {
       validator: CustomValidators.ValidateMatch('newPassword', 'confirmPassword')
@@ -30,9 +35,11 @@ export class ChangePasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    this.menuCtrl.enable(false);
-    this.menuCtrl.swipeGesture(false);
+    // TODO revisar porque estaba esto, si se descomenta rompe el menu en la pagina de settings cuando volves para atras
+    //  this.menuCtrl.enable(false);
+    //  this.menuCtrl.swipeGesture(false);
   }
+
 
   register() {
     console.log("hacer peticion de registro")

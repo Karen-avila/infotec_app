@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
     private titleService: Title,
     private router: Router,
     private storage: Storage,
+    private authenticationService: AuthenticationService
   ) {
     this.initializeApp();
   }
@@ -54,6 +55,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
   }
 
 
