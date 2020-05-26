@@ -14,6 +14,13 @@ export function ValidateCurp(control: AbstractControl) {
     return null;
 }
 
+export function ValidateAccountNumber(control: AbstractControl) {
+    if (!(/[0-9]{9,9}$/gi.test(control.value)) || (`${control.value}` || '').length !== 9) {
+        return { accountNumber: true };
+    }
+    return null;
+}
+
 export function ValidateEmail(control: AbstractControl) {
     if (!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(control.value))) {
         return { email: true };

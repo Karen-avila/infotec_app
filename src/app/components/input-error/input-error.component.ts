@@ -11,6 +11,7 @@ enum ErrorMessages {
   email = 'The email format is invalid',
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
+  accountNumber = 'The account number is invalid'
 }
 
 @Component({

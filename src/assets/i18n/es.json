@@ -24,7 +24,6 @@
     "registration.name":"Nombre (s)",
     "registration.lastname":"Apellido (s)",
     "registration.phonenumber":"Número de teléfono",
-    "registration.email":"Correo electrónico",
     "registration.confirmpassword":"Confirmar Contraseña",
     "registration.registers":"Registrar",
     "registration.cancel":"Cancelar",
@@ -106,5 +105,10 @@
     "The curp is invalid": "La CURP no es valida",
     "Offices": "Sucursales",
     "Change email": "Cambiar correo",
-    "Email": "Correo"
+    "Email": "Correo",
+    "First name": "Nombre(s)",
+    "Middle name": "Apellido paterno",
+    "Last name": "Apellido materno",
+    "Account number": "Número de cuenta",
+    "The account number is invalid": "El número de cuenta no es valido"
 }

@@ -13,15 +13,37 @@
       <ion-card-content>
 
         <div style="width: 190px; height: 190px; margin: 0.7rem auto; border: rgb(199, 198, 198) solid 1px; padding: 10px;">
-          <ion-img style="color: gray;" src="./assets/icon/social-media.svg"></ion-img>
+          <div style="position: relative; ">
+            <img id="inputImg" [src]="imageUrl || './assets/icon/social-media.svg'">
+            <canvas id="overlay"></canvas>
+          </div>
         </div>
 
-        <p style="text-align: center;">
-          Tómate una selfie*
-        </p>
+        <div [ngSwitch]="facesDetected">
+          <div *ngSwitchCase="0">
+            <p style="text-align: center; color: #DC3545;">
+              No se detecto ningún rostro*
+            </p>
+          </div>
+          <div *ngSwitchCase="1">
+            <p style="text-align: center; color: #28A745;">
+              Se detecto un rostro correctamente*
+            </p>
+          </div>
+          <div *ngSwitchCase="null">
+            <p style="text-align: center;">
+              Tómate una selfie*
+            </p>
+          </div>
+          <div *ngSwitchDefault>
+            <p style="text-align: center; color: rgb(219, 164, 0);">
+              Solo deber salir un rostro en la selfie*
+            </p>
+          </div>
+        </div>
 
         <ion-fab horizontal="end" edge>
-          <ion-fab-button color="secondary" size="medium">
+          <ion-fab-button (click)="takePhoto()" color="secondary" size="medium">
             <ion-icon src="./assets/icon/interface.svg"></ion-icon>
             <ion-ripple-effect></ion-ripple-effect>
           </ion-fab-button>
@@ -30,6 +52,13 @@
         <br><br>
         <form [formGroup]="registerForm" (ngSubmit)="register()">
           <ion-list>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="tel" formControlName="phoneNumber" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
+
             <ion-item>
               <ion-label position="stacked">{{ 'CURP' | translate }}<ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" placeholder="Escribe tu curp ..." formControlName="curp" clearInput></ion-input>
@@ -45,7 +74,7 @@
           </ion-list>
           <br>
           <div class="ion-padding">
-            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
+            <ion-button type="submit" [disabled]="registerForm.invalid || facesDetected !== 1" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
             <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
           </div>
         </form>

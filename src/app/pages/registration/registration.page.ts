@@ -17,6 +17,14 @@ export class RegistrationPage implements OnInit {
   type:string='password';
   reType:string='password';
   registerForm: FormGroup;
+  imageSrc = '/assets/sample.jpg';
+
+  selectFile(event: any) {
+    const file = event.target.files.item(0);
+    const reader = new FileReader();
+    reader.onload = (e: any) => (this.imageSrc = e.target.result);
+    reader.readAsDataURL(file);
+  }
 
   constructor(
       private router:Router, 

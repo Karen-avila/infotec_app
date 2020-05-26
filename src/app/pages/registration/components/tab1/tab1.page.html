@@ -14,29 +14,37 @@
 
         <form [formGroup]="registerForm" (ngSubmit)="register()">
           <ion-list>
-            <ion-item>
-              <ion-label position="floating">{{ 'registration.accountnumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="number" formControlName="accountNumber" clearInput></ion-input>
-            </ion-item>
-            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+            
 
             <ion-item>
-              <ion-label position="floating">{{ 'login.username' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="username" clearInput></ion-input>
+              <ion-label position="floating">{{ 'First name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="firstName" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.username"></app-input-error>
+            <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
 
             <ion-item>
-              <ion-label position="floating">{{ 'registration.email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-label position="floating">{{ 'Middle name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="lastName" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.lastName"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Last name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="surName" clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.surName"></app-input-error>
+
+            <ion-item>
+              <ion-label position="floating">{{ 'Email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="email" formControlName="email" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.email"></app-input-error>
 
             <ion-item>
-              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="number" formControlName="phoneNumber" clearInput></ion-input>
+              <ion-label position="floating">{{ 'Account number' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="tel" formControlName="accountNumber" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
 
             <ion-item style="margin-top: 15px;">
               <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>

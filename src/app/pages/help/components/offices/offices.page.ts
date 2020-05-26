@@ -31,14 +31,14 @@ export class OfficesPage implements OnInit {
     }).catch((error) => {
         this.center = [19.4284706, -99.1276627];
         console.log('Error getting location', error);
-    });
+    }).finally( () => setTimeout(() => this.start(), 200) );
   }
 
-  ionViewDidEnter() {
+  start() {
     
     this.initMap();
 
-    this.officeIcon = this.setMapMarkerSettings('assets/icon/marker-red.svg');
+    this.officeIcon = this.setMapMarkerSettings('assets/icon/icon-bank.png');
 
     this.myPositionIcon = this.setMapMarkerSettings('assets/icon/marker-blue.svg');
 

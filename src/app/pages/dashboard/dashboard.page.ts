@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonSlides, ModalController, AlertController } from '@ionic/angular';
+import { IonSlides, ModalController, AlertController, MenuController } from '@ionic/angular';
 import { MovementsPage } from './components/movements/movements.page';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -36,13 +36,15 @@ export class DashboardPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     private androidPermissions: AndroidPermissions,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private menuCtrl: MenuController
   ) {
     this.checkPermissions();
   }
 
   ngOnInit() {
     console.log('entre a dashboard.ts');
+    this.menuCtrl.enable(true);
   }
 
   protected checkPermissions() {

@@ -23,27 +23,28 @@ export class Tab1Page implements OnInit {
       public menuCtrl: MenuController
     ) { 
     this.registerForm = formBuilder.group({
-      username: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(5)
-      ])],
-      password: ["", Validators.compose([
-        Validators.required, 
-      ])],
+      username: [""],
+      password: ["", [Validators.required, Validators.minLength(8)]],
+      confirmPassword : ["", [Validators.required, Validators.minLength(8)]],
       accountNumber: ["", Validators.compose([
         Validators.required, 
-        Validators.pattern('[0-9]{9,9}$')
-      ])],
-      phoneNumber : ["", Validators.compose([
-        Validators.required, 
-        CustomValidators.ValidatePhoneNumber
-      ])],
-      confirmPassword : ["", Validators.compose([
-        Validators.required, 
+        CustomValidators.ValidateAccountNumber
       ])],
       email: ["", Validators.compose([
         Validators.required, 
         CustomValidators.ValidateEmail
+      ])],
+      firstName: ["", Validators.compose([
+        Validators.required, 
+        Validators.minLength(3)
+      ])],
+      surName: ["", Validators.compose([
+        Validators.required, 
+        Validators.minLength(3)
+      ])],
+      lastName: ["", Validators.compose([
+        Validators.required, 
+        Validators.minLength(3)
       ])]
     }, {
       validator: CustomValidators.ValidateMatch('password', 'confirmPassword')

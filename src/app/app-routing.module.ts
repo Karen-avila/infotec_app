@@ -5,7 +5,7 @@ import { AuthGuard } from '@core/guards/auth/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'second-login',
     loadChildren: () => import('@pages/second-login/second-login.module').then( m => m.SecondLoginPageModule)

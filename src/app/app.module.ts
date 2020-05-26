@@ -23,6 +23,8 @@ import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -58,6 +60,8 @@ export function createTranslateLoader(http: HttpClient) {
     CallNumber,
     Geolocation,
     SocialSharing,
+    Camera,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
