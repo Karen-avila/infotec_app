@@ -8,6 +8,9 @@ import { AboutUsPageRoutingModule } from './about-us-routing.module';
 
 import { AboutUsPage } from './about-us.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { SvgModule } from '@components/svg/svg.module';
+import { FooterModule } from '@components/footer/footer.module';
+
 
 @NgModule({
   imports: [
@@ -15,7 +18,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     AboutUsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    SvgModule,
+    FooterModule
   ],
   declarations: [AboutUsPage]
 })

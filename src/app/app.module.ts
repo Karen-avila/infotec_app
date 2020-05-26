@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { Sim } from '@ionic-native/sim/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -25,6 +25,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { AES256 } from '@ionic-native/aes-256/ngx';
+import { MenuModule } from '@components/menu/menu.module';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -37,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    MenuModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
@@ -62,12 +65,14 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     Camera,
     File,
+    Sim,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    AES256
   ],
   bootstrap: [AppComponent]
 })

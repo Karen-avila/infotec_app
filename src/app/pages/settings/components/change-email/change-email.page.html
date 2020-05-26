@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="secondary" translate>Change email</ion-title>
+    <ion-title color="secondary" translate>Change Email</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,16 +13,15 @@
       
       <ion-card-content>
     
-       <form style="margin-top: 0.5rem;" [formGroup]="form">
+        <form style="margin-top: 0.5rem;" [formGroup]="form"  (ngSubmit)="changeEmail()">
 
           <ion-item style="margin-top: 15px;">
-            <ion-input formControlName="email"  placeholder="{{ 'Email' | translate }}" type="text" clearInput></ion-input>
+            <ion-input formControlName="email"  placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
           </ion-item>  
           <app-input-error [control]="form.controls.email"></app-input-error>
-          
           <br>
           <div class="ion-padding">
-            <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change"></ion-button>    
+            <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change" ></ion-button>    
             <ion-button [routerLink]="['/settings']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
           </div>
         </form>

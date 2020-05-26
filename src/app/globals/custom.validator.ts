@@ -44,3 +44,10 @@ export function ValidateMatch(controlName: string, matchingControlName: string) 
         }
     }
 }
+
+export function ValidatePassword(control: AbstractControl) {
+    if (!(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{10,50})/.test(control.value))) {
+        return { password: true };
+    }
+    return null;
+}

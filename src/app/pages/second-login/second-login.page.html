@@ -1,28 +1,31 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar>
+	<ion-toolbar>
         <ion-buttons *ngIf="type === 'confirm-pin'" slot="start">
             <ion-back-button color="secondary"></ion-back-button>
         </ion-buttons>
+        <app-svg></app-svg>
+        <div *ngIf="type === 'pin'" class="header-title" translate="Set pin to login"></div>
+        <div *ngIf="type === 'confirm-pin'" class="header-title" translate="Confirm pin"></div>
+        <div *ngIf="type === 'login'" class="header-title" translate="Ingresar pin"></div>
+        <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled" 
+            class="header-title" style="color: red;"
+            translate="Pin confirmation is incorrect">
+        </div>
         <!-- <ion-buttons *ngIf="type === 'pin'" slot="end">
             <ion-button  [routerLink]="['/dashboard']" color="primary" translate>
                 Skip
             </ion-button>
         </ion-buttons> -->
-    </ion-toolbar>
+		</ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-grid>
   
       <div style="width: 80%; margin: auto;">
   
-        <ion-img style="margin-bottom: 1.5rem;margin-top: 1rem;" src="./assets/MifosX_logo.png"></ion-img>
+        <!-- <ion-img style="margin-bottom: 1.5rem;margin-top: 1rem;" src="./assets/MifosX_logo.png"></ion-img> -->
 
-        <div *ngIf="type === 'pin'" style="text-align: center;margin: 10px;" translate="Set pin to login"></div>
-        <div *ngIf="type === 'confirm-pin' && limitSelected !== lenSelectedNumbers" style="text-align: center;margin: 10px;" translate="Confirm pin"></div>
-        <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled" 
-            style="text-align: center;margin: 10px;color: red;"
-            translate="Pin confirmation is incorrect">
-        </div>
+
 
         <ion-grid style="text-align: center; width: 70%; margin-bottom: -15px;">
             <ion-row>
@@ -109,15 +112,13 @@
       </div>
     </ion-grid>
   </ion-content>
-  
+
+  <ion-button [routerLink]="['/registration']" routerDirection="forward" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.register' | translate }}</ion-button>
+  <ion-button [routerLink]="['/login']" routerDirection="forward" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.signin' | translate }}</ion-button>
+  <ion-button (click)="goToRoute()" [disabled]="buttonDisabled" style="width: 62%;margin: 3px auto;" expand="block" color="primary" [translate]="buttonText"></ion-button>
+
   <ion-footer class="ion-no-border">
     <ion-toolbar style="text-align: center;">
-        <ion-button (click)="goToRoute()" 
-            [disabled]="buttonDisabled" 
-            style="width: 80%;margin: 15px auto;" 
-            expand="block" 
-            color="primary" 
-            [translate]="buttonText">
-        </ion-button>    
+        <app-footer></app-footer> 
     </ion-toolbar>
   </ion-footer>

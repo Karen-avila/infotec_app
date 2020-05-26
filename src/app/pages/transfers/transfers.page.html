@@ -37,7 +37,7 @@
         <ion-item-sliding *ngFor="let item of savedAccounts; index as index; trackBy: identify">
   
           <ion-item-options side="start">
-            <ion-item-option (click)="onDelete()" color="danger">
+            <ion-item-option (click)="onDelete(item.id)" color="danger">
               <ion-icon style="font-size: 1.5rem; margin: auto 10px;" name="trash-outline"></ion-icon>
             </ion-item-option>
           </ion-item-options>

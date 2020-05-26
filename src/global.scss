@@ -27,3 +27,13 @@
 
 /*Add Font Montserrat*/
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+
+ion-footer {
+    height: 38px;
+}
+@media(max-width:350px) {
+    ion-footer{
+        height: 34px;
+    }
+}

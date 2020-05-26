@@ -9,6 +9,8 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { SvgModule } from '@components/svg/svg.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     LoginPageRoutingModule,
     ReactiveFormsModule,
     TranslateModule,
-    InputErrorModule
+    InputErrorModule,
+    SvgModule,
+    FooterModule
   ],
   declarations: [LoginPage]
 })
