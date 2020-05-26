@@ -19,12 +19,18 @@
                 font-weight: 600;
             }
             ion-toolbar{
-                --background: linear-gradient(180deg, rgba(5,26,23,1) 0%, rgb(26, 68, 59) 100%);
+                --background: cubic-bezier(0.01, 0, 1, 1)-gradient(180deg, rgba(5,26,23,1) 0%, rgb(26, 68, 59) 100%);
             }
         }
-        ion-footer {
-            height: 38px;
-        }
+        ion-content{
+            .about-container{
+                margin: auto; 
+                text-align: center;
+                h4 {
+                    margin-top: 15px;
+                }
+            }
+        }    
     }
 }
 .header-md:after{
@@ -41,26 +47,30 @@
 //     --background: url('assets/icon/toolbar.svg') no-repeat center / cover;
 // }
 
-@media(max-width:450px) {
+@media(min-width:550px) {
     :root {
         app-about-us{
-
-            ion-header {
-                height: 140px;
-            }
+            ion-content{
+                .about-container{
+                    margin: auto; 
+                    text-align: center;
+                    width: 60%;
+                }
+            }    
         }
     }
 }
 
-@media(max-width:350px) {
+@media(min-width:450px) {
     :root {
         app-about-us{
-            ion-footer{
-                height: 34px;
-            }
-            ion-header {
-                height: 140px;
-            }
+            ion-content{
+                .about-container{
+                    margin: auto; 
+                    text-align: center;
+                    width: 70%;
+                }
+            }    
         }
     }
 }

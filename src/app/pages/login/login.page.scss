@@ -1,10 +1,11 @@
 ion-content {
     ion-grid {
         ion-img {
-            padding: 28% 35% 0;
+            padding: 12% 35% 0;
+            position: relative;
         }
         .container{
-            width: 70%; 
+            width: 55%; 
             margin: auto; 
             text-align: center;
         }
@@ -12,9 +13,9 @@ ion-content {
             ion-col{
                 ion-button{
                     background: #696969;
-                    border-radius: 11px;
+                    border-radius: 10px;
                     color: white;
-                    margin: 20px 0 30px
+                    margin: 20px 0 30px;
                 }
             }
         }
@@ -27,7 +28,6 @@ ion-content {
         }
     }
 }
-
 
 ion-item {
     margin-top: 40px;
@@ -42,6 +42,22 @@ ion-col {
     padding: 0;
 }
 
+@media(max-width:450px) {
+    ion-content ion-grid .container {
+        width: 70%;
+        margin: auto;
+        text-align: center;
+    }
+    ion-item {
+        margin-top: 30px;
+    }
+    ion-grid {
+        ion-img {
+            padding: 20% 35% 0 !important;
+        }
+    }
+    
+}
 
 @media(max-width:350px) {
     ion-content ion-grid .container {
