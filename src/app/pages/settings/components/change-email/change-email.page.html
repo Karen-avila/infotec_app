@@ -1,16 +1,7 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button color="secondary"></ion-back-button>
-    </ion-buttons>
-    <ion-title color="secondary" translate>Change Email</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [svg]="true" [backButton]="true" [title]="'Change Email'"  [defaultHref]="'settings'" ></app-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <form style="margin-top: 0.5rem;" [formGroup]="form" (ngSubmit)="changeEmail()">
+      <form style="margin-top: 40%;" [formGroup]="form" (ngSubmit)="changeEmail()">
         <ion-item style="margin-top: 15px;">
           <ion-input formControlName="email" placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
         </ion-item>
@@ -23,6 +14,6 @@
             {{ 'registration.cancel' | translate }}</ion-button>
         </div>
       </form>
-    </ion-card-content>
-  </ion-card>
+   
+ 
 </ion-content>

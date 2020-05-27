@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
   @Input() svg?: boolean;
   @Input() backButton?: boolean;
   @Input() showNotifications?: boolean;
+  @Input() defaultHref?: string;
+
 
   constructor() { }
 
