@@ -32,6 +32,11 @@ ion-footer {
     height: 38px;
 }
 
+ion-toolbar{
+    --padding-end: 0;
+    --padding-start: 0;
+}
+
 @media (max-width: 350px) {
     ion-footer {
         height: 34px;

@@ -1,5 +1,5 @@
 ion-img {
-    padding: 12% 35% 0;
+    padding: 12% 41% 0;
     position: absolute;
 }
 
@@ -23,9 +23,21 @@ ion-header {
         z-index: 110;
     }
 }
+@media (max-width: 656px) {
+    ion-img {
+        padding: 17% 38% 0;
+        position: absolute;
+    }
+}
 
 @media (max-width: 450px) {
     ion-img {
-        padding: 25% 35% 0 !important;
+        padding: 25% 37% 0 !important;
+    }
+}
+
+@media (max-width: 350px) {
+    ion-img {
+        padding: 28% 35% 0 !important;
     }
 }

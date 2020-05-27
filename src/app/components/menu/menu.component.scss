@@ -1,19 +1,10 @@
 app-menu {
-    ion-content {
-        --background: var(--ion-item-background, var(--ion-background-color, #fff));
-        height: 100vh;
-    }
-
     .md {
         ion-content {
             --padding-start: 8px;
             --padding-end: 8px;
             --padding-top: 20px;
             --padding-bottom: 20px;
-        }
-
-        ion-list {
-            padding: 20px 0;
         }
 
         ion-note {
@@ -27,7 +18,6 @@ app-menu {
 
         ion-list {
             &#inbox-list {
-                border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
 
                 ion-list-header {
                     font-size: 22px;
@@ -47,18 +37,11 @@ app-menu {
         ion-item {
             --padding-start: 10px;
             --padding-end: 10px;
-            border-radius: 4px;
-
-            &.selected {
-                --background: rgba(var(--ion-color-primary-rgb), 0.14);
-
-                ion-icon {
-                    color: var(--ion-color-primary);
-                }
-            }
+            --background: #274f51;
+            color: white;
 
             ion-icon {
-                color: #616e7e;
+                color: #ffffff;
             }
 
             ion-label {
@@ -72,9 +55,6 @@ app-menu {
             --padding-bottom: 20px;
         }
 
-        ion-list {
-            padding: 20px 0 0 0;
-        }
 
         ion-note {
             line-height: 24px;
@@ -85,14 +65,16 @@ app-menu {
             --padding-start: 16px;
             --padding-end: 16px;
             --min-height: 50px;
+            --background: #274f51;
+            color: white;
 
             &.selected ion-icon {
-                color: var(--ion-color-primary);
+                color: white;
             }
 
             ion-icon {
                 font-size: 24px;
-                color: #73849a;
+                color: #ffffff;
             }
         }
 
@@ -119,7 +101,22 @@ app-menu {
     }
 
     ion-item.selected {
-        --color: var(--ion-color-primary);
+        --color: white;
+    }
+    ion-toolbar {
+        --background: #274f51;
+    }
+    ion-content {
+        --background: #274f51;
+        height: 100vh;
+    }
+    ion-item {
+        --background: #274f51;
+    }
+
+    .list-md {
+        padding-top: 0px;
+        padding-bottom: 0px;
     }
 
     .color-brown-primary,
