@@ -4,7 +4,7 @@
       <img src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg">
     </ion-avatar>
     <ion-text class="ion-text-capitalize" style="font-size: large;">{{ 'Hello' | translate}}
-      {{ this.userService && this.userService.displayName ? this.userService.displayName.toLowerCase() : this.personalInfo.displayName.toLowerCase() }}
+      {{ this.userService?.displayName ? this.userService?.displayName?.toLowerCase() : this.personalInfo?.displayName?.toLowerCase() }}
     </ion-text>
   </div>
 </ion-toolbar>
