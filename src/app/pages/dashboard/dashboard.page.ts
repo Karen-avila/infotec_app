@@ -8,6 +8,7 @@ import { ClientsService } from '@services/clients/clients.service';
 import { Storage } from '@ionic/storage';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
+import { LoginInfo } from '@globals/interfaces/login-info';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,6 +37,7 @@ export class DashboardPage implements OnInit {
   ];
 
   private personalInfo: PersonalInfo;
+  public loginInfo: LoginInfo;
 
   constructor(
     private modalController: ModalController,
@@ -95,12 +97,12 @@ export class DashboardPage implements OnInit {
       console.log('Barcode data', barcodeData);
       payload = JSON.stringify(barcodeData);
     }).catch(err => {
-        console.log('Error', err);
-        payload = JSON.stringify({error: "No se pudo leer correctamente el código"});
-        // this.presentAlert();
-        
-    }).finally( () => {
-      this.router.navigate(['pay-codi', payload ]);
+      console.log('Error', err);
+      payload = JSON.stringify({ error: "No se pudo leer correctamente el código" });
+      // this.presentAlert();
+
+    }).finally(() => {
+      this.router.navigate(['pay-codi', payload]);
     });
 
   }
@@ -126,7 +128,6 @@ export class DashboardPage implements OnInit {
 
   async presentModal() {
     this.color = 'secondary';
-    console.log('Si esta funcionando');
     const modal = await this.modalController.create({
       component: MovementsPage
     });
@@ -134,11 +135,21 @@ export class DashboardPage implements OnInit {
   }
 
   private initializeApp() {
+
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
+        console.log(data);
         this.personalInfo = data;
+        return this.clientsService.getLoginInfo();
+        //this.getAccounts();
+      })
+      .then((data: LoginInfo) => {
+        this.loginInfo = data;
+        console.log(data);
         this.getAccounts();
       });
+    ;
+
   }
 
   private getAccounts() {
@@ -147,7 +158,6 @@ export class DashboardPage implements OnInit {
         return this.clientsService.getAccounts(clientId).toPromise();
       })
       .then((response: any) => {
-        console.log("what" , response);
         this.accounts = [];
         let data = response.savingsAccounts;
         data.forEach(element => {

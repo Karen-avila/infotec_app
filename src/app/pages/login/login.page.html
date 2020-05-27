@@ -1,7 +1,11 @@
+<ion-header>
+  <app-svg></app-svg>
+</ion-header>
+
 <ion-content>
   <ion-grid>
-    <app-svg></app-svg>
-    <ion-img class="profile-photo" src="/assets/Leona.png"></ion-img>
+    <!-- <app-svg></app-svg> -->
+    <ion-img style="z-index: 105" class="profile-photo" src="/assets/Leona.png"></ion-img>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>

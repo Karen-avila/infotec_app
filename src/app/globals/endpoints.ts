@@ -8,5 +8,5 @@ export const ENDPOINTS = {
     codes: `${environment.commonUrl}/codes/{catalogo}/codevalues`,
     accounts: `${environment.baseUrl}/clients/{clientId}/accounts`,
     changeData: `${environment.baseUrl}/user`,
-  
+    savingsAccountsTransactions: `${environment.baseUrl}/savingsaccounts/{savingAccount}?associations=transactions`,
 }

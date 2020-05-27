@@ -91,7 +91,7 @@ export class ManageAccountPage implements OnInit {
 
     // TODO falta saber cual es el id del banco bienester
     // aca chequeamos que el banco a ingresar sea el bienestar
-    if (this.formGroup.value.accountNo.length() == 11) {
+    if (this.formGroup.value.accountNo.length == 11) {
       // aca metemos un beneficiario TPT a mifos
       let tpt = {
         "locale": "es",
@@ -121,7 +121,7 @@ export class ManageAccountPage implements OnInit {
   }
 
   public saveBeneficiarie() {
-
+    console.log("guardamos beneficiario en datatable");
     let cuenta = {
       "name": this.formGroup.value.owner,
       "accountNumber": this.formGroup.value.accountNo,

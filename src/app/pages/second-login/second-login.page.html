@@ -113,8 +113,8 @@
     </ion-grid>
   </ion-content>
 
-  <ion-button [routerLink]="['/registration']" routerDirection="forward" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.register' | translate }}</ion-button>
-  <ion-button [routerLink]="['/login']" routerDirection="forward" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.signin' | translate }}</ion-button>
+  <ion-button [routerLink]="['/registration']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.register' | translate }}</ion-button>
+  <ion-button [routerLink]="['/login']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.signin' | translate }}</ion-button>
   <ion-button (click)="goToRoute()" [disabled]="buttonDisabled" style="width: 62%;margin: 3px auto;" expand="block" color="primary" [translate]="buttonText"></ion-button>
 
   <ion-footer class="ion-no-border">

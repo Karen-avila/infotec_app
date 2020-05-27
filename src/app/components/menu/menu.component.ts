@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { ClientsService } from '@services/clients/clients.service';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
+import { UserService } from '@services/user/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +13,8 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 export class MenuComponent implements OnInit {
 
   constructor(
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    public userService: UserService
   ) {
     this.getPersonalInfo();
   }
@@ -66,7 +68,6 @@ export class MenuComponent implements OnInit {
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
         this.personalInfo = data;
-        console.log(data);
       });
   }
 }

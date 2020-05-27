@@ -47,8 +47,8 @@ export class ClientsService {
   //#endregion
 
   // este metodo trae los movimientos del usuario
-  public getMovements(clientId: string): Observable<any> {
-    return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}/transactions`);
+  public getMovements(savingAccount: string): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.savingsAccountsTransactions.replace('{savingAccount}', savingAccount)}`);
   }
 
   // traemos los accounts del cliente
@@ -58,6 +58,10 @@ export class ClientsService {
 
   public getPersonalInfo() {
     return this.storage.get('personal-info');
+  }
+
+  public getLoginInfo() {
+    return this.storage.get('login-info');
   }
   
 }

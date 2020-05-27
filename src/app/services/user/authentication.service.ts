@@ -3,14 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
-import { Platform, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ToastController, NavController } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
-
-interface User {
-  username: string;
-  password: string;
-}
+import { UserService } from './user.service';
+import { User } from '@globals/interfaces/user';
+import { LoginInfo } from '@globals/interfaces/login-info';
+import { PersonalInfo } from '@globals/interfaces/personal-info';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +19,10 @@ export class AuthenticationService {
 
   constructor(private httpClient: HttpClient,
     private storage: Storage,
-    private router: Router,
-    private platform: Platform,
     public toastController: ToastController,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private navCtrl: NavController,
+    private userService: UserService
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -36,27 +34,33 @@ export class AuthenticationService {
 
     this.storage.remove('token');
     this.storage.remove('personal-info');
+    this.storage.remove('login-info');
 
     this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
-      .then((login: any) => {
+      .then((login: LoginInfo) => {
+        console.log(login);
         console.log(login.base64EncodedAuthenticationKey);
 
         this.storage.set('token', login.base64EncodedAuthenticationKey)
-        this.storage.set('email', login.email)
+        this.storage.set('login-info', login)
 
         return this.storage.set('token', login.base64EncodedAuthenticationKey)
           .then(() => {
             console.log('<here>');
-            return this.clientsService.getClient(login.clientId).toPromise();
+            return this.clientsService.getClient(login.clientId.toString()).toPromise();
           });
       })
-      .then(client => {
+      .then((client: PersonalInfo) => {
         this.authState.next(true);
         this.storage.set('personal-info', client);
 
-        if (askForPin) this.router.navigate(['/second-login', { type: 'pin', username: user.username, password: user.password }]); //second-login
-        else this.router.navigate(['/dashboard']);
+        this.userService.username = user.username;
+        this.userService.password = user.password;
+        this.userService.displayName = client.displayName;
+
+        if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
+        else this.navCtrl.navigateRoot(['dashboard']);
       })
       .catch(err => {
         console.log(err);
@@ -74,6 +78,9 @@ export class AuthenticationService {
   public logout() {
     this.storage.remove('personal-info')
       .then(() => {
+        return this.storage.remove('login-info')
+      })
+      .then(() => {
         return this.storage.remove('token')
       })
       .then(() => {
@@ -82,14 +89,14 @@ export class AuthenticationService {
       .then(response => {
         this.authState.next(false);
         if (response) {
-          this.router.navigate(['/second-login', 'login']);
+          this.navCtrl.navigateRoot(['/second-login', 'login']);
         } else {
-          this.router.navigate(['/login']);
+          this.navCtrl.navigateRoot(['/login']);
         }
       })
   }
 
   public isAuthenticated() {
-    return this.authState.value;
+    return this.authState.value || true;
   }
 }
