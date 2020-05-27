@@ -1,3 +1,8 @@
+ion-img {
+    padding: 12% 35% 0;
+    position: relative;
+}
+
 ion-content {
     ion-grid {
         ion-img {
@@ -52,6 +57,10 @@ ion-col {
         ion-img {
             padding: 20% 35% 0 !important;
         }
+    }
+
+    ion-img {
+        padding: 20% 35% 0 !important;
     }
     
 }

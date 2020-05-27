@@ -1,0 +1,27 @@
+ion-img {
+    padding: 12% 35% 0;
+    position: absolute;
+}
+
+ion-header {
+    height: 123px;
+
+    ion-title, ion-menu-button {
+        --color: white !important;
+        --ion-color-base: white !important;
+    }
+    ion-toolbar {
+        --background: cubic-bezier(0.01, 0, 1, 1)-gradient(180deg, rgba(5, 26, 23, 1) 0%, rgb(26, 68, 59) 100%);
+    }
+    ion-back-button {
+        display: block;
+        --ion-color-base: white !important;
+    }
+    
+}
+
+@media (max-width: 450px) {
+    ion-img {
+        padding: 20% 35% 0 !important;
+    }
+}

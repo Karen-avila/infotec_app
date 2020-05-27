@@ -1,20 +1,6 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title class="text-white" translate="Settings"></ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [svg]="true" [menu]="true" [title]="'Settings'" [img]="'/assets/icon/settings.svg'"></app-header>
 
 <ion-content fullscreen>
-
-  <div class="secondary">
-    <br>
-    <ion-img src="./assets/icon/settings.svg"></ion-img>
-    <h6 style="text-align: center;color: white; font-weight: bold;" translate="Change settings"></h6>
-    <br>
-  </div>
 
   <br>
   <ion-list>
@@ -39,8 +25,5 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  
+
 </ion-content>
-
-     
-

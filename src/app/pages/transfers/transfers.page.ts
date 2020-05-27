@@ -58,14 +58,16 @@ export class TransfersPage implements OnInit {
   public savedAccountsTPT: SavedAccount[] = [
   ]
   public savedAccounts: SavedAccount[] = [
-    // {
-    //   owner: 'Fernando Jimenez Santiago',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta BBVA Bancomer',
-    //   bankId: 'bbva',
-    //   selected: false,
-    //   color: ''
-    // },
+    {
+      id: 1,
+      owner: "string",
+      accountNo: "string",
+      bankTitle: "string",
+      bankId: "string",
+      productType: "string",
+      color: 'light',
+      selected: true,
+    },
     // {
     //   owner: 'Didier Gomez Oliver',
     //   accountNo: '5546 5454 3223 8922',
@@ -129,33 +131,33 @@ export class TransfersPage implements OnInit {
       //this.clientsService.getBeneficiarie().toPromise(),
     ]
     )
-    .then(res => {
-      console.log(res[0]);
+      .then(res => {
+        console.log(res[0]);
 
-      res[0].forEach(element => {
-        let cuenta: SavedAccount = new SavedAccount();
-        cuenta.id = element.id;
-        //TODO falta poner el bankId correspondiente al de bienestar
-        cuenta.bankId = "1";
-        cuenta.accountNo = element.accountNumber;
-        cuenta.owner = element.clientName;
-        cuenta.productType = element.accountType.id.toString();
-        this.savedAccounts.push(cuenta);
+        res[0].forEach(element => {
+          let cuenta: SavedAccount = new SavedAccount();
+          cuenta.id = element.id;
+          //TODO falta poner el bankId correspondiente al de bienestar
+          cuenta.bankId = "1";
+          cuenta.accountNo = element.accountNumber;
+          cuenta.owner = element.clientName;
+          cuenta.productType = element.accountType.id.toString();
+          this.savedAccounts.push(cuenta);
+        })
+
+        console.log(res[1]);
+        res[1].forEach(element => {
+          let cuenta: SavedAccount = new SavedAccount();
+          cuenta.id = element.id;
+          cuenta.bankId = element.bankId;
+          cuenta.accountNo = element.accountNumber;
+          cuenta.owner = element.clientName;
+          cuenta.productType = element.accountType.id.toString();
+          this.savedAccounts.push(cuenta);
+        })
+
       })
-
-      console.log(res[1]);
-      res[1].forEach(element => {
-        let cuenta: SavedAccount = new SavedAccount();
-        cuenta.id = element.id;
-        cuenta.bankId = element.bankId;
-        cuenta.accountNo = element.accountNumber;
-        cuenta.owner = element.clientName;
-        cuenta.productType = element.accountType.id.toString();
-        this.savedAccounts.push(cuenta);
-      })
-
-    })
-    .catch(err => console.log(err));
+      .catch(err => console.log(err));
   }
 
   get content(): any {

@@ -1,0 +1,13 @@
+<ion-header [ngStyle]="{'margin-bottom': img ? '50px' : '0px' }">
+  <app-svg *ngIf="svg"></app-svg>
+  <ion-img *ngIf="img" style="z-index: 105" class="profile-photo" src="{{img}}"></ion-img>
+  <ion-toolbar *ngIf="menu || backButton">
+    <ion-buttons *ngIf="backButton" slot="start">
+      <ion-back-button color="secondary" icon="chevron-back-outline" defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="menu" slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-title *ngIf="title" color="secondary" translate>{{title | translate}}</ion-title>
+</ion-header>

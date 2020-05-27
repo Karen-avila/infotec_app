@@ -10,6 +10,7 @@ import { AboutUsPage } from './about-us.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { SvgModule } from '@components/svg/svg.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { HeaderModule } from '@components/header/header.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FooterModule } from '@components/footer/footer.module';
     AboutUsPageRoutingModule,
     TranslateModule,
     SvgModule,
-    FooterModule
+    FooterModule,
+    HeaderModule
   ],
   declarations: [AboutUsPage]
 })
