@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
+import { NavController } from '@ionic/angular';
+import { UserService } from '@services/user/user.service';
 
 var CryptoJS = require("crypto-js");
 
@@ -22,20 +24,14 @@ export class SecondLoginPage implements OnInit {
 
   public type: 'pin' | 'confirm-pin' | 'login' = 'pin';
 
-  private username: string;
-  private password: string;
-
   private errorNumberCount: number = 0;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private storage: Storage, private authenticationService: AuthenticationService) { }
+  constructor(private activatedRoute: ActivatedRoute, private navCtrl: NavController, private storage: Storage, private authenticationService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    console.log(this.activatedRoute.snapshot.params);
+    
     const { type } = this.activatedRoute.snapshot.params;
     const { code } = this.activatedRoute.snapshot.queryParams;
-
-    this.username = this.activatedRoute.snapshot.params.username;
-    this.password = this.activatedRoute.snapshot.params.password;
 
     if (type !== 'pin' && type !== 'confirm-pin' && type !== 'login') {
       this.type = 'pin';
@@ -110,12 +106,12 @@ export class SecondLoginPage implements OnInit {
   public goToRoute(): void {
     switch (this.type) {
       case 'pin':
-        this.router.navigate(['/second-login', { type: 'confirm-pin', username: this.username, password: this.password }], { queryParams: { code: this.seletedNumbers.join('') } })
+        this.navCtrl.navigateRoot(['/second-login', { type: 'confirm-pin'}], { queryParams: { code: this.seletedNumbers.join('') } })
         break;
 
       case 'confirm-pin':
         this.encryptPIN();
-        this.router.navigate(['/dashboard']);
+        this.navCtrl.navigateRoot(['/dashboard']);
         break;
 
       case 'login':
@@ -128,7 +124,7 @@ export class SecondLoginPage implements OnInit {
 
     const PIN = this.seletedNumbers.join('');
 
-    let user = { username: this.username, password: this.password };
+    let user = { username: this.userService.username, password: this.userService.password };
     let userString = JSON.stringify(user);
 
     var ciphertext = CryptoJS.AES.encrypt(userString, PIN).toString();
@@ -152,7 +148,7 @@ export class SecondLoginPage implements OnInit {
         // si el usuario pone mal el pin 3 veces, lo mandamos al login y borramos el hash guardado
         if (this.errorNumberCount == 3) {
           this.storage.remove('user-hash');
-          this.router.navigate(['/login']);
+          this.navCtrl.navigateRoot(['/login']);
         }
       });
   }

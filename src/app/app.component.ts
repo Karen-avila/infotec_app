@@ -86,17 +86,17 @@ export class AppComponent implements OnInit {
 
     //this.router.navigate(['/dashboard']);
 
-    this.storage.get('user-hash')
-      .then(response => {
-        if (response) {
-          this.router.navigate(['/second-login', 'login']);
-        } else {
-          this.router.navigate(['/login']);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // this.storage.get('user-hash')
+    //   .then(response => {
+    //     if (response) {
+    //       this.router.navigate(['/second-login', 'login']);
+    //     } else {
+    //       this.router.navigate(['/login']);
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   public share(): void {

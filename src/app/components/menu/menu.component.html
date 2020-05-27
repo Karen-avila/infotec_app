@@ -3,8 +3,8 @@
     <ion-avatar style="width: 75px;height: 75px;margin-bottom: 0.7rem; padding: 2px; background-color: white;">
       <img src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg">
     </ion-avatar>
-    <ion-text class="ion-text-capitalize" style="font-size: large;">Hola
-      {{ !personalInfo?.displayName ? 'Por favor ingrese con su usuario' : personalInfo?.displayName.toLowerCase() }}
+    <ion-text class="ion-text-capitalize" style="font-size: large;">{{ 'Hello' | translate}}
+      {{ this.userService && this.userService.displayName ? this.userService.displayName.toLowerCase() : this.personalInfo.displayName.toLowerCase() }}
     </ion-text>
   </div>
 </ion-toolbar>

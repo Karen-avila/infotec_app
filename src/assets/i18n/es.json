@@ -115,5 +115,7 @@
     "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
     "No movements": "No hay movimientos",
     "Transfer made": "Transferencia realizada",
-    "Transfer received": "Transferencia recibida"
+    "Transfer received": "Transferencia recibida",
+    "Last login": "Último ingreso",
+    "Hello": "Hola"
 }

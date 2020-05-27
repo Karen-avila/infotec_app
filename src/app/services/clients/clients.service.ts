@@ -59,5 +59,9 @@ export class ClientsService {
   public getPersonalInfo() {
     return this.storage.get('personal-info');
   }
+
+  public getLoginInfo() {
+    return this.storage.get('login-info');
+  }
   
 }
