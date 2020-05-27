@@ -128,7 +128,6 @@ export class DashboardPage implements OnInit {
 
   async presentModal() {
     this.color = 'secondary';
-    console.log('Si esta funcionando');
     const modal = await this.modalController.create({
       component: MovementsPage
     });

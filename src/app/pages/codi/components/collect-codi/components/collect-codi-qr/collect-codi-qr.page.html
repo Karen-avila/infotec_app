@@ -19,7 +19,7 @@
   <div style="margin: 2rem">
     <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
     <p> <b><span translate>Concept</span>:</b> <br> {{ concept }} </p> 
-    <p> <b><span translate>Reference</span>:</b> <br> {{ reference || 'Doesn´t apply' | translate }} </p> 
+    <p> <b><span translate>Reference</span>:</b> <br> {{ (reference | translate) || ('Doesn´t apply' | translate) }} </p> 
   </div>
 
   <div style="font-size: 1.7rem; text-align: center;">

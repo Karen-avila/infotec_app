@@ -68,7 +68,6 @@ export class MenuComponent implements OnInit {
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
         this.personalInfo = data;
-        console.log("whattt", data);
       });
   }
 }

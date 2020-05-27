@@ -19,7 +19,7 @@
 
   <br>
 
-  <app-card-account style="margin: auto" [accounts]="accounts"></app-card-account>
+  <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts"></app-card-account>
 
   <ion-tabs>
 
