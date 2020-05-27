@@ -6,7 +6,8 @@ ion-img {
 ion-header {
     height: 123px;
 
-    ion-title, ion-menu-button {
+    ion-title,
+    ion-menu-button {
         --color: white !important;
         --ion-color-base: white !important;
     }
@@ -17,8 +18,9 @@ ion-header {
         display: block;
         --ion-color-base: white !important;
     }
-    .header-md:after {
-        display: none;
+    ion-toolbar:last-of-type {
+        border: none;
+        z-index: 110;
     }
 }
 
