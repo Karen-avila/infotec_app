@@ -29,7 +29,7 @@ export class SecondLoginPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private navCtrl: NavController, private storage: Storage, private authenticationService: AuthenticationService, private userService: UserService) { }
 
   ngOnInit() {
-    
+
     const { type } = this.activatedRoute.snapshot.params;
     const { code } = this.activatedRoute.snapshot.queryParams;
 
@@ -106,7 +106,7 @@ export class SecondLoginPage implements OnInit {
   public goToRoute(): void {
     switch (this.type) {
       case 'pin':
-        this.navCtrl.navigateRoot(['/second-login', { type: 'confirm-pin'}], { queryParams: { code: this.seletedNumbers.join('') } })
+        this.navCtrl.navigateRoot(['/second-login', { type: 'confirm-pin' }], { queryParams: { code: this.seletedNumbers.join('') } })
         break;
 
       case 'confirm-pin':
@@ -118,6 +118,13 @@ export class SecondLoginPage implements OnInit {
         this.decryptUser();
         break;
     }
+  }
+  public headerTitle() {
+    if (this.type === 'login') return 'Enter pin';
+    if (this.type === 'pin') return 'Set pin to login';
+    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'Pin confirmation is incorrect';
+    if (this.type === 'confirm-pin') return 'Confirm pin';
+
   }
 
   private async encryptPIN() {

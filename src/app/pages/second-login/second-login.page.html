@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
     <ion-toolbar>
         <ion-buttons *ngIf="type === 'confirm-pin'" slot="start">
             <ion-back-button color="secondary"></ion-back-button>
@@ -11,7 +11,10 @@
             class="header-title" style="color: red;" translate="Pin confirmation is incorrect">
         </div>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<app-header [svg]="true" [title]="headerTitle()" [backButton]="true"></app-header>
+
 
 <ion-content>
     <ion-grid>

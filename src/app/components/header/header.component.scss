@@ -17,11 +17,13 @@ ion-header {
         display: block;
         --ion-color-base: white !important;
     }
-    
+    .header-md:after {
+        display: none;
+    }
 }
 
 @media (max-width: 450px) {
     ion-img {
-        padding: 20% 35% 0 !important;
+        padding: 25% 35% 0 !important;
     }
 }
