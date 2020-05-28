@@ -5,6 +5,7 @@ ion-img {
 
 ion-header {
     height: 123px;
+    background: url("assets/fondo.svg") no-repeat center / cover;
 
     ion-title,
     ion-menu-button {
@@ -22,6 +23,7 @@ ion-header {
         border: none;
         z-index: 110;
     }
+
 }
 @media (max-width: 656px) {
     ion-img {
