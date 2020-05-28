@@ -19,7 +19,7 @@
 <ion-content>
     <ion-grid>
 
-        <div style="width: 80%; margin: 15px auto;">
+        <div style="width: 80%; margin: 0 auto;">
 
             <ion-grid style="text-align: center; width: 70%; margin-bottom: -15px;">
                 <ion-row>
@@ -115,11 +115,11 @@
     </ion-grid>
 </ion-content>
 
-<ion-button [routerLink]="['/registration']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block"
+<ion-button [routerLink]="['/registration']" routerDirection="root" class="btn-second" expand="block"
     color="medium">{{ 'login.register' | translate }}</ion-button>
-<ion-button [routerLink]="['/login']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block"
+<ion-button [routerLink]="['/login']" routerDirection="root" class="btn-second" expand="block"
     color="medium">{{ 'login.signin' | translate }}</ion-button>
-<ion-button (click)="goToRoute()" [disabled]="buttonDisabled" style="width: 62%;margin: 3px auto;" expand="block"
+<ion-button (click)="goToRoute()" [disabled]="buttonDisabled" class="btn-second" expand="block"
     color="primary" [translate]="buttonText"></ion-button>
 
 <ion-footer class="ion-no-border">

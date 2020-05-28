@@ -41,6 +41,21 @@ ion-toolbar{
     margin-top: 50px;
 }
 
+.container-big{
+    width: 90%;
+    margin: 25px auto;
+}
+
+.container-small{
+    width: 80%;
+    margin: 25px auto;
+}
+
+ion-card {
+    box-shadow: none;
+}
+
+
 @media (max-width: 600px) {
     .container{
         margin-top: 40px;
