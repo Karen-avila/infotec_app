@@ -8,6 +8,8 @@ import { HelpPageRoutingModule } from './help-routing.module';
 
 import { HelpPage } from './help.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     HelpPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [HelpPage]
 })

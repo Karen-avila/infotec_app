@@ -13,6 +13,7 @@ ion-content {
             width: 55%; 
             margin: auto; 
             text-align: center;
+            margin: 50px auto;
         }
         ion-row{
             ion-col{
@@ -47,7 +48,6 @@ ion-col {
 @media(max-width:450px) {
     ion-content ion-grid .container {
         width: 70%;
-        margin: auto;
         text-align: center;
     }
     ion-item {
@@ -68,7 +68,6 @@ ion-col {
 @media(max-width:350px) {
     ion-content ion-grid .container {
         width: 78%;
-        margin: auto;
         text-align: center;
     }
     ion-item {

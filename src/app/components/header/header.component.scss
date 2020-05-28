@@ -1,10 +1,12 @@
 ion-img {
-    padding: 12% 41% 0;
+    padding: 15% 42% 0;
     position: absolute;
 }
 
+
+
 ion-header {
-    height: 123px;
+    height: 130px;
     background: url("assets/fondo.svg") no-repeat center / cover;
 
     ion-title,
@@ -25,21 +27,42 @@ ion-header {
     }
 
 }
+@media (max-width:767px){
+    .svg-correction{
+        background-position-y: bottom;
+    }
+}
 @media (max-width: 656px) {
     ion-img {
-        padding: 17% 38% 0;
+        padding: 15% 38% 0;
         position: absolute;
     }
 }
-
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     ion-img {
-        padding: 25% 37% 0 !important;
+        padding: 16% 39% 0;
+        position: absolute;
+    }
+}
+@media(max-width:540px) {
+    ion-img {
+        padding: 19% 35% 0;
+        position: absolute;
+    }
+}
+@media(max-width:450px) {
+    ion-img {
+        padding: 21% 34% 0 !important;
+    }
+}
+@media(max-width:400px) {
+    ion-img {
+        padding: 25% 32%  0 !important;
     }
 }
 
-@media (max-width: 350px) {
+@media(max-width:340px) {
     ion-img {
-        padding: 28% 35% 0 !important;
+        padding: 27% 30% 0 !important;
     }
 }

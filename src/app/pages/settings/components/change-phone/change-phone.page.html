@@ -1,11 +1,13 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
     <ion-title color="secondary" translate>Change Phone</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<app-header [svg]="true" [backButton]="true" [title]="'Change Phone'" [defaultHref]="'settings'" [img]="'/assets/header-icons/ajustes.png'"></app-header>
 
 <ion-content>
 
@@ -13,9 +15,10 @@
       
       <ion-card-content>
     
-        <form style="margin-top: 0.5rem;" [formGroup]="form"  (ngSubmit)="changePhone()">
+        <form class="container-small" [formGroup]="form"  (ngSubmit)="changePhone()">
 
           <ion-item style="margin-top: 15px;">
+            <ion-icon style="margin: 0px 15px 0 0px;" name="call-outline"></ion-icon>
             <ion-input formControlName="phone"  placeholder="{{ 'New Phone' | translate }}" clearInput></ion-input>
           </ion-item>  
           <app-input-error [control]="form.controls.phone"></app-input-error>
@@ -30,4 +33,7 @@
     </ion-card>
   
   </ion-content>
+  <ion-footer class="ion-no-border">
+    <app-footer></app-footer>
+  </ion-footer>
   

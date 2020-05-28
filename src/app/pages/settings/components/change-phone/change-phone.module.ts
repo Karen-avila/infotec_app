@@ -9,6 +9,8 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
 
 import { ChangePhonePage } from './change-phone.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     ChangePhonePageRoutingModule,
     InputErrorModule,
-      TranslateModule
+      TranslateModule,
+      HeaderModule,
+      FooterModule
   ],
   declarations: [ChangePhonePage]
 })

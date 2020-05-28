@@ -1,7 +1,7 @@
-<app-header [svg]="true" [backButton]="true" [title]="'Change Email'"  [defaultHref]="'settings'" ></app-header>
+<app-header [svg]="true" [backButton]="true" [title]="'Change Email'"  [defaultHref]="'settings'" [img]="'/assets/header-icons/ajustes.png'"></app-header>
 
 <ion-content>
-      <form style="margin-top: 40%;" [formGroup]="form" (ngSubmit)="changeEmail()">
+      <form class="container-small" [formGroup]="form" (ngSubmit)="changeEmail()">
         <ion-item style="margin-top: 15px;">
           <ion-input formControlName="email" placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
         </ion-item>
@@ -17,3 +17,6 @@
    
  
 </ion-content>
+<ion-footer class="ion-no-border">
+  <app-footer></app-footer>
+</ion-footer>

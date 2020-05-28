@@ -44,30 +44,28 @@
 
         <ion-fab horizontal="end" edge>
           <ion-fab-button (click)="takePhoto()" color="secondary" size="medium">
-            <ion-icon src="./assets/icon/interface.svg"></ion-icon>
+            <ion-icon style="margin: 0;" src="./assets/icon/interface.svg"></ion-icon>
             <ion-ripple-effect></ion-ripple-effect>
           </ion-fab-button>
         </ion-fab>
 
-        <br><br>
         <form [formGroup]="registerForm" (ngSubmit)="register()">
           <ion-list>
 
             <ion-item>
-              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="tel" formControlName="phoneNumber" clearInput></ion-input>
+              <ion-icon name="call-outline"></ion-icon>
+              <ion-input type="tel" placeholder="{{ 'registration.phonenumber' | translate }}" formControlName="phoneNumber" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
 
             <ion-item>
-              <ion-label position="stacked">{{ 'CURP' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" placeholder="Escribe tu curp ..." formControlName="curp" clearInput></ion-input>
+              <ion-icon name="person-circle-outline"></ion-icon>
+              <ion-input type="text" placeholder="{{ 'CURP' | translate }}" placeholder="Escribe tu curp ..." formControlName="curp" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.curp"></app-input-error>
 
             <ion-item>
-              <ion-label position="stacked">{{ 'Birthdate' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="date" formControlName="birthdate" clearInput></ion-input>
+              <ion-input type="date" placeholder="{{ 'Birthdate' | translate }}" formControlName="birthdate" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.birthdate"></app-input-error>
 
