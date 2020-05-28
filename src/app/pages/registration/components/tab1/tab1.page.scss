@@ -1,0 +1,33 @@
+ion-item{
+    margin-top: 15px;
+}
+ion-input{
+    .native-input.sc-ion-input-ios {
+        padding-left: 10px;
+    }
+}
+ion-icon{
+    margin: 0px 15px 0 0px;
+}
+ion-card{
+    box-shadow: none;
+    margin: 0px 20px 20px;
+    .card-content-ios{
+        padding-top: 0px;
+    }
+}
+app-input-error{
+    div{
+        margin: 0 20px;
+    }
+}
+ion-card-content{
+    padding: 5px 20px;
+}
+
+
+@media (min-width: 500px) {
+    ion-card-content{
+        padding: 28px 20px;
+    }
+}

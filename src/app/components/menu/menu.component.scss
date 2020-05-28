@@ -37,7 +37,7 @@ app-menu {
         ion-item {
             --padding-start: 10px;
             --padding-end: 10px;
-            --background: #274f51;
+            --background: #275a4e;
             color: white;
 
             ion-icon {
@@ -65,7 +65,7 @@ app-menu {
             --padding-start: 16px;
             --padding-end: 16px;
             --min-height: 50px;
-            --background: #274f51;
+            --background: #275a4e;
             color: white;
 
             &.selected ion-icon {
@@ -104,14 +104,14 @@ app-menu {
         --color: white;
     }
     ion-toolbar {
-        --background: #274f51;
+        --background: #275a4e;
     }
     ion-content {
-        --background: #274f51;
+        --background: #275a4e;
         height: 100vh;
     }
     ion-item {
-        --background: #274f51;
+        --background: #275a4e;
     }
 
     .list-md {

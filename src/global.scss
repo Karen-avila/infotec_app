@@ -37,6 +37,17 @@ ion-toolbar{
     --padding-start: 0;
 }
 
+.container{
+    margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+    .container{
+        margin-top: 40px;
+    }
+}
+
+
 @media (max-width: 350px) {
     ion-footer {
         height: 34px;

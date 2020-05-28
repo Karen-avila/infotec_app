@@ -2,16 +2,12 @@
     height: 0; 
     z-index: 100;
 }
-@media(max-width:767px) {
-    .svg-correction{
-        transform: scaleY(0.4);
-    }
+
+
+.svg-correction{
+    transform: scaleY(0.5);
 }
-@media(max-width:655px) {
-    .svg-correction{
-        transform: scaleY(0.5);
-    }
-}
+
 @media(max-width:540px) {
     .svg-correction{
         transform: scaleY(0.6);
