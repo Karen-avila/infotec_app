@@ -8,14 +8,14 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header> -->
-<app-header [svg]="true" [dismissButton]="true" [defaultHref]="'dashboard'" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
+<app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
 <ion-content>
   <!-- List of Text Items -->
 
   <ion-label *ngIf="!movements || movements.length==0 ">
     <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
   </ion-label>
-  <ion-list>
+  <ion-list style="width: 90%;margin: auto;">
     <ion-item *ngFor="let item of movements">
       <ion-avatar slot="start">
         <ion-icon

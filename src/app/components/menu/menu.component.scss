@@ -113,6 +113,9 @@ app-menu {
     ion-item {
         --background: #275a4e;
     }
+    ion-list{
+        margin-top: 30px !important;
+    }
 
     .list-md {
         padding-top: 0px;

@@ -13,6 +13,7 @@ ion-header {
     ion-back-button {
         display: block;
         --ion-color-base: white !important;
+        margin: 0 10px;
     }
     ion-toolbar:last-of-type {
         border: none;

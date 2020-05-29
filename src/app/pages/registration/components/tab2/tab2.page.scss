@@ -16,6 +16,7 @@ ion-icon{
     margin: 0px 15px 0 0px;
 }
 ion-card{
+    margin: 0;
     .card-content-ios{
         padding-top: 0px;
     }
@@ -27,4 +28,8 @@ app-input-error{
 }
 ion-card-content{
     padding: 0;
+}
+.container-small {
+    width: 80%;
+    margin: 0px auto;
 }

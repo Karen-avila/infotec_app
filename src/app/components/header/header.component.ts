@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,12 +18,17 @@ export class HeaderComponent implements OnInit {
   @Input() defaultHref?: string;
   @Input() notifications?: string;
   @Input() dismissButton?: string;
-
-  constructor(private modalController: ModalController,) { }
+  @Input() backButtonEnd?: string;
+  
+  constructor(private modalController: ModalController, private router : Router) { }
 
   ngOnInit() {}
 
   public dismissModal() {
     this.modalController.dismiss();
+  }
+
+  public goNotifications(){
+    this.router.navigate(['/notifications']);
   }
 }
