@@ -21,7 +21,10 @@
 
   <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts"></app-card-account>
   <ion-fab horizontal="end" edge>
-      <ion-icon style="margin: 0; font-size: 90px;" src="./assets/icon/configcuenta.svg"></ion-icon>
+    <ion-fab-button style="position: relative;top: -30px;" color="primary" size="medium">
+      <ion-icon name="create-outline"></ion-icon>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-fab-button>
   </ion-fab>
   <ion-tabs>
 

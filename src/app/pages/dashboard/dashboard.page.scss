@@ -148,3 +148,8 @@ ion-tab-bar{
   box-shadow: 5px 8px 22px 5px #757575;
   height: 65px;
 }
+@media(max-width:340px) {
+  .ion-text-center {
+    margin: -2px 0;
+  }
+}
