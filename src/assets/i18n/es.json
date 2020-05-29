@@ -76,13 +76,13 @@
     "Frequently asked questions": "Preguntas frecuentes",
     "Call now": "Llamar",
     "Leave an email": "Enviar correo",
-    "Find locations": "Secursales",
+    "Find locations": "Sucursales",
     "Answer": "Respuesta",
     "Do you want to pay with CoDi?": "Desea pagar con CoDi?",
     "Do you want to postpone payment with CoDi?": "Desea posponer el pago con CoDi?",
     "Recover": "Recuperar",
     "Confirm pin": "Confirmar PIN",
-    "Ingresar pin": "Ingresar PIN",
+    "Enter pin": "Ingresar PIN",
     "About us": "Nosotros",
     "All rights reserved": "Derechos reservados",
     "Privacy policies": "Políticas de privacidad",
@@ -123,5 +123,7 @@
     "Transfer received": "Transferencia recibida",
     "Made a transfer for":"Realizó una transferencia por",
     "Received a transfer for":"Recibió una transferencia por",
-    "Balance": "Saldo"
+    "Balance": "Saldo",
+    "About Us": "Nosotros",
+    "Back": "Atrás"
 }

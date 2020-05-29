@@ -1,11 +1,13 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
     <ion-title color="secondary" translate>Postponed</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<app-header [svg]="true" [backButton]="true" [defaultHref]="'dashboard'" [title]="'Postponed'" [img]="'/assets/header-icons/pospuestos.png'"></app-header>
 
 <ion-content>
   <!-- List of Text Items -->
@@ -38,3 +40,9 @@
     </ion-item>
   </ion-list>
 </ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
+

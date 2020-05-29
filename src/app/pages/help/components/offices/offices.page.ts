@@ -57,6 +57,7 @@ export class OfficesPage implements OnInit {
     this.mensaje('Visitanos en la sucursal más cercana a tí.');
   
   }
+  
  
   showMarkerMenu() {
     this.mensaje("Se ha pulsado click en un marcador puesto.");
@@ -90,17 +91,22 @@ export class OfficesPage implements OnInit {
   // }
   
   initMap() {
-  
+
     this.map = L.map('map', {
       center: this.center,
-      zoom: 13
+      zoom: 13,
+      zoomControl: false
     });
-    
+
     L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; Código 200'
     })
-    .addTo(this.map);
- 
+      .addTo(this.map);
+
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(this.map);
+
   }
  
   async mensaje(texto) {

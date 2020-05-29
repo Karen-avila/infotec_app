@@ -9,6 +9,8 @@ import { ChangeEmailPageRoutingModule } from './change-email-routing.module';
 import { ChangeEmailPage } from './change-email.page';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     TranslateModule,
     InputErrorModule,
-    ChangeEmailPageRoutingModule
+    ChangeEmailPageRoutingModule,
+    HeaderModule,
+    FooterModule,
   ],
   declarations: [ChangeEmailPage]
 })

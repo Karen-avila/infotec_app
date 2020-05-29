@@ -1,5 +1,5 @@
-<ion-header class="ion-no-border">
-	<ion-toolbar>
+<!-- <ion-header class="ion-no-border">
+    <ion-toolbar>
         <ion-buttons *ngIf="type === 'confirm-pin'" slot="start">
             <ion-back-button color="secondary"></ion-back-button>
         </ion-buttons>
@@ -7,118 +7,123 @@
         <div *ngIf="type === 'pin'" class="header-title" translate="Set pin to login"></div>
         <div *ngIf="type === 'confirm-pin'" class="header-title" translate="Confirm pin"></div>
         <div *ngIf="type === 'login'" class="header-title" translate="Ingresar pin"></div>
-        <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled" 
-            class="header-title" style="color: red;"
-            translate="Pin confirmation is incorrect">
+        <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled"
+            class="header-title" style="color: red;" translate="Pin confirmation is incorrect">
         </div>
-        <!-- <ion-buttons *ngIf="type === 'pin'" slot="end">
-            <ion-button  [routerLink]="['/dashboard']" color="primary" translate>
-                Skip
-            </ion-button>
-        </ion-buttons> -->
-		</ion-toolbar>
-</ion-header>
+    </ion-toolbar>
+</ion-header> -->
+
+<app-header [svg]="true" [title]="headerTitle()" [backButton]="true"></app-header>
+
+
 <ion-content>
     <ion-grid>
-  
-      <div style="width: 80%; margin: auto;">
-  
-        <!-- <ion-img style="margin-bottom: 1.5rem;margin-top: 1rem;" src="./assets/MifosX_logo.png"></ion-img> -->
 
+        <div style="width: 80%; margin: 0 auto;">
 
+            <ion-grid style="text-align: center; width: 70%; margin-bottom: -15px;">
+                <ion-row>
+                    <ion-col>
+                        <div *ngIf="show; else elseTemplateOne" style="margin-top: 5px;">{{ seletedNumbers[0] }}</div>
+                        <ng-template #elseTemplateOne>
+                            <div [ngClass]="lenSelectedNumbers >= 1 ? 'point-password' : 'point-password-outline'">
+                            </div>
+                        </ng-template>
+                    </ion-col>
+                    <ion-col>
+                        <div *ngIf="show; else elseTemplateTwo" style="margin-top: 5px;">{{ seletedNumbers[1] }}</div>
+                        <ng-template #elseTemplateTwo>
+                            <div [ngClass]="lenSelectedNumbers >= 2 ? 'point-password' : 'point-password-outline'">
+                            </div>
+                        </ng-template>
+                    </ion-col>
+                    <ion-col>
+                        <div *ngIf="show; else elseTemplateThree" style="margin-top: 5px;">{{ seletedNumbers[2] }}</div>
+                        <ng-template #elseTemplateThree>
+                            <div [ngClass]="lenSelectedNumbers >= 3 ? 'point-password' : 'point-password-outline'">
+                            </div>
+                        </ng-template>
+                    </ion-col>
+                    <ion-col>
+                        <div *ngIf="show; else elseTemplateFour" style="margin-top: 5px;">{{ seletedNumbers[3] }}</div>
+                        <ng-template #elseTemplateFour>
+                            <div [ngClass]="lenSelectedNumbers >= 4 ? 'point-password' : 'point-password-outline'">
+                            </div>
+                        </ng-template>
+                    </ion-col>
+                    <ion-col>
+                        <ion-icon (click)="show = !show" *ngIf="show; else elseTemplate"
+                            style="font-size: 30px; color: grey;" name="eye"></ion-icon>
+                        <ng-template #elseTemplate>
+                            <ion-icon (click)="show = !show" style="font-size: 30px; color: grey;" name="eye-off">
+                            </ion-icon>
+                        </ng-template>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid style="text-align: center;">
+                <ion-row>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(1)">1</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(2)">2</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(3)">3</ion-fab-button>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(4)">4</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(5)">5</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(6)">6</ion-fab-button>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(7)">7</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(8)">8</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(9)">9</ion-fab-button>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="4">
 
-        <ion-grid style="text-align: center; width: 70%; margin-bottom: -15px;">
-            <ion-row>
-                <ion-col>
-                    <div *ngIf="show; else elseTemplateOne" style="margin-top: 5px;">{{ seletedNumbers[0] }}</div>
-                    <ng-template #elseTemplateOne>
-                        <div [ngClass]="lenSelectedNumbers >= 1 ? 'point-password' : 'point-password-outline'"></div>
-                    </ng-template>
-                </ion-col>
-                <ion-col>
-                    <div *ngIf="show; else elseTemplateTwo" style="margin-top: 5px;">{{ seletedNumbers[1] }}</div>
-                    <ng-template #elseTemplateTwo>
-                        <div [ngClass]="lenSelectedNumbers >= 2 ? 'point-password' : 'point-password-outline'"></div>
-                    </ng-template>
-                </ion-col>
-                <ion-col>
-                    <div *ngIf="show; else elseTemplateThree" style="margin-top: 5px;">{{ seletedNumbers[2] }}</div>
-                    <ng-template #elseTemplateThree>
-                        <div [ngClass]="lenSelectedNumbers >= 3 ? 'point-password' : 'point-password-outline'"></div>
-                    </ng-template>
-                </ion-col>
-                <ion-col>
-                    <div *ngIf="show; else elseTemplateFour" style="margin-top: 5px;">{{ seletedNumbers[3] }}</div>
-                    <ng-template #elseTemplateFour>
-                        <div [ngClass]="lenSelectedNumbers >= 4 ? 'point-password' : 'point-password-outline'"></div>
-                    </ng-template>
-                </ion-col>
-                <ion-col>
-                    <ion-icon (click)="show = !show" *ngIf="show; else elseTemplate" style="font-size: 30px; color: grey;" name="eye"></ion-icon>
-                    <ng-template #elseTemplate>
-                        <ion-icon (click)="show = !show" style="font-size: 30px; color: grey;" name="eye-off"></ion-icon>
-                    </ng-template>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <ion-grid style="text-align: center;">
-            <ion-row>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(1)">1</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(2)">2</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(3)">3</ion-fab-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(4)">4</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(5)">5</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(6)">6</ion-fab-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(7)">7</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(8)">8</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(9)">9</ion-fab-button>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="4">
-                    
-                </ion-col>
-                <ion-col size="4">
-                    <ion-fab-button (click)="add(0)">0</ion-fab-button>
-                </ion-col>
-                <ion-col size="4">
-                    <ion-img (click)="delete()" style="width: 45px; height: 45px;margin-top: 7px; margin-left: 10px;" src="./assets/delete-filled.svg"></ion-img>
-                </ion-col>
-            </ion-row>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-fab-button (click)="add(0)">0</ion-fab-button>
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-img (click)="delete()"
+                            style="width: 45px; height: 45px;margin-top: 7px; margin-left: 10px;"
+                            src="./assets/delete-filled.svg"></ion-img>
+                    </ion-col>
+                </ion-row>
 
-        </ion-grid>  
-  
-      </div>
+            </ion-grid>
+
+        </div>
     </ion-grid>
-  </ion-content>
+</ion-content>
 
-  <ion-button [routerLink]="['/registration']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.register' | translate }}</ion-button>
-  <ion-button [routerLink]="['/login']" routerDirection="root" style="width: 62%;margin: 3px auto;" expand="block" color="medium">{{ 'login.signin' | translate }}</ion-button>
-  <ion-button (click)="goToRoute()" [disabled]="buttonDisabled" style="width: 62%;margin: 3px auto;" expand="block" color="primary" [translate]="buttonText"></ion-button>
+<ion-button [routerLink]="['/registration']" routerDirection="root" class="btn-second" expand="block"
+    color="medium">{{ 'login.register' | translate }}</ion-button>
+<ion-button [routerLink]="['/login']" routerDirection="root" class="btn-second" expand="block"
+    color="medium">{{ 'login.signin' | translate }}</ion-button>
+<ion-button (click)="goToRoute()" [disabled]="buttonDisabled" class="btn-second" expand="block"
+    color="primary" [translate]="buttonText"></ion-button>
 
-  <ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border">
     <ion-toolbar style="text-align: center;">
-        <app-footer></app-footer> 
+        <app-footer></app-footer>
     </ion-toolbar>
-  </ion-footer>
+</ion-footer>

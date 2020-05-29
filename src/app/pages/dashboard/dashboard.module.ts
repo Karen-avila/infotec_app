@@ -12,6 +12,7 @@ import { CardAccountModule } from '@components/card-account/card-account.module'
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MovementsPageModule,
     CardAccountModule,
     NgxQRCodeModule,
-    TranslateModule
+    TranslateModule,
+    HeaderModule
   ],
   declarations: [DashboardPage],
   providers: [BarcodeScanner]

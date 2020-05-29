@@ -24,7 +24,7 @@ export class CardAccountComponent implements OnInit {
   @Input() settings: ISettings = {
     accountSize: 'x-large',
     balanceSize: 'xx-large',
-    cardWidth: '86%',
+    cardWidth: '83%',
     spaceBetween: 1,
     orientation: 'vertical'
   };

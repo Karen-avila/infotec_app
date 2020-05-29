@@ -9,6 +9,8 @@ import { ChangePasswordPageRoutingModule } from './change-password-routing.modul
 import { ChangePasswordPage } from './change-password.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { FooterModule } from '@components/footer/footer.module';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     ChangePasswordPageRoutingModule,
     ReactiveFormsModule,
     TranslateModule,
-    InputErrorModule
+    InputErrorModule,
+    FooterModule,
+    HeaderModule
   ],
   declarations: [ChangePasswordPage]
 })

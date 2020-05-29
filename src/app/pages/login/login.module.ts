@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { SvgModule } from '@components/svg/svg.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { FooterModule } from '@components/footer/footer.module';
     TranslateModule,
     InputErrorModule,
     SvgModule,
-    FooterModule
+    FooterModule,
+    HeaderModule
   ],
   declarations: [LoginPage]
 })
