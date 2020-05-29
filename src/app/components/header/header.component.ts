@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-header',
@@ -14,10 +15,14 @@ export class HeaderComponent implements OnInit {
   @Input() backButton?: boolean;
   @Input() showNotifications?: boolean;
   @Input() defaultHref?: string;
+  @Input() notifications?: string;
+  @Input() dismissButton?: string;
 
-
-  constructor() { }
+  constructor(private modalController: ModalController,) { }
 
   ngOnInit() {}
 
+  public dismissModal() {
+    this.modalController.dismiss();
+  }
 }

@@ -1,4 +1,4 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar>
     <ion-title color="secondary">Movimientos</ion-title>
     <ion-buttons slot="end">
@@ -7,8 +7,8 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
+</ion-header> -->
+<app-header [svg]="true" [dismissButton]="true" [defaultHref]="'dashboard'" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
 <ion-content>
   <!-- List of Text Items -->
 
@@ -42,3 +42,10 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
+

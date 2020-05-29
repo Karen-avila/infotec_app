@@ -55,6 +55,31 @@ ion-card {
     box-shadow: none;
 }
 
+ion-input {
+    font-size: 13px !important;
+}
+
+ion-icon{
+    margin: 0px 15px 0 0px;
+    font-size: 16px;
+}
+
+.alert-wrapper{
+    background: linear-gradient(180deg, rgba(254,254,254,1) 0%, rgba(220,202,160,1) 100%) !important;
+}
+
+.alert-title {
+    color: #285d4d !important;
+    text-align: center;
+}
+
+.alert-button-inner, .alert-input, .alert-title  {
+    font-weight: 600 !important;
+    
+}
+.alert-input  {
+    border-bottom: 1px solid #c6c6c6 !important;
+}
 
 @media (max-width: 600px) {
     .container{

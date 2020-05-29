@@ -12,9 +12,9 @@
     
       <ion-card-content>
 
-        <div style="width: 190px; height: 190px; margin: 0.7rem auto; border: rgb(199, 198, 198) solid 1px; padding: 10px;">
-          <div style="position: relative; ">
-            <img id="inputImg" [src]="imageUrl || './assets/icon/social-media.svg'">
+        <div style="width: 45%; margin: 0 auto;">
+          <div style="position: relative;text-align: center; ">
+            <img id="img-user" src="/assets/header-icons/registro.png">
             <canvas id="overlay"></canvas>
           </div>
         </div>
@@ -43,13 +43,13 @@
         </div>
 
         <ion-fab horizontal="end" edge>
-          <ion-fab-button (click)="takePhoto()" color="secondary" size="medium">
-            <ion-icon style="margin: 0;" src="./assets/icon/interface.svg"></ion-icon>
+          <ion-fab-button style="position: relative;top: -30px;" (click)="takePhoto()" color="primary" size="medium">
+            <ion-icon style="margin: 0; font-size: 26px;" src="./assets/icon/interface.svg"></ion-icon>
             <ion-ripple-effect></ion-ripple-effect>
           </ion-fab-button>
         </ion-fab>
 
-        <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <form class="container-small" [formGroup]="registerForm" (ngSubmit)="register()">
           <ion-list>
 
             <ion-item>
@@ -65,15 +65,15 @@
             <app-input-error [control]="registerForm.controls.curp"></app-input-error>
 
             <ion-item>
+              <ion-icon name="calendar-outline"></ion-icon>
               <ion-input type="date" placeholder="{{ 'Birthdate' | translate }}" formControlName="birthdate" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.birthdate"></app-input-error>
 
           </ion-list>
-          <br>
           <div class="ion-padding">
             <ion-button type="submit" [disabled]="registerForm.invalid || facesDetected !== 1" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
-            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
+            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
           </div>
         </form>
       </ion-card-content>

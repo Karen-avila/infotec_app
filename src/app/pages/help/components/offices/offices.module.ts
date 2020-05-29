@@ -8,6 +8,7 @@ import { OfficesPageRoutingModule } from './offices-routing.module';
 
 import { OfficesPage } from './offices.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     OfficesPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    HeaderModule
   ],
   declarations: [OfficesPage]
 })

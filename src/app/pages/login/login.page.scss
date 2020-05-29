@@ -1,8 +1,23 @@
+// app-login{
+//     app-header{
+//         ion-header{
+//             ion-img{
+//                 padding: 23% 30% 0 !important;
+//             }   
+//         }
+//     }
+// }
 ion-img {
     padding: 12% 35% 0;
     position: relative;
 }
-
+ion-icon {
+    margin: 0px 15px 0 0px;
+    font-size: 22px;
+}
+ion-input {
+    font-size: 15.5px !important;
+}
 ion-content {
     ion-grid {
         ion-img {
@@ -64,7 +79,6 @@ ion-col {
     }
     
 }
-
 @media(max-width:350px) {
     ion-content ion-grid .container {
         width: 78%;

@@ -9,8 +9,14 @@
 
 <app-header [svg]="true" [menu]="true" [title]="'Help'" [defaultHref]="'home'" [img]="'/assets/header-icons/ayuda.png'"></app-header>
 
-<ion-content fullscreen>
 
+
+<ion-content fullscreen>
+  <div style="text-align: center; font-size: 16px; font-weight: 700; color: #193931;">
+    <p style="text-transform: uppercase;">
+      {{ 'Frequently asked questions' | translate }}
+    </p>
+  </div>
   <ion-list class="container-big">
     <ion-item routerLink="answer">
       <ion-label>
@@ -41,7 +47,7 @@
   
 </ion-content>
 
-  <ion-toolbar>
+  <ion-toolbar class="shadow">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button (click)="callToOffice()">
@@ -61,9 +67,6 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
-<ion-footer class="ion-no-border">
-  <app-footer></app-footer>
-</ion-footer>
    
      
 
