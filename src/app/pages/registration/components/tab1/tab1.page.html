@@ -16,36 +16,37 @@
           <ion-list>
             
             <ion-item>
-              <ion-label position="floating">{{ 'First name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="firstName" clearInput></ion-input>
+              <ion-icon name="person-outline"></ion-icon>
+              <ion-input type="text" placeholder="{{ 'First name' | translate }}" formControlName="firstName" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
 
             <ion-item>
-              <ion-label position="floating">{{ 'Middle name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="lastName" clearInput></ion-input>
+              <ion-icon name="person-outline"></ion-icon>
+              <ion-input type="text" placeholder="{{ 'Middle name' | translate }}" formControlName="lastName" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.lastName"></app-input-error>
 
-            <ion-item>
-              <ion-label position="floating">{{ 'Last name' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="surName" clearInput></ion-input>
+            <!-- <ion-item>
+              <ion-icon name="person-outline"></ion-icon>
+              <ion-input type="text" placeholder="{{ 'Last name' | translate }}" formControlName="surName" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.surName"></app-input-error>
+            <app-input-error [control]="registerForm.controls.surName"></app-input-error> -->
 
             <ion-item>
-              <ion-label position="floating">{{ 'Email' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="email" formControlName="email" clearInput></ion-input>
+              <ion-icon name="mail-outline"></ion-icon>
+              <ion-input type="email" placeholder="{{ 'Email' | translate }}" formControlName="email" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.email"></app-input-error>
 
-            <ion-item>
-              <ion-label position="floating">{{ 'Account number' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="tel" formControlName="accountNumber" clearInput></ion-input>
+            <!-- <ion-item>
+              <ion-icon name="document-outline"></ion-icon>
+              <ion-input type="tel" placeholder="{{ 'Account number' | translate }}" formControlName="accountNumber" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error> -->
 
             <ion-item style="margin-top: 15px;">
+              <ion-icon name="lock-closed-outline"></ion-icon>
               <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>
               <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
               <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
@@ -53,6 +54,7 @@
             <app-input-error [control]="registerForm.controls.password"></app-input-error>
 
             <ion-item style="margin-top: 15px;">
+              <ion-icon name="lock-closed-outline"></ion-icon>
                 <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
                 <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
                 <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
@@ -60,10 +62,14 @@
             <app-input-error [control]="registerForm.controls.confirmPassword"></app-input-error>
 
           </ion-list>
-          <br>
           <div class="ion-padding">
+<<<<<<< HEAD
             <ion-button type="submit" [disabled]="false" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
             <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
+=======
+            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
+            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
+>>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
           </div>
         </form>
       </ion-card-content>

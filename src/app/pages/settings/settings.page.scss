@@ -1,11 +1,8 @@
-.secondary {
-    background-color: var( --ion-color-secondary);
-}
-
 .text-white {
     color: white;
 }
 
+<<<<<<< HEAD
 ion-img {
     width: 3.5rem;
     height: 3.5rem;
@@ -15,3 +12,9 @@ ion-img {
 ion-footer {
     height: initial;
 }
+=======
+ion-toolbar:last-of-type {
+    border: none;
+    z-index: 110;
+}
+>>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471

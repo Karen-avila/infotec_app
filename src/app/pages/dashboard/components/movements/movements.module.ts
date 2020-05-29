@@ -8,6 +8,8 @@ import { MovementsPageRoutingModule } from './movements-routing.module';
 
 import { MovementsPage } from './movements.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     MovementsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [MovementsPage],
   entryComponents: [MovementsPage]

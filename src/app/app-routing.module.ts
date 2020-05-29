@@ -83,7 +83,11 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
+  },  {
+    path: 'plan-social',
+    loadChildren: () => import('./pages/plan-social/plan-social.module').then( m => m.PlanSocialPageModule)
   }
+
 ];
 
 @NgModule({

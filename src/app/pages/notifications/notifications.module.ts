@@ -8,6 +8,8 @@ import { NotificationsPageRoutingModule } from './notifications-routing.module';
 
 import { NotificationsPage } from './notifications.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     NotificationsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [NotificationsPage]
 })

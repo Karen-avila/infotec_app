@@ -1,11 +1,7 @@
-<ion-header>
-  <app-svg></app-svg>
-</ion-header>
+<app-header [svg]="true" [img]="'/assets/header-icons/leona.png'"></app-header>
 
 <ion-content>
   <ion-grid>
-    <!-- <app-svg></app-svg> -->
-    <ion-img style="z-index: 105" class="profile-photo" src="/assets/Leona.png"></ion-img>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>
@@ -34,7 +30,7 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      <a style="text-decoration: none;" [routerLink]="['/forgot-password']"
+      <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
         class="small-text">{{ 'login.forgot-password' | translate }}</a>
     </div>
   </ion-grid>

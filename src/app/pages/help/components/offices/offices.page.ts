@@ -69,6 +69,14 @@ export class OfficesPage implements OnInit {
       .subscribe( (resp: any) => this.mensaje(resp) );
   
   }
+<<<<<<< HEAD
+=======
+  
+ 
+  showMarkerMenu() {
+    this.mensaje("Se ha pulsado click en un marcador puesto.");
+  }
+>>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
 
   setMapMarkerSettings(iconUrl: string): any {
     return L.icon({
@@ -88,17 +96,22 @@ export class OfficesPage implements OnInit {
   }
   
   initMap() {
-  
+
     this.map = L.map('map', {
       center: this.center,
-      zoom: 13
+      zoom: 13,
+      zoomControl: false
     });
-    
+
     L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; Código 200'
     })
-    .addTo(this.map);
- 
+      .addTo(this.map);
+
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(this.map);
+
   }
  
   async mensaje(texto) {

@@ -65,6 +65,10 @@
     "core-js": "^2.5.4",
     "crypto-js": "^4.0.0",
     "es6-promise-plugin": "^4.2.2",
+<<<<<<< HEAD
+=======
+    "ionic": "^5.4.16",
+>>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
     "leaflet": "^1.6.0",
     "ngx-qrcode2": "0.0.9",
     "phonegap-plugin-barcodescanner": "^8.1.0",

@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.page.html',
   styleUrls: ['./about-us.page.scss'],
-  encapsulation: ViewEncapsulation.None
 })
 export class AboutUsPage implements OnInit {
 

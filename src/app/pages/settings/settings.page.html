@@ -1,46 +1,46 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title class="text-white" translate="Settings"></ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [svg]="true" [menu]="true" [title]="'Settings'" [img]="'/assets/header-icons/ajustes.png'"></app-header>
 
 <ion-content fullscreen>
 
-  <div class="secondary">
-    <br>
-    <ion-img src="./assets/icon/settings.svg"></ion-img>
-    <h6 style="text-align: center;color: white; font-weight: bold;" translate="Change settings"></h6>
-    <br>
-  </div>
 
-  <br>
-  <ion-list>
-    <ion-item routerLink="change-password">
+  <ion-list class="container-big">
+    <ion-item routerLink="change-password" routerDirection="root">
+      <ion-icon style="margin: 0px 15px 0 0px;" name="lock-closed-outline"></ion-icon>
       <ion-label>
         <h4>Cambiar contraseña</h4>
       </ion-label>
     </ion-item>
+<<<<<<< HEAD
     <!-- <ion-item routerLink="/login/second-login">
       <ion-label>
         <h4>Cambiar pin</h4>
       </ion-label>
     </ion-item> -->
     <ion-item button routerLink="change-phone">
+=======
+    <ion-item routerLink="/login/second-login" routerDirection="root">
+      <ion-icon style="margin: 0px 15px 0 0px;" name="apps-outline"></ion-icon>
+      <ion-label>
+        <h4>Cambiar pin</h4>
+      </ion-label>
+    </ion-item>
+    <ion-item button routerLink="change-phone" routerDirection="root">
+      <ion-icon style="margin: 0px 15px 0 0px;" name="call-outline"></ion-icon>
+>>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
       <ion-label>
         <h4>Cambiar número de teléfono</h4>
       </ion-label>
     </ion-item>
-    <ion-item button routerLink="change-email">
+    <ion-item button routerLink="change-email" routerDirection="root">
+      <ion-icon style="margin: 0px 15px 0 0px;" name="mail-outline"></ion-icon>
       <ion-label>
         <h4>Cambiar correo</h4>
       </ion-label>
     </ion-item>
   </ion-list>
-  
+
 </ion-content>
 
-     
-
+<ion-footer class="ion-no-border">
+  <app-footer></app-footer>
+</ion-footer>

@@ -10,6 +10,8 @@ import { TransfersPage } from './transfers.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { CardAccountModule } from '@components/card-account/card-account.module';
 import { ManageAccountPageModule } from './components/manage-account/manage-account.module';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { ManageAccountPageModule } from './components/manage-account/manage-acco
     TranfersPageRoutingModule,
     CardAccountModule,
     ReactiveFormsModule,
-    ManageAccountPageModule
+    ManageAccountPageModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [TransfersPage]
 })

@@ -1,23 +1,23 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-menu-button class="text-white"></ion-menu-button>
     </ion-buttons>
     <ion-title class="text-white" translate="Help"></ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
+<app-header [svg]="true" [menu]="true" [title]="'Help'" [defaultHref]="'home'" [img]="'/assets/header-icons/ayuda.png'"></app-header>
+
+
 
 <ion-content fullscreen>
-
-  <div class="secondary">
-    <br>
-    <ion-img src="./assets/icon/question.svg"></ion-img>
-    <h6 style="text-align: center;color: white; font-weight: bold;" translate="Frequently asked questions"></h6>
-    <br>
+  <div style="text-align: center; font-size: 16px; font-weight: 700; color: #193931; margin: 0 0 30px 0;">
+    <p style="text-transform: uppercase;">
+      {{ 'Frequently asked questions' | translate }}
+    </p>
   </div>
-
-  <br>
-  <ion-list>
+  <ion-list class="container-big">
     <ion-item routerLink="answer">
       <ion-label>
         <h4>¿Como solicitar una nueva cuenta de crédito?</h4>
@@ -47,8 +47,7 @@
   
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
+  <ion-toolbar class="shadow">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
         <ion-tab-button (click)="callToOffice()">
@@ -68,7 +67,6 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
-</ion-footer>
    
      
 

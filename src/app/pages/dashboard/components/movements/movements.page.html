@@ -1,4 +1,4 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar>
     <ion-title color="secondary">Movimientos</ion-title>
     <ion-buttons slot="end">
@@ -7,15 +7,15 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
+</ion-header> -->
+<app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
 <ion-content>
   <!-- List of Text Items -->
 
   <ion-label *ngIf="!movements || movements.length==0 ">
     <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
   </ion-label>
-  <ion-list>
+  <ion-list style="width: 90%;margin: auto;">
     <ion-item *ngFor="let item of movements">
       <ion-avatar slot="start">
         <ion-icon
@@ -42,3 +42,10 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
+
