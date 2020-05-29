@@ -64,7 +64,7 @@ export class MenuComponent implements OnInit {
 
   public labels = ['V.0.0.1'];
   public personalInfo: PersonalInfo;
-  public avatarUrl: string = 'https://ionicframework.com/docs/demos/api/avatar/avatar.svg';
+  public avatarUrl: string = '/assets/header-icons/leona.png';
 
   ngOnInit() {
     const img = localStorage.getItem('image');

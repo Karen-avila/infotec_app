@@ -69,14 +69,6 @@ export class OfficesPage implements OnInit {
       .subscribe( (resp: any) => this.mensaje(resp) );
   
   }
-<<<<<<< HEAD
-=======
-  
- 
-  showMarkerMenu() {
-    this.mensaje("Se ha pulsado click en un marcador puesto.");
-  }
->>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
 
   setMapMarkerSettings(iconUrl: string): any {
     return L.icon({

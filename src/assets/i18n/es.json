@@ -99,13 +99,13 @@
     "Change pin": "Cambiar pin",
     "Current pin": "Pin actual",
     "New pin": "Nuevo pin",
-    "Change phone": "Cambiar teléfono",
-    "Phone number": "Número de teléfono",
+    "Change Phone": "Cambiar teléfono",
+    "Phone Number": "Número de teléfono",
     "Next": "Siguiente",
     "Birthdate": "Fecha de nacimiento",
     "The curp is invalid": "La CURP no es valida",
     "Offices": "Sucursales",
-    "Change email": "Cambiar correo",
+    "Change Email": "Cambiar correo",
     "Email": "Correo",
     "First name": "Nombre(s)",
     "Middle name": "Apellido paterno",
@@ -124,11 +124,8 @@
     "Made a transfer for":"Realizó una transferencia por",
     "Received a transfer for":"Recibió una transferencia por",
     "Balance": "Saldo",
-<<<<<<< HEAD
     "registration.email": "Correo electrónico",
-    "Visit us at the office closest to you.": "Visítanos en la sucursal más cercana a tí."
-=======
+    "Visit us at the office closest to you.": "Visítanos en la sucursal más cercana a tí.",
     "About Us": "Nosotros",
     "Back": "Atrás"
->>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
 }

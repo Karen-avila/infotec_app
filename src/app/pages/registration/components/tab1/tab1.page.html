@@ -27,11 +27,11 @@
             </ion-item>
             <app-input-error [control]="registerForm.controls.lastName"></app-input-error>
 
-            <!-- <ion-item>
+            <ion-item>
               <ion-icon name="person-outline"></ion-icon>
               <ion-input type="text" placeholder="{{ 'Last name' | translate }}" formControlName="surName" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.surName"></app-input-error> -->
+            <app-input-error [control]="registerForm.controls.surName"></app-input-error> 
 
             <ion-item>
               <ion-icon name="mail-outline"></ion-icon>
@@ -39,11 +39,11 @@
             </ion-item>
             <app-input-error [control]="registerForm.controls.email"></app-input-error>
 
-            <!-- <ion-item>
+            <ion-item>
               <ion-icon name="document-outline"></ion-icon>
               <ion-input type="tel" placeholder="{{ 'Account number' | translate }}" formControlName="accountNumber" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error> -->
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
 
             <ion-item style="margin-top: 15px;">
               <ion-icon name="lock-closed-outline"></ion-icon>
@@ -63,13 +63,8 @@
 
           </ion-list>
           <div class="ion-padding">
-<<<<<<< HEAD
-            <ion-button type="submit" [disabled]="false" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
-            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" fill="clear">{{ 'registration.cancel' | translate }}</ion-button>
-=======
             <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
             <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
->>>>>>> 81a216ea908d7e7bc91a11534d5543f8deb46471
           </div>
         </form>
       </ion-card-content>
