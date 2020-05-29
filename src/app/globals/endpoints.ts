@@ -9,4 +9,6 @@ export const ENDPOINTS = {
     accounts: `${environment.baseUrl}/clients/{clientId}/accounts`,
     changeData: `${environment.baseUrl}/user`,
     savingsAccountsTransactions: `${environment.baseUrl}/savingsaccounts/{savingAccount}?associations=transactions`,
+    registration: `${environment.baseUrl}/registration`,
+    office: `${environment.baseUrl}/office`,
 }

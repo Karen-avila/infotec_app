@@ -21,12 +21,12 @@
 
         <div [ngSwitch]="facesDetected">
           <div *ngSwitchCase="0">
-            <p style="text-align: center; color: #DC3545;">
+            <p style="text-align: center; color: #EB445A;">
               No se detecto ningún rostro*
             </p>
           </div>
           <div *ngSwitchCase="1">
-            <p style="text-align: center; color: #28A745;">
+            <p style="text-align: center; color: #285D4D;">
               Se detecto un rostro correctamente*
             </p>
           </div>
@@ -54,10 +54,10 @@
           <ion-list>
 
             <ion-item>
-              <ion-label position="floating">{{ 'registration.phonenumber' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="tel" formControlName="phoneNumber" clearInput></ion-input>
+              <ion-label position="floating">{{ 'Phone number' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="tel" formControlName="mobileNumber" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
+            <app-input-error [control]="registerForm.controls.mobileNumber"></app-input-error>
 
             <ion-item>
               <ion-label position="stacked">{{ 'CURP' | translate }}<ion-text color="danger">*</ion-text></ion-label>
@@ -67,9 +67,9 @@
 
             <ion-item>
               <ion-label position="stacked">{{ 'Birthdate' | translate }}<ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="date" formControlName="birthdate" clearInput></ion-input>
+              <ion-input type="date" formControlName="dateOfBirth" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.birthdate"></app-input-error>
+            <app-input-error [control]="registerForm.controls.dateOfBirth"></app-input-error>
 
           </ion-list>
           <br>

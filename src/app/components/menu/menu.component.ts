@@ -3,6 +3,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClientsService } from '@services/clients/clients.service';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { UserService } from '@services/user/user.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-menu',
@@ -14,7 +16,9 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private clientsService: ClientsService,
-    public userService: UserService
+    public userService: UserService,
+    private socialSharing: SocialSharing,
+    private storage: Storage
   ) {
     this.getPersonalInfo();
   }
@@ -48,7 +52,7 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Compartir',
-      url: '/folder/Compartir',
+      funtion: this.share.bind(this),
       icon: 'share-social-outline'
     },
     {
@@ -60,8 +64,18 @@ export class MenuComponent implements OnInit {
 
   public labels = ['V.0.0.1'];
   public personalInfo: PersonalInfo;
+  public avatarUrl: string = 'https://ionicframework.com/docs/demos/api/avatar/avatar.svg';
 
   ngOnInit() {
+    const img = localStorage.getItem('image');
+    if (img) {
+      this.avatarUrl = img;
+    }
+  }
+
+  public share(index: number): void {
+    this.selectedIndex = index;
+    this.socialSharing.share('message', 'subject', null, 'https://www.gob.mx/bancodelbienestar');
   }
 
   public getPersonalInfo() {

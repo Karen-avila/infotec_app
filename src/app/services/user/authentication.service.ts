@@ -9,6 +9,8 @@ import { UserService } from './user.service';
 import { User } from '@globals/interfaces/user';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +19,19 @@ export class AuthenticationService {
 
   authState = new BehaviorSubject(false);
 
+  idleState = 'Not started.';
+  timedOut = false;
+  lastPing?: Date = null;
+  title = 'angular-idle-timeout';
+
   constructor(private httpClient: HttpClient,
     private storage: Storage,
     public toastController: ToastController,
     private clientsService: ClientsService,
     private navCtrl: NavController,
-    private userService: UserService
+    private userService: UserService,
+    private idle: Idle, 
+    private keepalive: Keepalive
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -94,6 +103,19 @@ export class AuthenticationService {
           this.navCtrl.navigateRoot(['/login']);
         }
       })
+  }
+
+  public startIdleTimer() {
+    
+     this.idle.setIdle(5);
+     this.idle.setTimeout(180);
+     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+ 
+     this.idle.onIdleEnd.subscribe(() => this.idle.watch());
+     this.idle.onTimeout.subscribe(() => this.logout());
+
+     this.idle.watch();
+ 
   }
 
   public isAuthenticated() {

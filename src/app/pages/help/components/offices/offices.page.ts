@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import L from "leaflet";
 import { ToastController } from '@ionic/angular';
+import { OfficeService } from '@services/office/office.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,11 +17,13 @@ export class OfficesPage implements OnInit {
   center: L.PointTuple;
   officeIcon: any;
   myPositionIcon: any;
-  myPosition: any;
+  myPosition: {lat:number, lng:number};
   
   constructor(
       private toastCtrl: ToastController,
-      private geolocation: Geolocation
+      private geolocation: Geolocation,
+      private office: OfficeService,
+      private translate: TranslateService
     ) {
   }
 
@@ -28,11 +32,20 @@ export class OfficesPage implements OnInit {
       console.log(resp);
       this.center = [resp.coords.latitude, resp.coords.longitude];
       this.myPosition = {lat: resp.coords.latitude, lng: resp.coords.longitude};
-    }).catch((error) => {
+    }).catch( () => {
         this.center = [19.4284706, -99.1276627];
-        console.log('Error getting location', error);
     }).finally( () => setTimeout(() => this.start(), 200) );
   }
+
+  getNearOffices() {
+    this.office.postNearOffices(this.myPosition.lat, this.myPosition.lng).toPromise().then( (offices: any[]) => {
+      
+      for (const key in offices) {
+        this.setMapMarker(offices[key].address.latitude, offices[key].address.longitude, this.officeIcon);
+      }
+      
+    } );
+  } 
 
   start() {
     
@@ -42,11 +55,9 @@ export class OfficesPage implements OnInit {
 
     this.myPositionIcon = this.setMapMarkerSettings('assets/icon/marker-blue.svg');
 
-    // this.map.on('click', (e) => { this.onMapClick(e) });
-
-    this.setMapMarker(16.75383713516979, -93.11639160471047, this.officeIcon);
-
-    this.setMapMarker(16.746818104879836, -93.07713625937892, this.officeIcon);
+    if (this.myPosition) {
+      this.getNearOffices();
+    }
 
     if (!this.myPosition) {
       return;
@@ -54,12 +65,9 @@ export class OfficesPage implements OnInit {
 
     this.setMapMarker(this.myPosition.lat, this.myPosition.lng, this.myPositionIcon);
 
-    this.mensaje('Visitanos en la sucursal más cercana a tí.');
+    this.translate.get('Visit us at the office closest to you.')
+      .subscribe( (resp: any) => this.mensaje(resp) );
   
-  }
- 
-  showMarkerMenu() {
-    this.mensaje("Se ha pulsado click en un marcador puesto.");
   }
 
   setMapMarkerSettings(iconUrl: string): any {
@@ -78,16 +86,6 @@ export class OfficesPage implements OnInit {
     return L.marker({lat, lng}, { icon })
         .addTo(this.map);
   }
-  
-  // onMapClick(e) {
-  //   console.log(e.latlng);
-  //   let tempMarker = L.marker(e.latlng, { icon: this.officeIcon })
-  //   .on('click', this.showMarkerMenu, this)  // Al hacer click, ejecutamos this.showMarkerMenu y le pasamos el contexto (this)
-  //   .addTo(this.map);
-    
-  //   this.mensaje("Pulsada la coordenada: " + e.latlng);
-  
-  // }
   
   initMap() {
   

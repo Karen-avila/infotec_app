@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
@@ -62,6 +62,25 @@ export class ClientsService {
 
   public getLoginInfo() {
     return this.storage.get('login-info');
+  }
+  
+  public postRegistration(data: any) {
+    return this.httpClient.post(`${ENDPOINTS.registration}`, data);
+  }
+
+  public postConfirmRegistration(data: any) {
+    return this.httpClient.post(`${ENDPOINTS.registration}/user`, data);
+  }
+
+  public postRegistrationSelfie(clientId: string, file: File) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    };
+    
+    return this.httpClient.post(`${ENDPOINTS.clients}/${clientId}/images`, {file}, httpOptions);
   }
   
 }

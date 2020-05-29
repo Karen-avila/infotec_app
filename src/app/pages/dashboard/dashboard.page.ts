@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +48,8 @@ export class DashboardPage implements OnInit {
     private alertController: AlertController,
     private menuCtrl: MenuController,
     private clientsService: ClientsService,
-    private storage: Storage
+    private storage: Storage,
+    private authentication: AuthenticationService
   ) {
     this.checkPermissions();
     this.initializeApp();
@@ -56,6 +58,7 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     console.log('entre a dashboard.ts');
     this.menuCtrl.enable(true);
+    this.authentication.startIdleTimer();
   }
 
   protected checkPermissions() {

@@ -49,4 +49,33 @@ export class HelpersService {
     })
     
   }
+
+  public async showNoInternet() {
+    const alert = await this.alertController.create({
+      cssClass: 'no-internet-class',
+      backdropDismiss: false,
+      buttons: ['Aceptar']
+    }).then( (data) => {
+      console.log(data);
+
+      const wrapper: any = document.querySelector('.alert-wrapper');
+
+      wrapper.innerHTML = '';
+
+      wrapper.style.borderRadius = '20px';
+      wrapper.style.position = 'relative';
+
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
+        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%">CERRAR</ion-button> 
+      `);
+
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss() );
+
+      return data;
+      
+    } );
+
+    await alert.present();
+  }
 }
