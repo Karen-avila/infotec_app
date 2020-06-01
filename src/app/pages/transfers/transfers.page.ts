@@ -12,17 +12,60 @@ import { Storage } from '@ionic/storage';
 import { BeneficiarieTPT } from '@globals/interfaces/beneficiarie-tpt';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
+import { UserService } from '@services/user/user.service';
+import { LoginInfo } from '@globals/interfaces/login-info';
 
-export class SavedAccount {
+export class AccountType {
   id: number;
-  owner: string;
-  accountNo: string;
-  bankTitle: string;
-  bankId: string;
-  productType: string;
-  beneficiarieClientId?: number;
+  code: string;
+  value: string;
+}
+
+export class BeneficiareTPT {
+  id: number;
+  name: string;
+  officeName: string;
+  clientName: string;
+  accountType: AccountType;
+  accountNumber: string;
+  transferLimit: number;
   color: '' | 'light';
   selected: boolean;
+
+  bankId: string = "1";
+  officeId: number;
+  clientId: number;
+  accountId: number;
+}
+
+// export class SavedAccount {
+//   id: number;
+//   name: string;
+//   accountNo: string;
+//   officeName: string;
+//   clientName: string;
+//   productType: string;
+//   color: '' | 'light';
+//   selected: boolean;
+// }
+
+export class accountTransfer {
+  fromOfficeId: number;
+  fromClientId: number;
+  fromAccountType: number;
+  fromAccountId: number;
+
+  toOfficeId: number;
+  toClientId: number;
+  toAccountType: number;
+  toAccountId: number;
+
+  dateFormat: string = "dd MMMM yyyy";
+  locale: string = "es-mx";
+  transferDate: string = "01 Agosto 2011";
+
+  transferAmount: number;
+  transferDescription: string;
 }
 
 @Component({
@@ -41,57 +84,11 @@ export class TransfersPage implements OnInit {
   };
 
   public accounts: CardAccount[] = [
-    // {
-    //   account: '0009878554',
-    //   balance: '8650.25',
-    //   clientName: 'Leona Vicario Fernández',
-    //   cardNumber: ''
-    // },
-    // {
-    //   account: '0003893021',
-    //   balance: '12400.97',
-    //   clientName: 'Leona Vicario Fernández',
-    //   cardNumber: ''
-    // }
   ];
 
-  public savedAccountsTPT: SavedAccount[] = [
+  public savedAccountsTPT: BeneficiareTPT[] = [
   ]
-  public savedAccounts: SavedAccount[] = [
-    {
-      id: 1,
-      owner: "string",
-      accountNo: "string",
-      bankTitle: "string",
-      bankId: "string",
-      productType: "string",
-      color: 'light',
-      selected: true,
-    },
-    // {
-    //   owner: 'Didier Gomez Oliver',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta HSBC',
-    //   bankId: 'hsbc',
-    //   selected: false,
-    //   color: ''
-    // },
-    // {
-    //   owner: 'Eduardo Moreno Palacios',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta Banorte',
-    //   bankId: 'banorte',
-    //   selected: false,
-    //   color: ''
-    // },
-    // {
-    //   owner: 'Edgar Arturo Dominguez Narvaez',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta Santander',
-    //   bankId: 'santander',
-    //   selected: false,
-    //   color: ''
-    // }
+  public savedAccountsEXT: BeneficiareTPT[] = [
   ];
 
   public transferForm: FormGroup;
@@ -99,6 +96,9 @@ export class TransfersPage implements OnInit {
   public isAccountSelected = false;
 
   public personalInfo: PersonalInfo;
+  private loginInfo: LoginInfo;
+
+  private accountSelected: BeneficiareTPT;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -107,54 +107,59 @@ export class TransfersPage implements OnInit {
     public helpersService: HelpersService,
     public translate: TranslateService,
     public router: Router,
-    private http: HttpClient,
     private clientsService: ClientsService,
-    private storage: Storage
+    private storage: Storage,
+    private userService: UserService
   ) {
     this.transferForm = formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      transferAmount: ['', Validators.required],
+      transferDescription: ['', Validators.required],
+      reference: ['', Validators.required]
     });
     this.initializeApp();
   }
 
   ngOnInit() {
     this.getAccounts();
-    //this.resolveALL();
+    this.resolveALL();
   }
 
-  public resolveALL() {
+  
+  private initializeApp() {
+    this.clientsService.getPersonalInfo()
+      .then((data: PersonalInfo) => {
+        this.personalInfo = data;
+        console.log("personal-info", data);
+        return this.clientsService.getLoginInfo();
+      })
+      .then((data: LoginInfo) => {
+        this.loginInfo = data;
+        console.log(data);
+        this.getAccounts();
+      });
+  }
+
+  private resolveALL() {
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
-      //TODO cambiar para que traiga de get beneficiaries cuando este el self service que consulta a datatable
+      //TODO cambiar para que traiga beneficiares ext
       this.clientsService.getBeneficiariesTPT().toPromise()
-      //this.clientsService.getBeneficiarie().toPromise(),
     ]
     )
       .then(res => {
-        console.log(res[0]);
+        console.log(res);
 
-        res[0].forEach(element => {
-          let cuenta: SavedAccount = new SavedAccount();
-          cuenta.id = element.id;
-          //TODO falta poner el bankId correspondiente al de bienestar
-          cuenta.bankId = "1";
-          cuenta.accountNo = element.accountNumber;
-          cuenta.owner = element.clientName;
-          cuenta.productType = element.accountType.id.toString();
-          this.savedAccounts.push(cuenta);
-        })
-
-        console.log(res[1]);
-        res[1].forEach(element => {
-          let cuenta: SavedAccount = new SavedAccount();
-          cuenta.id = element.id;
-          cuenta.bankId = element.bankId;
-          cuenta.accountNo = element.accountNumber;
-          cuenta.owner = element.clientName;
-          cuenta.productType = element.accountType.id.toString();
-          this.savedAccounts.push(cuenta);
-        })
+        this.savedAccountsTPT = res[0];
+        this.userService.beneficiaries = res[0];
+        // res[1].forEach(element => {
+        //   let cuenta: SavedAccount = new SavedAccount();
+        //   cuenta.id = element.id;
+        //   cuenta.bankId = element.bankId;
+        //   cuenta.accountNo = element.accountNumber;
+        //   cuenta.owner = element.clientName;
+        //   cuenta.productType = element.accountType.id.toString();
+        //   this.savedAccounts.push(cuenta);
+        // })
 
       })
       .catch(err => console.log(err));
@@ -164,8 +169,8 @@ export class TransfersPage implements OnInit {
     return document.querySelector('#content') as any;
   }
 
-  identify(index: number, item: SavedAccount) {
-    return item.accountNo;
+  identify(index: number, item: BeneficiareTPT) {
+    return item.accountNumber;
   }
 
   public onEdit() {
@@ -184,7 +189,7 @@ export class TransfersPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(() => {
-        this.getBeneficiariesTPT();
+        this.resolveALL();
       });
       return await modal.present();
     } else {
@@ -199,11 +204,11 @@ export class TransfersPage implements OnInit {
               component: ManageAccountPage,
               componentProps: {
                 'type': 'Update',
-                ...this.savedAccounts[index]
+                ...this.savedAccountsTPT[index]
               }
             });
             modal.onDidDismiss().then(() => {
-              this.getBeneficiariesTPT();
+              this.resolveALL();
             });
             return await modal.present();
           });
@@ -234,69 +239,50 @@ export class TransfersPage implements OnInit {
     await alert.present();
   }
 
-  public selectAccount(index: number, item: SavedAccount) {
+  public selectAccount(index: number, item: BeneficiareTPT) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccounts.find((account: SavedAccount) => account.selected);
+    const prevSelected = this.savedAccountsTPT.find((account: BeneficiareTPT) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
     }
     item.selected = true;
     item.color = 'light';
+    this.accountSelected = item;
     this.isAccountSelected = true;
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
   public makeTransfer(): void {
+    console.log("Transfering...");
+    const form = { ...this.transferForm.value };
 
-  }
+    let transfer = new accountTransfer();
 
-  private getBeneficiariesTPT(): void {
-    console.log("trae beneficiarios");
-    this.clientsService.getBeneficiariesTPT()
-      .toPromise()
-      .then(
-        (response: BeneficiarieTPT[]) => {
-          console.log(response);
-          this.savedAccountsTPT = [];
-          response.forEach(element => {
-            let cuenta: SavedAccount = new SavedAccount();
-            cuenta.id = element.id;
-            //TODO falta poner el bankId correspondiente al de bienestar
-            cuenta.bankId = "1";
-            cuenta.accountNo = element.accountNumber;
-            cuenta.owner = element.clientName;
-            cuenta.productType = element.accountType.id.toString();
-            this.savedAccounts.push(cuenta);
-          })
-        })
+    transfer.fromOfficeId = this.loginInfo.officeId;
+    transfer.fromClientId = this.loginInfo.clientId;
+    transfer.fromAccountType = this.userService.accountMovementsSelected.accountType;
+    transfer.fromAccountId = Number(this.userService.accountMovementsSelected.accountNo);
+    console.log("cuenta a transferir", this.accountSelected);
+    transfer.toOfficeId = this.accountSelected.officeId;
+    transfer.toClientId = this.accountSelected.clientId;
+    transfer.toAccountType = this.accountSelected.accountType.id;
+    transfer.toAccountId = this.accountSelected.accountId ? this.accountSelected.accountId : Number(this.accountSelected.accountNumber);
+
+    transfer.transferAmount = form.transferAmount;
+    transfer.transferDescription = form.transferDescription;
+
+    console.log(JSON.stringify(transfer));;
+
+
+    this.clientsService.accountTransfers(transfer).toPromise()
+      .then(response => {
+        console.log(response)
+      })
       .catch(err => {
         console.log(err)
       })
   }
-
-  // private getBeneficiaries(): void {
-  //   console.log("trae beneficiarios");
-  //   this.clientsService.getBeneficiariesTPT()
-  //     .toPromise().then(
-  //       (response: any) => {
-  //         console.log(response);
-  //         this.savedAccounts = [];
-  //         let data = response.data;
-  //         data.forEach(element => {
-  //           let cuenta: SavedAccount = new SavedAccount();
-  //           cuenta.id = element.row[0];
-  //           cuenta.bankId = element.row[2];
-  //           cuenta.accountNo = element.row[3];
-  //           cuenta.owner = element.row[4];
-  //           cuenta.productType = element.row[5];
-  //           this.savedAccounts.push(cuenta);
-  //         })
-  //       })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
 
   // traemos los accounts del cliente
   private getAccounts(): void {
@@ -305,12 +291,11 @@ export class TransfersPage implements OnInit {
         return this.clientsService.getAccounts(clientId).toPromise()
       })
       .then((response: any) => {
-        console.log(response);
         this.accounts = [];
         let data = response.savingsAccounts;
-
+        console.log("cuentas", response);
         data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, "No se que es el CARD NUMBER");
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, element.accountType.id);
           this.accounts.push(account);
         });
       })
@@ -319,20 +304,12 @@ export class TransfersPage implements OnInit {
       })
   }
 
-  private initializeApp() {
-    this.clientsService.getPersonalInfo()
-      .then((data: PersonalInfo) => {
-        this.personalInfo = data;
-      });
-  }
 
   public deleteBeneficiarie(id): void {
-
     this.clientsService.deleteBeneficiarieTPT(id)
       .toPromise()
       .then((response: any) => {
         console.log(response);
-        this.getBeneficiariesTPT();
       })
       .catch(err => {
         console.log(err)

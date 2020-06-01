@@ -12,7 +12,8 @@ enum ErrorMessages {
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
   accountNumber = 'The account number is invalid',
-  password = 'The password format is invalid'
+  password = 'The password format is invalid',
+  beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.'
 }
 
 @Component({

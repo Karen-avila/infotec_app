@@ -125,5 +125,6 @@
     "Received a transfer for":"Recibió una transferencia por",
     "Balance": "Saldo",
     "About Us": "Nosotros",
-    "Back": "Atrás"
+    "Back": "Atrás",
+    "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado. Seleccione otro."
 }

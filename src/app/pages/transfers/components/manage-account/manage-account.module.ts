@@ -8,6 +8,7 @@ import { ManageAccountPageRoutingModule } from './manage-account-routing.module'
 
 import { ManageAccountPage } from './manage-account.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { InputErrorModule } from '@components/input-error/input-error.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     ManageAccountPageRoutingModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputErrorModule
   ],
   declarations: [ManageAccountPage],
   entryComponents: [ManageAccountPage]

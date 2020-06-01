@@ -7,9 +7,12 @@ export interface AccountType {
 export interface BeneficiarieTPT {
     id: number;
     name: string;
-    officeName: string;
-    clientName: string;
-    accountType: AccountType;
+    accountId: number;
     accountNumber: string;
+    accountType: AccountType;
+    clientId: string;
+    clientName: string;
+    officeId: number;
+    officeName: string;
     transferLimit: number;
 }
