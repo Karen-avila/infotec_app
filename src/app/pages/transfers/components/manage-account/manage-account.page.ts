@@ -221,7 +221,8 @@ export class ManageAccountPage implements OnInit {
       .toPromise()
       .then((res: BeneficiareTPT[]) => {
         console.log(res);
-        return res.length == 1 ? this.form.controls['name'].setValue(res[0].clientName) :  ;
+        this.form.value.accountNumber.setErrors({ accountNotFound: true });
+        return res.length == 1 ? this.form.controls['name'].setValue(res[0].clientName) :  "";
       })
       .catch(err => {
         console.log(err);

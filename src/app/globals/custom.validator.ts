@@ -71,7 +71,6 @@ export function ValidateBeneficiarieName(control: AbstractControl) {
 }
 
 export function ValidateNameBeneficiary(controlName: string, beneficiaries: BeneficiarieTPT[]) {
-
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         for (var i = 0; i < beneficiaries.length; i++) {
@@ -81,6 +80,4 @@ export function ValidateNameBeneficiary(controlName: string, beneficiaries: Bene
         }
         return null;
     }
-
-
 }
