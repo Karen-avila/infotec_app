@@ -1,4 +1,4 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar>
     <ion-title color="secondary" translate>{{ type }} Account</ion-title>
     <ion-buttons slot="end">
@@ -7,24 +7,19 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
+<app-header [svg]="true" [dismissButton]="true" [title]="'Beneficiary'" [img]="'/assets/header-icons/crear-cuenta.png'"></app-header>
 <ion-content>
 
+  <ion-toolbar>
+    <ion-title translate><b>{{'Create Account' | translate}}</b></ion-title>
+    <!-- <ion-title translate><b>{{'Update Account' | translate}}</b></ion-title> -->
+  </ion-toolbar>
   <ion-card>
 
-    <ion-card-header>
-      <div style="text-align: center;">
-        <ion-item>
-          <ion-label style="text-align: center;">
-            <ion-icon color="secondary" style="font-size: 2.1rem;" src="assets/icon/clipboardv2.svg"></ion-icon>
-          </ion-label>
-        </ion-item>
-      </div>
-    </ion-card-header>
+      <form class="container-small" [formGroup]="form" (ngSubmit)="submit()">
 
-    <ion-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()">
         <ion-list>
 
           <ion-item>
@@ -98,9 +93,12 @@
         </div>
       </form>
 
-      <br>
-    </ion-card-content>
-
   </ion-card>
 
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>

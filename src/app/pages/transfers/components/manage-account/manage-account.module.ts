@@ -9,6 +9,8 @@ import { ManageAccountPageRoutingModule } from './manage-account-routing.module'
 import { ManageAccountPage } from './manage-account.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     ManageAccountPageRoutingModule,
     TranslateModule,
     ReactiveFormsModule,
-    InputErrorModule
+    InputErrorModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [ManageAccountPage],
   entryComponents: [ManageAccountPage]
