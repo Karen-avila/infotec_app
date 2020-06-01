@@ -13,7 +13,7 @@ ion-header {
     ion-back-button {
         display: block;
         --ion-color-base: white !important;
-        margin: 0 10px;
+        margin: 0 10px 0 0;
     }
     ion-toolbar:last-of-type {
         border: none;
@@ -44,22 +44,22 @@ ion-header {
 }
 @media (max-width: 656px) {
     ion-img {
-        padding: 15% 41% 0;
+        padding: 15% 41% 0 !important;
     }
 }
 @media (max-width: 600px) {
     ion-img {
-        padding: 16% 41% 0;
+        padding: 16% 41% 0 !important;
     }
 }
 @media(max-width:540px) {
     ion-img {
-        padding: 19% 40% 0;
+        padding: 19% 40% 0 !important; 
     }
 }
 @media(max-width:500px) {
     ion-img {
-        padding: 19% 38% 0;
+        padding: 19% 38% 0 !important;
     }
 }
 @media(max-width:450px) {
