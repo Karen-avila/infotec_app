@@ -26,8 +26,8 @@ export class ClientsService {
     return this.httpClient.post(`${ENDPOINTS.beneficiarytpt}`, data);
   }
 
-  public putBeneficiariesTPT(data: any): Observable<any> {
-    return this.httpClient.put(`${ENDPOINTS.beneficiarytpt}`, data);
+  public putBeneficiariesTPT(data: any, id: string): Observable<any> {
+    return this.httpClient.put(`${ENDPOINTS.beneficiarytpt}/${id}`, data);
   }
 
   public deleteBeneficiarieTPT(id: string): Observable<any> {
@@ -66,7 +66,25 @@ export class ClientsService {
   }
 
   public searchAccount(accountNumber: string) {
-    return this.httpClient.get(`${ENDPOINTS.beneficiarytpt}`+ "?search=" + accountNumber);
+    return this.httpClient.get(`${ENDPOINTS.beneficiarytpt}` + "?search=" + accountNumber);
   }
-  
+
+  //#region beneficiaries EXT
+  // aca tenemos los metodos para manejar un beneficiaro EXT (externo de mifos)
+  public getBeneficiariesEXT(): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.beneficiaryext}`);
+  }
+
+  public postBeneficiariesEXT(data: any): Observable<any> {
+    return this.httpClient.post(`${ENDPOINTS.beneficiaryext}`, data);
+  }
+
+  public putBeneficiariesEXT(data: any): Observable<any> {
+    return this.httpClient.put(`${ENDPOINTS.beneficiaryext}`, data);
+  }
+
+  public deleteBeneficiarieEXT(id: string): Observable<any> {
+    return this.httpClient.delete(`${ENDPOINTS.beneficiaryext}/${id}`);
+  }
+  //#endregion
 }

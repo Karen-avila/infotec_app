@@ -13,6 +13,7 @@ import { Transaction } from '@globals/interfaces/transaction';
 export class MovementsPage implements OnInit {
 
   movements: Transaction[];
+  flag: boolean = false;
 
   constructor(public modalController: ModalController, private clientsService: ClientsService, private userService: UserService) {
     this.initialize();
@@ -29,13 +30,12 @@ export class MovementsPage implements OnInit {
   private initialize() {
     this.clientsService.getMovements(this.userService.accountMovementsSelected.accountNo).toPromise()
       .then(movimientos => {
-        console.log("movimientos", movimientos)
         this.movements = movimientos.transactions;
-        console.log(this.movements);
       })
       .catch(err => {
         console.log(err)
       })
+      .finally(()=> this.flag = true)
   }
 
 

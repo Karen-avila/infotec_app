@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { BeneficiarieTPT } from './interfaces/beneficiarie-tpt';
+import { Beneficiarie } from './interfaces/beneficiarie';
 
 export function ValidatePhoneNumber(control: AbstractControl) {
     if (!(/[0-9]{10,10}$/.test(control.value)) || (`${control.value}` || '').length !== 10) {
@@ -70,14 +70,25 @@ export function ValidateBeneficiarieName(control: AbstractControl) {
     return { accountNumber: true };
 }
 
-export function ValidateNameBeneficiary(controlName: string, beneficiaries: BeneficiarieTPT[]) {
+export function ValidateNameBeneficiary(controlName: string, beneficiaries: Beneficiarie[]) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
         for (var i = 0; i < beneficiaries.length; i++) {
             if (beneficiaries[i].name.toLowerCase() == control.value.toLowerCase()) {
                 control.setErrors({ beneficiaryAlreadyRegistered: true });
             }
         }
+        return null;
+    }
+}
+
+export function ValidateTransferAmountLimit(controlName: string, transferLimit: number) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
+        if (control.value > transferLimit)
+            control.setErrors({ transferAmountLimit: true });
         return null;
     }
 }

@@ -83,6 +83,12 @@ ion-icon{
     border-bottom: 1px solid #c6c6c6 !important;
 }
 
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    position: relative;
+    bottom: 0px;
+    padding-bottom: 3px;
+}
+
 @media (max-width: 350px) {
     ion-footer {
         height: 34px;
