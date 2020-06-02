@@ -11,4 +11,5 @@ export const ENDPOINTS = {
     savingsAccountsTransactions: `${environment.baseUrl}/savingsaccounts/{savingAccount}?associations=transactions`,
     registration: `${environment.baseUrl}/registration`,
     office: `${environment.baseUrl}/office`,
+    codesOptions: `${environment.baseUrl}/codes`,
 }

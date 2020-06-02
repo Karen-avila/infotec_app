@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
 import { ToastController, NavController } from '@ionic/angular';
@@ -82,6 +82,10 @@ export class AuthenticationService {
         this.authState.next(true);
       }
     });
+  }
+
+  public simpleLogin(user: User): Observable<any> {
+    return this.httpClient.post(ENDPOINTS.authentication, user);
   }
 
   public logout() {

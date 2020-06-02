@@ -50,6 +50,12 @@ export class HelpersService {
     
   }
 
+  public async loading() {
+    return await this.loadingController.create({
+      message: 'Por favor espere...'
+    });
+  }
+
   public async showNoInternet() {
     const alert = await this.alertController.create({
       cssClass: 'no-internet-class',

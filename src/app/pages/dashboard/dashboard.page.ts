@@ -58,7 +58,7 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     console.log('entre a dashboard.ts');
     this.menuCtrl.enable(true);
-    this.authentication.startIdleTimer();
+    // this.authentication.startIdleTimer();
   }
 
   protected checkPermissions() {

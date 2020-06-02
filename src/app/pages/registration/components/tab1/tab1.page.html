@@ -1,11 +1,4 @@
-<!-- <ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button color="secondary"></ion-back-button>
-    </ion-buttons>
-    <ion-title color="secondary" translate>Registration</ion-title>
-  </ion-toolbar>
-</ion-header> -->
+<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'login'" [title]="'registration.register'"></app-header>
 
 <ion-content>
   <ion-card>
@@ -62,13 +55,19 @@
             <app-input-error [control]="registerForm.controls.confirmPassword"></app-input-error>
 
           </ion-list>
-          <div class="ion-padding">
-            <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
-            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
-          </div>
+          
         </form>
       </ion-card-content>
   
     </ion-card>
   
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-padding">
+      <ion-button (click)="register()" type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
+      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

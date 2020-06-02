@@ -23,7 +23,7 @@
         <ion-item (click)="p.funtion(i)" routerDirection="root" lines="none" detail="false"
           [class.selected]="selectedIndex == i">
           <ion-icon slot="start" [ios]="p.icon" [md]="p.icon"></ion-icon>
-          <ion-label>{{ p.title }}</ion-label>
+          <ion-label style="text-transform: uppercase; font-size: 15px;">{{ p.title }}</ion-label>
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
         </ion-item>
       </ng-template>

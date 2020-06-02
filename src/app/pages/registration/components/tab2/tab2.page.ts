@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController, AlertController, ToastController } from '@ionic/angular';
+import { MenuController, AlertController, ToastController, LoadingController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Storage } from '@ionic/storage';
@@ -9,6 +9,7 @@ import { ClientsService } from '@services/clients/clients.service';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ENDPOINTS } from '@globals/endpoints';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 
 declare var faceapi;
@@ -36,13 +37,19 @@ export class Tab2Page implements OnInit {
 
   minConfidence: number = 0.9;
 
-  facesDetected: number = 1;
+  facesDetected: number = null;
 
   imageUrl: string;
 
   registerForm: FormGroup;
 
   completeForm: any;
+
+  loading: any;
+
+  waiting: boolean = false;
+
+  registerResponse: any;
 
   constructor(
       private router:Router, 
@@ -54,18 +61,19 @@ export class Tab2Page implements OnInit {
       private clientsService: ClientsService,
       private toastController: ToastController,
       private authenticationService: AuthenticationService,
-      private httpClient: HttpClient
+      public loadingController: LoadingController,
+      public helpersService: HelpersService
     ) { 
     this.registerForm = formBuilder.group({
-      curp: ["", Validators.compose([
+      curp: ["MASL820234HCSZPS90", Validators.compose([
         Validators.required, 
         CustomValidators.ValidateCurp
       ])],
-      dateOfBirth: ["", Validators.required],
+      dateOfBirth: ["1980-04-15", Validators.required],
       dateFormat: "yyyy-MM-dd",
       locale: "es",
       authenticationMode: "email",
-      mobileNumber: ["", Validators.compose([
+      mobileNumber: ["5573435678", Validators.compose([
         Validators.required, 
         CustomValidators.ValidatePhoneNumber
       ])],
@@ -85,25 +93,39 @@ export class Tab2Page implements OnInit {
 
     this.imageUrl = localStorage.getItem('image');
 
-    setTimeout(() => this.updateResults(), 200);
+    this.facesDetected  = -1;
+
+    setTimeout(() => this.updateResults(), 100);
   }
 
   getFaceDetectorOptions() {
       return new faceapi.SsdMobilenetv1Options({ minConfidence: this.minConfidence })
   }
 
-  async updateResults() {
+  async showLoading() {
+    this.loading = await this.helpersService.loading();
+    this.loading.present();
+  }
 
-      const inputImgEl = document.getElementById('inputImg');
-      const options = this.getFaceDetectorOptions();
+  hideLoading() {
+    this.loading.dismiss();
+  }
 
-      const results = await faceapi.detectAllFaces(inputImgEl, options);
+  async updateResults() {    
+    
+    const inputImgEl = document.getElementById('img-user');
+    const options = this.getFaceDetectorOptions();
 
-      this.facesDetected = results.length;
+    const results = await faceapi.detectAllFaces(inputImgEl, options);
 
-      const canvas = document.getElementById('overlay');
-      faceapi.matchDimensions(canvas, inputImgEl);
-      faceapi.draw.drawDetections(canvas, faceapi.resizeResults(results, inputImgEl));
+    this.facesDetected = results.length;
+
+    console.log(this.facesDetected);
+
+
+    // const canvas = document.getElementById('overlay');
+    // faceapi.matchDimensions(canvas, inputImgEl);
+    // faceapi.draw.drawDetections(canvas, faceapi.resizeResults(results, inputImgEl));
   }
 
   getCurrentFaceDetectionNet() {
@@ -113,6 +135,7 @@ export class Tab2Page implements OnInit {
   takePhoto(): void {
     this.camera.getPicture(this.options).then((imageData) => {
 
+      this.facesDetected  = -1;
       this.imageUrl = 'data:image/jpeg;base64,' + imageData;
       setTimeout(() => this.updateResults(), 200);
       
@@ -128,9 +151,13 @@ export class Tab2Page implements OnInit {
 
     return this.storage.get('registration').then( value => {
     
-      this.completeForm = {...form, ...value};
+      this.completeForm = {...form, ...value, username: form.mobileNumber};
+
       return this.clientsService.postRegistration( this.completeForm )
-        .toPromise();
+        .toPromise().then( registerResponse => {
+          this.registerResponse = registerResponse;
+          return registerResponse;
+        } );
 
     } ).catch( error => {
       if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.resource.not.found') {
@@ -144,59 +171,67 @@ export class Tab2Page implements OnInit {
   register() {
     console.log("hacer peticion de registro");
 
-    // return this.presentAlertPrompt();
+    this.waiting = true;
+
+    this.showLoading();
 
     this.getActivationCode().then( resp => {
       console.log('getActivationCode', resp);
       return Promise.all([this.presentAlertPrompt(), resp]);
     } ).then( ([token, resource]) => {
       console.log(token, resource);
+
+      this.showLoading();
       
       if (token.codigoActivacion) {
+        console.log('Its enter here');
+        
         return this.clientsService.postConfirmRegistration({
-            requestId: resource.resourceId,
+            requestId: this.registerResponse.resourceId,
             authenticationToken: parseInt(token.codigoActivacion)
           }).toPromise();
       }
+      throw new Error('No se pudo obtener el código de activación');
     } ).then( (resp: any) => {
       console.log('confirm', resp);
 
       if (resp.resourceId) {
-        this.presentToast('Usuario registrado exitosamente');
-        this.storage.remove('registration');
         return resp.resourceId;
       } 
-      this.presentToast('No se pudo registrar al usuario, intentelo más tarde');
       throw new Error('No se pudo registrar el usuario');
-    } )
-    // .then( () => {
-    //   // return this.authenticationService.login({ username: this.completeForm.username, password: this.completeForm.username }, false);
+    } ).then( () => {
+      const { username, password } = this.completeForm;
+      this.authenticationService.simpleLogin({ username, password })
+        .toPromise()
+        .then( (user: any) => {
+          if (user.clientId) {
 
-    //   const httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Fineract-Platform-TenantId': 'default',
-    //       'Content-Type': 'application/json'
-    //     })
-    //   };
+            this.presentToast('Usuario registrado exitosamente');
+            this.storage.remove('registration');
+        
+            const file = this.dataURLtoFile(this.imageUrl);
 
-    //   return this.httpClient.post(ENDPOINTS.authentication, { username: 'testingservicedos', password: this.completeForm.password }, httpOptions)
-    //     .toPromise();
-    // } ).then( (user: any) => {
-    //   if (user.clientId) {
-    //     const file = this.dataURLtoFile(this.imageUrl);
-    //     return this.clientsService.postRegistrationSelfie(user.clientId, file).toPromise();
-    //   }
-    //   throw new Error('No se pudo registrar la selfie');
-    // } )
-    .then( () => {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            return this.clientsService.postRegistrationSelfie(user.clientId, formData, user.base64EncodedAuthenticationKey)
+              .toPromise();
+          }
+          throw new Error('No se pudo registrar la selfie');
+        } )
+    }).then( () => {
+      this.hideLoading();
       this.storage.set('image-profile', this.imageUrl);
       this.router.navigateByUrl('/login');
     } ).catch( error => {
       console.error(error.error.userMessageGlobalisationCode);
+      this.hideLoading();
       if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
         this.presentToast('No se pudo registrar al usuario, intentelo más tarde');
       }
-    } );
+    } ).finally( () => {
+      this.waiting = false;
+    });
     //this.router.navigateByUrl('/dashboard'); //second-login
     
   }
@@ -217,6 +252,8 @@ export class Tab2Page implements OnInit {
   }
 
   presentAlertPrompt(): Promise<any> {
+
+    this.hideLoading();
 
     return new Promise( async resolve => {
       const alert = await this.alertController.create({
@@ -247,10 +284,17 @@ export class Tab2Page implements OnInit {
             text: 'Aceptar',
             handler: (alertData) => {
               if (alertData.codigoActivacion) {
+                console.log('se resuelve la promesa');
+                
                 resolve({codigoActivacion: alertData.codigoActivacion});
                 return; 
               }
-              document.getElementById('codigoActivacion').insertAdjacentHTML('afterend', 'El código de activación es requerido');
+
+              if (!document.getElementById('text-error')) {
+                document.getElementById('codigoActivacion')
+                  .insertAdjacentHTML('afterend', '<span id="text-error">El código de activación es requerido<span>');
+              }
+                
               return false;
               
             }

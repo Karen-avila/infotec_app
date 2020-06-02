@@ -35,10 +35,7 @@ export class Tab1Page implements OnInit {
         Validators.required, 
         CustomValidators.ValidateAccountNumber
       ])],
-      email: ["", Validators.compose([
-        Validators.required, 
-        CustomValidators.ValidateEmail
-      ])],
+      email: ["", CustomValidators.ValidateEmail],
       firstName: ["", Validators.compose([
         Validators.required, 
         Validators.minLength(3)
@@ -57,9 +54,6 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    this.registerForm.get('email').valueChanges
-      .subscribe( value => this.registerForm.get('username').setValue(value, {emitEvent: false}) );
-
       this.storage.get('registration').then( data => {
         this.registerForm.patchValue(data);
       } );

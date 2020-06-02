@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
@@ -9,7 +9,15 @@ import { Storage } from '@ionic/storage';
 })
 export class ClientsService {
 
-  constructor(private httpClient: HttpClient, private storage: Storage) { }
+  private httpWithoutInterceptors: HttpClient;
+
+  constructor(
+    private httpClient: HttpClient, 
+    private storage: Storage,
+    private handler: HttpBackend,
+  ) { 
+    this.httpWithoutInterceptors = new HttpClient(this.handler);
+  }
 
   public getClient(clientId: string): Observable<any> {
     this.storage.set('clientId', clientId);
@@ -72,15 +80,16 @@ export class ClientsService {
     return this.httpClient.post(`${ENDPOINTS.registration}/user`, data);
   }
 
-  public postRegistrationSelfie(clientId: string, file: File) {
+  public postRegistrationSelfie(clientId: string, formData: FormData, token: string) {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data'
+        'Fineract-Platform-TenantId': 'default',
+        Authorization: `Basic ${token}`
       })
     };
     
-    return this.httpClient.post(`${ENDPOINTS.clients}/${clientId}/images`, {file}, httpOptions);
+    return this.httpWithoutInterceptors.post(`${ENDPOINTS.clients}/${clientId}/images`, formData, httpOptions);
   }
   
 }

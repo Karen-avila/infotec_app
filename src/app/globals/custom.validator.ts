@@ -1,28 +1,28 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 export function ValidatePhoneNumber(control: AbstractControl) {
-    if (!(/[0-9]{10,10}$/.test(control.value)) || (`${control.value}` || '').length !== 10) {
+    if (!(/^[0-9]{10}$/.test(control.value))) {
         return { phoneNumber: true };
     }
     return null;
 }
 
 export function ValidateCurp(control: AbstractControl) {
-    if (!(/[a-z0-9]{18,18}$/gi.test(control.value)) || (`${control.value}` || '').length !== 18) {
+    if (!(/^[a-zA-Z]{4}[\d]{6}(H|h|M|m)[a-zA-Z]{5}[a-zA-Z0-9]{2}$/.test(control.value))) {
         return { curp: true };
     }
     return null;
 }
 
 export function ValidateAccountNumber(control: AbstractControl) {
-    if (!(/[0-9]{9,9}$/gi.test(control.value)) || (`${control.value}` || '').length !== 9) {
+    if (!(/^[0-9]{9}$/.test(control.value))) {
         return { accountNumber: true };
     }
     return null;
 }
 
 export function ValidateEmail(control: AbstractControl) {
-    if (!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(control.value))) {
+    if  (control.value && !(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(control.value))) {
         return { email: true };
     }
     return null;

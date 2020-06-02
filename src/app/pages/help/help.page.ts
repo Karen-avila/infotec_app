@@ -1,6 +1,7 @@
 import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { CodesService } from '@services/catalogs/codes.service';
 
 @Component({
   selector: 'app-help',
@@ -9,9 +10,17 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 })
 export class HelpPage implements OnInit {
 
-  constructor(private alertController: AlertController, private callNumber: CallNumber) { }
+  questions: any[] = [];
+
+  constructor(
+    private alertController: AlertController, 
+    private callNumber: CallNumber,
+    private codesService: CodesService
+  ) { }
 
   ngOnInit() {
+    this.codesService.getFAQS().toPromise()
+      .then( questions => this.questions = questions )
   }
 
   public showAnswer(text: string): void {
