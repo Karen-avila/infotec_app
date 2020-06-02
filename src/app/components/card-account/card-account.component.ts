@@ -30,6 +30,7 @@ export class CardAccountComponent implements OnInit {
   };
 
   @Input() accounts: CardAccount[];
+  @Input() hideEditButton: boolean = false;
 
   public array = Array;
 

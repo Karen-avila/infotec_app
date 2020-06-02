@@ -2,20 +2,19 @@ export interface ICardAccount {
     accountNo: string;
     accountBalance: string;
     displayName: string;
-    cardNumber?: string;
-    [prop: string]: string;
+    accountType: number;
 }
 
 export class CardAccount implements ICardAccount {
     accountNo: string;
     accountBalance: string;
     displayName: string;
-    cardNumber?: string;
-    [prop: string]: string;
-    constructor(pAccountNo: string, pAccountBalance: string, pDisplayName: string, pCardNumber?: string) {
+    accountType: number;
+    
+    constructor(pAccountNo: string, pAccountBalance: string, pDisplayName: string, pAccountType: number) {
         this.accountNo = pAccountNo;
         this.accountBalance = pAccountBalance;
         this.displayName = pDisplayName;
-        this.cardNumber = pCardNumber;
+        this.accountType = pAccountType;
     }
 }

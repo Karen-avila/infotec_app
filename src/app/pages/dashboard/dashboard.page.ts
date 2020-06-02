@@ -144,7 +144,6 @@ export class DashboardPage implements OnInit {
         console.log(data);
         this.personalInfo = data;
         return this.clientsService.getLoginInfo();
-        //this.getAccounts();
       })
       .then((data: LoginInfo) => {
         this.loginInfo = data;
@@ -164,7 +163,7 @@ export class DashboardPage implements OnInit {
         this.accounts = [];
         let data = response.savingsAccounts;
         data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, "No se que es el CARD NUMBER");
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, element.accountType.id);
           this.accounts.push(account);
         });
       })

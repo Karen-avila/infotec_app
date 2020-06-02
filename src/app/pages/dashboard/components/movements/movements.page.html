@@ -1,15 +1,5 @@
-<!-- <ion-header translucent>
-  <ion-toolbar>
-    <ion-title color="secondary">Movimientos</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="secondary" (click)="dismissModal()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> -->
 <app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
-<ion-content>
+<ion-content *ngIf="flag">
   <!-- List of Text Items -->
 
   <ion-label *ngIf="!movements || movements.length==0 ">

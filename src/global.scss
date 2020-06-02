@@ -35,6 +35,8 @@ ion-footer {
 ion-toolbar{
     --padding-end: 0;
     --padding-start: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
 }
 
 .container{
@@ -79,6 +81,12 @@ ion-icon{
 }
 .alert-input  {
     border-bottom: 1px solid #c6c6c6 !important;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    position: relative;
+    bottom: 0px;
+    padding-bottom: 3px;
 }
 
 @media (max-width: 350px) {

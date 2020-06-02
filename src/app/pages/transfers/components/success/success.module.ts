@@ -4,27 +4,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ManageAccountPageRoutingModule } from './manage-account-routing.module';
 
-import { ManageAccountPage } from './manage-account.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { SuccessComponent } from './success.page';
+import { SuccessPageRoutingModule } from './success-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ManageAccountPageRoutingModule,
+    SuccessPageRoutingModule,
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule,
     HeaderModule,
     FooterModule
   ],
-  declarations: [ManageAccountPage],
-  entryComponents: [ManageAccountPage]
+  declarations: [SuccessComponent],
+  entryComponents: [SuccessComponent]
 })
-export class ManageAccountPageModule {}
+export class SuccessPageModule {}

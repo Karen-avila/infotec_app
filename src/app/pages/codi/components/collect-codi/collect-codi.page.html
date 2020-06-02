@@ -1,32 +1,30 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
     <ion-title color="secondary" translate>Collect with CoDi</ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content color="primary">
-
-  <ion-img style="width: 60%;margin: auto; margin-top: 0.8rem;" src="assets/logo_intro.png"></ion-img>
+</ion-header> -->
+<app-header [svg]="true" [backButton]="true" [img]="'/assets/header-icons/cobrar-codi.png'" [title]="'Charge with CoDi'"></app-header>
+<ion-content>
 
   <div class="ion-text-center">
     <b>
-      <ion-text style="color: white;" translate> ¿How much do you want to charge? </ion-text> 
+      <ion-text  translate> ¿How much do you want to charge? </ion-text> 
     </b>
   </div>
 
-  <div style="margin: 1rem;">
+  <div class="container-small">
     <form [formGroup]="formGroup">
-      <ion-list class="primary">
+      <ion-list>
         
         <ion-item>
           <ion-label position="floating" translate>Amount<ion-text>*</ion-text></ion-label>
           <ion-input formControlName="amount" required inputmode="decimal" type="number"></ion-input>
         </ion-item>
         <div style="padding-left: 20px;">
-          <app-input-error colorClass="warning" [control]="formControls.amount"></app-input-error>
+          <app-input-error colorClass="danger" [control]="formControls.amount"></app-input-error>
         </div>
   
         <ion-item>
@@ -34,7 +32,7 @@
           <ion-input formControlName="concept" required inputmode="text" type="text"></ion-input>
         </ion-item>
         <div style="padding-left: 20px;">
-          <app-input-error colorClass="warning" [control]="formControls.concept"></app-input-error>
+          <app-input-error colorClass="danger" [control]="formControls.concept"></app-input-error>
         </div>
   
         <ion-item>
@@ -42,7 +40,7 @@
           <ion-input formControlName="reference" inputmode="text" type="text"></ion-input>
         </ion-item>
         <div style="padding-left: 20px;">
-          <app-input-error colorClass="warning" [control]="formControls.reference"></app-input-error>
+          <app-input-error colorClass="danger" [control]="formControls.reference"></app-input-error>
         </div>
 
       </ion-list>
@@ -50,24 +48,26 @@
     </form>
   </div>
 
+  <div style="width: 100%; position: absolute;bottom: 0;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <app-rounding-button title="Cancel" iconType="close" (click)="onCancel()"></app-rounding-button>
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          <app-rounding-button [disabled]="formGroup.invalid" title="Accept" (click)="onClick()" iconType="check"></app-rounding-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="primary">
-    <div style="width: 80%; margin: auto;">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <app-rounding-button title="Cancel" iconType="close" (click)="onCancel()"></app-rounding-button>
-          </ion-col>
-          <ion-col>
-            
-          </ion-col>
-          <ion-col>
-            <app-rounding-button [disabled]="formGroup.invalid" title="Accept" (click)="onClick()" iconType="check"></app-rounding-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
   </ion-toolbar>
 </ion-footer>

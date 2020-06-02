@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ENDPOINTS } from '@globals/endpoints';
 import { CardAccount } from '@globals/classes/card-account';
+import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class UserService {
   public password: string;
   public displayName: string;
   public accountMovementsSelected: CardAccount;
+  public beneficiaries: Beneficiarie[];
 
   constructor(private httpClient: HttpClient) { }
 
