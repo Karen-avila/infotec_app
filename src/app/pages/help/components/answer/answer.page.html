@@ -1,45 +1,12 @@
-<!-- <ion-header class="ion-no-border">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-back-button class="text-white"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="text-white" translate="Answer"></ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <app-header [svg]="true" [backButton]="true" [title]="'Frequently asked questions'" [defaultHref]="'help'"></app-header>
 
 <ion-content fullscreen>
 
-  <!-- <div class="secondary">
-    <br>
-    <ion-img src="./assets/icon/correct.svg"></ion-img>
-    <h6 style="text-align: center;color: white; font-weight: bold;width: 75%;margin: auto;margin-top: 0.8rem;">
-      ¿Como solicitar una nueva cuenta de crédito?
-    </h6>
-    <br>
-  </div>
-
-  <br> -->
   <div class="container-big" style="text-align: center; font-size: 16px; font-weight: 700; color: #193931;">
-    <p>
-      ¿Como solicitar una nueva cuenta de crédito?
-    </p>
+    <p>{{ question }}</p>
   </div>
   <div class="container-big" style="text-align: justify;font-size: 14px;">
-    <p>
-      Si estás pensando en solicitar una tarjeta de crédito, recordemos que esta es una herramienta que funciona para
-      poder comprar diferentes productos o servicios y pagar después por ellos; y que al adquirirla obtienes una nueva
-      responsabilidad financiera que se debe cubrir a tiempo para evitar que se convierta en una deuda creciente.
-
-      Para solicitar una tarjeta de crédito solo debes acercarte a cualquier banco y cumplir con los requisitos. Dentro
-      de los principales se encuentran ser mayor de 18 años y poder comprobar un mínimo de ingresos. También, es
-      importante tener un buen historial crediticio que demuestre que pagas a tiempo y sabes manejar adecuadamente tus
-      financiamientos.
-
-      Si cumples con ellos, lo siguiente es contemplar todos los elementos que componen una tarjeta de crédito para que
-      elijas la que mejor te convenga.
-    </p>
+    <p>{{ answer }}</p>
   </div>
 
 </ion-content>

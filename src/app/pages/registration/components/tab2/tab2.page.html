@@ -1,11 +1,4 @@
-<!-- <ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button color="secondary"></ion-back-button>
-    </ion-buttons>
-    <ion-title color="secondary" translate>Registration</ion-title>
-  </ion-toolbar>
-</ion-header> -->
+<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'/registration/tab1'" [title]="'registration.register'"></app-header>
 
 <ion-content>
   <ion-card>
@@ -14,19 +7,26 @@
 
         <div style="width: 45%; margin: 0 auto;">
           <div style="position: relative;text-align: center; ">
-            <img id="img-user" src="/assets/header-icons/registro.png">
+            <div style="width: 100px; height: 100px; margin: auto;">
+              <img style="border-radius: 50%;" id="img-user" [src]="imageUrl || '/assets/header-icons/registro.png'">
+            </div>
             <canvas id="overlay"></canvas>
           </div>
         </div>
 
         <div [ngSwitch]="facesDetected">
+          <div *ngSwitchCase="-1">
+            <p style="text-align: center;">
+              Detectando rostro...
+            </p>
+          </div>
           <div *ngSwitchCase="0">
-            <p style="text-align: center; color: #DC3545;">
+            <p style="text-align: center; color: #EB445A;">
               No se detecto ningún rostro*
             </p>
           </div>
           <div *ngSwitchCase="1">
-            <p style="text-align: center; color: #28A745;">
+            <p style="text-align: center; color: #285D4D;">
               Se detecto un rostro correctamente*
             </p>
           </div>
@@ -49,14 +49,14 @@
           </ion-fab-button>
         </ion-fab>
 
-        <form class="container-small" [formGroup]="registerForm" (ngSubmit)="register()">
+        <form class="container-small" [formGroup]="registerForm">
           <ion-list>
 
             <ion-item>
               <ion-icon name="call-outline"></ion-icon>
-              <ion-input type="tel" placeholder="{{ 'registration.phonenumber' | translate }}" formControlName="phoneNumber" clearInput></ion-input>
+              <ion-input type="tel" placeholder="{{ 'Phone Number' | translate }}" formControlName="mobileNumber" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.phoneNumber"></app-input-error>
+            <app-input-error [control]="registerForm.controls.mobileNumber"></app-input-error>
 
             <ion-item>
               <ion-icon name="person-circle-outline"></ion-icon>
@@ -65,19 +65,24 @@
             <app-input-error [control]="registerForm.controls.curp"></app-input-error>
 
             <ion-item>
-              <ion-icon name="calendar-outline"></ion-icon>
-              <ion-input type="date" placeholder="{{ 'Birthdate' | translate }}" formControlName="birthdate" clearInput></ion-input>
+              <ion-label position="stacked">{{ 'Birthdate' | translate }}<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="date" formControlName="dateOfBirth" clearInput></ion-input>
             </ion-item>
-            <app-input-error [control]="registerForm.controls.birthdate"></app-input-error>
+            <app-input-error [control]="registerForm.controls.dateOfBirth"></app-input-error>
 
           </ion-list>
-          <div class="ion-padding">
-            <ion-button type="submit" [disabled]="registerForm.invalid || facesDetected !== 1" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
-            <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
-          </div>
         </form>
       </ion-card-content>
   
     </ion-card>
   
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="ion-padding">
+      <ion-button type="button" (click)="register()" [disabled]="registerForm.invalid || facesDetected !== 1 || waiting" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
+      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

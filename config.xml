@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="mx.banco.movil" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Banco del Bienestar</name>
-    <description>Principal dispersor de recursos de programas sociales del gobierno federal.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Fintecheando</author>
+<widget id="gob.mx.bancodelbienestar.movil" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bienestar Móvil</name>
+    <description>El Banco de los Mexicanos.</description>
+    <author email="dgatyo@bancodelbienestar.com.mx" href="http://bancodelbienestar.com.mx/">Banco del Bienestar</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -121,4 +121,6 @@
         <splash src="resources/windows/splash/Splash.png" target="SplashScreen" />
     </platform>
     <engine name="android" spec="^8.1.0" />
+
+    <engine name="ios" spec="^5.1.1" />
 </widget>
