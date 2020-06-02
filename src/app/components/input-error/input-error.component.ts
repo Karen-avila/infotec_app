@@ -9,7 +9,10 @@ enum ErrorMessages {
   minlength = 'The minimum length of this field is {{value}}',
   phoneNumber = 'The phone number must contain 10 digits',
   email = 'The email format is invalid',
-  mustMatch = 'Passwords do not match'
+  mustMatch = 'Passwords do not match',
+  curp = 'The curp is invalid',
+  accountNumber = 'The account number is invalid',
+  password = 'The password format is invalid'
 }
 
 @Component({
@@ -30,8 +33,8 @@ export class InputErrorComponent implements OnInit {
   constructor(protected translate: TranslateService) { }
 
   ngOnInit() {
-    console.log('control',this.control);
-    this.control.valueChanges.subscribe( () => console.log(this.control) );
+    //console.log('control', this.control);
+    //this.control.valueChanges.subscribe(() => console.log(this.control));
     if (this.colorClass) {
       this.color = '';
     }
@@ -47,13 +50,13 @@ export class InputErrorComponent implements OnInit {
     }
     const keys: string[] = Object.keys(this.control.errors);
 
-    switch(keys[0]) {
+    switch (keys[0]) {
       case 'minlength':
         this.params['value'] = this.control.errors[keys[0]]['requiredLength'];
         break;
 
-      default: 
-        this.params['value'] = this.control.errors[keys[0]][keys[0]];        
+      default:
+        this.params['value'] = this.control.errors[keys[0]][keys[0]];
         break;
     }
 
@@ -62,7 +65,7 @@ export class InputErrorComponent implements OnInit {
     }
 
     return ErrorMessages[keys[0]];
-    
+
   }
 
 }

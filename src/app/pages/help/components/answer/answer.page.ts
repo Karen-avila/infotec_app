@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-answer',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnswerPage implements OnInit {
 
-  constructor() { }
+  question: string;
+
+  answer: string;
+
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+
+    const { question = '', answer = '' } = this.activatedRoute.snapshot.queryParams;
+
+    this.question = question;
+    this.answer = answer;
+    
   }
 
 }

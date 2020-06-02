@@ -12,11 +12,19 @@ import * as CustomValidators from '@globals/custom.validator';
 })
 export class RegistrationPage implements OnInit {
 
-  icon:boolean=true;
-  reIcon:boolean=true;
-  type:string='password';
-  reType:string='password';
+  icon: boolean = true;
+  reIcon: boolean = true;
+  type: string = 'password';
+  reType: string = 'password';
   registerForm: FormGroup;
+  imageSrc = '/assets/sample.jpg';
+
+  selectFile(event: any) {
+    const file = event.target.files.item(0);
+    const reader = new FileReader();
+    reader.onload = (e: any) => (this.imageSrc = e.target.result);
+    reader.readAsDataURL(file);
+  }
 
   constructor(
       private router:Router, 
@@ -26,27 +34,28 @@ export class RegistrationPage implements OnInit {
     ) { 
     this.registerForm = formBuilder.group({
       username: ["", Validators.compose([
-        Validators.required, 
+        Validators.required,
         Validators.minLength(5)
       ])],
       password: ["", Validators.compose([
-        Validators.required, 
+        Validators.required,
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        CustomValidators.ValidatePassword
       ])],
       accountNumber: ["", Validators.compose([
         Validators.required, 
         Validators.pattern('[0-9]{9,9}$')
       ])],
-      phoneNumber : ["", Validators.compose([
-        Validators.required, 
+      phoneNumber: ["", Validators.compose([
+        Validators.required,
         CustomValidators.ValidatePhoneNumber
       ])],
-      confirmPassword : ["", Validators.compose([
-        Validators.required, 
+      confirmPassword: ["", Validators.compose([
+        Validators.required,
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])],
       email: ["", Validators.compose([
-        Validators.required, 
+        Validators.required,
         CustomValidators.ValidateEmail
       ])]
     }, {
@@ -59,33 +68,33 @@ export class RegistrationPage implements OnInit {
     this.menuCtrl.swipeGesture(false);
   }
 
-  register(){
+  register() {
     console.log("hacer peticion de registro")
     //this.router.navigateByUrl('/dashboard'); //second-login
     this.presentAlertPrompt();
   }
 
-  viewRePassword(){
-    if(this.reIcon){
+  viewRePassword() {
+    if (this.reIcon) {
       console.log("view repassword");
-      this.reIcon=false;
-      this.reType="text";
-    }else{
+      this.reIcon = false;
+      this.reType = "text";
+    } else {
       console.log("not view repassword");
-      this.reIcon=true;
-      this.reType="password";
+      this.reIcon = true;
+      this.reType = "password";
     }
   }
 
-  viewPassword(){
-    if(this.icon){
+  viewPassword() {
+    if (this.icon) {
       console.log("view password");
-      this.icon=false;
-      this.type="text";
-    }else{
+      this.icon = false;
+      this.type = "text";
+    } else {
       console.log("not view password");
-      this.icon=true;
-      this.type="password";
+      this.icon = true;
+      this.type = "password";
     }
   }
 

@@ -68,10 +68,10 @@ export class CollectCodiPage implements OnInit {
 
   public onClick(): void {
 
-    this.presentAlert();
-    if (this.formGroup.invalid || true) {
-      return;
-    }
+    // this.presentAlert();
+    // if (this.formGroup.invalid || true) {
+    //   return;
+    // }
 
     console.log(this.formGroup.value);
 

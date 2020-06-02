@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
-
-interface User {
-  username: string;
-  password: string;
-}
+import { CardAccount } from '@globals/classes/card-account';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  public username: string;
+  public password: string;
+  public displayName: string;
+  public accountMovementsSelected: CardAccount;
+
   constructor(private httpClient: HttpClient) { }
 
-
-  public login(user: User): Observable<any> {
-    return this.httpClient.post(ENDPOINTS.authentication, user);
+  public changeData(data: any) {
+    return this.httpClient.put(`${ENDPOINTS.changeData}`, data);
   }
 }

@@ -7,13 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { MovementsPageRoutingModule } from './movements-routing.module';
 
 import { MovementsPage } from './movements.page';
+import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MovementsPageRoutingModule
+    MovementsPageRoutingModule,
+    TranslateModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [MovementsPage],
   entryComponents: [MovementsPage]

@@ -2,5 +2,14 @@ import { environment } from '@env';
 
 export const ENDPOINTS = {
     authentication: `${environment.baseUrl}/authentication`,
-    clients: `${environment.baseUrl}/clients`
+    clients: `${environment.baseUrl}/clients`,
+    tptBeneficiary: `${environment.baseUrl}/beneficiaries/tpt`,
+    beneficiary: `${environment.baseUrl}/datatable/beneficiaries`,
+    codes: `${environment.commonUrl}/codes/{catalogo}/codevalues`,
+    accounts: `${environment.baseUrl}/clients/{clientId}/accounts`,
+    changeData: `${environment.baseUrl}/user`,
+    savingsAccountsTransactions: `${environment.baseUrl}/savingsaccounts/{savingAccount}?associations=transactions`,
+    registration: `${environment.baseUrl}/registration`,
+    office: `${environment.baseUrl}/office`,
+    codesOptions: `${environment.baseUrl}/codes`,
 }

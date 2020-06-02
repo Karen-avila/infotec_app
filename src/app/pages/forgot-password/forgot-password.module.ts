@@ -5,10 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ForgotPasswordPageRoutingModule } from './forgot-password-routing.module';
-
 import { ForgotPasswordPage } from './forgot-password.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { FooterModule } from '@components/footer/footer.module';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,9 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     IonicModule,
     ForgotPasswordPageRoutingModule,
     TranslateModule,
-    InputErrorModule
+    InputErrorModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [ForgotPasswordPage]
 })

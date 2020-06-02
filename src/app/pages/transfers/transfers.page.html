@@ -1,19 +1,19 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-title color="secondary">{{ 'tranfers.transfers' | translate }}</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
+<app-header [svg]="true" [menu]="true" [backButtonEnd]="true" [title]="'tranfers.transfers'" [img]="'/assets/header-icons/transferir.png'"></app-header>
 <ion-content fullscreen id="content">
 
   <div style="height: 100%;width: 100%;">
     <div>
-      <br>
   
-      <div style="text-align: center;"> <b style="color: #AD915F; font-size: medium;">Cuenta Origen</b></div>
+      <div style="text-align: center;"> <b style="color: #112b22; font-size: medium;">Cuenta Origen</b></div>
   
       <app-card-account [accounts]="accounts" [settings]="settings"></app-card-account>
   
@@ -28,16 +28,16 @@
         </ion-fab-button>
       </ion-fab>
   
-      <div style="text-align: center; margin-top: 1.6rem;"> <b style="color: #AD915F; font-size: medium;">Cuenta Destino</b></div>
+      <div style="text-align: center; margin-top: 1.6rem;"> <b style="color: #112b22; font-size: medium;">Cuenta Destino</b></div>
   
-      <div style="color: #AD915F; font-size: 0.7rem;font-weight: bold; margin-left: 1.3rem;margin-top: 1rem; margin-bottom: 0.4rem;">CUENTAS GUARDADAS</div>
+      <div style="color: #112b22; font-size: 0.7rem;font-weight: bold; margin-left: 1.3rem;margin-top: 1rem; margin-bottom: 0.4rem;">CUENTAS GUARDADAS</div>
   
       <ion-list style="max-height: 10rem; overflow: auto;">
   
         <ion-item-sliding *ngFor="let item of savedAccounts; index as index; trackBy: identify">
   
           <ion-item-options side="start">
-            <ion-item-option (click)="onDelete()" color="danger">
+            <ion-item-option (click)="onDelete(item.id)" color="danger">
               <ion-icon style="font-size: 1.5rem; margin: auto 10px;" name="trash-outline"></ion-icon>
             </ion-item-option>
           </ion-item-options>
@@ -122,6 +122,10 @@
     
   
 </ion-content>
-   
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
      
 

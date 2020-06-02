@@ -1,32 +1,16 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-back-button class="text-white"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="text-white" translate="Answer"></ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [svg]="true" [backButton]="true" [title]="'Frequently asked questions'" [defaultHref]="'help'"></app-header>
 
 <ion-content fullscreen>
 
-  <div class="secondary">
-    <br>
-    <ion-img src="./assets/icon/correct.svg"></ion-img>
-    <h6 style="text-align: center;color: white; font-weight: bold;width: 75%;margin: auto;margin-top: 0.8rem;">
-      ¿Como solicitar una nueva cuenta de crédito?
-    </h6>
-    <br>
+  <div class="container-big" style="text-align: center; font-size: 16px; font-weight: 700; color: #193931;">
+    <p>{{ question }}</p>
   </div>
-  
-  <br>
+  <div class="container-big" style="text-align: justify;font-size: 14px;">
+    <p>{{ answer }}</p>
+  </div>
 
-  <div style="width: 80%;margin: auto;text-align: justify;">
-    <p>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-    </p>
-  </div>  
-  
 </ion-content>
-   
-     
 
+<ion-footer class="ion-no-border">
+  <app-footer></app-footer>
+</ion-footer>

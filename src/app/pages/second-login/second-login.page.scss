@@ -1,5 +1,5 @@
 ion-row {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 ion-fab-button {
@@ -24,4 +24,18 @@ ion-img:active {
     margin-top: 10px;
 }
 
+.header-title{
+    text-align: center;
+    margin: 50px 0;
+    z-index: 100;
+    position: relative;
+    color: white;
+    font-weight: 600;
+}
 
+.btn-second {
+    height: 30px;
+    width: 62%;
+    margin: 4px auto;
+    --border-radius: 5px;
+}

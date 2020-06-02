@@ -5,7 +5,7 @@ import { AuthGuard } from '@core/guards/auth/auth.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'second-login',
     loadChildren: () => import('@pages/second-login/second-login.module').then( m => m.SecondLoginPageModule)
@@ -22,7 +22,6 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [AuthGuard],
     loadChildren: () => import('@pages/home/home.module').then( m => m.HomePageModule)
   },
   {
@@ -80,6 +79,13 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'logout',
+    loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
+  },  {
+    path: 'plan-social',
+    loadChildren: () => import('./pages/plan-social/plan-social.module').then( m => m.PlanSocialPageModule)
   }
 
 ];

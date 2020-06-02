@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
+import { Sim } from '@ionic-native/sim/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -20,6 +20,15 @@ import { environment } from '../environments/environment';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptorService } from '@services/interceptors/auth-interceptor/auth-interceptor.service';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { AES256 } from '@ionic-native/aes-256/ngx';
+import { MenuModule } from '@components/menu/menu.module';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -32,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    MenuModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
@@ -43,7 +53,9 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
   ],
   providers: [
     StatusBar,
@@ -52,12 +64,19 @@ export function createTranslateLoader(http: HttpClient) {
     AndroidPermissions,
     SplashScreen,
     AppVersion,
+    CallNumber,
+    Geolocation,
+    SocialSharing,
+    Camera,
+    File,
+    Sim,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    AES256
   ],
   bootstrap: [AppComponent]
 })

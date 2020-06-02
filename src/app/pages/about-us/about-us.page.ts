@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
-
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.page.html',

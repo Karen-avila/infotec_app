@@ -1,26 +1,31 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button style="color: #AD915F;"></ion-menu-button>
+      <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/notifications']" style="color: #AD915F;">
+      <ion-button [routerLink]="['/notifications']" color="secondary">
         <ion-icon name="notifications"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+<app-header [svg]="true" [notifications]="true" [menu]="true"></app-header>
 
 <ion-content>
 
   <div class="ion-text-center">
-    <ion-text style="color: #A3976A; font-size: small;">Último ingreso 14 ene. 2020 10:30:06 a.m.</ion-text>
+    <ion-text style="color: #A3976A; font-size: small;">{{ 'Last login' | translate}} {{this.loginInfo?.lastLogin[2]}}/{{this.loginInfo?.lastLogin[1]}}/{{this.loginInfo?.lastLogin[0]}}</ion-text>
   </div>
 
-  <br>
 
-  <app-card-account style="margin: auto" [accounts]="accounts"></app-card-account>
-
+  <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts"></app-card-account>
+  <ion-fab horizontal="end" edge>
+    <ion-fab-button style="position: relative;top: -30px;" color="primary" size="medium">
+      <ion-icon name="create-outline"></ion-icon>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-fab-button>
+  </ion-fab>
   <ion-tabs>
 
     <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.6rem;" fill="clear" shape="round" size="small">
@@ -28,31 +33,29 @@
     </ion-button>
 
     <ion-img (click)="scannerQRCode()" style="width: 4rem; height: 4rem; margin: auto; margin-bottom: -1rem; z-index: 2;" src="./assets/btn-codi.png"></ion-img>
-
     <ion-tab-bar slot="bottom" style="z-index: 1;">
   
       <ion-tab-button (click)="presentModal()">
-        <ion-icon src="assets/icon/clipboard.svg"></ion-icon>
+        <ion-icon name="document-text-outline"></ion-icon>
         <ion-label translate>Movements</ion-label>
       </ion-tab-button>
 
       <ion-tab-button [routerLink]="['/transfers']">
-        <ion-icon src="assets/icon/transaction.svg"></ion-icon>
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
         <ion-label translate>Transfer</ion-label>
       </ion-tab-button>
   
       <ion-tab-button [routerLink]="['/collect-codi']">
-        <ion-icon name="wallet"></ion-icon>
+        <ion-icon name="cash-outline"></ion-icon>
         <ion-label translate>Charge</ion-label>
       </ion-tab-button>
 
       <ion-tab-button [routerLink]="['/postponed']">
-        <ion-icon src="assets/icon/posponer.svg"></ion-icon>
+        <ion-icon name="time-outline"></ion-icon>
         <ion-label translate>Postponed</ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>
-
     
   </ion-tabs>
 
