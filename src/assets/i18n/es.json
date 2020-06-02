@@ -31,6 +31,7 @@
     "Please wait...": "Por favor espera...",
     "Pay with CoDi": "Pagar con CoDi",
     "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
+    "This transfer does not generate charge":"Esta transferencia no genera comisión",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -122,6 +123,7 @@
     "Made a deposit for": "Realizó un depósito por",
     "Made a withdrawal for": "Realizó un retiro por",
     "Transfer made": "Transferencia realizada",
+    "Trasfer Success": "Transferencia Exitosa",
     "Transfer received": "Transferencia recibida",
     "Made a transfer for":"Realizó una transferencia por",
     "Received a transfer for":"Recibió una transferencia por",
@@ -129,4 +131,5 @@
     "About Us": "Nosotros",
     "Back": "Atrás",
     "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado. Seleccione otro."
+    
 }

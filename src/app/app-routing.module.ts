@@ -53,6 +53,11 @@ const routes: Routes = [
     loadChildren: () => import('@pages/transfers/transfers.module').then( m => m.TransfersPageModule)
   },
   {
+    path: 'success',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@pages/transfers/success/success.module').then( m => m.SuccessPageModule)
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
