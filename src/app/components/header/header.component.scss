@@ -42,6 +42,14 @@ ion-header {
         background-position-y: bottom;
     }
 }
+// @media (max-width: 656px) {
+//     ion-img {
+//         width: 30%;
+//     margin: auto;
+//     position: relative !important;
+//     padding: 72px 0 0;
+//     }
+// }
 @media (max-width: 656px) {
     ion-img {
         padding: 15% 41% 0 !important;

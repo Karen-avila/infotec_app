@@ -1,8 +1,28 @@
 .ion-text-center{
     margin: 5px 0;
 }
+
+.three-points{
+    font-size: 85px; 
+    margin: -15px auto;
+    color: grey; 
+    width: 100%;
+}
+
+ion-icon {
+    margin: 0;
+    font-size: 30px;
+}
+
 @media(min-width:350px) {
     .ion-text-center:nth-child(2) {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width:340px) {
+
+    .three-points{
+        margin: -25px auto;
     }
 }

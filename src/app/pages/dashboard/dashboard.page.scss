@@ -149,19 +149,8 @@ ion-tab-bar{
   height: 65px;
 }
 
-.three-points{
-  font-size: 85px; 
-  margin: -15px auto;
-  color: grey; 
-  width: 100%;
-}
-
 @media(max-width:340px) {
   .ion-text-center {
     margin: -2px 0;
-  }
-
-  .three-points{
-    margin: -25px auto;
   }
 }
