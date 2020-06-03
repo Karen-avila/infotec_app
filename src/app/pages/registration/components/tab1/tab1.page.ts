@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController, AlertController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
+import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab1',
@@ -20,20 +23,19 @@ export class Tab1Page implements OnInit {
   constructor(
       private router:Router, 
       public formBuilder: FormBuilder, 
-      public menuCtrl: MenuController
+      public menuCtrl: MenuController,
+      public storage: Storage,
+      public alertController: AlertController
     ) { 
     this.registerForm = formBuilder.group({
       username: [""],
       password: ["", [Validators.required, Validators.minLength(8)]],
-      confirmPassword : ["", [Validators.required, Validators.minLength(8)]],
+      confirmPassword : ["123456789", [Validators.required, Validators.minLength(8)]],
       accountNumber: ["", Validators.compose([
         Validators.required, 
         CustomValidators.ValidateAccountNumber
       ])],
-      email: ["", Validators.compose([
-        Validators.required, 
-        CustomValidators.ValidateEmail
-      ])],
+      email: ["", CustomValidators.ValidateEmail],
       firstName: ["", Validators.compose([
         Validators.required, 
         Validators.minLength(3)
@@ -52,12 +54,24 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
+      this.storage.get('registration').then( data => {
+        this.registerForm.patchValue(data);
+      } );
   }
 
-  register(){
-    console.log("hacer peticion de registro")
-    this.router.navigateByUrl('/registration/tab2'); //second-login
-    // this.presentAlertPrompt();
+  register() {
+
+    const form = {...this.registerForm.value};
+    delete form.confirmPassword;
+
+    this.storage.set('registration', form).then( () => {
+      this.router.navigateByUrl('/registration/tab2'); //second-login
+    } );
+    
+  }
+
+  hello() {
+    console.log('Hello Word');
   }
 
   viewRePassword(){

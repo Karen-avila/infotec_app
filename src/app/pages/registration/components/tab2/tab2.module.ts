@@ -10,6 +10,7 @@ import { Tab2Page } from './tab2.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderModule } from '@components/header/header.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule,
-    HttpClientModule
+    HttpClientModule,
+    HeaderModule
   ],
   declarations: [Tab2Page]
 })

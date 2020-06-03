@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
@@ -10,7 +10,15 @@ import { accountTransfer } from '@pages/transfers/transfers.page';
 })
 export class ClientsService {
 
-  constructor(private httpClient: HttpClient, private storage: Storage) { }
+  private httpWithoutInterceptors: HttpClient;
+
+  constructor(
+    private httpClient: HttpClient, 
+    private storage: Storage,
+    private handler: HttpBackend,
+  ) { 
+    this.httpWithoutInterceptors = new HttpClient(this.handler);
+  }
 
   public getClient(clientId: string): Observable<any> {
     this.storage.set('clientId', clientId);
@@ -87,4 +95,25 @@ export class ClientsService {
     return this.httpClient.delete(`${ENDPOINTS.beneficiaryext}/${id}`);
   }
   //#endregion
+  
+  public postRegistration(data: any) {
+    return this.httpClient.post(`${ENDPOINTS.registration}`, data);
+  }
+
+  public postConfirmRegistration(data: any) {
+    return this.httpClient.post(`${ENDPOINTS.registration}/user`, data);
+  }
+
+  public postRegistrationSelfie(clientId: string, formData: FormData, token: string) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Fineract-Platform-TenantId': 'default',
+        Authorization: `Basic ${token}`
+      })
+    };
+    
+    return this.httpWithoutInterceptors.post(`${ENDPOINTS.clients}/${clientId}/images`, formData, httpOptions);
+  }
+  
 }
