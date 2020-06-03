@@ -81,8 +81,7 @@ export class TransfersPage implements OnInit {
   ) {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
-      transferDescription: ['', Validators.required],
-      reference: ['']
+      transferDescription: ['', Validators.required]
     });
     this.initialize();
   }
@@ -228,8 +227,7 @@ export class TransfersPage implements OnInit {
     transferSuccess.accountNumber = this.accountSelected.accountNumber;
     transferSuccess.clientName = this.accountSelected.clientName;
     transferSuccess.transferAmount = form.transferAmount;
-    transferSuccess.concepto = form.transferDescription;
-    transferSuccess.referencia = form.reference;
+    transferSuccess.referencia = form.transferDescription;
 
     console.log(JSON.stringify(transfer));
 
@@ -266,10 +264,10 @@ export class TransfersPage implements OnInit {
       })
       .then((response: any) => {
         this.accounts = [];
+        //TODO que este configurable el muestreo de datos de loans
         let data = response.savingsAccounts;
-        console.log("cuentas", response);
         data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, element.accountType.id);
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
           this.accounts.push(account);
         });
       })
