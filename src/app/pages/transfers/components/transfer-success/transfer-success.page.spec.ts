@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SuccessComponent } from './success.page';
+import { TransferSuccessPage } from './transfer-success.page';
 
-describe('SuccessComponent', () => {
-  let component: SuccessComponent;
-  let fixture: ComponentFixture<SuccessComponent>;
+describe('TransferSuccessPage', () => {
+  let component: TransferSuccessPage;
+  let fixture: ComponentFixture<TransferSuccessPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SuccessComponent ],
+      declarations: [ TransferSuccessPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SuccessComponent);
+    fixture = TestBed.createComponent(TransferSuccessPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

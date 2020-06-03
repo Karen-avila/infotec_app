@@ -14,6 +14,7 @@ import { CardAccount } from '@globals/classes/card-account';
 import { UserService } from '@services/user/user.service';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import * as CustomValidators from '@globals/custom.validator';
+import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
 
 export class accountTransfer {
   fromOfficeId: number;
@@ -92,6 +93,7 @@ export class TransfersPage implements OnInit {
 
   private initialize() {
     this.flag = false;
+    this.isAccountSelected = false;
 
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
@@ -207,7 +209,8 @@ export class TransfersPage implements OnInit {
 
     transfer.fromOfficeId = this.loginInfo.officeId;
     transfer.fromClientId = this.loginInfo.clientId;
-    transfer.fromAccountType = this.userService.accountMovementsSelected.accountType;
+    //TODO revisar porque viene accountType 1 para una savings account
+    transfer.fromAccountType = 2//this.userService.accountMovementsSelected.accountType;
     //TODO revisar aca porque tiene que ser el accountId
     transfer.fromAccountId = Number(this.userService.accountMovementsSelected.accountNo);
     console.log("cuenta a transferir", this.accountSelected);
@@ -220,18 +223,41 @@ export class TransfersPage implements OnInit {
     transfer.transferAmount = form.transferAmount;
     transfer.transferDescription = form.transferDescription;
 
-    console.log(JSON.stringify(transfer));;
+    //TODO mejorar cuando sepamos que se necesita
+    let transferSuccess: any = {};
+    transferSuccess.accountNumber = this.accountSelected.accountNumber;
+    transferSuccess.clientName = this.accountSelected.clientName;
+    transferSuccess.transferAmount = form.transferAmount;
+    transferSuccess.concepto = form.transferDescription;
+    transferSuccess.referencia = form.reference;
 
+    console.log(JSON.stringify(transfer));
 
     this.clientsService.accountTransfers(transfer).toPromise()
-      .then(response => {
+      .then((response: any) => {
         console.log(response)
+        transferSuccess.folio = response.resourceId
+        this.openSuccessModal(transferSuccess);
       })
       .catch(err => {
         console.log(err)
       })
   }
 
+  private async openSuccessModal(transfer: any) {
+    const modal = await this.modalController.create({
+      component: TransferSuccessPage,
+      componentProps: {
+        'type': 'Create',
+        ...transfer,
+      }
+    });
+    modal.onDidDismiss().then(() => {
+      this.initialize();
+    });
+
+    return await modal.present();
+  }
   // traemos los accounts del cliente
   private getAccounts(): void {
     this.storage.get('clientId')

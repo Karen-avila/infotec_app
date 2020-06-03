@@ -158,7 +158,6 @@ export class ManageAccountPage implements OnInit {
   }
 
   async evaluateBank(x: string) {
-    console.log("evaluate bank", x);
     let possibleBank = x.substring(0, 4);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
 
