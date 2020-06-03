@@ -115,5 +115,8 @@ export class ClientsService {
     
     return this.httpWithoutInterceptors.post(`${ENDPOINTS.clients}/${clientId}/images`, formData, httpOptions);
   }
+ public getSocialPrograms(): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.socialPrograms}`);
+  }
   
 }

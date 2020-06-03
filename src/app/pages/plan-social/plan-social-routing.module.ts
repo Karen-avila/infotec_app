@@ -7,7 +7,17 @@ const routes: Routes = [
   {
     path: '',
     component: PlanSocialPage
+  },
+ 
+  {
+    path: 'program-details',
+    loadChildren: () => import('./components/program-details/program-details/program-details.module').then( m => m.ProgramDetailsPageModule)
+  },  {
+    path: 'program-more-info',
+    loadChildren: () => import('./components/program-details/program-more-info/program-more-info/program-more-info.module').then( m => m.ProgramMoreInfoPageModule)
   }
+
+
 ];
 
 @NgModule({
@@ -15,3 +25,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class PlanSocialPageRoutingModule {}
+ 
