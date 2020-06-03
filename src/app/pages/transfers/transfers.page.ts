@@ -6,48 +6,14 @@ import { ManageAccountPage } from './components/manage-account/manage-account.pa
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ClientsService } from '@services/clients/clients.service';
 import { Storage } from '@ionic/storage';
-import { BeneficiarieTPT } from '@globals/interfaces/beneficiarie-tpt';
+import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { UserService } from '@services/user/user.service';
 import { LoginInfo } from '@globals/interfaces/login-info';
-
-export class AccountType {
-  id: number;
-  code: string;
-  value: string;
-}
-
-export class BeneficiareTPT {
-  id: number;
-  name: string;
-  officeName: string;
-  clientName: string;
-  accountType: AccountType;
-  accountNumber: string;
-  transferLimit: number;
-  color: '' | 'light';
-  selected: boolean;
-
-  bankId: string = "1";
-  officeId: number;
-  clientId: number;
-  accountId: number;
-}
-
-// export class SavedAccount {
-//   id: number;
-//   name: string;
-//   accountNo: string;
-//   officeName: string;
-//   clientName: string;
-//   productType: string;
-//   color: '' | 'light';
-//   selected: boolean;
-// }
+import * as CustomValidators from '@globals/custom.validator';
 
 export class accountTransfer {
   fromOfficeId: number;
@@ -60,9 +26,10 @@ export class accountTransfer {
   toAccountType: number;
   toAccountId: number;
 
+  //TODO cambiar porque se va a llenar desde le backend
   dateFormat: string = "dd MMMM yyyy";
   locale: string = "es-mx";
-  transferDate: string = "01 Agosto 2011";
+  transferDate: string = "02 Junio 2020";
 
   transferAmount: number;
   transferDescription: string;
@@ -86,10 +53,8 @@ export class TransfersPage implements OnInit {
   public accounts: CardAccount[] = [
   ];
 
-  public savedAccountsTPT: BeneficiareTPT[] = [
+  public savedAccounts: Beneficiarie[] = [
   ]
-  public savedAccountsEXT: BeneficiareTPT[] = [
-  ];
 
   public transferForm: FormGroup;
 
@@ -98,7 +63,9 @@ export class TransfersPage implements OnInit {
   public personalInfo: PersonalInfo;
   private loginInfo: LoginInfo;
 
-  private accountSelected: BeneficiareTPT;
+  private accountSelected: Beneficiarie;
+
+  public flag: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -114,71 +81,51 @@ export class TransfersPage implements OnInit {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
       transferDescription: ['', Validators.required],
-      reference: ['', Validators.required]
+      reference: ['']
     });
-    this.initializeApp();
+    this.initialize();
   }
 
   ngOnInit() {
-    this.getAccounts();
-    this.resolveALL();
   }
 
-  
-  private initializeApp() {
-    this.clientsService.getPersonalInfo()
-      .then((data: PersonalInfo) => {
-        this.personalInfo = data;
-        console.log("personal-info", data);
-        return this.clientsService.getLoginInfo();
-      })
-      .then((data: LoginInfo) => {
-        this.loginInfo = data;
-        console.log(data);
-        this.getAccounts();
-      });
-  }
 
-  private resolveALL() {
+  private initialize() {
+    this.flag = false;
+
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
       //TODO cambiar para que traiga beneficiares ext
-      this.clientsService.getBeneficiariesTPT().toPromise()
+      this.clientsService.getBeneficiariesEXT().toPromise(),
+
+      this.clientsService.getPersonalInfo(),
+      this.clientsService.getLoginInfo()
     ]
     )
       .then(res => {
         console.log(res);
+        this.savedAccounts = [...res[0], ...res[1]];
+        this.userService.beneficiaries = this.savedAccounts;
+        this.personalInfo = res[2];
+        this.loginInfo = res[3];
 
-        this.savedAccountsTPT = res[0];
-        this.userService.beneficiaries = res[0];
-        // res[1].forEach(element => {
-        //   let cuenta: SavedAccount = new SavedAccount();
-        //   cuenta.id = element.id;
-        //   cuenta.bankId = element.bankId;
-        //   cuenta.accountNo = element.accountNumber;
-        //   cuenta.owner = element.clientName;
-        //   cuenta.productType = element.accountType.id.toString();
-        //   this.savedAccounts.push(cuenta);
-        // })
-
+        this.getAccounts();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => this.flag = true)
   }
 
   get content(): any {
     return document.querySelector('#content') as any;
   }
 
-  identify(index: number, item: BeneficiareTPT) {
+  identify(index: number, item: Beneficiarie) {
     return item.accountNumber;
   }
 
-  public onEdit() {
-
-  }
-
-
-  async onMangeAccount(index?: number) {
+  async onManageAccount(index?: number) {
     console.log(index);
 
     if (index === undefined) {
@@ -189,7 +136,7 @@ export class TransfersPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(() => {
-        this.resolveALL();
+        this.initialize();
       });
       return await modal.present();
     } else {
@@ -204,33 +151,29 @@ export class TransfersPage implements OnInit {
               component: ManageAccountPage,
               componentProps: {
                 'type': 'Update',
-                ...this.savedAccountsTPT[index]
+                ...this.savedAccounts[index]
               }
             });
             modal.onDidDismiss().then(() => {
-              this.resolveALL();
+              this.initialize();
             });
             return await modal.present();
           });
       })
     }
-
-
-
   }
 
-  async onDelete(id) {
-    console.log("ID a borrar", id);
+  async onDelete(id, accountNumber, index) {
     const alert = await this.alertController.create({
       header: 'Eliminar',
-      message: 'Deséa eliminar la cuenta de banco?',
+      message: 'Desea eliminar la cuenta de banco?',
       buttons: [
         'Cancelar',
         {
           text: 'Aceptar',
           handler: () => {
             console.log('Confirm Ok');
-            this.deleteBeneficiarie(id);
+            this.deleteBeneficiarie(id, accountNumber, index);
           }
         }
       ]
@@ -239,9 +182,9 @@ export class TransfersPage implements OnInit {
     await alert.present();
   }
 
-  public selectAccount(index: number, item: BeneficiareTPT) {
+  public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccountsTPT.find((account: BeneficiareTPT) => account.selected);
+    const prevSelected = this.savedAccounts.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
@@ -250,6 +193,9 @@ export class TransfersPage implements OnInit {
     item.color = 'light';
     this.accountSelected = item;
     this.isAccountSelected = true;
+    this.transferForm.clearValidators();
+    this.transferForm.setValidators([CustomValidators.ValidateTransferAmountLimit('transferAmount', this.accountSelected.transferLimit)])
+    this.transferForm.reset();
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
@@ -262,8 +208,10 @@ export class TransfersPage implements OnInit {
     transfer.fromOfficeId = this.loginInfo.officeId;
     transfer.fromClientId = this.loginInfo.clientId;
     transfer.fromAccountType = this.userService.accountMovementsSelected.accountType;
+    //TODO revisar aca porque tiene que ser el accountId
     transfer.fromAccountId = Number(this.userService.accountMovementsSelected.accountNo);
     console.log("cuenta a transferir", this.accountSelected);
+
     transfer.toOfficeId = this.accountSelected.officeId;
     transfer.toClientId = this.accountSelected.clientId;
     transfer.toAccountType = this.accountSelected.accountType.id;
@@ -305,12 +253,21 @@ export class TransfersPage implements OnInit {
   }
 
 
-  public deleteBeneficiarie(id): void {
-    this.clientsService.deleteBeneficiarieTPT(id)
-      .toPromise()
-      .then((response: any) => {
-        console.log(response);
-      })
+  public deleteBeneficiarie(id, accountNumber: string, index): void {
+
+    let accountClassificaction = 'TPT' || 'EXT';
+    accountClassificaction = (accountNumber.length == 9 || accountNumber.length == 11) ? 'TPT' : 'EXT';
+    let promise: any;
+    if (accountClassificaction == 'TPT') {
+      promise = this.clientsService.deleteBeneficiarieTPT(id)
+    }
+    if (accountClassificaction == 'EXT') {
+      promise = this.clientsService.deleteBeneficiarieEXT(id)
+    }
+    promise.toPromise().then((response: any) => {
+      console.log(response);
+      this.savedAccounts.splice(index, 1);
+    })
       .catch(err => {
         console.log(err)
       })

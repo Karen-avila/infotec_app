@@ -12,4 +12,7 @@ export const ENDPOINTS = {
     accountTransfers: `${environment.baseUrl}/accounttransfers?type="tpt"`,
     banks: `${environment.baseUrl}/codes/BANKS/options`,
     beneficiaryAccountTypes: `${environment.baseUrl}/codes/BENEFICIARY_ACCOUNT_TYPE/options`,
+    registration: `${environment.baseUrl}/registration`,
+    office: `${environment.baseUrl}/office`,
+    codesOptions: `${environment.baseUrl}/codes`,
 }

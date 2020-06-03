@@ -27,6 +27,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AES256 } from '@ionic-native/aes-256/ngx';
 import { MenuModule } from '@components/menu/menu.module';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -51,7 +53,9 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
   ],
   providers: [
     StatusBar,

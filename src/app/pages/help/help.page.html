@@ -18,29 +18,9 @@
     </p>
   </div>
   <ion-list class="container-big">
-    <ion-item routerLink="answer">
+    <ion-item *ngFor="let item of questions" routerLink="answer" [queryParams]="{question: item.name, answer: item.description}">
       <ion-label>
-        <h4>¿Como solicitar una nueva cuenta de crédito?</h4>
-      </ion-label>
-    </ion-item>
-    <ion-item routerLink="answer">
-      <ion-label>
-        <h4>¿Dónde puedo ver información sobre mi perfil?</h4>
-      </ion-label>
-    </ion-item>
-    <ion-item routerLink="answer">
-      <ion-label>
-        <h4>¿Dónde puedo ver las transacciones de mi cuenta de ahorros?</h4>
-      </ion-label>
-    </ion-item>
-    <ion-item routerLink="answer">
-      <ion-label>
-        <h4>¿Cuál es el uso de un código QR?</h4>
-      </ion-label>
-    </ion-item>
-    <ion-item routerLink="answer">
-      <ion-label>
-        <h4>¿Cómo hacer un pago para una cuenta de crédito?</h4>
+        <h4>{{ item.name }}</h4>
       </ion-label>
     </ion-item>
   </ion-list>
