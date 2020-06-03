@@ -1,9 +1,32 @@
-<ion-header>
+<!-- <ion-header translucent>
   <ion-toolbar>
-    <ion-title>plan-social</ion-title>
+    <ion-title color="secondary">Movimientos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="secondary" (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+<app-header [svg]="true" [dismissButton]="true" [title]="'Programas Sociales'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
+<ion-content *ngIf="flag">
+  <!-- List of Text Items -->
 
-<ion-content>
-
+  <ion-label *ngIf="!programs || programs.length==0 ">
+    <ion-title size="small">{{ 'No hay programas' | translate }}</ion-title>
+  </ion-label>
+  <ion-list style="width: 90%;margin: auto;">
+    <ion-item *ngFor="let item of programs" (click)="goToDetails(item)">
+   <ion-label>
+ {{item.name}}
+     </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
+

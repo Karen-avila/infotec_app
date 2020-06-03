@@ -15,4 +15,5 @@ export const ENDPOINTS = {
     registration: `${environment.baseUrl}/registration`,
     office: `${environment.baseUrl}/office`,
     codesOptions: `${environment.baseUrl}/codes`,
+  socialPrograms: `${environment.baseUrl}/socialprogram`,
 }

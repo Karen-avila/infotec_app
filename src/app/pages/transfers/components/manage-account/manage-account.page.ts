@@ -111,18 +111,21 @@ export class ManageAccountPage implements OnInit {
         //Cargamos catalogo de beneficiary account types
         this.beneficiaryAccountTypes = response[2].codeValues;
 
-        const { id, name, alias, accountNumber, transferLimit, officeName, accountType } = this.navParams.data;
+        const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
 
         if (this.type === 'Create') {
           return;
         }
 
+        //BORRAR cuando no haya problemas con 9 digitos u 11
+        let accountFixed = accountNumber.length == 9 ? "00" + accountNumber : accountNumber;
         this.form.patchValue({
           id: id,
           name: name,
           alias: alias,
-          accountNumber: "00" + accountNumber.replace(/ /gi, ''),
+          accountNumber: accountFixed.replace(/ /gi, ''),
           transferLimit: transferLimit,
+          bankId: bankEntity
         });
 
         this.officeNameFound = officeName;
@@ -158,10 +161,9 @@ export class ManageAccountPage implements OnInit {
   }
 
   async evaluateBank(x: string) {
-    console.log("evaluate bank", x);
     let possibleBank = x.substring(0, 4);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
-
+    console.log("valor account number", x)
     // TODO borrar condicion de 9 cuando las account number sean de 11
     if (x.length == 11 || x.length == 9) {
       this.searchButtonEnabled = true;
@@ -175,6 +177,7 @@ export class ManageAccountPage implements OnInit {
       this.form.controls['name'].enable();
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
     } else {
+      console.log("else furioso")
       this.form.controls['name'].disable();
       this.form.controls['name'].reset();
 
@@ -258,7 +261,8 @@ export class ManageAccountPage implements OnInit {
         "alias": form.alias,
         "accountNumber": form.accountNumber,
         "bankEntity": form.bankId,
-        "accountType": 1,
+        //siempre saving
+        "accountType": 2,
         "transferLimit": form.transferLimit
       }
       promise = this.clientsService.postBeneficiariesEXT(beneficiary);
@@ -267,14 +271,13 @@ export class ManageAccountPage implements OnInit {
     if (this.type == 'Update' && accountClassificaction == 'EXT') {
       // aca metemos un beneficiario TPT a mifos
       let beneficiary = {
-        "locale": "es",
         "name": form.name,
         // TODO chequear si el alias puede ser updateable
         //"alias": form.alias,
         "transferLimit": form.transferLimit
       }
-
-      promise = this.clientsService.putBeneficiariesEXT(beneficiary);
+      console.log(JSON.stringify(beneficiary));
+      promise = this.clientsService.putBeneficiariesEXT(beneficiary, form.id);
     }
 
     promise.toPromise().then(res => {
