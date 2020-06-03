@@ -4,27 +4,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
+import { TransferSuccessPageRoutingModule } from './transfer-success-routing.module';
 
+import { TransferSuccessPage } from './transfer-success.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
-import { SuccessComponent } from './success.page';
-import { SuccessPageRoutingModule } from './success-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SuccessPageRoutingModule,
+    TransferSuccessPageRoutingModule,
+    IonicModule,
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule,
     HeaderModule,
     FooterModule
   ],
-  declarations: [SuccessComponent],
-  entryComponents: [SuccessComponent]
+  declarations: [TransferSuccessPage],
+  entryComponents: [TransferSuccessPage]
 })
-export class SuccessPageModule {}
+export class TransferSuccessPageModule {}
