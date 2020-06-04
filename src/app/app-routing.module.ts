@@ -48,6 +48,11 @@ const routes: Routes = [
     loadChildren: () => import('@pages/codi/components/collect-codi/collect-codi.module').then(m => m.CollectCodiPageModule)
   },
   {
+    path: 'soft-token',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('@pages/soft-token/soft-token.module').then(m => m.SoftTokenPageModule)
+  },
+  {
     path: 'transfers',
     canActivate: [AuthGuard],
     loadChildren: () => import('@pages/transfers/transfers.module').then(m => m.TransfersPageModule)
@@ -92,7 +97,12 @@ const routes: Routes = [
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
   },
-  { path: "**", redirectTo: "not-found" }
+  { path: "**", redirectTo: "not-found" },
+  {
+    path: 'soft-token',
+    loadChildren: () => import('./pages/soft-token/soft-token.module').then( m => m.SoftTokenPageModule)
+  }
+
 
 ];
 

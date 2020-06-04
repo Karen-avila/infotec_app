@@ -32,6 +32,8 @@
     "Pay with CoDi": "Pagar con CoDi",
     "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
     "This transfer does not generate charge":"Esta transferencia no genera comisión",
+    "Your operational soft token is:":"Tu clave dinámica para realizar tu operación es:",
+    "soft-token": "Clave Dinámica",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -137,6 +139,7 @@
     "Account already registered": "Cuenta ya registrada",
     "Create Beneficiarie": "Crear Beneficiario",
     "Update Beneficiarie": "Modificar Beneficiario",
-    "Amount greather than transfer limit": "Monto mayor al límite de transferencia"
+    "Amount greather than transfer limit": "Monto mayor al límite de transferencia",
+    "finish":"terminar"
     
 }

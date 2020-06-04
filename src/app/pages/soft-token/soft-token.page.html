@@ -1,0 +1,43 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>soft-token</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+<app-header [svg]="true" [home]="true" [title]="'soft-token'"></app-header>
+
+
+<ion-content>
+
+  <div class="container-small" style="text-align: center;">
+    <span translate class="ion-text-center" style="font-size: 18px; font-weight: 700; color: #545454">{{ 'Your operational soft token is:' | translate}}
+    </span>
+  
+
+  <div style="margin: 40px 0;">
+    <span style="font-size: 40px;font-weight: 700;color: #14322c;padding: 10px;border-radius: 10px;border: 2px solid #14322c;">739274</span>
+  </div>
+
+  <div class="base-timer">
+    <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g class="base-timer__circle">
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
+      </g>
+    </svg>
+
+  </div>
+
+  <ion-row>
+    <ion-col align-self-center class="text-center">
+      <ion-button [routerLink]="['/registration']" expand="block" style="text-transform: uppercase;" color="primary">{{ 'finish' | translate }}
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</div>
+
+
+</ion-content>
+
+
+<ion-footer class="ion-no-border">
+  <app-footer></app-footer>
+</ion-footer>
