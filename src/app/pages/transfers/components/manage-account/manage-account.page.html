@@ -1,4 +1,4 @@
-<ion-header translucent>
+<!-- <ion-header translucent>
   <ion-toolbar>
     <ion-title color="secondary" translate>{{ type }} Account</ion-title>
     <ion-buttons slot="end">
@@ -7,70 +7,88 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
+<app-header [svg]="true" [dismissButton]="true" title="{{ type }} Beneficiarie"
+  [img]="'/assets/header-icons/crear-cuenta.png'"></app-header>
 <ion-content>
+  <ion-card *ngIf="flag">
 
-  <ion-card>
+    <form class="container-small" [formGroup]="form" (ngSubmit)="submit()">
 
-    <ion-card-header>
-      <div style="text-align: center;">
-        <ion-item>
-          <ion-label style="text-align: center;"> <ion-icon color="secondary" style="font-size: 2.1rem;" src="assets/icon/clipboardv2.svg"></ion-icon></ion-label>
-        </ion-item>
-      </div>
-    </ion-card-header>
-  
-    <ion-card-content>
-    <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <ion-list>
 
         <ion-item>
-          <ion-label position="stacked">No. de tarjeta / Cuenta / CLABE <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input formControlName="accountNo" required inputmode="numeric" type="number"></ion-input>
+          <ion-label position="stacked">No. de tarjeta / Cuenta / CLABE <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input formControlName="accountNumber" required inputmode="text" type="text"></ion-input>
+          <ion-icon *ngIf="searchButtonEnabled" (click)="search()"
+            style=" position: relative; top: 32px; left: 6px; font-size: 27px; margin: 0px;" name="eye" slot="end">
+          </ion-icon>
         </ion-item>
-        
-        <ion-item>
-          <ion-label position="stacked">Nombre del beneficiario <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input formControlName="owner" required inputmode="text" type="text"></ion-input>
-        </ion-item>
+        <app-input-error [control]="form.controls.accountNumber"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked">Tipo de producto <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select formControlName="productType" cancel-text="Cancelar" [interfaceOptions]="{header: 'Tipo de producto'}" interface="action-sheet" placeholder="Selecciona una opción">
-            <ion-select-option value="2">Tarjeta de Débito</ion-select-option>
-            <ion-select-option value="1">Tarjeta de Crédito</ion-select-option>
-          </ion-select>
+          <ion-label position="stacked">Nombre del beneficiario <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-input formControlName="name" required inputmode="text" type="text"></ion-input>
         </ion-item>
+        <app-input-error [control]="form.controls.name"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked">Banco / Institución <ion-text color="danger">*</ion-text></ion-label>
-          <ion-select formControlName="bankId" cancel-text="Cancelar" [interfaceOptions]="{header: 'Banco / Institución'}" interface="action-sheet" placeholder="Selecciona una opción">
-            <ion-select-option value="1">BBVA Bancomer</ion-select-option>
-            <ion-select-option value="2">HSBC</ion-select-option>
-            <ion-select-option value="3">Santander</ion-select-option>
-            <ion-select-option value="4">Scotiabank</ion-select-option>
-            <ion-select-option value="5">Banorte</ion-select-option>
+          <ion-label position="stacked">Alias
+          </ion-label>
+          <ion-input formControlName="alias" inputmode="text" type="text"></ion-input>
+        </ion-item>
+        <app-input-error [control]="form.controls.alias"></app-input-error>
+
+        <ion-item>
+          <ion-label position="stacked">Tipo de producto <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select formControlName="accountType" cancel-text="Cancelar"
+            [interfaceOptions]="{header: 'Tipo de producto'}" interface="action-sheet"
+            placeholder="Selecciona una opción">
+            <ion-select-option *ngFor="let item of beneficiaryAccountTypes" value="{{item.id}}">{{item.name}}
+            </ion-select-option>
           </ion-select>
         </ion-item>
-  
+        <app-input-error [control]="form.controls.accountType"></app-input-error>
+
         <ion-item>
-          <ion-label position="stacked">Límite de transferencia <ion-text color="danger">*</ion-text></ion-label>
+          <ion-label position="stacked">Banco / Institución <ion-text color="danger">*</ion-text>
+          </ion-label>
+          <ion-select formControlName="bankId" cancel-text="Cancelar"
+            [interfaceOptions]="{header: 'Banco / Institución'}" interface="action-sheet"
+            placeholder="Selecciona una opción">
+            <ion-select-option *ngFor="let item of banks" value="{{item.id}}">{{item.description}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <app-input-error [control]="form.controls.bankId"></app-input-error>
+
+        <ion-item>
+          <ion-label position="stacked">Límite de transferencia <ion-text color="danger">*</ion-text>
+          </ion-label>
           <ion-input formControlName="transferLimit" required inputmode="text" type="text"></ion-input>
         </ion-item>
+        <app-input-error [control]="form.controls.transferLimit"></app-input-error>
 
       </ion-list>
-  
+
       <br>
-  
+      <br>
+      <br>
+
       <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin">Guardar</ion-button>
+        <ion-button [disabled]="form.invalid" expand="block" type="submit" class="ion-no-margin">Guardar</ion-button>
       </div>
     </form>
-
-    <br>
-    </ion-card-content>
 
   </ion-card>
 
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>

@@ -10,6 +10,8 @@ import { PayCodiPage } from './pay-codi.page';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { RoundingButtonModule } from '@components/rounding-button/rounding-butto
     IonicModule,
     PayCodiPageRoutingModule,
     TranslateModule,
-    RoundingButtonModule
+    RoundingButtonModule,
+    HeaderModule,
+    FooterModule
   ],
   providers: [HelpersService],
   declarations: [PayCodiPage]

@@ -3,6 +3,7 @@
 <ion-content>
       <form class="container-small" [formGroup]="form" (ngSubmit)="changeEmail()">
         <ion-item style="margin-top: 15px;">
+          <ion-icon name="mail-outline"></ion-icon>
           <ion-input formControlName="email" placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
         </ion-item>
         <app-input-error [control]="form.controls.email"></app-input-error>

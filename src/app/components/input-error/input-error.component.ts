@@ -5,14 +5,17 @@ import { TranslateService } from '@ngx-translate/core';
 enum ErrorMessages {
   required = 'This field is required',
   min = 'The minimum number is {{value}}',
-  max = 'The miximum number is {{value}}',
+  max = 'The maximum number is {{value}}',
   minlength = 'The minimum length of this field is {{value}}',
   phoneNumber = 'The phone number must contain 10 digits',
   email = 'The email format is invalid',
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
   accountNumber = 'The account number is invalid',
-  password = 'The password format is invalid'
+  password = 'The password format is invalid',
+  beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
+  accountNotFound = 'Account not found',
+  transferAmountLimit = 'Amount greather than transfer limit'
 }
 
 @Component({

@@ -2,10 +2,32 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { ClientsService } from '@services/clients/clients.service';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
+import * as CustomValidators from '@globals/custom.validator';
+import { UserService } from '@services/user/user.service';
+import { Beneficiarie } from '@globals/interfaces/beneficiarie';
+
+export interface Bank {
+  id: number;
+  name: string;
+  position: number;
+  score: number;
+  description: string;
+  active: boolean;
+  mandatory: boolean;
+}
+
+export interface BeneficiaryAccountType {
+  id: number;
+  name: string;
+  position: number;
+  score: number;
+  description: string;
+  active: boolean;
+  mandatory: boolean;
+}
 
 @Component({
   selector: 'app-manage-account',
@@ -16,9 +38,20 @@ export class ManageAccountPage implements OnInit {
 
   public type: 'Create' | 'Update';
 
-  public formGroup: FormGroup;
+  public form: FormGroup;
 
   public personalInfo: PersonalInfo;
+
+  public banks: Bank[] = [];
+
+  public searchButtonEnabled: boolean = false;
+
+  private officeNameFound: string;
+  private accountTypeFound: number;
+
+  public flag: boolean = false;
+
+  public beneficiaryAccountTypes: BeneficiaryAccountType[] = [];
 
   constructor(
     protected modalController: ModalController,
@@ -26,117 +59,231 @@ export class ManageAccountPage implements OnInit {
     protected navParams: NavParams,
     protected formBuilder: FormBuilder,
     protected http: HttpClient,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private userService: UserService
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
     console.log(this.navParams.data);
-    const { id, type, owner, accountNo, productType, bankId, transferLimit } = this.navParams.data;
+    const { type } = this.navParams.data;
 
     this.type = type;
-
-    this.formGroup = this.formBuilder.group({
-      id: [''],
-      accountNo: ['', Validators.required],
-      owner: ['', Validators.required],
-      productType: ['', Validators.required],
-      bankId: ['', Validators.required],
-      transferLimit: ['', Validators.required]
-    });
-
-    if (this.type === 'Create') {
-      return;
-    }
-
-    this.formGroup.patchValue({
-      id: id,
-      accountNo: accountNo.replace(/ /gi, ''),
-      owner,
-      productType,
-      bankId,
-      transferLimit
-    });
   }
 
   private initializeApp() {
-    this.clientsService.getPersonalInfo()
-      .then((data: PersonalInfo) => {
-        this.personalInfo = data;
-      });
+
+    this.form = this.formBuilder.group({
+      id: [''],
+      name: ['', Validators.required],
+      alias: [''],
+      accountType: ['', Validators.required],
+      accountNumber: ['', Validators.compose([
+        Validators.required,
+        // Validators.min(9),
+        //TODO por algun motivo este validador anda mal
+        // Validators.max(19),
+        CustomValidators.ValidateAccountNumberBeneficiaries
+      ])],
+      transferLimit: ['', Validators.required],
+
+      bankId: ['', Validators.required]
+    }, {
+      validator: CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries)
+    });
+
+
+    this.form.controls['accountType'].disable();
+    this.form.controls['bankId'].disable();
+    this.form.controls['name'].disable();
+
+    Promise.all([
+      this.clientsService.getPersonalInfo(),
+      this.clientsService.getBanks().toPromise(),
+      this.clientsService.getBeneficiaryAccountTypes().toPromise()
+    ])
+      .then((response: any[]) => {
+        // Cargamos datos del usuario
+        this.personalInfo = response[0];
+        // Cargamos catalogo de bancos
+        this.banks = response[1].codeValues;
+        //Cargamos catalogo de beneficiary account types
+        this.beneficiaryAccountTypes = response[2].codeValues;
+
+        const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
+
+        if (this.type === 'Create') {
+          return;
+        }
+
+        //BORRAR cuando no haya problemas con 9 digitos u 11
+        let accountFixed = accountNumber.length == 9 ? "00" + accountNumber : accountNumber;
+        this.form.patchValue({
+          id: id,
+          name: name,
+          alias: alias,
+          accountNumber: accountFixed.replace(/ /gi, ''),
+          transferLimit: transferLimit,
+          bankId: bankEntity
+        });
+
+        this.officeNameFound = officeName;
+        this.accountTypeFound = accountType.id;
+
+        this.form.controls['name'].enable();
+        this.form.controls['accountNumber'].disable();
+        this.form.controls['alias'].disable();
+        this.searchButtonEnabled = false;
+
+        this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries.filter(i => i.id != id))])
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => this.flag = true)
+
+    // Si el valor cambia => configuramos las variables necesarias
+    this.form.get("accountNumber").valueChanges.subscribe((x: string) => {
+      this.evaluateAccountType(x);
+      this.evaluateBank(x);
+    })
+  }
+
+  async evaluateAccountType(x: string) {
+    // dinamismo para poner en account type en base al largo seteado en el description
+    const beneficiaryAccountType = this.beneficiaryAccountTypes.filter(u => u.score == x.length && u.active);
+    if (beneficiaryAccountType.length == 1) {
+      this.form.controls['accountType'].setValue(beneficiaryAccountType[0].id.toString(), { onlySelf: true });
+    } else {
+      this.form.controls['accountType'].reset();
+    }
+  }
+
+  async evaluateBank(x: string) {
+    let possibleBank = x.substring(0, 4);
+    const possibleBanks = this.banks.filter(u => u.name == possibleBank);
+    console.log("valor account number", x)
+    // TODO borrar condicion de 9 cuando las account number sean de 11
+    if (x.length == 11 || x.length == 9) {
+      this.searchButtonEnabled = true;
+      return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
+    } else if (x.length == 16) {
+      this.form.controls['bankId'].enable();
+      this.form.controls['name'].enable();
+      this.searchButtonEnabled = false;
+    } else if (x.length == 18) {
+      this.searchButtonEnabled = false;
+      this.form.controls['name'].enable();
+      return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
+    } else {
+      console.log("else furioso")
+      this.form.controls['name'].disable();
+      this.form.controls['name'].reset();
+
+      this.form.controls['bankId'].disable();
+      this.form.controls['bankId'].reset();
+      this.searchButtonEnabled = false;
+    }
   }
 
   public dismissModal() {
     this.modalController.dismiss();
   }
 
-  public getBeneficiareClientId(accountNo?: number): Observable<any> {
-    let headers = new HttpHeaders({
-      "authorization": "Basic " + btoa("mifos:password")
-    })
-    return this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/savingsaccounts/" + accountNo, { headers: headers });
+  async search() {
+    const form = { ...this.form.value };
+    //TODO borrar cuando las accounts number tengan 11 digitos
+    let accountNumber = form.accountNumber.substring(2);
+    this.clientsService.searchAccount(accountNumber)
+      .toPromise()
+      .then((res: Beneficiarie[]) => {
+        console.log(res);
+        if (res.length == 1) {
+          this.officeNameFound = res[0].officeName;
+          this.accountTypeFound = res[0].accountType.id;
+          this.form.controls['name'].setValue(res[0].clientName);
+          this.form.controls['name'].markAsTouched();
+          this.form.controls['name'].enable();
+        } else {
+          this.form.controls['accountNumber'].setErrors({ accountNotFound: true })
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-
-  // getOfficeId(clientId?: number): Observable<any> {
-  //   let headers = new HttpHeaders({
-  //     "authorization": "Basic " + btoa("mifos:password")
-  //   })
-  //   return this.http.get("https://fineract.actionfintech.net/fineract-provider/api/v1/savingsaccounts/" + clientId, { headers: headers });
-  // }
 
   async submit() {
 
-    if (this.formGroup.invalid) { return }
+    const form = { ...this.form.getRawValue() };
 
-    // TODO falta saber cual es el id del banco bienester
-    // aca chequeamos que el banco a ingresar sea el bienestar
-    if (this.formGroup.value.accountNo.length == 11) {
+    console.log("formulario", form);
+    if (this.form.invalid) { return }
+
+    let accountClassificaction = 'TPT' || 'EXT';
+    accountClassificaction = (form.accountNumber.length == 9 || form.accountNumber.length == 11) ? 'TPT' : 'EXT';
+    let promise: any;
+
+    console.log("classification", accountClassificaction);
+
+    if (this.type == 'Create' && accountClassificaction == 'TPT') {
       // aca metemos un beneficiario TPT a mifos
-      let tpt = {
+      let beneficiary = {
         "locale": "es",
-        //TODO este parametro va a venir de un request que nos tiene que pasar alberto
-        "name": this.formGroup.value.owner,
-        //TODO este parametro va a venir de un request que nos tiene que pasar alberto
-        "officeName": "Head Office",
-        "accountNumber": this.formGroup.value.accountNo,
-        "accountType": this.formGroup.value.productType,
-        "transferLimit": this.formGroup.value.transferLimit
+        "name": form.name,
+        "alias": form.alias,
+        //TODO borrar el substring cuando admita 11 parametros
+        "accountNumber": form.accountNumber.substring(2),
+        "officeName": this.officeNameFound,
+        "accountType": this.accountTypeFound,
+        "transferLimit": form.transferLimit
       }
 
-
-      this.clientsService.postBeneficiariesTPT(tpt)
-        .toPromise()
-        .then(res => {
-          console.log(res);
-          this.dismissModal();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-    } else {
-      this.saveBeneficiarie();
-    }
-  }
-
-  public saveBeneficiarie() {
-    console.log("guardamos beneficiario en datatable");
-    let cuenta = {
-      "name": this.formGroup.value.owner,
-      "accountNumber": this.formGroup.value.accountNo,
-      "accountType": this.formGroup.value.productType,
-      "transferLimit": this.formGroup.value.transferLimit,
-      "bankId": this.formGroup.value.bankId,
-      "locale": "es"
+      promise = this.clientsService.postBeneficiariesTPT(beneficiary);
     }
 
-    this.clientsService.postBeneficiaries(cuenta)
-      .toPromise()
-      .then(res => {
-        console.log(res);
-        this.dismissModal();
-      })
+    if (this.type == 'Update' && accountClassificaction == 'TPT') {
+      let beneficiary = {
+        "name": form.name,
+        // TODO chequear si el alias puede ser updateable
+        // "alias": form.alias,
+        "transferLimit": form.transferLimit
+      }
+      promise = this.clientsService.putBeneficiariesTPT(beneficiary, form.id);
+    }
+
+    if (this.type == 'Create' && accountClassificaction == 'EXT') {
+      // aca metemos un beneficiario TPT a mifos
+      let beneficiary = {
+        "locale": "es",
+        "name": form.name,
+        "alias": form.alias,
+        "accountNumber": form.accountNumber,
+        "bankEntity": form.bankId,
+        //siempre saving
+        "accountType": 2,
+        "transferLimit": form.transferLimit
+      }
+      promise = this.clientsService.postBeneficiariesEXT(beneficiary);
+    }
+
+    if (this.type == 'Update' && accountClassificaction == 'EXT') {
+      // aca metemos un beneficiario TPT a mifos
+      let beneficiary = {
+        "name": form.name,
+        // TODO chequear si el alias puede ser updateable
+        //"alias": form.alias,
+        "transferLimit": form.transferLimit
+      }
+      console.log(JSON.stringify(beneficiary));
+      promise = this.clientsService.putBeneficiariesEXT(beneficiary, form.id);
+    }
+
+    promise.toPromise().then(res => {
+      console.log(res);
+      this.dismissModal();
+    })
       .catch(err => {
         console.log(err);
       });

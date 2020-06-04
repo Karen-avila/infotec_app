@@ -10,6 +10,8 @@ import { CollectCodiPage } from './collect-codi.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     TranslateModule,
     RoundingButtonModule,
     ReactiveFormsModule,
-    InputErrorModule
+    InputErrorModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [CollectCodiPage]
 })

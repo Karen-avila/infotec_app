@@ -20,15 +20,9 @@
 
 
   <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts"></app-card-account>
-  <ion-fab horizontal="end" edge>
-    <ion-fab-button style="position: relative;top: -30px;" color="primary" size="medium">
-      <ion-icon name="create-outline"></ion-icon>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-fab-button>
-  </ion-fab>
   <ion-tabs>
 
-    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.6rem;" fill="clear" shape="round" size="small">
+    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.2rem;" fill="clear" shape="round" size="small">
       <ion-icon slot="icon-only" name="chevron-up"></ion-icon>
     </ion-button>
 

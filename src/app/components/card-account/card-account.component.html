@@ -1,4 +1,4 @@
-<ion-slides #slides (ionSlideDidChange)="slideChanged(slides)">
+<ion-slides class="my-custom-slider" #slides (ionSlideDidChange)="slideChanged(slides)" pager="true">
 
   <ion-slide *ngFor="let account of accounts">
     <div class="slide">
@@ -26,8 +26,14 @@
           {{account.displayName}}
         </span>
       </div>
-      <ion-icon style="font-size: 70px;margin: -16px 0;color: grey;" name="ellipsis-horizontal"></ion-icon>
     </div>
   </ion-slide>
 
 </ion-slides>
+
+<!-- <ion-fab [hidden]="hideEditButton" horizontal="end" edge>
+  <ion-fab-button color="primary" size="medium">
+    <ion-icon name="create-outline"></ion-icon>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-fab-button>
+</ion-fab> -->

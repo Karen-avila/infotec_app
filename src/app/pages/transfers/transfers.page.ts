@@ -6,23 +6,34 @@ import { ManageAccountPage } from './components/manage-account/manage-account.pa
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ClientsService } from '@services/clients/clients.service';
 import { Storage } from '@ionic/storage';
-import { BeneficiarieTPT } from '@globals/interfaces/beneficiarie-tpt';
+import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
+import { UserService } from '@services/user/user.service';
+import { LoginInfo } from '@globals/interfaces/login-info';
+import * as CustomValidators from '@globals/custom.validator';
+import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
 
-export class SavedAccount {
-  id: number;
-  owner: string;
-  accountNo: string;
-  bankTitle: string;
-  bankId: string;
-  productType: string;
-  beneficiarieClientId?: number;
-  color: '' | 'light';
-  selected: boolean;
+export class accountTransfer {
+  fromOfficeId: number;
+  fromClientId: number;
+  fromAccountType: number;
+  fromAccountId: number;
+
+  toOfficeId: number;
+  toClientId: number;
+  toAccountType: number;
+  toAccountId: number;
+
+  //TODO cambiar porque se va a llenar desde le backend
+  dateFormat: string = "dd MMMM yyyy";
+  locale: string = "es-mx";
+  transferDate: string = "02 Junio 2020";
+
+  transferAmount: number;
+  transferDescription: string;
 }
 
 @Component({
@@ -41,64 +52,21 @@ export class TransfersPage implements OnInit {
   };
 
   public accounts: CardAccount[] = [
-    // {
-    //   account: '0009878554',
-    //   balance: '8650.25',
-    //   clientName: 'Leona Vicario Fernández',
-    //   cardNumber: ''
-    // },
-    // {
-    //   account: '0003893021',
-    //   balance: '12400.97',
-    //   clientName: 'Leona Vicario Fernández',
-    //   cardNumber: ''
-    // }
   ];
 
-  public savedAccountsTPT: SavedAccount[] = [
+  public savedAccounts: Beneficiarie[] = [
   ]
-  public savedAccounts: SavedAccount[] = [
-    {
-      id: 1,
-      owner: "string",
-      accountNo: "string",
-      bankTitle: "string",
-      bankId: "string",
-      productType: "string",
-      color: 'light',
-      selected: true,
-    },
-    // {
-    //   owner: 'Didier Gomez Oliver',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta HSBC',
-    //   bankId: 'hsbc',
-    //   selected: false,
-    //   color: ''
-    // },
-    // {
-    //   owner: 'Eduardo Moreno Palacios',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta Banorte',
-    //   bankId: 'banorte',
-    //   selected: false,
-    //   color: ''
-    // },
-    // {
-    //   owner: 'Edgar Arturo Dominguez Narvaez',
-    //   accountNo: '5546 5454 3223 8922',
-    //   bankTitle: 'Cuenta Santander',
-    //   bankId: 'santander',
-    //   selected: false,
-    //   color: ''
-    // }
-  ];
 
   public transferForm: FormGroup;
 
   public isAccountSelected = false;
 
   public personalInfo: PersonalInfo;
+  private loginInfo: LoginInfo;
+
+  private accountSelected: Beneficiarie;
+
+  public flag: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -107,73 +75,58 @@ export class TransfersPage implements OnInit {
     public helpersService: HelpersService,
     public translate: TranslateService,
     public router: Router,
-    private http: HttpClient,
     private clientsService: ClientsService,
-    private storage: Storage
+    private storage: Storage,
+    private userService: UserService
   ) {
     this.transferForm = formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      transferAmount: ['', Validators.required],
+      transferDescription: ['', Validators.required]
     });
-    this.initializeApp();
+    this.initialize();
   }
 
   ngOnInit() {
-    this.getAccounts();
-    //this.resolveALL();
   }
 
-  public resolveALL() {
+
+  private initialize() {
+    this.flag = false;
+    this.isAccountSelected = false;
+
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
-      //TODO cambiar para que traiga de get beneficiaries cuando este el self service que consulta a datatable
-      this.clientsService.getBeneficiariesTPT().toPromise()
-      //this.clientsService.getBeneficiarie().toPromise(),
+      //TODO cambiar para que traiga beneficiares ext
+      this.clientsService.getBeneficiariesEXT().toPromise(),
+
+      this.clientsService.getPersonalInfo(),
+      this.clientsService.getLoginInfo()
     ]
     )
       .then(res => {
-        console.log(res[0]);
+        console.log(res);
+        this.savedAccounts = [...res[0], ...res[1]];
+        this.userService.beneficiaries = this.savedAccounts;
+        this.personalInfo = res[2];
+        this.loginInfo = res[3];
 
-        res[0].forEach(element => {
-          let cuenta: SavedAccount = new SavedAccount();
-          cuenta.id = element.id;
-          //TODO falta poner el bankId correspondiente al de bienestar
-          cuenta.bankId = "1";
-          cuenta.accountNo = element.accountNumber;
-          cuenta.owner = element.clientName;
-          cuenta.productType = element.accountType.id.toString();
-          this.savedAccounts.push(cuenta);
-        })
-
-        console.log(res[1]);
-        res[1].forEach(element => {
-          let cuenta: SavedAccount = new SavedAccount();
-          cuenta.id = element.id;
-          cuenta.bankId = element.bankId;
-          cuenta.accountNo = element.accountNumber;
-          cuenta.owner = element.clientName;
-          cuenta.productType = element.accountType.id.toString();
-          this.savedAccounts.push(cuenta);
-        })
-
+        this.getAccounts();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => this.flag = true)
   }
 
   get content(): any {
     return document.querySelector('#content') as any;
   }
 
-  identify(index: number, item: SavedAccount) {
-    return item.accountNo;
+  identify(index: number, item: Beneficiarie) {
+    return item.accountNumber;
   }
 
-  public onEdit() {
-
-  }
-
-
-  async onMangeAccount(index?: number) {
+  async onManageAccount(index?: number) {
     console.log(index);
 
     if (index === undefined) {
@@ -184,7 +137,7 @@ export class TransfersPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(() => {
-        this.getBeneficiariesTPT();
+        this.initialize();
       });
       return await modal.present();
     } else {
@@ -203,29 +156,25 @@ export class TransfersPage implements OnInit {
               }
             });
             modal.onDidDismiss().then(() => {
-              this.getBeneficiariesTPT();
+              this.initialize();
             });
             return await modal.present();
           });
       })
     }
-
-
-
   }
 
-  async onDelete(id) {
-    console.log("ID a borrar", id);
+  async onDelete(id, accountNumber, index) {
     const alert = await this.alertController.create({
       header: 'Eliminar',
-      message: 'Deséa eliminar la cuenta de banco?',
+      message: 'Desea eliminar la cuenta de banco?',
       buttons: [
         'Cancelar',
         {
           text: 'Aceptar',
           handler: () => {
             console.log('Confirm Ok');
-            this.deleteBeneficiarie(id);
+            this.deleteBeneficiarie(id, accountNumber, index);
           }
         }
       ]
@@ -234,70 +183,79 @@ export class TransfersPage implements OnInit {
     await alert.present();
   }
 
-  public selectAccount(index: number, item: SavedAccount) {
+  public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccounts.find((account: SavedAccount) => account.selected);
+    const prevSelected = this.savedAccounts.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
     }
     item.selected = true;
     item.color = 'light';
+    this.accountSelected = item;
     this.isAccountSelected = true;
+    this.transferForm.clearValidators();
+    this.transferForm.setValidators([CustomValidators.ValidateTransferAmountLimit('transferAmount', this.accountSelected.transferLimit)])
+    this.transferForm.reset();
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
   public makeTransfer(): void {
+    console.log("Transfering...");
+    const form = { ...this.transferForm.value };
 
-  }
+    let transfer = new accountTransfer();
 
-  private getBeneficiariesTPT(): void {
-    console.log("trae beneficiarios");
-    this.clientsService.getBeneficiariesTPT()
-      .toPromise()
-      .then(
-        (response: BeneficiarieTPT[]) => {
-          console.log(response);
-          this.savedAccountsTPT = [];
-          response.forEach(element => {
-            let cuenta: SavedAccount = new SavedAccount();
-            cuenta.id = element.id;
-            //TODO falta poner el bankId correspondiente al de bienestar
-            cuenta.bankId = "1";
-            cuenta.accountNo = element.accountNumber;
-            cuenta.owner = element.clientName;
-            cuenta.productType = element.accountType.id.toString();
-            this.savedAccounts.push(cuenta);
-          })
-        })
+    transfer.fromOfficeId = this.loginInfo.officeId;
+    transfer.fromClientId = this.loginInfo.clientId;
+    //TODO revisar porque viene accountType 1 para una savings account
+    transfer.fromAccountType = 2//this.userService.accountMovementsSelected.accountType;
+    //TODO revisar aca porque tiene que ser el accountId
+    transfer.fromAccountId = Number(this.userService.accountMovementsSelected.accountNo);
+    console.log("cuenta a transferir", this.accountSelected);
+
+    transfer.toOfficeId = this.accountSelected.officeId;
+    transfer.toClientId = this.accountSelected.clientId;
+    transfer.toAccountType = this.accountSelected.accountType.id;
+    transfer.toAccountId = this.accountSelected.accountId ? this.accountSelected.accountId : Number(this.accountSelected.accountNumber);
+
+    transfer.transferAmount = form.transferAmount;
+    transfer.transferDescription = form.transferDescription;
+
+    //TODO mejorar cuando sepamos que se necesita
+    let transferSuccess: any = {};
+    transferSuccess.accountNumber = this.accountSelected.accountNumber;
+    transferSuccess.clientName = this.accountSelected.clientName;
+    transferSuccess.transferAmount = form.transferAmount;
+    transferSuccess.referencia = form.transferDescription;
+
+    console.log(JSON.stringify(transfer));
+
+    this.clientsService.accountTransfers(transfer).toPromise()
+      .then((response: any) => {
+        console.log(response)
+        transferSuccess.folio = response.resourceId
+        this.openSuccessModal(transferSuccess);
+      })
       .catch(err => {
         console.log(err)
       })
   }
 
-  // private getBeneficiaries(): void {
-  //   console.log("trae beneficiarios");
-  //   this.clientsService.getBeneficiariesTPT()
-  //     .toPromise().then(
-  //       (response: any) => {
-  //         console.log(response);
-  //         this.savedAccounts = [];
-  //         let data = response.data;
-  //         data.forEach(element => {
-  //           let cuenta: SavedAccount = new SavedAccount();
-  //           cuenta.id = element.row[0];
-  //           cuenta.bankId = element.row[2];
-  //           cuenta.accountNo = element.row[3];
-  //           cuenta.owner = element.row[4];
-  //           cuenta.productType = element.row[5];
-  //           this.savedAccounts.push(cuenta);
-  //         })
-  //       })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
+  private async openSuccessModal(transfer: any) {
+    const modal = await this.modalController.create({
+      component: TransferSuccessPage,
+      componentProps: {
+        'type': 'Create',
+        ...transfer,
+      }
+    });
+    modal.onDidDismiss().then(() => {
+      this.initialize();
+    });
 
+    return await modal.present();
+  }
   // traemos los accounts del cliente
   private getAccounts(): void {
     this.storage.get('clientId')
@@ -305,12 +263,11 @@ export class TransfersPage implements OnInit {
         return this.clientsService.getAccounts(clientId).toPromise()
       })
       .then((response: any) => {
-        console.log(response);
         this.accounts = [];
+        //TODO que este configurable el muestreo de datos de loans
         let data = response.savingsAccounts;
-
         data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, "No se que es el CARD NUMBER");
+          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
           this.accounts.push(account);
         });
       })
@@ -319,21 +276,22 @@ export class TransfersPage implements OnInit {
       })
   }
 
-  private initializeApp() {
-    this.clientsService.getPersonalInfo()
-      .then((data: PersonalInfo) => {
-        this.personalInfo = data;
-      });
-  }
 
-  public deleteBeneficiarie(id): void {
+  public deleteBeneficiarie(id, accountNumber: string, index): void {
 
-    this.clientsService.deleteBeneficiarieTPT(id)
-      .toPromise()
-      .then((response: any) => {
-        console.log(response);
-        this.getBeneficiariesTPT();
-      })
+    let accountClassificaction = 'TPT' || 'EXT';
+    accountClassificaction = (accountNumber.length == 9 || accountNumber.length == 11) ? 'TPT' : 'EXT';
+    let promise: any;
+    if (accountClassificaction == 'TPT') {
+      promise = this.clientsService.deleteBeneficiarieTPT(id)
+    }
+    if (accountClassificaction == 'EXT') {
+      promise = this.clientsService.deleteBeneficiarieEXT(id)
+    }
+    promise.toPromise().then((response: any) => {
+      console.log(response);
+      this.savedAccounts.splice(index, 1);
+    })
       .catch(err => {
         console.log(err)
       })

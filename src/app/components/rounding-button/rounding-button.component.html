@@ -1,13 +1,13 @@
 <div class="card-button" [ngClass]="{'beautiful-rounded-button': !disabled, 'beautiful-rounded-button-disabled': disabled}">
   <div [ngSwitch]="iconType">
     <div *ngSwitchCase="'check'">
-      <ion-icon style="color:green; font-size: 36px; margin-top: 7px; margin-left: 7px;" src="assets/icon/tick.svg"></ion-icon>
+      <ion-icon style="color: #fff;background:green; font-size: 50px; border-radius: 10px;" name="checkmark-outline"></ion-icon>
     </div>
     <div *ngSwitchCase="'add'">
-      <ion-icon style="color: #FFC000; font-size: 50px" name="add"></ion-icon>
+      <ion-icon style="color: #fff; background: #FFC000; font-size: 50px; border-radius: 10px;" name="add"></ion-icon>
     </div>
     <div *ngSwitchCase="'close'">
-      <ion-icon style="color:red; font-size: 28px; margin-top: 11px; margin-left: 11px;" src="assets/icon/close.svg"></ion-icon>
+      <ion-icon style="color: #fff; background:red; font-size: 50px; border-radius: 10px;" name="close-outline"></ion-icon>
     </div>
   </div>
 </div>

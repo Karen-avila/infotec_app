@@ -1,0 +1,20 @@
+b {
+    color: #16312c;
+    font-size: 40px;
+}
+
+.container-big {
+    margin: 0px auto;
+}
+
+h1 {
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+.item-native{
+    --padding-left: unset;
+}
+
+ion-list span {
+    float: right;
+}

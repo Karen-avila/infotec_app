@@ -1,4 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Beneficiarie } from './interfaces/beneficiarie';
 
 export function ValidatePhoneNumber(control: AbstractControl) {
     if (!(/^[0-9]{10}$/.test(control.value))) {
@@ -15,7 +16,7 @@ export function ValidateCurp(control: AbstractControl) {
 }
 
 export function ValidateAccountNumber(control: AbstractControl) {
-    if (!(/^[0-9]{9}$/.test(control.value))) {
+    if (!(/^([0-9]{8,9}|[0-9]{11})$/.test(control.value))) {
         return { accountNumber: true };
     }
     return null;
@@ -50,4 +51,44 @@ export function ValidatePassword(control: AbstractControl) {
         return { password: true };
     }
     return null;
+}
+
+export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
+    // TODO borrar el de parametro 9 porque las cuentas del banco siempre van a ser de 11, se dejo asi para las pruebas en un comienzo
+    if ((`${control.value}`).length === 9 || (`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {
+        return null;
+    }
+    return { accountNumber: true };
+}
+
+
+export function ValidateBeneficiarieName(control: AbstractControl) {
+    // TODO borrar el de parametro 9 porque las cuentas del banco siempre van a ser de 11, se dejo asi para las pruebas en un comienzo
+    if ((`${control.value}`).length === 9 || (`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {
+        return null;
+    }
+    return { accountNumber: true };
+}
+
+export function ValidateNameBeneficiary(controlName: string, beneficiaries: Beneficiarie[]) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
+        for (var i = 0; i < beneficiaries.length; i++) {
+            if (beneficiaries[i].name.toLowerCase() == control.value.toLowerCase()) {
+                control.setErrors({ beneficiaryAlreadyRegistered: true });
+            }
+        }
+        return null;
+    }
+}
+
+export function ValidateTransferAmountLimit(controlName: string, transferLimit: number) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
+        if (control.value > transferLimit)
+            control.setErrors({ transferAmountLimit: true });
+        return null;
+    }
 }

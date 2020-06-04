@@ -12,6 +12,8 @@ import { CardAccountModule } from '@components/card-account/card-account.module'
 import { ManageAccountPageModule } from './components/manage-account/manage-account.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { InputErrorModule } from '@components/input-error/input-error.module';
+import { TransferSuccessPageModule } from './components/transfer-success/transfer-success.module';
 
 @NgModule({
   imports: [
@@ -23,8 +25,10 @@ import { FooterModule } from '@components/footer/footer.module';
     CardAccountModule,
     ReactiveFormsModule,
     ManageAccountPageModule,
+    TransferSuccessPageModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    InputErrorModule
   ],
   declarations: [TransfersPage]
 })
