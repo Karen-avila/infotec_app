@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -83,5 +84,9 @@ export class HelpersService {
     } );
 
     await alert.present();
+  }
+
+  public getFormattedDate() : string {
+    return formatDate(new Date(), 'yyyyMMdd', 'es-MX');
   }
 }

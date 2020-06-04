@@ -87,6 +87,7 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.helpersService.getFormattedDate);
   }
 
 
