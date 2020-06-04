@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   @Input() notifications?: string;
   @Input() dismissButton?: string;
   @Input() backButtonEnd?: string;
+  @Input() home?: string;
   
   constructor(private modalController: ModalController, private router : Router) { }
 
@@ -30,5 +31,9 @@ export class HeaderComponent implements OnInit {
 
   public goNotifications(){
     this.router.navigate(['/notifications']);
+  }
+
+  public goHome(){
+    this.router.navigate(['/dashboard']);
   }
 }

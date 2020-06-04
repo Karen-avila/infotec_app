@@ -87,8 +87,8 @@ export class ClientsService {
     return this.httpClient.post(`${ENDPOINTS.beneficiaryext}`, data);
   }
 
-  public putBeneficiariesEXT(data: any): Observable<any> {
-    return this.httpClient.put(`${ENDPOINTS.beneficiaryext}`, data);
+  public putBeneficiariesEXT(data: any, id: string): Observable<any> {
+    return this.httpClient.put(`${ENDPOINTS.beneficiaryext}/${id}`, data);
   }
 
   public deleteBeneficiarieEXT(id: string): Observable<any> {
@@ -114,6 +114,9 @@ export class ClientsService {
     };
     
     return this.httpWithoutInterceptors.post(`${ENDPOINTS.clients}/${clientId}/images`, formData, httpOptions);
+  }
+ public getSocialPrograms(): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.socialPrograms}`);
   }
   
 }

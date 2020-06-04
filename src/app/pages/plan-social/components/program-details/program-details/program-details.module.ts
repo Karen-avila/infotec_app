@@ -4,25 +4,24 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PlanSocialPageRoutingModule } from './plan-social-routing.module';
+import { ProgramDetailsPageRoutingModule } from './program-details-routing.module';
 
-import { PlanSocialPage } from './plan-social.page';
-import { TranslateModule } from '@ngx-translate/core';
-import { HeaderModule } from '@components/header/header.module';
+import { ProgramDetailsPage } from './program-details.page';
 import { FooterModule } from '@components/footer/footer.module';
-
+import { HeaderModule } from '@components/header/header.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PlanSocialPageRoutingModule, 
+    ProgramDetailsPageRoutingModule, 
     TranslateModule,
     HeaderModule,
     FooterModule
+    
   ],
-  declarations: [PlanSocialPage]
+  declarations: [ProgramDetailsPage]
 })
-export class PlanSocialPageModule {
-}
+export class ProgramDetailsPageModule {}

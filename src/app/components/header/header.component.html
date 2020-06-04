@@ -2,7 +2,7 @@
 <ion-header class=" svg-correction ion-no-border" [ngStyle]="{'margin-bottom': img ? '80px' : '0px' }" no-border>
   <!-- <app-svg *ngIf="svg"></app-svg> -->
   <ion-img *ngIf="img" style="z-index: 105" class="profile-photo" src="{{img}}"></ion-img>
-  <ion-toolbar *ngIf="menu || backButton || notifications || dismissButton || backButtonEnd">
+  <ion-toolbar *ngIf="menu || backButton || notifications || dismissButton || backButtonEnd || home">
     <ion-buttons *ngIf="backButton" slot="start">
       <ion-back-button color="secondary" icon="chevron-back-outline" defaultHref="{{defaultHref ? defaultHref : 'dashboard'}}"></ion-back-button>
     </ion-buttons>
@@ -17,6 +17,9 @@
     </ion-button>
     <ion-buttons *ngIf="backButtonEnd" slot="end">
       <ion-back-button color="secondary" icon="chevron-back-outline" defaultHref="{{defaultHref ? defaultHref : 'dashboard'}}"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="home" (click)="goHome()" slot="end">
+      <ion-icon name="home-outline"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
   <ion-title *ngIf="title" color="secondary">

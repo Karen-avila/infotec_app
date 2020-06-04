@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SuccessComponent } from './success.page';
 
+import { TransferSuccessPage } from './transfer-success.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SuccessComponent
+    component: TransferSuccessPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SuccessPageRoutingModule {}
+export class TransferSuccessPageRoutingModule {}

@@ -13,12 +13,12 @@ const routes: Routes = [
     path: 'manage-account',
     canActivate: [AuthGuard],
     loadChildren: () => import('./components/manage-account/manage-account.module').then( m => m.ManageAccountPageModule)
-  },
+  }, 
   {
-    path: 'success',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('@pages/transfers/components/success/success.module').then( m => m.SuccessPageModule)
+    path: 'transfer-success',
+    loadChildren: () => import('./components/transfer-success/transfer-success.module').then( m => m.TransferSuccessPageModule)
   },
+
 ];
 
 @NgModule({
