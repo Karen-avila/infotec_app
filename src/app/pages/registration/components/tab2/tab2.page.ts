@@ -7,8 +7,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Storage } from '@ionic/storage';
 import { ClientsService } from '@services/clients/clients.service';
 import { AuthenticationService } from '@services/user/authentication.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ENDPOINTS } from '@globals/endpoints';
 import { HelpersService } from '@services/helpers/helpers.service';
 
 
@@ -65,15 +63,15 @@ export class Tab2Page implements OnInit {
       public helpersService: HelpersService
     ) { 
     this.registerForm = formBuilder.group({
-      curp: ["MASL820234HCSZPS90", Validators.compose([
+      curp: ["", Validators.compose([
         Validators.required, 
         CustomValidators.ValidateCurp
       ])],
-      dateOfBirth: ["1980-04-15", Validators.required],
+      dateOfBirth: ["", Validators.required],
       dateFormat: "yyyy-MM-dd",
       locale: "es",
       authenticationMode: "email",
-      mobileNumber: ["5573435678", Validators.compose([
+      mobileNumber: ["", Validators.compose([
         Validators.required, 
         CustomValidators.ValidatePhoneNumber
       ])],
@@ -93,9 +91,7 @@ export class Tab2Page implements OnInit {
 
     this.imageUrl = localStorage.getItem('image');
 
-    this.facesDetected  = -1;
-
-    setTimeout(() => this.updateResults(), 100);
+    // setTimeout(() => this.updateResults(), 100);
   }
 
   getFaceDetectorOptions() {
@@ -207,7 +203,6 @@ export class Tab2Page implements OnInit {
           if (user.clientId) {
 
             this.presentToast('Usuario registrado exitosamente');
-            this.storage.remove('registration');
         
             const file = this.dataURLtoFile(this.imageUrl);
 
@@ -222,6 +217,7 @@ export class Tab2Page implements OnInit {
     }).then( () => {
       this.hideLoading();
       this.storage.set('image-profile', this.imageUrl);
+      this.storage.remove('registration');
       this.router.navigateByUrl('/login');
     } ).catch( error => {
       console.error(error.error.userMessageGlobalisationCode);

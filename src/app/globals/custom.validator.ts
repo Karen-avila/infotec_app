@@ -16,7 +16,7 @@ export function ValidateCurp(control: AbstractControl) {
 }
 
 export function ValidateAccountNumber(control: AbstractControl) {
-    if (!(/^[0-9]{9}$/.test(control.value))) {
+    if (!(/^([0-9]{8,9}|[0-9]{11})$/.test(control.value))) {
         return { accountNumber: true };
     }
     return null;

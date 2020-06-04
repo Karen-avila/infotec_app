@@ -30,7 +30,7 @@ export class Tab1Page implements OnInit {
     this.registerForm = formBuilder.group({
       username: [""],
       password: ["", [Validators.required, Validators.minLength(8)]],
-      confirmPassword : ["123456789", [Validators.required, Validators.minLength(8)]],
+      confirmPassword : ["", [Validators.required, Validators.minLength(8)]],
       accountNumber: ["", Validators.compose([
         Validators.required, 
         CustomValidators.ValidateAccountNumber
@@ -55,7 +55,9 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
       this.storage.get('registration').then( data => {
-        this.registerForm.patchValue(data);
+        if (data) {
+          this.registerForm.patchValue({...data, confirmPassword: data.password});
+        }
       } );
   }
 
