@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { ClientsService } from '@services/clients/clients.service';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare var faceapi;
@@ -60,7 +61,8 @@ export class Tab2Page implements OnInit {
       private toastController: ToastController,
       private authenticationService: AuthenticationService,
       public loadingController: LoadingController,
-      public helpersService: HelpersService
+      public helpersService: HelpersService,
+      private translate: TranslateService
     ) { 
     this.registerForm = formBuilder.group({
       curp: ["", Validators.compose([
@@ -89,22 +91,13 @@ export class Tab2Page implements OnInit {
 
     await faceapi.nets.ssdMobilenetv1.loadFromUri('https://raw.githubusercontent.com/nestorlazcano-fintecheando/testing-face-api/master');
 
-    this.imageUrl = localStorage.getItem('image');
+    // this.imageUrl = localStorage.getItem('image');
 
     // setTimeout(() => this.updateResults(), 100);
   }
 
   getFaceDetectorOptions() {
       return new faceapi.SsdMobilenetv1Options({ minConfidence: this.minConfidence })
-  }
-
-  async showLoading() {
-    this.loading = await this.helpersService.loading();
-    this.loading.present();
-  }
-
-  hideLoading() {
-    this.loading.dismiss();
   }
 
   async updateResults() {    
@@ -155,9 +148,10 @@ export class Tab2Page implements OnInit {
           return registerResponse;
         } );
 
-    } ).catch( error => {
+    } ).catch( async error => {
       if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.resource.not.found') {
-        this.presentToast('Los datos de cliente son incorrectos, comuníquese con el área de soporte');
+        const text = await this.translate.get('Customer details are incorrect, please contact support area').toPromise();
+        this.presentToast(text);
       }
       throw error;
     } );
@@ -169,7 +163,7 @@ export class Tab2Page implements OnInit {
 
     this.waiting = true;
 
-    this.showLoading();
+    this.helpersService.presentLoading();
 
     this.getActivationCode().then( resp => {
       console.log('getActivationCode', resp);
@@ -177,7 +171,7 @@ export class Tab2Page implements OnInit {
     } ).then( ([token, resource]) => {
       console.log(token, resource);
 
-      this.showLoading();
+      this.helpersService.presentLoading();
       
       if (token.codigoActivacion) {
         console.log('Its enter here');
@@ -199,10 +193,11 @@ export class Tab2Page implements OnInit {
       const { username, password } = this.completeForm;
       this.authenticationService.simpleLogin({ username, password })
         .toPromise()
-        .then( (user: any) => {
+        .then( async (user: any) => {
           if (user.clientId) {
 
-            this.presentToast('Usuario registrado exitosamente');
+            const text = await this.translate.get('User successfully registered').toPromise();
+            this.presentToast(text);
         
             const file = this.dataURLtoFile(this.imageUrl);
 
@@ -215,15 +210,16 @@ export class Tab2Page implements OnInit {
           throw new Error('No se pudo registrar la selfie');
         } )
     }).then( () => {
-      this.hideLoading();
+      this.helpersService.hideLoading();
       this.storage.set('image-profile', this.imageUrl);
       this.storage.remove('registration');
       this.router.navigateByUrl('/login');
-    } ).catch( error => {
+    } ).catch( async error => {
       console.error(error.error.userMessageGlobalisationCode);
-      this.hideLoading();
+      this.helpersService.hideLoading();
       if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
-        this.presentToast('No se pudo registrar al usuario, intentelo más tarde');
+        const text = await this.translate.get('Could not register user, please try again later').toPromise();
+        this.presentToast(text);
       }
     } ).finally( () => {
       this.waiting = false;
@@ -249,7 +245,7 @@ export class Tab2Page implements OnInit {
 
   presentAlertPrompt(): Promise<any> {
 
-    this.hideLoading();
+    this.helpersService.hideLoading();
 
     return new Promise( async resolve => {
       const alert = await this.alertController.create({

@@ -1,4 +1,4 @@
-<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'/registration/tab1'" [title]="'registration.register'"></app-header>
+<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'/registration/tab1'" [title]="'Register'"></app-header>
 
 <ion-content>
   <ion-card>
@@ -16,29 +16,19 @@
 
         <div [ngSwitch]="facesDetected">
           <div *ngSwitchCase="-1">
-            <p style="text-align: center;">
-              Detectando rostro...
-            </p>
+            <p style="text-align: center;" translate="Detecting face..."></p>
           </div>
           <div *ngSwitchCase="0">
-            <p style="text-align: center; color: #EB445A;">
-              No se detecto ningún rostro*
-            </p>
+            <p style="text-align: center; color: #EB445A;" translate="No face was detected*"></p>
           </div>
           <div *ngSwitchCase="1">
-            <p style="text-align: center; color: #285D4D;">
-              Se detecto un rostro correctamente*
-            </p>
+            <p style="text-align: center; color: #285D4D;" translate="A face was detected correctly*"></p>
           </div>
           <div *ngSwitchCase="null">
-            <p style="text-align: center;">
-              Tómate una selfie*
-            </p>
+            <p style="text-align: center;" translate="Take a selfie*"></p>
           </div>
           <div *ngSwitchDefault>
-            <p style="text-align: center; color: rgb(219, 164, 0);">
-              Solo deber salir un rostro en la selfie*
-            </p>
+            <p style="text-align: center; color: rgb(219, 164, 0);" translate="Only one face should appear in the selfie*"></p>
           </div>
         </div>
 
@@ -60,7 +50,7 @@
 
             <ion-item>
               <ion-icon name="person-circle-outline"></ion-icon>
-              <ion-input type="text" placeholder="{{ 'CURP' | translate }}" placeholder="Escribe tu curp ..." formControlName="curp" clearInput></ion-input>
+              <ion-input type="text" placeholder="{{ 'CURP' | translate }}" formControlName="curp" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.curp"></app-input-error>
 
@@ -81,8 +71,8 @@
 <ion-footer>
   <ion-toolbar>
     <div class="ion-padding">
-      <ion-button type="button" (click)="register()" [disabled]="registerForm.invalid || facesDetected !== 1 || waiting" expand="block" color="primary">{{ 'registration.registers' | translate }}</ion-button>    
-      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
+      <ion-button type="button" (click)="register()" [disabled]="registerForm.invalid || facesDetected !== 1 || waiting" expand="block" color="primary">{{ 'To Register' | translate }}</ion-button>    
+      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'Cancel' | translate }}</ion-button>
     </div>
   </ion-toolbar>
 </ion-footer>

@@ -8,6 +8,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { Beneficiarie } from '@globals/interfaces/beneficiarie';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Bank {
   id: number;
@@ -53,6 +54,12 @@ export class ManageAccountPage implements OnInit {
 
   public beneficiaryAccountTypes: BeneficiaryAccountType[] = [];
 
+  public accountTypeOption: any;
+  
+  public bankIdOption: any; 
+
+  public cancelText: string; 
+
   constructor(
     protected modalController: ModalController,
     protected activatedRoute: ActivatedRoute,
@@ -60,7 +67,8 @@ export class ManageAccountPage implements OnInit {
     protected formBuilder: FormBuilder,
     protected http: HttpClient,
     private clientsService: ClientsService,
-    private userService: UserService
+    private userService: UserService,
+    private translateService: TranslateService
   ) {
     this.initializeApp();
   }
@@ -73,6 +81,16 @@ export class ManageAccountPage implements OnInit {
   }
 
   private initializeApp() {
+
+    this.translateService.get(['Kind of product', 'Bank / Institution', 'Cancel']).subscribe( translate => {
+      console.log(translate);
+
+      this.accountTypeOption =  {header: translate['Kind of product']};
+      this.bankIdOption = {header: translate['Bank / Institution']};
+      this.cancelText = translate['Cancel'];
+      
+    } )
+
 
     this.form = this.formBuilder.group({
       id: [''],

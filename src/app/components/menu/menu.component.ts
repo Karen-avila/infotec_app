@@ -26,37 +26,37 @@ export class MenuComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Inicio',
+      title: 'Home',
       url: '/dashboard',
       icon: 'home-outline'
     },
     {
-      title: 'Transferencias',
+      title: 'Transfers',
       url: '/transfers',
       icon: 'swap-horizontal-outline'
     },
     {
-      title: 'Ajustes',
+      title: 'Settings',
       url: '/settings',
       icon: 'settings-outline'
     },
     {
-      title: 'Nosotros',
+      title: 'About Us',
       url: '/about-us',
       icon: 'information-circle-outline'
     },
     {
-      title: 'Ayuda',
+      title: 'Help',
       url: '/help',
       icon: 'help-circle-outline'
     },
     {
-      title: 'Compartir',
+      title: 'Share',
       funtion: this.share.bind(this),
       icon: 'share-social-outline'
     },
     {
-      title: 'Cerrar Sesión',
+      title: 'Sign off',
       url: '/logout',
       icon: 'log-out-outline'
     }
@@ -67,10 +67,11 @@ export class MenuComponent implements OnInit {
   public avatarUrl: string = '/assets/header-icons/leona.png';
 
   ngOnInit() {
-    const img = localStorage.getItem('image');
-    if (img) {
-      this.avatarUrl = img;
-    }
+    this.storage.get('image-profile').then( image => {
+      if (image) {
+        this.avatarUrl = image;
+      }
+    } )
   }
 
   public share(index: number): void {

@@ -5,7 +5,7 @@
   <div style="height: 100%;width: 100%;">
     <div>
 
-      <div style="text-align: center;"> <b style="color: #112b22; font-size: medium;">Cuenta Origen</b></div>
+      <div style="text-align: center;"> <b style="color: #112b22; font-size: medium;"> {{ 'Origin Account' | translate }} </b></div>
 
       <app-card-account *ngIf="accounts.length > 0" [accounts]="accounts" [settings]="settings" [hideEditButton]="true"></app-card-account>
 
@@ -19,12 +19,11 @@
           <ion-ripple-effect></ion-ripple-effect>
         </ion-fab-button>
       </ion-fab>
-      <div style="text-align: center; margin-top: 1.6rem;"> <b style="color: #112b22; font-size: medium;">Cuenta
-          Destino</b></div>
+      <div style="text-align: center; margin-top: 1.6rem;"> <b style="color: #112b22; font-size: medium;"> {{ 'Destination Account' | translate }} </b></div>
 
       <div
         style="color: #112b22; font-size: 0.7rem;font-weight: bold; margin-left: 1.3rem;margin-top: 1rem; margin-bottom: 0.4rem;">
-        CUENTAS GUARDADAS</div>
+        {{ 'SAVED ACCOUNTS' | translate }}</div>
       <ion-list style="max-height: 10rem; overflow: auto;">
 
         <ion-item-sliding *ngFor="let item of savedAccounts; index as index; trackBy: identify">
@@ -61,7 +60,7 @@
     <div style="margin: auto;">
       <br>
 
-      <div style="text-align: center;"> <b style="color: #AD915F; font-size: medium;">Completar</b></div>
+      <div style="text-align: center;"> <b style="color: #AD915F; font-size: medium;" translate="To Complete"></b></div>
 
       <ion-card>
 
@@ -81,14 +80,14 @@
             <ion-list>
 
               <ion-item>
-                <ion-label position="stacked">Monto <ion-text color="danger">*</ion-text>
+                <ion-label position="stacked"> {{ 'Amount' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-input formControlName="transferAmount" required inputmode="decimal" type="number"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferAmount"></app-input-error>
 
               <ion-item>
-                <ion-label position="stacked">Referencia <ion-text color="danger">*</ion-text>
+                <ion-label position="stacked"> {{ 'Reference' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
                 <ion-input formControlName="transferDescription" required inputmode="text" type="text"></ion-input>
               </ion-item>
@@ -99,7 +98,7 @@
             <br>
 
             <div class="ion-padding">
-              <ion-button [disabled]="transferForm.invalid" expand="block" type="submit" class="ion-no-margin">Confirmar
+              <ion-button [disabled]="transferForm.invalid" expand="block" type="submit" class="ion-no-margin"> {{ 'Confirm' | translate }}
               </ion-button>
             </div>
           </form>

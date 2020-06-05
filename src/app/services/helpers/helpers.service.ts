@@ -7,6 +7,10 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HelpersService {
 
+  flagNoInternetOpen: boolean = false;
+
+  loading: any = null;
+
   constructor(
     protected loadingController: LoadingController, 
     protected translate: TranslateService,
@@ -15,14 +19,20 @@ export class HelpersService {
 
   public async presentLoading() {
     this.translate.get('Please wait...').subscribe( async message => {
-      const loading = await this.loadingController.create({message});
-        await loading.present();
-
-        setTimeout(() => {  
-          loading.dismiss();          
-        }, 2000);
+      
+      this.loading = await this.loadingController.create({message});
+      this.loading.present();
 
     } );
+  }
+
+
+  public hideLoading() {
+    if (!this.loading) {
+      return;
+    }
+    this.loading.dismiss();
+    this.loading = null;
   }
 
   public async showAlert(header: string, message: string): Promise<any> {
@@ -50,13 +60,13 @@ export class HelpersService {
     
   }
 
-  public async loading() {
-    return await this.loadingController.create({
-      message: 'Por favor espere...'
-    });
-  }
-
   public async showNoInternet() {
+    if (this.flagNoInternetOpen) {
+      return;
+    }
+
+    this.flagNoInternetOpen = true;
+
     const alert = await this.alertController.create({
       cssClass: 'no-internet-class',
       backdropDismiss: false,
@@ -82,6 +92,9 @@ export class HelpersService {
       
     } );
 
+    alert.onDidDismiss().then( () => this.flagNoInternetOpen = false );
+
     await alert.present();
+
   }
 }

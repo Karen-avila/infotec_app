@@ -12,8 +12,14 @@ ion-input{
         padding-left: 10px;
     }
 }
+ion-input:not([type=date]){
+    text-transform: capitalize;
+}
 ion-icon{
     margin: 0px 15px 0 0px;
+}
+ion-footer {
+    height: initial;
 }
 ion-card{
     margin: 0;
@@ -28,10 +34,6 @@ app-input-error{
 }
 ion-card-content{
     padding: 0;
-}
-ion-footer {
-    height: initial;
-    padding: auto 20px;
 }
 .container-small {
     width: 80%;
