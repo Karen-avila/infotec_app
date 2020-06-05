@@ -10,7 +10,7 @@ import { User } from '@globals/interfaces/user';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { Keepalive } from '@ng-idle/keepalive';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class AuthenticationService {
     private navCtrl: NavController,
     private userService: UserService,
     private idle: Idle, 
-    private keepalive: Keepalive
+    private helpersService: HelpersService
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -44,6 +44,8 @@ export class AuthenticationService {
     this.storage.remove('token');
     this.storage.remove('personal-info');
     this.storage.remove('login-info');
+
+    this.helpersService.presentLoading();
 
     this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
@@ -73,7 +75,7 @@ export class AuthenticationService {
       })
       .catch(err => {
         console.log(err);
-      });
+      }).finally( () => this.helpersService.hideLoading() );
   }
 
   public ifLoggedIn() {

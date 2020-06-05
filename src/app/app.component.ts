@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
     console.log(navigator.language);
 
     this.translate.setDefaultLang(navigator.language.substring(0, 2));
-    this.translate.get('title').subscribe((res: string) => this.titleService.setTitle(res));
+    this.translate.get('Mobile Banking - Banco del Bienestar').subscribe((res: string) => this.titleService.setTitle(res));
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString("#285D4D");
       this.splashScreen.hide();

@@ -73,7 +73,7 @@ export class HelpersService {
       cssClass: 'no-internet-class',
       backdropDismiss: false,
       buttons: ['Aceptar']
-    }).then((data) => {
+    }).then( async(data) => {
       console.log(data);
 
       const wrapper: any = document.querySelector('.alert-wrapper');
@@ -83,9 +83,11 @@ export class HelpersService {
       wrapper.style.borderRadius = '20px';
       wrapper.style.position = 'relative';
 
+      const text = await this.translate.get('Close').toPromise();
+
       wrapper.insertAdjacentHTML('afterbegin', `
         <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
-        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%">CERRAR</ion-button> 
+        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button> 
       `);
 
       document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
