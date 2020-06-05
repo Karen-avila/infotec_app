@@ -20,7 +20,9 @@
     "Please wait...": "Por favor espera...",
     "Pay with CoDi": "Pagar con CoDi",
     "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
-    "This transfer does not generate charge":"Esta transferencia no genera comisión",
+    "This transfer does not generate charge": "Esta transferencia no genera comisión",
+    "Your operational soft token is:": "Tu clave dinámica para realizar tu operación es:",
+    "soft-token": "Clave Dinámica",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -153,5 +155,7 @@
     "Could not register user, please try again later": "No se pudo registrar al usuario, intentelo más tarde",
     "Customer details are incorrect, please contact support area": "Los datos de cliente son incorrectos, comuníquese con el área de soporte",
     "Just one more step": "Solo un paso más",
-    "!Check your email!": "¡Revisa tu correo!"
+    "!Check your email!": "¡Revisa tu correo!",
+    "Transfer amount greather than account balance": "Monto mayor al saldo de la cuenta",
+    "Finish": "terminar"
 }

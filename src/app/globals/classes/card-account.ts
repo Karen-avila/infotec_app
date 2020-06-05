@@ -1,4 +1,5 @@
 export interface ICardAccount {
+    id: number;
     accountNo: string;
     accountBalance: string;
     displayName: string;
@@ -6,12 +7,14 @@ export interface ICardAccount {
 }
 
 export class CardAccount implements ICardAccount {
+    id: number;
     accountNo: string;
     accountBalance: string;
     displayName: string;
     accountType: number;
     
-    constructor(pAccountNo: string, pAccountBalance: string, pDisplayName: string, pAccountType: number) {
+    constructor(pId: number, pAccountNo: string, pAccountBalance: string, pDisplayName: string, pAccountType: number) {
+        this.id = pId;
         this.accountNo = pAccountNo;
         this.accountBalance = pAccountBalance;
         this.displayName = pDisplayName;

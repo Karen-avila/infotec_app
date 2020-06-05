@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
+import { environment } from '@env';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class HelpersService {
   loading: any = null;
 
   constructor(
-    protected loadingController: LoadingController, 
+    protected loadingController: LoadingController,
     protected translate: TranslateService,
     protected alertController: AlertController
   ) { }
@@ -23,7 +25,7 @@ export class HelpersService {
       this.loading = await this.loadingController.create({message});
       this.loading.present();
 
-    } );
+    });
   }
 
 
@@ -37,9 +39,9 @@ export class HelpersService {
 
   public async showAlert(header: string, message: string): Promise<any> {
 
-    return new Promise( (resolve, reject) => {
-      this.translate.get(['Cancel','Accept'])
-        .subscribe( async (resp: any) => {
+    return new Promise((resolve, reject) => {
+      this.translate.get(['Cancel', 'Accept'])
+        .subscribe(async (resp: any) => {
           const alert = await this.alertController.create({
             header,
             message,
@@ -55,9 +57,9 @@ export class HelpersService {
             ]
           });
           await alert.present();
-      } )
+        })
     })
-    
+
   }
 
   public async showNoInternet() {
@@ -71,7 +73,7 @@ export class HelpersService {
       cssClass: 'no-internet-class',
       backdropDismiss: false,
       buttons: ['Aceptar']
-    }).then( (data) => {
+    }).then((data) => {
       console.log(data);
 
       const wrapper: any = document.querySelector('.alert-wrapper');
@@ -86,15 +88,19 @@ export class HelpersService {
         <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%">CERRAR</ion-button> 
       `);
 
-      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss() );
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
 
       return data;
-      
-    } );
+
+    });
 
     alert.onDidDismiss().then( () => this.flagNoInternetOpen = false );
 
     await alert.present();
 
+  }
+
+  public getFormattedDate(): string {
+    return formatDate(new Date(), environment.dateFormat, environment.locale);
   }
 }

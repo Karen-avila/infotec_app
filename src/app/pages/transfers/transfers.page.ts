@@ -15,8 +15,10 @@ import { UserService } from '@services/user/user.service';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import * as CustomValidators from '@globals/custom.validator';
 import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
+import { environment } from '@env';
 
-export class accountTransfer {
+export class accountTransferTPT {
+  type: string = "tpt";
   fromOfficeId: number;
   fromClientId: number;
   fromAccountType: number;
@@ -27,13 +29,25 @@ export class accountTransfer {
   toAccountType: number;
   toAccountId: number;
 
-  //TODO cambiar porque se va a llenar desde le backend
-  dateFormat: string = "dd MMMM yyyy";
-  locale: string = "es-mx";
-  transferDate: string = "02 Junio 2020";
+  dateFormat: string = environment.dateFormat;
+  locale: string = environment.locale;
+  transferDate: string;
 
   transferAmount: number;
   transferDescription: string;
+}
+
+export class accountTransferEXT {
+  type: string = "ext";
+  fromAccountId: number;
+  accountNumber: string;
+  dateFormat: string = environment.dateFormat;
+  locale: string = environment.locale;
+  note: string;
+  // siempre es 2 porque es SPEI
+  paymentTypeId: number = 2;
+  transactionAmount: number;
+  transactionDate: string;
 }
 
 @Component({
@@ -87,6 +101,7 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.helpersService.getFormattedDate());
   }
 
 
@@ -96,7 +111,6 @@ export class TransfersPage implements OnInit {
 
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
-      //TODO cambiar para que traiga beneficiares ext
       this.clientsService.getBeneficiariesEXT().toPromise(),
 
       this.clientsService.getPersonalInfo(),
@@ -200,46 +214,103 @@ export class TransfersPage implements OnInit {
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
+  async onMakeTransfer() {
+    const form = { ...this.transferForm.value };
+    if (form.transferAmount > this.userService.accountMovementsSelected.accountBalance) {
+      this.transferForm.controls['transferAmount'].setErrors({ transferAmountExceeded: true })
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Confirmar transferencia',
+      message: 'Desea confirmar la transferencia?',
+      buttons: [
+        'Cancelar',
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Confirm Ok');
+            this.makeTransfer();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   public makeTransfer(): void {
+
     console.log("Transfering...");
     const form = { ...this.transferForm.value };
 
-    let transfer = new accountTransfer();
+    let transfer: any;
+    let accountClassificaction = 'TPT' || 'EXT';
+    accountClassificaction = (this.accountSelected.accountNumber.length == 9 || this.accountSelected.accountNumber.length == 11) ? 'TPT' : 'EXT';
+    if (accountClassificaction == 'TPT') {
+      transfer = new accountTransferTPT();
+      transfer.transferDate = this.helpersService.getFormattedDate();
+      transfer.locale = environment.locale;
+      transfer.dateFormat = environment.dateFormat;
+      transfer.fromOfficeId = this.loginInfo.officeId;
+      transfer.fromClientId = this.loginInfo.clientId;
+      //TODO revisar aca porque SIEMPRE es 2
+      transfer.fromAccountType = this.userService.accountMovementsSelected.accountType;
+      transfer.fromAccountId = this.userService.accountMovementsSelected.id;
 
-    transfer.fromOfficeId = this.loginInfo.officeId;
-    transfer.fromClientId = this.loginInfo.clientId;
-    //TODO revisar porque viene accountType 1 para una savings account
-    transfer.fromAccountType = 2//this.userService.accountMovementsSelected.accountType;
-    //TODO revisar aca porque tiene que ser el accountId
-    transfer.fromAccountId = Number(this.userService.accountMovementsSelected.accountNo);
-    console.log("cuenta a transferir", this.accountSelected);
+      transfer.toOfficeId = this.accountSelected.officeId;
+      transfer.toClientId = this.accountSelected.clientId;
+      transfer.toAccountType = this.accountSelected.accountType.id;
+      transfer.toAccountId = this.accountSelected.accountId;
 
-    transfer.toOfficeId = this.accountSelected.officeId;
-    transfer.toClientId = this.accountSelected.clientId;
-    transfer.toAccountType = this.accountSelected.accountType.id;
-    transfer.toAccountId = this.accountSelected.accountId ? this.accountSelected.accountId : Number(this.accountSelected.accountNumber);
+      transfer.transferAmount = form.transferAmount;
+      transfer.transferDescription = form.transferDescription;
 
-    transfer.transferAmount = form.transferAmount;
-    transfer.transferDescription = form.transferDescription;
 
+    } else if (accountClassificaction == 'EXT') {
+      transfer = new accountTransferEXT();
+
+      transfer.fromAccountId = this.userService.accountMovementsSelected.id;
+      transfer.accountNumber = this.accountSelected.accountNumber;
+      transfer.transactionDate = this.helpersService.getFormattedDate();
+      transfer.locale = environment.locale;
+      transfer.dateFormat = environment.dateFormat;
+      transfer.transactionAmount = form.transferAmount;
+      transfer.note = form.transferDescription;
+    } else {
+      return;
+    }
+
+    console.log(JSON.stringify(transfer));
     //TODO mejorar cuando sepamos que se necesita
     let transferSuccess: any = {};
     transferSuccess.accountNumber = this.accountSelected.accountNumber;
-    transferSuccess.clientName = this.accountSelected.clientName;
+    transferSuccess.clientName = this.accountSelected.clientName ? this.accountSelected.clientName : this.accountSelected.name;
     transferSuccess.transferAmount = form.transferAmount;
     transferSuccess.referencia = form.transferDescription;
 
-    console.log(JSON.stringify(transfer));
-
-    this.clientsService.accountTransfers(transfer).toPromise()
+    this.clientsService.accountTransfers("asd").toPromise()
       .then((response: any) => {
         console.log(response)
-        transferSuccess.folio = response.resourceId
+        transferSuccess.folio = response.resourceId;
         this.openSuccessModal(transferSuccess);
       })
       .catch(err => {
         console.log(err)
+        this.transferForm.reset();
+        this.showErrorTransactionMessage();
       })
+  }
+
+  private async showErrorTransactionMessage() {
+    const alert = await this.alertController.create({
+      header: 'Error en la transferencia',
+      message: 'No se pudo realizar la transferencia. Intente más tarde.',
+      buttons: [
+        'Aceptar'
+      ]
+    });
+    await alert.present();
   }
 
   private async openSuccessModal(transfer: any) {
@@ -258,18 +329,18 @@ export class TransfersPage implements OnInit {
   }
   // traemos los accounts del cliente
   private getAccounts(): void {
-    this.storage.get('clientId')
-      .then(clientId => {
-        return this.clientsService.getAccounts(clientId).toPromise()
-      })
+    this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
       .then((response: any) => {
         this.accounts = [];
         //TODO que este configurable el muestreo de datos de loans
-        let data = response.savingsAccounts;
-        data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
-          this.accounts.push(account);
-        });
+        let savings = response.savingsAccounts;
+        savings.forEach(element => {
+          // si es savings, es 2
+          if (element.status.active) {
+            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
+            this.accounts.push(account);
+          }
+        })
       })
       .catch(err => {
         console.log(err)

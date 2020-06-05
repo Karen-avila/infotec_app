@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
-import { accountTransfer } from '@pages/transfers/transfers.page';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class ClientsService {
   private httpWithoutInterceptors: HttpClient;
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private storage: Storage,
     private handler: HttpBackend,
-  ) { 
+  ) {
     this.httpWithoutInterceptors = new HttpClient(this.handler);
   }
 
@@ -49,8 +49,8 @@ export class ClientsService {
   }
 
   // traemos los accounts del cliente
-  public getAccounts(clientId: string): Observable<any> {
-    return this.httpClient.get(`${ENDPOINTS.accounts.replace('{clientId}', clientId)}`);
+  public getAccounts(clientId: number): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.accounts.replace('{clientId}', clientId.toString())}`);
   }
 
   public getPersonalInfo() {
@@ -61,16 +61,26 @@ export class ClientsService {
     return this.storage.get('login-info');
   }
 
-  public accountTransfers(data: accountTransfer) {
+  public accountTransfers(data: any) {
     return this.httpClient.post(`${ENDPOINTS.accountTransfers}`, data);
   }
 
-  public getBanks() {
-    return this.httpClient.get(`${ENDPOINTS.banks}`);
+  public getBanks(): Observable<any> {
+    //return this.httpClient.get(`${ENDPOINTS.banks}`);
+    return this.httpClient.get(`${ENDPOINTS.codesOptions}/BANKS/options`).pipe(
+      map((data: any) => {
+        return data.codeValues;
+      })
+    );
   }
 
-  public getBeneficiaryAccountTypes() {
-    return this.httpClient.get(`${ENDPOINTS.beneficiaryAccountTypes}`);
+  public getBeneficiaryAccountTypes(): Observable<any> {
+    //return this.httpClient.get(`${ENDPOINTS.beneficiaryAccountTypes}`);
+    return this.httpClient.get(`${ENDPOINTS.codesOptions}/BENEFICIARY_ACCOUNT_TYPE/options`).pipe(
+      map((data: any) => {
+        return data.codeValues;
+      })
+    );
   }
 
   public searchAccount(accountNumber: string) {
@@ -95,7 +105,7 @@ export class ClientsService {
     return this.httpClient.delete(`${ENDPOINTS.beneficiaryext}/${id}`);
   }
   //#endregion
-  
+
   public postRegistration(data: any) {
     return this.httpClient.post(`${ENDPOINTS.registration}`, data);
   }
@@ -112,11 +122,11 @@ export class ClientsService {
         Authorization: `Basic ${token}`
       })
     };
-    
+
     return this.httpWithoutInterceptors.post(`${ENDPOINTS.clients}/${clientId}/images`, formData, httpOptions);
   }
- public getSocialPrograms(): Observable<any> {
+  public getSocialPrograms(): Observable<any> {
     return this.httpClient.get(`${ENDPOINTS.socialPrograms}`);
   }
-  
+
 }
