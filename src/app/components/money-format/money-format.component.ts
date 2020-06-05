@@ -16,6 +16,7 @@ export class MoneyFormatComponent implements OnInit {
   constructor(protected currencyPipe: CurrencyPipe) { }
 
   ngOnInit() {
+    //TODO cambiar para que el transform solo tenga como parametro el amount - hay que poner el locale solo en un modulo 
     let amount = this.currencyPipe.transform(this.amount, undefined, 'symbol', undefined, "en-US"  );
     const len = amount ? amount.length : 0;
     this.decimals = amount ? amount.substring(len - 2, len) : '00';
