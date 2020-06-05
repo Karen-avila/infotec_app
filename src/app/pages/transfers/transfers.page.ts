@@ -108,6 +108,7 @@ export class TransfersPage implements OnInit {
   private initialize() {
     this.flag = false;
     this.isAccountSelected = false;
+    this.helpersService.presentLoading();
 
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
@@ -117,19 +118,23 @@ export class TransfersPage implements OnInit {
       this.clientsService.getLoginInfo()
     ]
     )
-      .then(res => {
+      .then( async res => {
         console.log(res);
         this.savedAccounts = [...res[0], ...res[1]];
         this.userService.beneficiaries = this.savedAccounts;
         this.personalInfo = res[2];
         this.loginInfo = res[3];
 
-        this.getAccounts();
+        await this.getAccounts();
+        return res;
       })
       .catch(err => {
         console.log(err);
       })
-      .finally(() => this.flag = true)
+      .finally(() => {
+        this.flag = true;
+        this.helpersService.hideLoading();
+      })
   }
 
   get content(): any {
@@ -328,8 +333,8 @@ export class TransfersPage implements OnInit {
     return await modal.present();
   }
   // traemos los accounts del cliente
-  private getAccounts(): void {
-    this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
+  private async getAccounts(): Promise<any> {
+    return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
       .then((response: any) => {
         this.accounts = [];
         //TODO que este configurable el muestreo de datos de loans
@@ -341,9 +346,11 @@ export class TransfersPage implements OnInit {
             this.accounts.push(account);
           }
         })
+        return savings;
       })
       .catch(err => {
         console.log(err)
+        throw err;
       })
   }
 

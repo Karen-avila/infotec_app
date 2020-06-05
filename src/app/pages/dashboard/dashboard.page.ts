@@ -5,11 +5,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Router } from '@angular/router';
 import { ClientsService } from '@services/clients/clients.service';
-import { Storage } from '@ionic/storage';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
-import { AuthenticationService } from '@services/user/authentication.service';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,8 +47,7 @@ export class DashboardPage implements OnInit {
     private alertController: AlertController,
     private menuCtrl: MenuController,
     private clientsService: ClientsService,
-    private storage: Storage,
-    private authentication: AuthenticationService
+    private helpersService: HelpersService
   ) {
     this.checkPermissions();
     this.initializeApp();
@@ -139,23 +137,25 @@ export class DashboardPage implements OnInit {
 
   private initializeApp() {
 
+    this.helpersService.presentLoading();
+
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
         console.log(data);
         this.personalInfo = data;
         return this.clientsService.getLoginInfo();
       })
-      .then((data: LoginInfo) => {
+      .then( async (data: LoginInfo) => {
         this.loginInfo = data;
         console.log(data);
-        this.getAccounts();
-      });
-    ;
+        await this.getAccounts(); 
+        return data;
+      }).finally( () => this.helpersService.hideLoading() );
 
   }
 
-  private getAccounts() {
-    this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
+  private getAccounts(): Promise<any> {
+    return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
       .then((response: any) => {
         this.accounts = [];
         let savings = response.savingsAccounts;
@@ -166,9 +166,11 @@ export class DashboardPage implements OnInit {
             this.accounts.push(account);
           }
         })
+        return savings;
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        throw err;
       })
   }
 

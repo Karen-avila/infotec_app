@@ -246,34 +246,50 @@ export class Tab2Page implements OnInit {
   presentAlertPrompt(): Promise<any> {
 
     this.helpersService.hideLoading();
-
+    
     return new Promise( async resolve => {
+
+      const message = 'To complete the registration, check your email, an activation code must have arrived (if the code does not arrive, select the forward option) that you must provide below.';       
+
+      const translate = await this.translate.get([
+        'Just one more step', 
+        '!Check your email!', 
+        'Transfer amount greather than account balance',
+        message,
+        'Finish',
+        'Activation code',
+        'Activation code is required',
+        'Resend',
+        'Cancel',
+        'Accept'
+      ]).toPromise();
+
       const alert = await this.alertController.create({
-        header: 'Solo un paso más',
-        subHeader: '¡Revisa tu correo!',
+        header: translate['Just one more step'],
+        subHeader: translate['!Check your email!'],
         backdropDismiss: false,
-        message: 'Para completar el registro, revisa tu correo, te deberá haber llegado un código de activación (si el código no te llego selecciona la opción de reenviar) que deberás proporcionar a continuación. ',
+        message: translate[message],
         inputs: [
           {
             name: 'codigoActivacion',
             id: 'codigoActivacion',
             type: 'number',
-            placeholder: 'Código de activación'
+            placeholder: translate['Activation code']
           }
         ],
         buttons: [
           {
-            text: 'Cancelar',
+            text: translate['Cancel'],
             role: 'cancel',
             handler: () => resolve('cancelar')
           }, {
-            text: 'Reenviar',
+            text: translate['Resend'],
             handler: () => {
               this.getActivationCode();
               return false;
             }
           }, {
-            text: 'Aceptar',
+            text: translate['Accept'],
             handler: (alertData) => {
               if (alertData.codigoActivacion) {
                 console.log('se resuelve la promesa');
@@ -284,7 +300,7 @@ export class Tab2Page implements OnInit {
 
               if (!document.getElementById('text-error')) {
                 document.getElementById('codigoActivacion')
-                  .insertAdjacentHTML('afterend', '<span id="text-error">El código de activación es requerido<span>');
+                  .insertAdjacentHTML('afterend', `<span id="text-error">${translate['Activation code is required']}<span>`);
               }
                 
               return false;

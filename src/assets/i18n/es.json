@@ -1,5 +1,5 @@
 {
-    "title": "Banca Móvil - Banco del Bienestar",
+    "Mobile Banking - Banco del Bienestar": "Banca Móvil - Banco del Bienestar",
     "Sign in": "Iniciar sesión",
     "Password": "Contraseña",
     "Username": "Usuario",
@@ -16,7 +16,6 @@
     "Register":"Registro",
     "Confirm Password":"Confirmar Contraseña",
     "To Register":"Registrar",
-    "tranfers.transfers":"Transferir",
     "Please wait...": "Por favor espera...",
     "Pay with CoDi": "Pagar con CoDi",
     "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
@@ -125,8 +124,8 @@
     "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado. Seleccione otro.",
     "Account not found": "Cuenta no encontrada",
     "Account already registered": "Cuenta ya registrada",
-    "Create Beneficiarie": "Crear Beneficiario",
-    "Update Beneficiarie": "Modificar Beneficiario",
+    "Create Beneficiary": "Crear Beneficiario",
+    "Update Beneficiary": "Modificar Beneficiario",
     "Amount greather than transfer limit": "Monto mayor al límite de transferencia",
     "Card Number / Account / CLABE": "No. de tarjeta / Cuenta / CLABE",
     "Beneficiary's name": "Nombre del beneficiario",
@@ -157,5 +156,11 @@
     "Just one more step": "Solo un paso más",
     "!Check your email!": "¡Revisa tu correo!",
     "Transfer amount greather than account balance": "Monto mayor al saldo de la cuenta",
-    "Finish": "terminar"
+    "Finish": "terminar",
+    "To complete the registration, check your email, an activation code must have arrived (if the code does not arrive, select the forward option) that you must provide below.": "Para completar el registro, revisa tu correo, te deberá haber llegado un código de activación (si el código no te llego selecciona la opción de reenviar) que deberás proporcionar a continuación.",
+    "Activation code": "Código de activación",
+    "Activation code is required": "El código de activación es requerido",
+    "Resend": "Reenviar",
+    "Close": "Cerrar",
+    "Login with PIN": "Ingresar con PIN"
 }
