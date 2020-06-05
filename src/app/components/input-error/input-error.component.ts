@@ -15,7 +15,8 @@ enum ErrorMessages {
   password = 'The password format is invalid',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
-  transferAmountLimit = 'Amount greather than transfer limit'
+  transferAmountLimit = 'Amount greather than transfer limit',
+  transferAmountExceeded = "Transfer amount greather than account balance"
 }
 
 @Component({

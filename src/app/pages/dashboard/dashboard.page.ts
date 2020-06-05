@@ -155,17 +155,17 @@ export class DashboardPage implements OnInit {
   }
 
   private getAccounts() {
-    this.storage.get('clientId')
-      .then((clientId: string) => {
-        return this.clientsService.getAccounts(clientId).toPromise();
-      })
+    this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
       .then((response: any) => {
         this.accounts = [];
-        let data = response.savingsAccounts;
-        data.forEach(element => {
-          let account: CardAccount = new CardAccount(element.accountNo, element.accountBalance, this.personalInfo.displayName, element.accountType.id);
-          this.accounts.push(account);
-        });
+        let savings = response.savingsAccounts;
+        savings.forEach(element => {
+          // si es savings, es 2
+          if (element.status.active) {
+            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
+            this.accounts.push(account);
+          }
+        })
       })
       .catch(err => {
         console.log(err)

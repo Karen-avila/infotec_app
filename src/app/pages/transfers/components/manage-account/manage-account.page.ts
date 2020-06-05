@@ -8,6 +8,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { Beneficiarie } from '@globals/interfaces/beneficiarie';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Bank {
   id: number;
@@ -53,6 +54,12 @@ export class ManageAccountPage implements OnInit {
 
   public beneficiaryAccountTypes: BeneficiaryAccountType[] = [];
 
+  public accountTypeOption: any;
+  
+  public bankIdOption: any; 
+
+  public cancelText: string; 
+
   constructor(
     protected modalController: ModalController,
     protected activatedRoute: ActivatedRoute,
@@ -60,7 +67,8 @@ export class ManageAccountPage implements OnInit {
     protected formBuilder: FormBuilder,
     protected http: HttpClient,
     private clientsService: ClientsService,
-    private userService: UserService
+    private userService: UserService,
+    private translateService: TranslateService
   ) {
     this.initializeApp();
   }
@@ -73,6 +81,16 @@ export class ManageAccountPage implements OnInit {
   }
 
   private initializeApp() {
+
+    this.translateService.get(['Kind of product', 'Bank / Institution', 'Cancel']).subscribe( translate => {
+      console.log(translate);
+
+      this.accountTypeOption =  {header: translate['Kind of product']};
+      this.bankIdOption = {header: translate['Bank / Institution']};
+      this.cancelText = translate['Cancel'];
+      
+    } )
+
 
     this.form = this.formBuilder.group({
       id: [''],
@@ -107,9 +125,9 @@ export class ManageAccountPage implements OnInit {
         // Cargamos datos del usuario
         this.personalInfo = response[0];
         // Cargamos catalogo de bancos
-        this.banks = response[1].codeValues;
+        this.banks = response[1];
         //Cargamos catalogo de beneficiary account types
-        this.beneficiaryAccountTypes = response[2].codeValues;
+        this.beneficiaryAccountTypes = response[2];
 
         const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
 
@@ -163,7 +181,6 @@ export class ManageAccountPage implements OnInit {
   async evaluateBank(x: string) {
     let possibleBank = x.substring(0, 4);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
-    console.log("valor account number", x)
     // TODO borrar condicion de 9 cuando las account number sean de 11
     if (x.length == 11 || x.length == 9) {
       this.searchButtonEnabled = true;
@@ -177,7 +194,6 @@ export class ManageAccountPage implements OnInit {
       this.form.controls['name'].enable();
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
     } else {
-      console.log("else furioso")
       this.form.controls['name'].disable();
       this.form.controls['name'].reset();
 
@@ -224,12 +240,13 @@ export class ManageAccountPage implements OnInit {
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (form.accountNumber.length == 9 || form.accountNumber.length == 11) ? 'TPT' : 'EXT';
     let promise: any;
+    let beneficiary: any;
 
     console.log("classification", accountClassificaction);
 
     if (this.type == 'Create' && accountClassificaction == 'TPT') {
       // aca metemos un beneficiario TPT a mifos
-      let beneficiary = {
+      beneficiary = {
         "locale": "es",
         "name": form.name,
         "alias": form.alias,
@@ -244,7 +261,7 @@ export class ManageAccountPage implements OnInit {
     }
 
     if (this.type == 'Update' && accountClassificaction == 'TPT') {
-      let beneficiary = {
+      beneficiary = {
         "name": form.name,
         // TODO chequear si el alias puede ser updateable
         // "alias": form.alias,
@@ -255,7 +272,7 @@ export class ManageAccountPage implements OnInit {
 
     if (this.type == 'Create' && accountClassificaction == 'EXT') {
       // aca metemos un beneficiario TPT a mifos
-      let beneficiary = {
+      beneficiary = {
         "locale": "es",
         "name": form.name,
         "alias": form.alias,
@@ -270,7 +287,7 @@ export class ManageAccountPage implements OnInit {
 
     if (this.type == 'Update' && accountClassificaction == 'EXT') {
       // aca metemos un beneficiario TPT a mifos
-      let beneficiary = {
+      beneficiary = {
         "name": form.name,
         // TODO chequear si el alias puede ser updateable
         //"alias": form.alias,
@@ -280,8 +297,9 @@ export class ManageAccountPage implements OnInit {
       promise = this.clientsService.putBeneficiariesEXT(beneficiary, form.id);
     }
 
-    promise.toPromise().then(res => {
+    promise.toPromise().then((res: any) => {
       console.log(res);
+      beneficiary.id = res.resourceId;
       this.dismissModal();
     })
       .catch(err => {

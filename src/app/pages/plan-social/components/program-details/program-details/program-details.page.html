@@ -7,10 +7,7 @@
     {{program.title}}
     </p>
   </div>
-  <div class="container-big" style="text-align: justify;font-size: 14px;">
-    <p>
-    {{program.text}}
-    </p>
+  <div [innerHTML]="program.text" class="container-big" style="text-align: justify;font-size: 14px;">
     <div class="ion-padding">
     <ion-button  (click)="goToDetails(program)" expand="block" color="primary" translate="More info">
     </ion-button>

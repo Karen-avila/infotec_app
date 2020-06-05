@@ -1,4 +1,4 @@
-<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'login'" [title]="'registration.register'"></app-header>
+<app-header [svg]="true" [menu]="false" [backButton]="true" [defaultHref]="'login'" [title]="'Register'"></app-header>
 
 <ion-content>
   <ion-card>
@@ -10,7 +10,7 @@
             
             <ion-item>
               <ion-icon name="person-outline"></ion-icon>
-              <ion-input type="text" placeholder="{{ 'First name' | translate }}" formControlName="firstName" clearInput></ion-input>
+              <ion-input class="text-transform" type="text" placeholder="{{ 'First name' | translate }}" formControlName="firstName" clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
 
@@ -40,7 +40,7 @@
 
             <ion-item style="margin-top: 15px;">
               <ion-icon name="lock-closed-outline"></ion-icon>
-              <ion-input formControlName="password"  placeholder="{{ 'login.password' | translate }}" [type]="type" clearInput></ion-input>
+              <ion-input formControlName="password"  placeholder="{{ 'Password' | translate }}" [type]="type" clearInput></ion-input>
               <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
               <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
             </ion-item>  
@@ -48,7 +48,7 @@
 
             <ion-item style="margin-top: 15px;">
               <ion-icon name="lock-closed-outline"></ion-icon>
-                <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'registration.confirmpassword' | translate }}" clearInput></ion-input>
+                <ion-input formControlName="confirmPassword" [type]="reType" placeholder="{{ 'Confirm Password' | translate }}" clearInput></ion-input>
                 <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
                 <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
             </ion-item>
@@ -67,7 +67,7 @@
   <ion-toolbar>
     <div class="ion-padding">
       <ion-button (click)="register()" type="submit" [disabled]="!registerForm.valid" expand="block" color="primary">{{ 'Next' | translate }}</ion-button>    
-      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'registration.cancel' | translate }}</ion-button>
+      <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'Cancel' | translate }}</ion-button>
     </div>
   </ion-toolbar>
 </ion-footer>

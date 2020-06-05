@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { Sim } from '@ionic-native/sim/ngx';
@@ -30,6 +30,9 @@ import { MenuModule } from '@components/menu/menu.module';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(es);
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -76,7 +79,8 @@ export function createTranslateLoader(http: HttpClient) {
       useClass: AuthInterceptorService,
       multi: true
     },
-    AES256
+    AES256,
+    { provide: LOCALE_ID, useValue: environment.locale }
   ],
   bootstrap: [AppComponent]
 })

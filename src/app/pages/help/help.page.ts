@@ -2,6 +2,7 @@ import { Component, OnInit, ComponentFactoryResolver } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { CodesService } from '@services/catalogs/codes.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-help',
@@ -15,7 +16,8 @@ export class HelpPage implements OnInit {
   constructor(
     private alertController: AlertController, 
     private callNumber: CallNumber,
-    private codesService: CodesService
+    private codesService: CodesService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -34,39 +36,42 @@ export class HelpPage implements OnInit {
   }
 
   async presentAlertPrompt() {
-    const alert = await this.alertController.create({
-      header: 'Enviar Correo',
-      inputs: [
-        {
-          name: 'name1',
-          type: 'text',
-          placeholder: 'Asunto*'
-        },
-        // multiline input.
-        {
-          name: 'paragraph',
-          id: 'paragraph',
-          type: 'textarea',
-          placeholder: 'Mensaje*'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            console.log('Confirm Cancel');
+    this.translate.get(['Send Email', 'Message', 'Cancel', 'Subject']).subscribe( async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Send Email'],
+        inputs: [
+          {
+            name: 'name1',
+            type: 'text',
+            placeholder: translate['Subject']+'*'
+          },
+          // multiline input.
+          {
+            name: 'paragraph',
+            id: 'paragraph',
+            type: 'textarea',
+            placeholder: translate['Message']+'*'
           }
-        }, {
-          text: 'Enviar',
-          handler: () => {
-            console.log('Confirm Ok');
+        ],
+        buttons: [
+          {
+            text: translate['Cancel'],
+            role: 'cancel',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: translate['Send'],
+            handler: () => {
+              console.log('Confirm Ok');
+            }
           }
-        }
-      ]
-    });
-
-    await alert.present();
+        ]
+      });
+  
+      await alert.present();
+    } );
+   
   }
 
 }
