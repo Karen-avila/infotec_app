@@ -83,9 +83,15 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
-  },  {
+  },
+  {
     path: 'plan-social',
     loadChildren: () => import('./pages/plan-social/plan-social.module').then( m => m.PlanSocialPageModule)
+  },
+  {
+    path: 'orden-pago',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/orden-pago/orden-pago.module').then( m => m.OrdenPagoPageModule)
   }
 
 ];

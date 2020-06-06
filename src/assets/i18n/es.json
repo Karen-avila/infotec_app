@@ -127,5 +127,6 @@
     "registration.email": "Correo electrónico",
     "Visit us at the office closest to you.": "Visítanos en la sucursal más cercana a tí.",
     "About Us": "Nosotros",
-    "Back": "Atrás"
+    "Back": "Atrás",
+    "PaymentOrder.title": "Orden de pago"
 }
