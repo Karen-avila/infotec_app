@@ -90,7 +90,6 @@ export class TransfersPage implements OnInit {
     public translate: TranslateService,
     public router: Router,
     private clientsService: ClientsService,
-    private storage: Storage,
     private userService: UserService
   ) {
     this.transferForm = formBuilder.group({
@@ -118,7 +117,7 @@ export class TransfersPage implements OnInit {
       this.clientsService.getLoginInfo()
     ]
     )
-      .then( async res => {
+      .then(async res => {
         console.log(res);
         this.savedAccounts = [...res[0], ...res[1]];
         this.userService.beneficiaries = this.savedAccounts;
@@ -160,12 +159,9 @@ export class TransfersPage implements OnInit {
       });
       return await modal.present();
     } else {
-      this.translate.get([
-        'Update',
-        'Do you want to update the bank account?'
-      ]).subscribe((resp: any) => {
+      this.translate.get(['Update', 'Do you want to update the bank account?']).subscribe(async translate => {
         this.helpersService
-          .showAlert(resp.Update, resp['Do you want to update the bank account?'])
+          .showAlert(translate.Update, translate['Do you want to update the bank account?'])
           .then(async () => {
             const modal = await this.modalController.create({
               component: ManageAccountPage,
@@ -184,22 +180,23 @@ export class TransfersPage implements OnInit {
   }
 
   async onDelete(id, accountNumber, index) {
-    const alert = await this.alertController.create({
-      header: 'Eliminar',
-      message: 'Desea eliminar la cuenta de banco?',
-      buttons: [
-        'Cancelar',
-        {
-          text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Ok');
-            this.deleteBeneficiarie(id, accountNumber, index);
+    this.translate.get(['Delete', 'Do you want to delete the beneficiary?', 'Cancel', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Delete'],
+        message: translate['Do you want to delete the beneficiary?'],
+        buttons: [
+          translate['Cancel'],
+          {
+            text: translate['Accept'],
+            handler: () => {
+              this.deleteBeneficiarie(id, accountNumber, index);
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    });
   }
 
   public selectAccount(index: number, item: Beneficiarie) {
@@ -226,22 +223,23 @@ export class TransfersPage implements OnInit {
       return;
     }
 
-    const alert = await this.alertController.create({
-      header: 'Confirmar transferencia',
-      message: 'Desea confirmar la transferencia?',
-      buttons: [
-        'Cancelar',
-        {
-          text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Ok');
-            this.makeTransfer();
+    this.translate.get(['Confirm transfer', 'Do you want to confirm the transfer?', 'Cancel', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Confirm transfer'],
+        message: translate['Do you want to confirm the transfer?'],
+        buttons: [
+          translate['Cancel'],
+          {
+            text: translate['Accept'],
+            handler: () => {
+              this.makeTransfer();
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    });
   }
 
   public makeTransfer(): void {
@@ -308,14 +306,16 @@ export class TransfersPage implements OnInit {
   }
 
   private async showErrorTransactionMessage() {
-    const alert = await this.alertController.create({
-      header: 'Error en la transferencia',
-      message: 'No se pudo realizar la transferencia. Intente más tarde.',
-      buttons: [
-        'Aceptar'
-      ]
+    this.translate.get(['Transfer error', 'We could not proccess the transfer. Try later', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Transfer error'],
+        message: translate['We could not proccess the transfer. Try later'],
+        buttons: [
+          translate['Accept']
+        ]
+      });
+      await alert.present();
     });
-    await alert.present();
   }
 
   private async openSuccessModal(transfer: any) {

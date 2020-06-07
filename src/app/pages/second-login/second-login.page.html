@@ -1,20 +1,4 @@
-<!-- <ion-header class="ion-no-border">
-    <ion-toolbar>
-        <ion-buttons *ngIf="type === 'confirm-pin'" slot="start">
-            <ion-back-button color="secondary"></ion-back-button>
-        </ion-buttons>
-        <app-svg></app-svg>
-        <div *ngIf="type === 'pin'" class="header-title" translate="Set pin to login"></div>
-        <div *ngIf="type === 'confirm-pin'" class="header-title" translate="Confirm pin"></div>
-        <div *ngIf="type === 'login'" class="header-title" translate="Ingresar pin"></div>
-        <div *ngIf="type === 'confirm-pin' && limitSelected === lenSelectedNumbers && buttonDisabled"
-            class="header-title" style="color: red;" translate="Pin confirmation is incorrect">
-        </div>
-    </ion-toolbar>
-</ion-header> -->
-
-<app-header [svg]="true" [title]="headerTitle()" [backButton]="true"></app-header>
-
+<app-header [svg]="true" [title]="headerTitle()" [backButton]="showBackButton()"></app-header>
 
 <ion-content>
     <ion-grid>
@@ -110,14 +94,14 @@
                 </ion-row>
 
             </ion-grid>
-
+            <div *ngIf="incorrectPin" class="custom-error-message">{{'Incorrect PIN' | translate}}</div>
         </div>
     </ion-grid>
 </ion-content>
 
-<ion-button [routerLink]="['/registration']" routerDirection="root" class="btn-second" expand="block"
+<ion-button *ngIf="showRegisterButton()" [routerLink]="['/registration']" routerDirection="root" class="btn-second" expand="block"
     color="medium">{{ 'Register ' | translate }}</ion-button>
-<ion-button [routerLink]="['/login']" routerDirection="root" class="btn-second" expand="block"
+<ion-button *ngIf="showSignInButton()" [routerLink]="['/login']" routerDirection="root" class="btn-second" expand="block"
     color="medium">{{ 'Sign in' | translate }}</ion-button>
 <ion-button (click)="goToRoute()" [disabled]="buttonDisabled" class="btn-second" expand="block"
     color="primary" [translate]="buttonText"></ion-button>
