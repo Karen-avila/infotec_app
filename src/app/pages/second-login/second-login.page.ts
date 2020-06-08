@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { NavController } from '@ionic/angular';
@@ -26,7 +26,15 @@ export class SecondLoginPage implements OnInit {
 
   private errorNumberCount: number = 0;
 
-  constructor(private activatedRoute: ActivatedRoute, private navCtrl: NavController, private storage: Storage, private authenticationService: AuthenticationService, private userService: UserService) { }
+  public incorrectPin: boolean = false;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private navCtrl: NavController,
+    private storage: Storage,
+    private authenticationService: AuthenticationService,
+    private userService: UserService,
+  ) { }
 
   ngOnInit() {
 
@@ -39,7 +47,6 @@ export class SecondLoginPage implements OnInit {
       this.type = type;
     }
     this.pin = code || '';
-    console.log(this.type, this.pin);
 
   }
 
@@ -88,6 +95,7 @@ export class SecondLoginPage implements OnInit {
   }
 
   public add(number: number): void {
+    this.incorrectPin = false;
     if (this.seletedNumbers.length >= this.limitSelected) {
       return;
     }
@@ -119,12 +127,25 @@ export class SecondLoginPage implements OnInit {
         break;
     }
   }
+
   public headerTitle() {
     if (this.type === 'login') return 'Enter pin';
     if (this.type === 'pin') return 'Set pin to login';
     if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'Pin confirmation is incorrect';
     if (this.type === 'confirm-pin') return 'Confirm pin';
 
+  }
+
+  public showBackButton() {
+    return this.type === 'pin' || this.type === 'confirm-pin' ? true : false;
+  }
+
+  public showRegisterButton() {
+    return this.type === 'pin' || this.type === 'confirm-pin' ? false : true;
+  }
+
+  public showSignInButton() {
+    return this.type === 'pin' || this.type === 'confirm-pin' ? false : true;
   }
 
   private async encryptPIN() {
@@ -140,7 +161,7 @@ export class SecondLoginPage implements OnInit {
 
   private async decryptUser() {
     const PIN = this.seletedNumbers.join('');
-
+    this.incorrectPin = false;
     this.storage.get('user-hash')
       .then(encryptedUser => {
         var bytes = CryptoJS.AES.decrypt(encryptedUser, PIN);
@@ -149,7 +170,8 @@ export class SecondLoginPage implements OnInit {
       })
       .catch(err => {
         console.log(err);
-        alert("El PIN ingresado es incorrecto");
+        //alert("El PIN ingresado es incorrecto");
+        this.incorrectPin = true;
         this.seletedNumbers = [];
         this.errorNumberCount++;
         // si el usuario pone mal el pin 3 veces, lo mandamos al login y borramos el hash guardado
@@ -159,5 +181,4 @@ export class SecondLoginPage implements OnInit {
         }
       });
   }
-
 }

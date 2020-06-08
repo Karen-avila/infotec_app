@@ -21,7 +21,6 @@ export class ClientsService {
   }
 
   public getClient(clientId: string): Observable<any> {
-    this.storage.set('clientId', clientId);
     return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}`);
   }
   //#region beneficiaries TPT

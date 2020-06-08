@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, AlertController } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
 import { UserService } from './user.service';
 import { User } from '@globals/interfaces/user';
@@ -11,6 +11,8 @@ import { LoginInfo } from '@globals/interfaces/login-info';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { environment } from '@env';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,9 @@ export class AuthenticationService {
     private navCtrl: NavController,
     private userService: UserService,
     private idle: Idle, 
-    private helpersService: HelpersService
+    private helpersService: HelpersService,
+    private translate: TranslateService,
+    private alertController: AlertController
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -75,7 +79,24 @@ export class AuthenticationService {
       })
       .catch(err => {
         console.log(err);
+        this.showLoginErrorMessage();
       }).finally( () => this.helpersService.hideLoading() );
+  }
+
+  private async showLoginErrorMessage() {
+    this.translate.get(['The credentials entered are incorrect', 'Login Error', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Incorrect Login'],
+        message: translate['The credentials entered are incorrect'],
+        buttons: [
+          {
+            text: translate['Accept'],
+          }
+        ]
+      });
+
+      await alert.present();
+    });
   }
 
   public ifLoggedIn() {
@@ -125,6 +146,6 @@ export class AuthenticationService {
   }
 
   public isAuthenticated() {
-    return this.authState.value || true;
+    return this.authState.value || environment.mockLogin;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-transfer-success',
@@ -31,7 +32,7 @@ export class TransferSuccessPage implements OnInit {
     this.transferAmount = transferAmount;
 
     const date = new Date();
-    const formattedDate = date.toLocaleDateString('es-mx', {
+    const formattedDate = date.toLocaleDateString(environment.locale, {
       day: '2-digit', month: 'short', year: 'numeric'
     })
     this.fecha = formattedDate;

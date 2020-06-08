@@ -234,15 +234,12 @@ export class ManageAccountPage implements OnInit {
 
     const form = { ...this.form.getRawValue() };
 
-    console.log("formulario", form);
     if (this.form.invalid) { return }
 
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (form.accountNumber.length == 9 || form.accountNumber.length == 11) ? 'TPT' : 'EXT';
     let promise: any;
     let beneficiary: any;
-
-    console.log("classification", accountClassificaction);
 
     if (this.type == 'Create' && accountClassificaction == 'TPT') {
       // aca metemos un beneficiario TPT a mifos
