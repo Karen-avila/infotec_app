@@ -32,6 +32,7 @@ import { MomentModule } from 'angular2-moment'; // optional, provides moment-sty
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+
 registerLocaleData(es);
 
 export function createTranslateLoader(http: HttpClient) {

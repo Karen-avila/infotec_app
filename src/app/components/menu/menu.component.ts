@@ -36,6 +36,11 @@ export class MenuComponent implements OnInit {
       icon: 'swap-horizontal-outline'
     },
     {
+      title: 'Pay Order',
+      url: '/pay-order',
+      icon: 'wallet-outline'
+    },
+    {
       title: 'Settings',
       url: '/settings',
       icon: 'settings-outline'
