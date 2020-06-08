@@ -132,25 +132,4 @@ export class ClientsService {
   public getSocialPrograms(): Observable<any> {
     return this.httpClient.get(`${ENDPOINTS.socialPrograms}`);
   }
-
-  public async showSuccessMessage(text: string,routeLink:string) {
-    this.translate.get(['Succes!','Your',text, 'has been modified correctly', 'Accept']).subscribe(async translate => {
-      const alert = await this.alertController.create({
-        header: translate['Success!'],
-        message: translate['Your']+' '+translate[text]+' '+translate['has been modified correctly'],
-        buttons: [
-          {
-            text: translate['Accept'],
-            handler: () => {
-              this.navCtrl.navigateRoot([routeLink])
-            }
-          }
-          
-        ]
-      });
-
-      await alert.present();
-    });
-  }
-
 }

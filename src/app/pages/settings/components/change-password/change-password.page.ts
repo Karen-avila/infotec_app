@@ -23,9 +23,9 @@ export class ChangePasswordPage implements OnInit {
   reType: string = 'password';
   form: FormGroup;
 
-  
 
-  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService,private clientsService: ClientsService,private helpersService: HelpersService) {
+
+  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService, private clientsService: ClientsService, private helpersService: HelpersService) {
     this.form = formBuilder.group({
       password: ["", Validators.required],
       newPassword: ["",
@@ -75,16 +75,13 @@ export class ChangePasswordPage implements OnInit {
     this.userService.changeData(data)
       .toPromise()
       .then(response => {
-        this.clientsService.showSuccessMessage('password','/logout')
+        this.helpersService.showSuccessMessage('Successful change','Your password has been modified correctly', '/logout')
       })
       .catch(err => {
         console.log(err)
+        this.helpersService.showErrorMessage();
       })
-      .finally(()=> 
-      {
-        this.helpersService.hideLoading()
-        }
-      )
+      .finally(() => this.helpersService.hideLoading())
   }
 
   viewPassword() {

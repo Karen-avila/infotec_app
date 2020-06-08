@@ -20,14 +20,13 @@ export class ChangePhonePage implements OnInit {
 
   form: FormGroup;
 
-  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService,private storage: Storage,private clientsService: ClientsService,private helpersService: HelpersService) { 
+  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
 
     this.form = formBuilder.group({
-      phone: ["",   Validators.compose([
+      phone: ["", Validators.compose([
         Validators.required,
         CustomValidators.ValidatePhoneNumber
       ])]
-    
     })
   }
 
@@ -35,32 +34,29 @@ export class ChangePhonePage implements OnInit {
 
 
     this.storage.get('personal-info')
- 
-    .then(phone => {
-    
-      this.form.patchValue({
-       phone: phone.mobileNo
+      .then(phone => {
+        this.form.patchValue({
+          phone: phone.mobileNo
+        });
+      })
+      .catch(err => {
+        console.log(err)
       });
-    })
-    .catch(err => {
-      console.log(err)
-    });
-    
-
   }
 
   changePhone() {
     const form = { ...this.form.value };
+    
     this.helpersService.presentLoading()
     this.userService.changeData(form)
       .toPromise()
       .then(() => {
-        this.clientsService.showSuccessMessage('phone','/dashboard')
+        this.helpersService.showSuccessMessage('Successful change', 'Your phone has been modified correctly', '/dashboard')
       })
       .catch(err => {
         console.log(err)
+        this.helpersService.showErrorMessage();
       })
+      .finally(() => this.helpersService.hideLoading())
   }
-
-
 }

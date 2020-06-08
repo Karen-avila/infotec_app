@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 import { environment } from '@env';
@@ -16,18 +16,19 @@ export class HelpersService {
   constructor(
     protected loadingController: LoadingController,
     protected translate: TranslateService,
-    protected alertController: AlertController
+    protected alertController: AlertController,
+    private navCtrl: NavController
   ) { }
 
-  public async presentLoading() {
-    this.translate.get('Please wait...').subscribe( async message => {
-      
-      this.loading = await this.loadingController.create({message});
+  public async presentLoading(text?: string) {
+    const message = text ? text : 'Please wait...';
+    this.translate.get(message).subscribe(async message => {
+
+      this.loading = await this.loadingController.create({ message });
       this.loading.present();
 
     });
   }
-
 
   public hideLoading() {
     if (!this.loading) {
@@ -73,7 +74,7 @@ export class HelpersService {
       cssClass: 'no-internet-class',
       backdropDismiss: false,
       buttons: ['Aceptar']
-    }).then( async(data) => {
+    }).then(async (data) => {
       console.log(data);
 
       const wrapper: any = document.querySelector('.alert-wrapper');
@@ -96,10 +97,43 @@ export class HelpersService {
 
     });
 
-    alert.onDidDismiss().then( () => this.flagNoInternetOpen = false );
+    alert.onDidDismiss().then(() => this.flagNoInternetOpen = false);
 
     await alert.present();
 
+  }
+
+  public async showSuccessMessage(header: string, message: string, routerLink?: string) {
+    this.translate.get([header, message]).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate[header],
+        message: translate[message],
+        buttons: [
+          {
+            text: translate['Accept'],
+            handler: () => {
+              if (routerLink) { this.navCtrl.navigateRoot([routerLink]) }
+            }
+          }
+        ]
+      });
+      await alert.present();
+    });
+  }
+
+  public async showErrorMessage(title?: string, text?: string) {
+    const message = text ? text : 'Can not proccess the request right now. Try again later'
+    const header = title ? title : 'Error'
+    this.translate.get([title, message, 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate[header],
+        message: translate[message],
+        buttons: [
+          translate['Accept']
+        ]
+      });
+      await alert.present();
+    });
   }
 
   public getFormattedDate(): string {

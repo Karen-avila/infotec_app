@@ -62,16 +62,15 @@ export class TransfersPage implements OnInit {
   public settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
-    cardWidth: '80%',
+    cardWidth: '70%',
     spaceBetween: 0,
     orientation: 'horizontal'
   };
 
-  public accounts: CardAccount[] = [
-  ];
+  public accounts: CardAccount[] = [];
 
-  public savedAccounts: Beneficiarie[] = [
-  ]
+  public savedAccounts: Beneficiarie[] = []
+  public savedAccountsFiltered: Beneficiarie[] = []
 
   public transferForm: FormGroup;
 
@@ -105,7 +104,6 @@ export class TransfersPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.helpersService.getFormattedDate());
   }
 
 
@@ -126,6 +124,7 @@ export class TransfersPage implements OnInit {
         console.log(res);
         this.savedAccounts = [...res[0], ...res[1]];
         this.userService.beneficiaries = this.savedAccounts;
+        this.savedAccountsFiltered = this.savedAccounts;
         this.personalInfo = res[2];
         this.loginInfo = res[3];
 
@@ -134,6 +133,7 @@ export class TransfersPage implements OnInit {
       })
       .catch(err => {
         console.log(err);
+        this.helpersService.showErrorMessage();
       })
       .finally(() => {
         this.flag = true;
@@ -172,7 +172,7 @@ export class TransfersPage implements OnInit {
               component: ManageAccountPage,
               componentProps: {
                 'type': 'Update',
-                ...this.savedAccounts[index]
+                ...this.savedAccountsFiltered[index]
               }
             });
             modal.onDidDismiss().then(() => {
@@ -206,7 +206,7 @@ export class TransfersPage implements OnInit {
 
   public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccounts.find((account: Beneficiarie) => account.selected);
+    const prevSelected = this.savedAccountsFiltered.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
@@ -304,6 +304,8 @@ export class TransfersPage implements OnInit {
     transferSuccess.transferAmount = form.transferAmount;
     transferSuccess.referencia = form.transferDescription;
 
+    this.helpersService.presentLoading('Transfering...');
+
     this.clientsService.accountTransfers(transfer).toPromise()
       .then((response: any) => {
         console.log(response)
@@ -313,21 +315,9 @@ export class TransfersPage implements OnInit {
       .catch(err => {
         console.log(err)
         this.transferForm.reset();
-        this.showErrorTransactionMessage();
+        this.helpersService.showErrorMessage('Transfer error', 'We could not proccess the transfer. Try later');
       })
-  }
-
-  private async showErrorTransactionMessage() {
-    this.translate.get(['Transfer error', 'We could not proccess the transfer. Try later', 'Accept']).subscribe(async translate => {
-      const alert = await this.alertController.create({
-        header: translate['Transfer error'],
-        message: translate['We could not proccess the transfer. Try later'],
-        buttons: [
-          translate['Accept']
-        ]
-      });
-      await alert.present();
-    });
+      .finally(() => this.helpersService.hideLoading())
   }
 
   private async openSuccessModal(transfer: any) {
@@ -346,6 +336,7 @@ export class TransfersPage implements OnInit {
 
     return await modal.present();
   }
+
   // traemos los accounts del cliente
   private async getAccounts(): Promise<any> {
     return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
@@ -369,8 +360,8 @@ export class TransfersPage implements OnInit {
   }
 
 
-  public deleteBeneficiarie(id, accountNumber: string, index): void {
-
+  public deleteBeneficiarie(id: string, accountNumber: string, index: number): void {
+    this.helpersService.presentLoading('Deleting beneficiary...');
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (accountNumber.length == 9 || accountNumber.length == 11) ? 'TPT' : 'EXT';
     let promise: any;
@@ -381,11 +372,19 @@ export class TransfersPage implements OnInit {
       promise = this.clientsService.deleteBeneficiarieEXT(id)
     }
     promise.toPromise().then((response: any) => {
-      console.log(response);
-      this.savedAccounts.splice(index, 1);
+      this.savedAccountsFiltered = this.savedAccounts;
+      this.savedAccountsFiltered.splice(index, 1);
     })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        this.helpersService.showErrorMessage();
       })
+      .finally(() => this.helpersService.hideLoading())
+  }
+
+  public onChangeText(text: string) {
+    this.isAccountSelected = false;
+    this.accountSelected = null;
+    this.savedAccountsFiltered = this.savedAccounts.filter(function (str) { return str.name.toLowerCase().indexOf(text.toLowerCase()) !== -1 || str.alias.toLowerCase().indexOf(text.toLowerCase()) !== -1; });
   }
 }

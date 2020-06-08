@@ -20,7 +20,7 @@ export class ChangeEmailPage implements OnInit {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private navCtrl: NavController,private userService: UserService, private storage: Storage,private clientsService: ClientsService,private helpersService: HelpersService) {
+  constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
 
     this.form = formBuilder.group({
       email: ["", Validators.compose([
@@ -50,16 +50,13 @@ export class ChangeEmailPage implements OnInit {
       .toPromise()
       .then(response => {
         console.log(response)
-        this.clientsService.showSuccessMessage('email','/dashboard')
+        this.helpersService.showSuccessMessage('Successful change', 'Your email has been modified correctly', '/dashboard')
       })
       .catch(err => {
         console.log(err)
+        this.helpersService.showErrorMessage();
       })
-      .finally(()=> 
-      {
-        this.helpersService.hideLoading()
-        }
-      )
+      .finally(() => this.helpersService.hideLoading())
   }
 
 }

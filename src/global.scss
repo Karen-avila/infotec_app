@@ -100,6 +100,15 @@ ion-icon {
     text-align: center;
 }
 
+ion-searchbar {
+    .searchbar-input-container {
+        height: 32px !important;
+        input {
+            font-size: 14px !important;
+        }
+    }
+}
+
 @media (max-width: 350px) {
     ion-footer {
         height: 34px;

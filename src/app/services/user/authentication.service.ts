@@ -79,24 +79,8 @@ export class AuthenticationService {
       })
       .catch(err => {
         console.log(err);
-        this.showLoginErrorMessage();
+        this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
       }).finally( () => this.helpersService.hideLoading() );
-  }
-
-  private async showLoginErrorMessage() {
-    this.translate.get(['The credentials entered are incorrect', 'Login Error', 'Accept']).subscribe(async translate => {
-      const alert = await this.alertController.create({
-        header: translate['Incorrect Login'],
-        message: translate['The credentials entered are incorrect'],
-        buttons: [
-          {
-            text: translate['Accept'],
-          }
-        ]
-      });
-
-      await alert.present();
-    });
   }
 
   public ifLoggedIn() {

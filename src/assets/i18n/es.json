@@ -175,5 +175,18 @@
     "Delete": "Eliminar",
     "Incorrect PIN": "PIN Incorrecto",
     "Incorrect Login": "Login Incorrecto",
-    "The credentials entered are incorrect": "Las credenciales ingresadas son incorrectas"
+    "The credentials entered are incorrect": "Las credenciales ingresadas son incorrectas",
+    "Search": "Buscar",
+    "No beneficiaries found": "No se encontraron beneficiarios",
+    "Please enter a beneficiary to make a transfer": "Por favor cargue un beneficiario para realizar una transferencia",
+    "Transfering...": "Realizando transferencia...",
+    "Can not proccess the request right now. Try again later": "No podemos procesar la solicitud en estos momentos. Intente más tarde",
+    "Successful change": "Cambio exitoso",
+    "Your phone has been modified correctly": "Su teléfono ha sido modificado correctamente",
+    "Your password has been modified correctly": "Su contraseña ha sido modificado correctamente",
+    "Your email has been modified correctly": "Su email ha sido modificado correctamente",
+    "Searching client...": "Buscando cliente...",
+    "Creating beneficiary...": "Creando beneficiario...",
+    "Updating beneficiary...": "Actualizando beneficiario...",
+    "Deleting beneficiary...": "Borrando beneficiario..."
 }
