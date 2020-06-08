@@ -7,6 +7,8 @@ import { UserService } from '@services/user/user.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Storage } from '@ionic/storage';
 import { LoginInfo } from '@globals/interfaces/login-info';
+import { ClientsService } from '@services/clients/clients.service';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class ChangeEmailPage implements OnInit {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private navCtrl: NavController,private userService: UserService, private storage: Storage) {
+  constructor(public formBuilder: FormBuilder, private navCtrl: NavController,private userService: UserService, private storage: Storage,private clientsService: ClientsService,private helpersService: HelpersService) {
 
     this.form = formBuilder.group({
       email: ["", Validators.compose([
@@ -43,16 +45,21 @@ export class ChangeEmailPage implements OnInit {
 
   changeEmail() {
     const form = { ...this.form.value };
-
+    this.helpersService.presentLoading()
     this.userService.changeData(form)
       .toPromise()
       .then(response => {
         console.log(response)
-        this.navCtrl.navigateRoot(['/dashboard'])
+        this.clientsService.showSuccessMessage('email','/dashboard')
       })
       .catch(err => {
         console.log(err)
       })
+      .finally(()=> 
+      {
+        this.helpersService.hideLoading()
+        }
+      )
   }
 
 }
