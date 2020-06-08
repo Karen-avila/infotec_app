@@ -44,6 +44,8 @@ export class accountTransferEXT {
   dateFormat: string = environment.dateFormat;
   locale: string = environment.locale;
   note: string;
+  routingCode: string;
+  receiptNumber: string;
   // siempre es 2 porque es SPEI
   paymentTypeId: number = 2;
   transactionAmount: number;
@@ -81,6 +83,7 @@ export class TransfersPage implements OnInit {
   private accountSelected: Beneficiarie;
 
   public flag: boolean = false;
+  public showRFC: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -94,7 +97,9 @@ export class TransfersPage implements OnInit {
   ) {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
-      transferDescription: ['', Validators.required]
+      transferDescription: ['', Validators.required],
+      concept: [''],
+      rfc: ['']
     });
     this.initialize();
   }
@@ -212,6 +217,8 @@ export class TransfersPage implements OnInit {
     this.isAccountSelected = true;
     this.transferForm.clearValidators();
     this.transferForm.setValidators([CustomValidators.ValidateTransferAmountLimit('transferAmount', this.accountSelected.transferLimit)])
+    this.showRFC = this.accountSelected.accountNumber.length != 9 && this.accountSelected.accountNumber.length != 11;
+    if (this.showRFC) { this.transferForm.controls['rfc'].setValidators(Validators.required) } else { this.transferForm.controls['rfc'].clearValidators() }
     this.transferForm.reset();
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
@@ -279,7 +286,12 @@ export class TransfersPage implements OnInit {
       transfer.locale = environment.locale;
       transfer.dateFormat = environment.dateFormat;
       transfer.transactionAmount = form.transferAmount;
-      transfer.note = form.transferDescription;
+      // concepto
+      transfer.note = form.concept;
+      // referencia
+      transfer.routingCode = form.transferDescription;
+      // rfc
+      transfer.receiptNumber = form.rfc;
     } else {
       return;
     }
@@ -292,7 +304,7 @@ export class TransfersPage implements OnInit {
     transferSuccess.transferAmount = form.transferAmount;
     transferSuccess.referencia = form.transferDescription;
 
-    this.clientsService.accountTransfers("asd").toPromise()
+    this.clientsService.accountTransfers(transfer).toPromise()
       .then((response: any) => {
         console.log(response)
         transferSuccess.folio = response.resourceId;
@@ -327,7 +339,9 @@ export class TransfersPage implements OnInit {
       }
     });
     modal.onDidDismiss().then(() => {
-      this.initialize();
+      this.accountSelected = null;
+      this.isAccountSelected = false;
+      setTimeout(() => this.content.scrollToTop(1000), 200);
     });
 
     return await modal.present();
