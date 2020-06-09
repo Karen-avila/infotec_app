@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-footer',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private statusBar: StatusBar) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.statusBar.hide();
+    this.statusBar.overlaysWebView(false);
+  }
 
 }

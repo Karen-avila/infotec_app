@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlertController, MenuController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Storage } from '@ionic/storage';
 import { ClientsService } from '@services/clients/clients.service';
 import { HelpersService } from '@services/helpers/helpers.service';
-
-
+import { LoginInfo } from '@globals/interfaces/login-info';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-change-phone',
@@ -20,7 +16,12 @@ export class ChangePhonePage implements OnInit {
 
   form: FormGroup;
 
-  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
+  constructor(public formBuilder: FormBuilder,
+    private userService: UserService,
+    private clientsService: ClientsService,
+    private helpersService: HelpersService,
+    private storage: Storage
+    ) {
 
     this.form = formBuilder.group({
       phone: ["", Validators.compose([
@@ -31,26 +32,21 @@ export class ChangePhonePage implements OnInit {
   }
 
   ngOnInit() {
-
-
-    this.storage.get('personal-info')
-      .then(phone => {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
         this.form.patchValue({
-          phone: phone.mobileNo
+          phone: data.phone
         });
-      })
-      .catch(err => {
-        console.log(err)
       });
   }
 
   changePhone() {
     const form = { ...this.form.value };
-    
     this.helpersService.presentLoading()
     this.userService.changeData(form)
       .toPromise()
       .then(() => {
+        this.updatePhone(form.phone)
         this.helpersService.showSuccessMessage('Successful change', 'Your phone has been modified correctly', '/dashboard')
       })
       .catch(err => {
@@ -59,4 +55,13 @@ export class ChangePhonePage implements OnInit {
       })
       .finally(() => this.helpersService.hideLoading())
   }
+
+  private updatePhone(phone: string): void {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
+        data.phone = phone;
+        this.storage.set('login-info', data);
+      });
+  }
+
 }

@@ -145,12 +145,21 @@ export class DashboardPage implements OnInit {
         this.personalInfo = data;
         return this.clientsService.getLoginInfo();
       })
-      .then( async (data: LoginInfo) => {
+      .then(async (data: LoginInfo) => {
         this.loginInfo = data;
         console.log(data);
-        await this.getAccounts(); 
+        await this.getAccounts();
         return data;
-      }).finally( () => this.helpersService.hideLoading() );
+      })
+      .catch(err => {
+        console.log("err", err);
+        this.router.navigate(['/login'])
+        this.helpersService.showErrorMessage();
+        throw err;
+      })
+      .finally(() => {
+        this.helpersService.hideLoading()
+      });
 
   }
 

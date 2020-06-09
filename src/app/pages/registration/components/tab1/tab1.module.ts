@@ -10,6 +10,7 @@ import { Tab1Page } from './tab1.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { HeaderModule } from '@components/header/header.module';
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule,
-    HeaderModule
+    HeaderModule,
+    FooterModule
   ],
   declarations: [Tab1Page]
 })
