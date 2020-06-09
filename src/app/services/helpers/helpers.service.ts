@@ -11,7 +11,7 @@ export class HelpersService {
 
   flagNoInternetOpen: boolean = false;
 
-  loading: any = null;
+  isLoading = false;
 
   constructor(
     protected loadingController: LoadingController,
@@ -20,23 +20,41 @@ export class HelpersService {
     private navCtrl: NavController
   ) { }
 
-  public async presentLoading(text?: string) {
+  async presentLoading(text?: string) {
+    // this.isLoading = true;
+    // console.log("Presenting loading...")
     const message = text ? text : 'Please wait...';
     this.translate.get(message).subscribe(async message => {
 
-      this.loading = await this.loadingController.create({ message });
-      this.loading.present();
-
+      return await this.loadingController.create({ message
+        // duration: 5000,
+      }).then(a => {
+        a.present().then(() => {
+          console.log('presented');
+          if (!this.isLoading) {
+            a.dismiss().then(() => console.log('abort presenting'));
+          }
+        });
+      });
+    //   this.loading = await this.loadingController.create({ message });
+    //   this.loading.present();
+    //   console.log("Loading exists present:", this.loading);
     });
   }
 
-  public hideLoading() {
-    if (!this.loading) {
-      return;
-    }
-    this.loading.dismiss();
-    this.loading = null;
+  async hideLoading() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
+
+  // public async hideLoading() {
+  //   console.log("Loading exists:", this.loading);
+  //   if (!this.loading) {
+  //     return;
+  //   }
+  //   //this.loading.dismiss();
+  //   return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  // }
 
   public async showAlert(header: string, message: string): Promise<any> {
 

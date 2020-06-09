@@ -43,28 +43,18 @@
 
     </form>
   </div>
-
-  <div style="width: 100%; position: absolute;bottom: 0;">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <app-rounding-button title="Cancel" iconType="close" (click)="onCancel()"></app-rounding-button>
-        </ion-col>
-        <ion-col>
-
-        </ion-col>
-        <ion-col>
-          <app-rounding-button [disabled]="formGroup.invalid" title="Accept" (click)="onClick()" iconType="check">
-          </app-rounding-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
+<ion-grid style="position: absolute; bottom: 38px; width: 100%;">
+  <ion-row>
+    <ion-col>
+      <app-rounding-button title="Cancel" iconType="close" (click)="onCancel()"></app-rounding-button>
+    </ion-col>
+    <ion-col>
+      <app-rounding-button [disabled]="formGroup.invalid" title="Accept" (click)="onClick()" iconType="check">
+      </app-rounding-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<app-footer></app-footer>

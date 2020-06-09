@@ -67,11 +67,11 @@ export class MenuComponent implements OnInit {
   public avatarUrl: string = '/assets/header-icons/leona.png';
 
   ngOnInit() {
-    this.storage.get('image-profile').then( image => {
+    this.storage.get('image-profile').then(image => {
       if (image) {
         this.avatarUrl = image;
       }
-    } )
+    })
   }
 
   public share(index: number): void {
@@ -79,7 +79,7 @@ export class MenuComponent implements OnInit {
     this.socialSharing.share('message', 'subject', null, 'https://www.gob.mx/bancodelbienestar');
   }
 
-  public getPersonalInfo() {
+  private getPersonalInfo() {
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
         this.personalInfo = data;

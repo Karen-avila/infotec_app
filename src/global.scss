@@ -28,7 +28,7 @@
 /*Add Font Montserrat*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 
-ion-footer {
+app-footer {
     height: 38px;
 }
 
@@ -107,16 +107,6 @@ ion-searchbar {
             font-size: 14px !important;
         }
     }
-}
-
-ion-footer.ios {
-    position: relative;
-    top: -2px;
-}
-
-ion-footer.md {
-    position: relative;
-    top: -7px;
 }
 
 @media (max-width: 350px) {

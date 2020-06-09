@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-collect-codi',
@@ -20,14 +19,10 @@ export class CollectCodiPage implements OnInit {
     protected router: Router,
     protected helpersService: HelpersService,
     protected translate: TranslateService,
-    protected alertController: AlertController,
-    private statusBar: StatusBar
+    protected alertController: AlertController
   ) { }
 
   ngOnInit() {
-    this.statusBar.hide();
-    this.statusBar.overlaysWebView(false);
-
     this.formGroup = this.formBuilder.group({
       amount: ['', [Validators.required, Validators.min(1)]],
       concept: ['', [Validators.required, Validators.minLength(5)]],
