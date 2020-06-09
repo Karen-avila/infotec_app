@@ -21,7 +21,7 @@ export class HelpersService {
   ) { }
 
   async presentLoading(text?: string) {
-    // this.isLoading = true;
+    this.isLoading = true;
     // console.log("Presenting loading...")
     const message = text ? text : 'Please wait...';
     this.translate.get(message).subscribe(async message => {
