@@ -11,7 +11,7 @@ export class HelpersService {
 
   flagNoInternetOpen: boolean = false;
 
-  loading: any = null;
+  isLoading = false;
 
   constructor(
     protected loadingController: LoadingController,
@@ -20,23 +20,41 @@ export class HelpersService {
     private navCtrl: NavController
   ) { }
 
-  public async presentLoading(text?: string) {
+  async presentLoading(text?: string) {
+    this.isLoading = true;
+    // console.log("Presenting loading...")
     const message = text ? text : 'Please wait...';
     this.translate.get(message).subscribe(async message => {
 
-      this.loading = await this.loadingController.create({ message });
-      this.loading.present();
-
+      return await this.loadingController.create({ message
+        // duration: 5000,
+      }).then(a => {
+        a.present().then(() => {
+          console.log('presented');
+          if (!this.isLoading) {
+            a.dismiss().then(() => console.log('abort presenting'));
+          }
+        });
+      });
+    //   this.loading = await this.loadingController.create({ message });
+    //   this.loading.present();
+    //   console.log("Loading exists present:", this.loading);
     });
   }
 
-  public hideLoading() {
-    if (!this.loading) {
-      return;
-    }
-    this.loading.dismiss();
-    this.loading = null;
+  async hideLoading() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss().then(() => console.log('dismissed'));
   }
+
+  // public async hideLoading() {
+  //   console.log("Loading exists:", this.loading);
+  //   if (!this.loading) {
+  //     return;
+  //   }
+  //   //this.loading.dismiss();
+  //   return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  // }
 
   public async showAlert(header: string, message: string): Promise<any> {
 
@@ -70,41 +88,45 @@ export class HelpersService {
 
     this.flagNoInternetOpen = true;
 
-    const alert = await this.alertController.create({
-      cssClass: 'no-internet-class',
-      backdropDismiss: false,
-      buttons: ['Aceptar']
-    }).then(async (data) => {
-      console.log(data);
+    this.translate.get(['Accept']).subscribe(async translate => {
 
-      const wrapper: any = document.querySelector('.alert-wrapper');
+      const alert = await this.alertController.create({
+        cssClass: 'no-internet-class',
+        backdropDismiss: false,
+        buttons: translate['Accept']
+      }).then(async (data) => {
+        console.log(data);
 
-      wrapper.innerHTML = '';
+        const wrapper: any = document.querySelector('.alert-wrapper');
 
-      wrapper.style.borderRadius = '20px';
-      wrapper.style.position = 'relative';
+        wrapper.innerHTML = '';
 
-      const text = await this.translate.get('Close').toPromise();
+        wrapper.style.borderRadius = '20px';
+        wrapper.style.position = 'relative';
 
-      wrapper.insertAdjacentHTML('afterbegin', `
+        const text = await this.translate.get('Close').toPromise();
+
+        wrapper.insertAdjacentHTML('afterbegin', `
         <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
         <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button> 
       `);
 
-      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
+        document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
 
-      return data;
+        return data;
+
+      });
+      alert.onDidDismiss().then(() => this.flagNoInternetOpen = false);
+
+      await alert.present();
 
     });
 
-    alert.onDidDismiss().then(() => this.flagNoInternetOpen = false);
-
-    await alert.present();
 
   }
 
   public async showSuccessMessage(header: string, message: string, routerLink?: string) {
-    this.translate.get([header, message]).subscribe(async translate => {
+    this.translate.get([header, message, 'Accept']).subscribe(async translate => {
       const alert = await this.alertController.create({
         header: translate[header],
         message: translate[message],

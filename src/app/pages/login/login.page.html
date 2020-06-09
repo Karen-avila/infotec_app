@@ -1,6 +1,6 @@
 <app-header [svg]="true" [img]="'/assets/header-icons/leona.png'"></app-header>
 
-<ion-content>
+<ion-content fullscreen>
   <ion-grid>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
@@ -36,8 +36,4 @@
   </ion-grid>
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

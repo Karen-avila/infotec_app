@@ -31,15 +31,11 @@ export class ChangeEmailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.get('login-info')
-      .then((login: LoginInfo) => {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
         this.form.patchValue({
-          email: login.email
+          email: data.email
         });
-        console.log(login.email)
-      })
-      .catch(err => {
-        console.log(err)
       });
   }
 
@@ -49,7 +45,7 @@ export class ChangeEmailPage implements OnInit {
     this.userService.changeData(form)
       .toPromise()
       .then(response => {
-        console.log(response)
+        this.updateEmail(form.email)
         this.helpersService.showSuccessMessage('Successful change', 'Your email has been modified correctly', '/dashboard')
       })
       .catch(err => {
@@ -57,6 +53,14 @@ export class ChangeEmailPage implements OnInit {
         this.helpersService.showErrorMessage();
       })
       .finally(() => this.helpersService.hideLoading())
+  }
+
+  private updateEmail(email: string): void {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
+        data.email = email;
+        this.storage.set('login-info', data);
+      });
   }
 
 }
