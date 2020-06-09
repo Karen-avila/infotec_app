@@ -68,8 +68,8 @@
   
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
     <div class="ion-padding">
       <ion-button type="button" (click)="register()" [disabled]="registerForm.invalid || facesDetected !== 1 || waiting" expand="block" color="primary">{{ 'To Register' | translate }}</ion-button>    
       <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">{{ 'Cancel' | translate }}</ion-button>

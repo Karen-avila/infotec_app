@@ -1,23 +1,25 @@
-<app-header [svg]="true" [backButton]="true" [title]="'Change Email'"  [defaultHref]="'settings'" [img]="'/assets/header-icons/ajustes.png'"></app-header>
+<app-header [svg]="true" [backButton]="true" [title]="'Change Email'" [defaultHref]="'settings'"
+  [img]="'/assets/header-icons/ajustes.png'"></app-header>
 
 <ion-content>
-      <form class="container-small" [formGroup]="form" (ngSubmit)="changeEmail()">
-        <ion-item style="margin-top: 15px;">
-          <ion-icon name="mail-outline"></ion-icon>
-          <ion-input formControlName="email" placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
-        </ion-item>
-        <app-input-error [control]="form.controls.email"></app-input-error>
-        <br>
-        <div class="ion-padding">
-          <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change">
-          </ion-button>
-          <ion-button [routerLink]="['/settings']" routerDirection="backward" expand="block" fill="clear">
-            {{ 'Cancel' | translate }}</ion-button>
-        </div>
-      </form>
-   
- 
+  <form class="container-small" [formGroup]="form" (ngSubmit)="changeEmail()">
+    <ion-item style="margin-top: 15px;">
+      <ion-icon name="mail-outline"></ion-icon>
+      <ion-input formControlName="email" placeholder="{{ 'New Email' | translate }}" clearInput></ion-input>
+    </ion-item>
+    <app-input-error [control]="form.controls.email"></app-input-error>
+    <br>
+    <div class="ion-padding">
+      <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change">
+      </ion-button>
+      <ion-button [routerLink]="['/settings']" routerDirection="backward" expand="block" fill="clear">
+        {{ 'Cancel' | translate }}</ion-button>
+    </div>
+  </form>
 </ion-content>
+
 <ion-footer class="ion-no-border">
-  <app-footer></app-footer>
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
 </ion-footer>

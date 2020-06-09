@@ -29,10 +29,10 @@
         {{ 'SAVED ACCOUNTS' | translate }}</div>
 
       <div *ngIf="savedAccounts.length > 0">
-        <ion-searchbar (ionInput)="onChangeText($event.target.value)" placeholder="{{ 'Search' | translate}}">
+        <ion-searchbar style="width: 90%; margin: 0 auto;" (ionInput)="onChangeText($event.target.value)" placeholder="{{ 'Search' | translate}}">
         </ion-searchbar>
         <div *ngIf="savedAccountsFiltered.length == 0" class="custom-error-message">{{ 'No beneficiaries found' | translate}}</div>
-        <ion-list style="max-height: 10rem; overflow: auto;">
+        <ion-list style="max-height: 10rem; overflow: auto; margin-top: 5px;" >
 
           <ion-item-sliding *ngFor="let item of savedAccountsFiltered; index as index; trackBy: identify">
 
@@ -136,8 +136,9 @@
 
   </div>
 </ion-content>
+
 <ion-footer class="ion-no-border">
   <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer style="position: relative;top: 13px;"></app-footer>
+    <app-footer></app-footer>
   </ion-toolbar>
 </ion-footer>

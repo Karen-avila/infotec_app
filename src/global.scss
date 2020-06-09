@@ -109,6 +109,16 @@ ion-searchbar {
     }
 }
 
+ion-footer.ios {
+    position: relative;
+    top: -2px;
+}
+
+ion-footer.md {
+    position: relative;
+    top: -7px;
+}
+
 @media (max-width: 350px) {
     ion-footer {
         height: 34px;

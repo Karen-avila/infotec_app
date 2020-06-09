@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertController } from '@ionic/angular';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-collect-codi',
@@ -15,36 +16,40 @@ export class CollectCodiPage implements OnInit {
   public formGroup: FormGroup;
 
   constructor(
-    protected formBuilder: FormBuilder, 
-    protected router: Router, 
+    protected formBuilder: FormBuilder,
+    protected router: Router,
     protected helpersService: HelpersService,
     protected translate: TranslateService,
-    protected alertController: AlertController
+    protected alertController: AlertController,
+    private statusBar: StatusBar
   ) { }
 
   ngOnInit() {
+    this.statusBar.hide();
+    this.statusBar.overlaysWebView(false);
+
     this.formGroup = this.formBuilder.group({
-      amount: ['',  [Validators.required, Validators.min(1)]],
+      amount: ['', [Validators.required, Validators.min(1)]],
       concept: ['', [Validators.required, Validators.minLength(5)]],
       reference: '',
     });
 
   }
 
-  get formControls() { 
+  get formControls() {
     return this.formGroup.controls;
   }
 
   public onCancel(): void {
-   
+
     this.translate.get([
-      'Cancel', 
+      'Cancel',
       'Do you want to cancel the collect with CoDi?'
-    ]).subscribe( (resp: any) => {
+    ]).subscribe((resp: any) => {
       this.helpersService
         .showAlert(resp.Reject, resp['Do you want to cancel the collect with CoDi?'])
-        .then( () => this.router.navigate(['/dashboard']) );
-    } )
+        .then(() => this.router.navigate(['/dashboard']));
+    })
   }
 
   async presentAlert() {
@@ -60,7 +65,7 @@ export class CollectCodiPage implements OnInit {
           }
         }
       ]
-      
+
     });
 
     await alert.present();
@@ -76,15 +81,15 @@ export class CollectCodiPage implements OnInit {
     console.log(this.formGroup.value);
 
     this.translate.get([
-      'Accept', 
+      'Accept',
       'The information is correct?'
-    ]).subscribe( (resp: any) => {
+    ]).subscribe((resp: any) => {
       this.helpersService
         .showAlert(resp.Accept, resp['The information is correct?'])
-        .then( () => 
-          this.router.navigate(['collect-codi', 'genarate-qr'], { queryParams: this.formGroup.value }) 
+        .then(() =>
+          this.router.navigate(['collect-codi', 'genarate-qr'], { queryParams: this.formGroup.value })
         );
-    } );
+    });
   }
 
 }
