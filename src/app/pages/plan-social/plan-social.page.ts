@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientsService } from '@services/clients/clients.service';
 import { UserService } from '@services/user/user.service';
 import { Router } from '@angular/router';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 export interface Programs {
   name: string;
@@ -25,10 +26,10 @@ export class PlanSocialPage implements OnInit {
   programs: Programs[];
   flag:boolean;
 
-  constructor(private clientsService: ClientsService, private userService: UserService,private router:Router) { }
+  constructor(private clientsService: ClientsService, private userService: UserService,private router:Router,private helpersService: HelpersService) { }
 
   ngOnInit() {
-
+    this.helpersService.presentLoading();
     this.clientsService.getSocialPrograms().toPromise()
     .then(programas => {
       this.programs = programas;
@@ -38,6 +39,7 @@ export class PlanSocialPage implements OnInit {
       console.log(err)
     })
     .finally(()=> {
+      this.helpersService.hideLoading()
       this.flag=true
     })
   }

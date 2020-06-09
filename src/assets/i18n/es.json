@@ -179,5 +179,18 @@
     "Pay Order": "Orden de Pago",
     "¿How much do you want to withdraw?": "¿Cuánto deseas retirar?",
     "Generate Pay Order": "Generar Orden de Pago",
-    "¿Do you want to cancel the withdrawal?": "¿Desea cancelar el retiro?"
+    "¿Do you want to cancel the withdrawal?": "¿Desea cancelar el retiro?",
+    "Search": "Buscar",
+    "No beneficiaries found": "No se encontraron beneficiarios",
+    "Please enter a beneficiary to make a transfer": "Por favor cargue un beneficiario para realizar una transferencia",
+    "Transfering...": "Realizando transferencia...",
+    "Can not proccess the request right now. Try again later": "No podemos procesar la solicitud en estos momentos. Intente más tarde",
+    "Successful change": "Cambio exitoso",
+    "Your phone has been modified correctly": "Su teléfono ha sido modificado correctamente",
+    "Your password has been modified correctly": "Su contraseña ha sido modificado correctamente",
+    "Your email has been modified correctly": "Su email ha sido modificado correctamente",
+    "Searching client...": "Buscando cliente...",
+    "Creating beneficiary...": "Creando beneficiario...",
+    "Updating beneficiary...": "Actualizando beneficiario...",
+    "Deleting beneficiary...": "Borrando beneficiario..."
 }
