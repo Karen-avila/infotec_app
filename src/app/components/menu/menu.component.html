@@ -12,16 +12,15 @@
 <ion-content>
   <ion-list id="inbox-list">
     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-      <ion-item *ngIf="p.url; else elseTemplate" (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
-        [class.selected]="selectedIndex == i">
+      <ion-item *ngIf="p.url; else elseTemplate" (click)="selectedIndex = i" [routerLink]="[p.url]" lines="none"
+        detail="false" [class.selected]="selectedIndex == i">
         <ion-icon slot="start" [ios]="p.icon" [md]="p.icon"></ion-icon>
         <ion-label style="text-transform: uppercase; font-size: 15px;">{{ p.title | translate }}</ion-label>
         <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
       </ion-item>
 
       <ng-template #elseTemplate>
-        <ion-item (click)="p.funtion(i)" routerDirection="root" lines="none" detail="false"
-          [class.selected]="selectedIndex == i">
+        <ion-item (click)="p.funtion(i)" lines="none" detail="false" [class.selected]="selectedIndex == i">
           <ion-icon slot="start" [ios]="p.icon" [md]="p.icon"></ion-icon>
           <ion-label style="text-transform: uppercase; font-size: 15px;">{{ p.title | translate }}</ion-label>
           <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>

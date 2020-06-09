@@ -99,11 +99,12 @@
     </ion-grid>
 </ion-content>
 
-<ion-button *ngIf="showRegisterButton()" [routerLink]="['/registration']" routerDirection="root" class="btn-second"
-    expand="block" color="medium">{{ 'Register ' | translate }}</ion-button>
-<ion-button *ngIf="showSignInButton()" [routerLink]="['/login']" routerDirection="root" class="btn-second"
-    expand="block" color="medium">{{ 'Sign in' | translate }}</ion-button>
+<div style="margin-bottom: 4px;">
+<ion-button *ngIf="showRegisterButton()" [routerLink]="['/registration']" class="btn-second" expand="block"
+    color="medium">{{ 'Register ' | translate }}</ion-button>
+<ion-button *ngIf="showSignInButton()" [routerLink]="['/login']" class="btn-second" expand="block" color="medium">
+    {{ 'Sign in' | translate }}</ion-button>
 <ion-button (click)="goToRoute()" [disabled]="buttonDisabled" class="btn-second" expand="block" color="primary"
     [translate]="buttonText"></ion-button>
-
+</div>
 <app-footer></app-footer>
