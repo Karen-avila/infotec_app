@@ -32,6 +32,11 @@ export class AppComponent implements OnInit {
       icon: 'swap-horizontal-outline'
     },
     {
+      title: 'Pay Order',
+      url: '/pay-order',
+      icon: 'wallet-outline'
+    },
+    {
       title: 'Ajustes',
       url: '/settings',
       icon: 'settings-outline'

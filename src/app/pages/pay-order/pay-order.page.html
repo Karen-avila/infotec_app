@@ -1,0 +1,65 @@
+<app-header [svg]="true" [menu]="true" [img]="'/assets/header-icons/payment-order.png'" [title]="'Generate Pay Order'"></app-header>
+<ion-content>
+
+  <div class="ion-text-center ion-text-uppercase">
+    <b>
+      <ion-text  translate> ¿How much do you want to withdraw? </ion-text> 
+    </b>
+  </div>
+
+  <div class="container-small">
+    <form [formGroup]="formGroup">
+      <ion-list>
+        
+        <ion-item>
+          <ion-label position="floating" translate>Amount<ion-text>*</ion-text></ion-label>
+          <ion-input formControlName="amount" required inputmode="decimal" type="number"></ion-input>
+        </ion-item>
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="danger" [control]="formControls.amount"></app-input-error>
+        </div>
+  
+        <ion-item>
+          <ion-label position="floating" translate>Concept<ion-text>*</ion-text></ion-label>
+          <ion-input formControlName="concept" required inputmode="text" type="text"></ion-input>
+        </ion-item>
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="danger" [control]="formControls.concept"></app-input-error>
+        </div>
+  
+        <ion-item>
+          <ion-label position="floating" translate>Reference</ion-label>
+          <ion-input formControlName="reference" inputmode="text" type="text"></ion-input>
+        </ion-item>
+        <div style="padding-left: 20px;">
+          <app-input-error colorClass="danger" [control]="formControls.reference"></app-input-error>
+        </div>
+
+      </ion-list>
+  
+    </form>
+  </div>
+
+  <div style="width: 70%; position: absolute;bottom: 0; right: 15%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <app-rounding-button title="Cancel" iconType="close" (click)="onCancel()"></app-rounding-button>
+        </ion-col>
+        <ion-col>
+          
+        </ion-col>
+        <ion-col>
+          <app-rounding-button [disabled]="formGroup.invalid" title="Accept" (click)="onClick()" iconType="check"></app-rounding-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar style="text-align: center;" no-padding>
+    <app-footer></app-footer>
+  </ion-toolbar>
+</ion-footer>
