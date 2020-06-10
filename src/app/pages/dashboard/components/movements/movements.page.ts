@@ -16,7 +16,7 @@ export class MovementsPage implements OnInit {
   movements: Transaction[];
   flag: boolean = false;
 
-  constructor(public modalController: ModalController, private clientsService: ClientsService, private userService: UserService,private helpersService: HelpersService) {
+  constructor(public modalController: ModalController, private clientsService: ClientsService, private userService: UserService, private helpersService: HelpersService) {
     this.initialize();
   }
 
@@ -31,17 +31,17 @@ export class MovementsPage implements OnInit {
   private initialize() {
     this.helpersService.presentLoading()
     this.clientsService.getMovements(this.userService.accountMovementsSelected.accountNo).toPromise()
-      .then(movimientos => {
-        this.movements = movimientos.transactions;
+      .then(response => {
+        console.log(response);
+        this.movements = response.transactions;
       })
       .catch(err => {
         console.log(err)
       })
-      .finally(()=> 
-      {
+      .finally(() => {
         this.flag = true;
-        this.helpersService.hideLoading()
-        }
+        this.helpersService.hideLoading();
+      }
       )
   }
 

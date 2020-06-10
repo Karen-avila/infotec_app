@@ -188,5 +188,6 @@
     "Searching client...": "Buscando cliente...",
     "Creating beneficiary...": "Creando beneficiario...",
     "Updating beneficiary...": "Actualizando beneficiario...",
-    "Deleting beneficiary...": "Borrando beneficiario..."
+    "Deleting beneficiary...": "Borrando beneficiario...",
+    "Money Transfer": "Transferencia de dinero"
 }
