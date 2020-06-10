@@ -100,12 +100,15 @@ export class TransfersPage implements OnInit {
       concept: [''],
       rfc: ['']
     });
-    this.initialize();
   }
 
   ngOnInit() {
+    console.log('Transfer page init...')
   }
 
+  ionViewDidEnter() {
+    this.initialize();
+  }
 
   private initialize() {
     this.flag = false;
