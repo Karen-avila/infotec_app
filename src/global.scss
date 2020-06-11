@@ -131,6 +131,8 @@ ion-searchbar {
     display: inline-flex; 
     align-items: center; 
     margin-top: 20px;
+    position: relative;
+    right: 10px;
 }
 
 @media (max-width: 350px) {
