@@ -15,3 +15,9 @@
     stroke-width: 7px;
     stroke: grey;
 }
+
+@media(max-width:360px){
+    .container-small {
+        margin: 10px auto 0;
+    }
+}
