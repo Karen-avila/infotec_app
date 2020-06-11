@@ -1,45 +1,44 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button color="secondary"></ion-back-button>
-    </ion-buttons>
-    <ion-title color="secondary" translate>QR Code CoDi</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [svg]="true" [backButton]="true" [title]="'QR Code CoDi'"></app-header>
+<ion-content>
 
-<ion-content color="primary">
-
-  <div style="text-align: center; width: 220px; height: 220px; margin: auto; margin-top: 1.5rem;">
+  <div style="background-color: white;" style="text-align: center; width: 160px; height: 160px; margin: 0 auto -2rem auto;">
     <ngx-qrcode
       qrc-element-type="img"
       [qrc-value]="qrData">
     </ngx-qrcode>
   </div>
 
-  <div style="margin: 2rem">
-    <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
-    <p> <b><span translate>Concept</span>:</b> <br> {{ concept }} </p> 
-    <p> <b><span translate>Reference</span>:</b> <br> {{ (reference | translate) || ('Doesn´t apply' | translate) }} </p> 
+  
+  <div class="container-small">
+    <ion-list>
+      <ion-item>
+        <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
+      </ion-item>
+      <ion-item>
+        <p> <b><span translate>Concept</span>:</b> <br> {{ concept }} </p> 
+      </ion-item>
+      <ion-item>
+        <p> <b><span translate>Reference</span>:</b> <br> {{ (reference || 'Doesn´t apply') | translate }} </p>  
+      </ion-item>
+    </ion-list>
   </div>
 
-  <div style="font-size: 1.7rem; text-align: center;">
+  <div style="font-size: 1.7rem; font-weight: bold; text-align: center; margin-top: -1rem;">
     <app-money-format [amount]="amount"></app-money-format>
+  </div>
+
+  <div style="width: 70%; position: absolute;bottom: 0; right: 15%;">
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>
+        <ion-col>
+          <app-rounding-button title="Ready" routerLink="/dashboard" iconType="check"></app-rounding-button>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="primary">
-    <div style="width: 80%; margin: auto;">
-      <ion-grid>
-        <ion-row>
-          <ion-col></ion-col>
-          <ion-col>
-            <app-rounding-button title="Ready" [routerLink]="['/dashboard']" iconType="check"></app-rounding-button>
-          </ion-col>
-          <ion-col></ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

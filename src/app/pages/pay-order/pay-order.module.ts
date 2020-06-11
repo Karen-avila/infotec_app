@@ -13,6 +13,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
 import { InputErrorModule } from '@components/input-error/input-error.module';
+import { WrapperModule } from '@components/wrapper/wrapper.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { InputErrorModule } from '@components/input-error/input-error.module';
     NgxBarcodeModule,
     TranslateModule,
     RoundingButtonModule,
-    InputErrorModule
+    InputErrorModule,
+    WrapperModule
   ],
   declarations: [PayOrderPage]
 })
