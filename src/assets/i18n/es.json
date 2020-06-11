@@ -21,7 +21,7 @@
     "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
     "This transfer does not generate charge": "Esta transferencia no genera comisión",
     "Your operational soft token is:": "Tu clave dinámica para realizar tu operación es:",
-    "soft-token": "Clave Dinámica",
+    "Soft Token": "Clave Dinámica",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -193,5 +193,6 @@
     "Creating beneficiary...": "Creando beneficiario...",
     "Updating beneficiary...": "Actualizando beneficiario...",
     "Deleting beneficiary...": "Borrando beneficiario...",
-    "Money Transfer": "Transferencia de dinero"
+    "Money Transfer": "Transferencia de dinero",
+    "Login with username and password": "Iniciar sesión con usuario y contraseña"
 }
