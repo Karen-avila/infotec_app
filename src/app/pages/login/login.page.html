@@ -21,17 +21,20 @@
           </ng-template>
         </ion-item>
         <app-input-error [control]="loginForm.controls.password"></app-input-error>
-        <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">
-          {{ 'Sign in' | translate }}</ion-button>
+        <ion-row>
+          <ion-col align-self-center class="text-center">
+            <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">{{ 'Sign in' | translate }}</ion-button>
+            <ion-button [routerLink]="['/registration']" expand="block" color="medium">{{ 'Register ' | translate }}</ion-button>
+            <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
+            class="small-text">{{ '¿Did you forget your password?' | translate }}</a>
+          </ion-col>
+        </ion-row>
       </form>
-      <ion-row>
-        <ion-col align-self-center class="text-center">
-          <ion-button [routerLink]="['/registration']" expand="block" color="medium">{{ 'Register ' | translate }}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
-        class="small-text">{{ '¿Did you forget your password?' | translate }}</a>
+        <br>
+        <div class="soft-token">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-button [routerLink]="['/soft-token']" type="submit" expand="block" color="primary">{{ 'soft-token' | translate }}</ion-button>
+      </div>
     </div>
   </ion-grid>
 </ion-content>
