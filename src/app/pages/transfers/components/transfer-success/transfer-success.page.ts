@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavParams } from '@ionic/angular';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-transfer-success',
@@ -10,28 +11,30 @@ export class TransferSuccessPage implements OnInit {
 
   public accountNumber: string;
   public clientName: string;
-  public concepto: string;
+  public concept: string;
   public folio: number;
-  public referencia: string;
+  public reference: string;
   public transferAmount: number;
   public fecha: string;
+  public rfc: string;
 
   constructor(protected navParams: NavParams) { }
 
   ngOnInit() {
     console.log("transfer data", this.navParams.data);
 
-    const { accountNumber, clientName, concepto, folio, referencia, transferAmount } = this.navParams.data;
+    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc } = this.navParams.data;
 
     this.accountNumber = accountNumber;
     this.clientName = clientName;
-    this.concepto = concepto;
+    this.concept = concept;
     this.folio = folio;
-    this.referencia = referencia;
+    this.reference = reference;
     this.transferAmount = transferAmount;
+    this.rfc = rfc;
 
     const date = new Date();
-    const formattedDate = date.toLocaleDateString('es-mx', {
+    const formattedDate = date.toLocaleDateString(environment.locale, {
       day: '2-digit', month: 'short', year: 'numeric'
     })
     this.fecha = formattedDate;

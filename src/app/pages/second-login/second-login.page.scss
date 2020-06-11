@@ -1,5 +1,5 @@
 ion-row {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 ion-fab-button {
@@ -34,8 +34,38 @@ ion-img:active {
 }
 
 .btn-second {
-    height: 30px;
+    height: 32px;
     width: 62%;
-    margin: 4px auto;
+    margin: 10px auto;
     --border-radius: 5px;
+}
+
+.soft-token {
+    margin: 5px 0;
+}
+
+@media(max-width:380px){
+    ion-fab-button {
+        width: 70%;
+        height: 53px;
+    }
+
+    .btn-second {
+        height: 30px;
+        margin: 8px auto;
+    }
+}
+
+@media(max-width:350px){
+    ion-row {
+        margin-bottom: 2px;
+    }
+    ion-fab-button {
+        width: 63%;
+        height: 42px;
+    }
+    .btn-second {
+        height: 26px;
+        margin: 8px auto;
+    }
 }

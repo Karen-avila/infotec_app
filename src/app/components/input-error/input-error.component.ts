@@ -45,7 +45,7 @@ export class InputErrorComponent implements OnInit {
   }
 
   get hasError(): any {
-    return this.control && this.control.touched && this.control.errors;
+    return this.control && this.control.dirty && this.control.errors;
   }
 
   get messageError(): string {

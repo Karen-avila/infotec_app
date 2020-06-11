@@ -1,21 +1,23 @@
-<app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
+<app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'">
+</app-header>
 <ion-content *ngIf="flag">
   <!-- List of Text Items -->
 
   <ion-label *ngIf="!movements || movements.length==0 ">
     <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
   </ion-label>
-  <ion-list style="width: 90%;margin: auto;">
-    <ion-item *ngFor="let item of movements">
+  <ion-list style="width: 90%; margin: auto;">
+    <ion-item *ngFor="let item of movements; index as index">
       <ion-avatar slot="start">
         <ion-icon
           [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
           src="assets/icon/logout.svg"></ion-icon>
       </ion-avatar>
-      <ion-label>
+      <ion-label>{{index}}
 
         <h3 *ngIf="item.paymentDetailData">
-          {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }}</h3>
+          {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} -
+          {{ item.paymentDetailData.paymentType.name | translate }}</h3>
         <h3 *ngIf="item.transfer">
           {{ item.transactionType.id === 2  ? ('Transfer made' | translate) : ('Transfer received' | translate) }}</h3>
 
@@ -33,9 +35,4 @@
   </ion-list>
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
-
+<app-footer></app-footer>

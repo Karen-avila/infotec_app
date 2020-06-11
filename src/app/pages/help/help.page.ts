@@ -36,7 +36,7 @@ export class HelpPage implements OnInit {
   }
 
   async presentAlertPrompt() {
-    this.translate.get(['Send Email', 'Message', 'Cancel', 'Subject']).subscribe( async translate => {
+    this.translate.get(['Send Email', 'Send', 'Message', 'Cancel', 'Subject']).subscribe( async translate => {
       const alert = await this.alertController.create({
         header: translate['Send Email'],
         inputs: [

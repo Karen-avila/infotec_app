@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { Storage } from '@ionic/storage';
 import { ClientsService } from '@services/clients/clients.service';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,11 @@ export class AppComponent implements OnInit {
       title: 'Transferencias',
       url: '/transfers',
       icon: 'swap-horizontal-outline'
+    },
+    {
+      title: 'Pay Order',
+      url: '/pay-order',
+      icon: 'wallet-outline'
     },
     {
       title: 'Ajustes',
@@ -80,23 +86,24 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang(navigator.language.substring(0, 2));
     this.translate.get('Mobile Banking - Banco del Bienestar').subscribe((res: string) => this.titleService.setTitle(res));
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString("#285D4D");
+      this.statusBar.backgroundColorByHexString("##002c22");
       this.splashScreen.hide();
     });
 
     // this.router.navigate(['/dashboard']);
-
-    // this.storage.get('user-hash')
-    //   .then(response => {
-    //     if (response) {
-    //       this.router.navigate(['/second-login', 'login']);
-    //     } else {
-    //       this.router.navigate(['/login']);
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    if (!environment.mockLogin) {
+      this.storage.get('user-hash')
+        .then(response => {
+          if (response) {
+            this.router.navigate(['/second-login', 'login']);
+          } else {
+            this.router.navigate(['/login']);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   public share(): void {
@@ -106,14 +113,14 @@ export class AppComponent implements OnInit {
   public logout(): void {
     this.selectedIndex = 6;
     this.translate.get([
-      'Sign off', 
+      'Sign off',
       'Do you want to exit the app?'
-    ]).subscribe( (resp: any) => {
+    ]).subscribe((resp: any) => {
       this.helpersService
         .showAlert(resp.Reject, resp['Do you want to exit the app?'])
-        .then( () => this.router.navigate(['/login']) );
-    } )
-  } 
+        .then(() => this.router.navigate(['/login']));
+    })
+  }
 
   ngOnInit() {
   }

@@ -97,12 +97,15 @@ const routes: Routes = [
     path: 'not-found',
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
   },
-  { path: "**", redirectTo: "not-found" },
   {
     path: 'soft-token',
     loadChildren: () => import('./pages/soft-token/soft-token.module').then( m => m.SoftTokenPageModule)
-  }
-
+  },
+  {
+    path: 'pay-order',
+    loadChildren: () => import('./pages/pay-order/pay-order.module').then( m => m.PayOrderPageModule)
+  },
+  { path: "**", redirectTo: "not-found" },
 
 ];
 
