@@ -24,14 +24,19 @@
         <h4>{{'Account Number' | translate}}:<span>{{accountNumber}}</span></h4>
       </ion-label>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label>
-        <h4>Concepto:<span>{{concepto}}</span></h4>
-      </ion-label>
-    </ion-item> -->
     <ion-item>
       <ion-label>
-        <h4>{{'Reference' | translate}}:<span>{{referencia}}</span></h4>
+        <h4>{{'Concept' | translate}}::<span>{{concept}}</span></h4>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h4>{{'Reference' | translate}}:<span>{{reference}}</span></h4>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="rfc">
+      <ion-label>
+        <h4>{{'RFC' | translate}}:<span>{{rfc}}</span></h4>
       </ion-label>
     </ion-item>
     <!-- <ion-item>

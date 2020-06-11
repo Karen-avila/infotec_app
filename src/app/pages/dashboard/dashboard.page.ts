@@ -50,13 +50,16 @@ export class DashboardPage implements OnInit {
     private helpersService: HelpersService
   ) {
     this.checkPermissions();
-    this.initializeApp();
+    
   }
 
   ngOnInit() {
-    console.log('entre a dashboard.ts');
+    console.log('Dashboard page init...')
     this.menuCtrl.enable(true);
-    // this.authentication.startIdleTimer();
+  }
+
+  ionViewDidEnter() {
+    this.initialize();
   }
 
   protected checkPermissions() {
@@ -135,7 +138,7 @@ export class DashboardPage implements OnInit {
     return await modal.present();
   }
 
-  private initializeApp() {
+  private initialize() {
 
     this.helpersService.presentLoading();
 

@@ -32,7 +32,7 @@
         <ion-searchbar style="width: 90%; margin: 0 auto;" (ionInput)="onChangeText($event.target.value)"
           placeholder="{{ 'Search' | translate}}">
         </ion-searchbar>
-        <div *ngIf="savedAccountsFiltered.length == 0" class="custom-error-message">
+        <div *ngIf="savedAccountsFiltered.length == 0" class="custom-error-message" style="margin-top: 15px;">
           {{ 'No beneficiaries found' | translate}}</div>
         <ion-list style="max-height: 10rem; overflow: auto; margin-top: 5px;">
 
