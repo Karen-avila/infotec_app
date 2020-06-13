@@ -109,8 +109,34 @@ ion-searchbar {
     }
 }
 
+.soft-token{
+    ion-icon{
+        color: white;
+        background: #285d4d;
+        padding: 10px;
+        border-radius: 50%;
+        display: inline-block; 
+        margin: 0 !important; 
+        position: relative; 
+        left: 10px; 
+        border: #ffffff 1px solid; 
+        z-index: 10;
+    }
+    ion-button{
+        display: inline-block; 
+        margin: 0; 
+        height: 26px; 
+        --border-radius: 0px;
+    }
+    display: inline-flex; 
+    align-items: center; 
+    margin-top: 20px;
+    position: relative;
+    right: 10px;
+}
+
 @media (max-width: 350px) {
-    ion-footer {
+    app-footer {
         height: 34px;
     }
 }
