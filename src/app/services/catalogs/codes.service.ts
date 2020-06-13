@@ -18,4 +18,19 @@ export class CodesService {
       } )
     );
   }
+
+  public getMOBILE(): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.codesOptions}/MOBILE/options`).pipe(
+      map( (data: any) => {
+        let obj = {};        
+        
+        for (const key in data.codeValues) {
+          const item = data.codeValues[key];
+          obj[item.name] = item;
+        }
+
+        return obj;
+      } )
+    );
+  }
 }
