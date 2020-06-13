@@ -344,24 +344,41 @@ export class TransfersPage implements OnInit {
 
   // traemos los accounts del cliente
   private async getAccounts(): Promise<any> {
-    return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
-      .then((response: any) => {
-        this.accounts = [];
-        //TODO que este configurable el muestreo de datos de loans
-        let savings = response.savingsAccounts;
-        savings.forEach(element => {
-          // si es savings, es 2
-          if (element.status.active) {
-            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
-            this.accounts.push(account);
+    this.translate.get(['Own Account']).subscribe(async translate => {
+      return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
+        .then((response: any) => {
+          this.accounts = [];
+
+          //TODO que este configurable el muestreo de datos de loans
+          let savings = response.savingsAccounts;
+          console.log("savings", response.savingsAccounts)
+          // que haga todo si hay cuentas guardadas
+          if (response.savingsAccounts.length > 0) {
+            let accountNumberDefault;
+            savings.forEach((element, index) => {
+              if (index == 0) {
+                accountNumberDefault = element.accountNo;
+              }
+              // si es savings, es 2
+              if (element.status.active) {
+                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
+                this.accounts.push(account);
+
+                let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
+                  element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+                this.savedAccounts.push(ownBeneficiarieAccount);
+              }
+            })
+            this.savedAccountsFiltered = this.savedAccounts.filter(u => (u.isOwnAccount && u.accountNumber != accountNumberDefault) || !u.isOwnAccount);
+            return savings;
           }
+
         })
-        return savings;
-      })
-      .catch(err => {
-        console.log(err)
-        throw err;
-      })
+        .catch(err => {
+          console.log(err)
+          throw err;
+        })
+    })
   }
 
 
@@ -390,6 +407,9 @@ export class TransfersPage implements OnInit {
   public onChangeText(text: string) {
     this.isAccountSelected = false;
     this.accountSelected = null;
-    this.savedAccountsFiltered = this.savedAccounts.filter(function (str) { return str.name.toLowerCase().indexOf(text.toLowerCase()) !== -1 || str.alias.toLowerCase().indexOf(text.toLowerCase()) !== -1; });
+    // filtramos la cuenta seleccionada
+    this.savedAccountsFiltered = this.savedAccounts.filter(u => (u.isOwnAccount && u.accountNumber !== this.userService.accountMovementsSelected.accountNo) || !u.isOwnAccount);
+    // filtramos por el texto introducido
+    this.savedAccountsFiltered = this.savedAccountsFiltered.filter(function (str) { return str.name.toLowerCase().indexOf(text.toLowerCase()) !== -1 || str.alias.toLowerCase().indexOf(text.toLowerCase()) !== -1; });
   }
 }
