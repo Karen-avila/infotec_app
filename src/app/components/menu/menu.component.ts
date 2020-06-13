@@ -79,6 +79,7 @@ export class MenuComponent implements OnInit {
     })
   }
 
+  //TODO: Agregar el translate y el servicios para traer los globals
   public share(index: number): void {
     this.selectedIndex = index;
     this.socialSharing.share('message', 'subject', null, 'https://www.gob.mx/bancodelbienestar');
