@@ -9,7 +9,7 @@ export interface ISettings {
   balanceSize: string;
   cardWidth: string;
   spaceBetween: number;
-  orientation: 'vertical'|'horizontal';
+  orientation: 'vertical' | 'horizontal';
 }
 
 @Component({
@@ -42,9 +42,9 @@ export class CardAccountComponent implements OnInit {
 
   public slideChanged(slides: IonSlides) {
     slides.getActiveIndex().then((index: number) => {
-     console.log(index);
-     this.userService.accountMovementsSelected = this.accounts[index];
-     this.tabIndexSelected = index;
+      console.log(index);
+      this.userService.accountMovementsSelected = this.accounts[index];
+      this.tabIndexSelected = index;
     });
   }
 

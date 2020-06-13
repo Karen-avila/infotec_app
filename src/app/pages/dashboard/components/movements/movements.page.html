@@ -13,7 +13,7 @@
           [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
           src="assets/icon/logout.svg"></ion-icon>
       </ion-avatar>
-      <ion-label>{{index}}
+      <ion-label>
 
         <h3 *ngIf="item.paymentDetailData">
           {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} -
