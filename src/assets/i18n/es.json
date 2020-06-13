@@ -32,7 +32,7 @@
     "Cancel": "Cancelar",
     "Do you want to reject the payment with CoDi?": "Deséa rechazar el pago con CoDi?",
     "Charge with CoDi": "Cobrar con CoDi",
-    "¿How much do you want to charge?": "¿Cuánto deseas cobrar?",
+    "How much do you want to charge?": "¿Cuánto deseas cobrar?",
     "Amount": "Monto",
     "Ready": "Listo",
     "Collect with CoDi": "Cobrar con CoDi",
@@ -103,7 +103,7 @@
     "Last name": "Apellido materno",
     "Account number": "Número de cuenta",
     "The account number is invalid": "El número de cuenta no es válido",
-    "The password format is invalid": "La contraseña debe tener mínimo 10 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
+    "The password format is invalid": "La contraseña debe tener 8 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
     "No movements": "No hay movimientos",
     "Last login": "Último ingreso",
     "Hello": "Hola",
@@ -177,7 +177,7 @@
     "Incorrect Login": "Login Incorrecto",
     "The credentials entered are incorrect": "Las credenciales ingresadas son incorrectas",
     "Pay Order": "Orden de Pago",
-    "¿How much do you want to withdraw?": "¿Cuánto deseas retirar?",
+    "How much do you want to withdraw?": "¿Cuánto deseas retirar?",
     "Generate Pay Order": "Generar Orden de Pago",
     "¿Do you want to cancel the withdrawal?": "¿Desea cancelar el retiro?",
     "Search": "Buscar",
@@ -193,5 +193,6 @@
     "Creating beneficiary...": "Creando beneficiario...",
     "Updating beneficiary...": "Actualizando beneficiario...",
     "Deleting beneficiary...": "Borrando beneficiario...",
-    "Money Transfer": "Transferencia de dinero"
+    "Money Transfer": "Transferencia de dinero",
+    "Own Account": "Cuenta Propia"
 }
