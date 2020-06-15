@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class ProgramMoreInfoPage implements OnInit {
 
-  program :Programs;
+  public program: Programs;
 
-  constructor(private userService: UserService,private router: Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
 
     if (!this.userService.programaSocialSelected) {
-this.router.navigate(["/plan-social"])
+      this.router.navigate(["/plan-social"])
     }
     this.program = this.userService.programaSocialSelected
   }

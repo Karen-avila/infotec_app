@@ -4,14 +4,14 @@
 
   <div class="container-big" style="text-align: center; font-size: 16px; font-weight: 700; color: #193931;">
     <p>
-    {{program.title}}
+      {{program.title}}
     </p>
   </div>
   <div [innerHTML]="program.text" class="container-big" style="text-align: justify;font-size: 14px;">
     <div class="ion-padding">
-    <ion-button  (click)="goToDetails(program)" expand="block" color="primary" translate="More info">
-    </ion-button>
-  </div>
+      <ion-button (click)="goToDetails(program)" expand="block" color="primary" translate="More info">
+      </ion-button>
+    </div>
   </div>
 
 </ion-content>

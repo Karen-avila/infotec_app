@@ -8,7 +8,7 @@
       <div style="text-align: center;"> <b style="color: #112b22; font-size: medium;">
           {{ 'Origin Account' | translate }} </b></div>
 
-      <app-card-account *ngIf="accounts.length > 0" [accounts]="accounts" [settings]="settings" [hideEditButton]="true">
+      <app-card-account *ngIf="accounts.length > 0" [accounts]="accounts" [settings]="settings" [hideEditButton]="true" (initComponent)='onInitCardAccount($event)' (valueChange)='onChangeAccount($event)'>
       </app-card-account>
 
     </div>
@@ -29,7 +29,7 @@
         {{ 'SAVED ACCOUNTS' | translate }}</div>
 
       <div *ngIf="savedAccounts.length > 0">
-        <ion-searchbar style="width: 90%; margin: 0 auto;" (ionInput)="onChangeText($event.target.value)"
+        <ion-searchbar [(ngModel)]="beneficiarieSearch" style="width: 90%; margin: 0 auto;" (ionInput)="onChangeText($event.target.value)"
           placeholder="{{ 'Search' | translate}}">
         </ion-searchbar>
         <div *ngIf="savedAccountsFiltered.length == 0" class="custom-error-message" style="margin-top: 15px;">
@@ -67,7 +67,7 @@
 
   </div>
 
-  <div *ngIf="isAccountSelected" style="width: 100%; height: 100%;">
+  <div *ngIf="isBeneficiarieSelected" style="width: 100%; height: 100%;">
 
     <div style="margin: auto;">
       <br>

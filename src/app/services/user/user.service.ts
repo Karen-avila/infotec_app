@@ -13,7 +13,7 @@ export class UserService {
   public username: string;
   public password: string;
   public displayName: string;
-  public accountMovementsSelected: CardAccount;
+  //public accountMovementsSelected: CardAccount;
   public beneficiaries: Beneficiarie[];
   public programaSocialSelected: Programs;
 
