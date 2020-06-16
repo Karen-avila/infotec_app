@@ -253,7 +253,7 @@ export class Tab2Page implements OnInit {
 
       const translate = await this.translate.get([
         'Just one more step', 
-        '!Check your email!', 
+        'Check your email!', 
         'Transfer amount greather than account balance',
         message,
         'Finish',
@@ -266,7 +266,7 @@ export class Tab2Page implements OnInit {
 
       const alert = await this.alertController.create({
         header: translate['Just one more step'],
-        subHeader: translate['!Check your email!'],
+        subHeader: translate['Check your email!'],
         backdropDismiss: false,
         message: translate[message],
         inputs: [

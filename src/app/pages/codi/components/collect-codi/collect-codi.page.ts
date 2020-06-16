@@ -82,7 +82,7 @@ export class CollectCodiPage implements OnInit {
       this.helpersService
         .showAlert(resp.Accept, resp['The information is correct?'])
         .then(() =>
-          this.router.navigate(['collect-codi', 'genarate-qr'], { queryParams: this.formGroup.value })
+          this.router.navigate(['collect-codi', 'generate-qr'], { queryParams: this.formGroup.value })
         );
     });
   }

@@ -36,7 +36,9 @@ export class DashboardPage implements OnInit {
     // }
   ];
 
+  private accountSelected: CardAccount;
   private personalInfo: PersonalInfo;
+
   public loginInfo: LoginInfo;
 
   constructor(
@@ -50,7 +52,7 @@ export class DashboardPage implements OnInit {
     private helpersService: HelpersService
   ) {
     this.checkPermissions();
-    
+
   }
 
   ngOnInit() {
@@ -133,7 +135,10 @@ export class DashboardPage implements OnInit {
   async presentModal() {
     this.color = 'secondary';
     const modal = await this.modalController.create({
-      component: MovementsPage
+      component: MovementsPage,
+      componentProps: {
+        'accountNumber': this.accountSelected.accountNo
+      }
     });
     return await modal.present();
   }
@@ -186,4 +191,12 @@ export class DashboardPage implements OnInit {
       })
   }
 
+  public onChangeAccount(param: CardAccount) {
+    this.accountSelected = param;
+  }
+
+  public onInitCardAccount(param: CardAccount) {
+    // seteamos nueva cuenta
+    this.accountSelected = param;
+  }
 }
