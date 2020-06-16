@@ -5,6 +5,8 @@ ion-input{
     .native-input.sc-ion-input-ios {
         padding-left: 10px;
     };
+}
+ion-input:not([type=email]){
     text-transform: capitalize;
 }
 ion-icon{

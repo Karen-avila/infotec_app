@@ -8,7 +8,7 @@ export const environment = {
   commonUrl: '/api/v1',
   dateFormat: 'dd MMMM yyyy',
   locale: 'es-MX',
-  mockLogin: true
+  mockLogin: false
 };
 
 

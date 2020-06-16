@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { MoneyFormatModule } from '@components/money-format/money-format.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { FooterModule } from '@components/footer/footer.module';
     ReactiveFormsModule,
     InputErrorModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    MoneyFormatModule
   ],
   declarations: [TransferSuccessPage],
   entryComponents: [TransferSuccessPage]
