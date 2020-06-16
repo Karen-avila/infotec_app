@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NavParams } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NavParams, ModalController } from '@ionic/angular';
 import { environment } from '@env';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { TranslateService } from '@ngx-translate/core';
+
+
+declare var domtoimage: any;
 
 @Component({
   selector: 'app-transfer-success',
@@ -18,7 +23,14 @@ export class TransferSuccessPage implements OnInit {
   public fecha: string;
   public rfc: string;
 
-  constructor(protected navParams: NavParams) { }
+  @ViewChild('pageShare',{static:true}) pageShare: ElementRef;
+
+  constructor(
+    protected navParams: NavParams, 
+    protected socialSharing: SocialSharing,
+    public modalController: ModalController,
+    protected translate: TranslateService
+  ) { }
 
   ngOnInit() {
     console.log("transfer data", this.navParams.data);
@@ -38,6 +50,19 @@ export class TransferSuccessPage implements OnInit {
       day: '2-digit', month: 'short', year: 'numeric'
     })
     this.fecha = formattedDate;
+  }
+
+  async onShare() {
+
+    const element = this.pageShare.nativeElement;
+    const textSuccess = await this.translate.get('Transfer Success').toPromise();
+    
+    domtoimage.toPng(element)
+      .then( (dataUrl) => {
+          this.socialSharing.share(`${textSuccess} | Banco del Bienestar`, null, dataUrl);
+      }).catch( (error) => {
+          console.error('oops, something went wrong!', error);
+      });
   }
 
 }

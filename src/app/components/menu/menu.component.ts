@@ -5,6 +5,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { UserService } from '@services/user/user.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +19,8 @@ export class MenuComponent implements OnInit {
     private clientsService: ClientsService,
     public userService: UserService,
     private socialSharing: SocialSharing,
-    private storage: Storage
+    private storage: Storage,
+    private authentication: AuthenticationService
   ) {
     this.getPersonalInfo();
   }
@@ -62,7 +64,7 @@ export class MenuComponent implements OnInit {
     },
     {
       title: 'Sign off',
-      url: '/logout',
+      funtion: this.logout.bind(this),
       icon: 'log-out-outline'
     }
   ];
@@ -82,7 +84,11 @@ export class MenuComponent implements OnInit {
   //TODO: Agregar el translate y el servicios para traer los globals
   public share(index: number): void {
     this.selectedIndex = index;
-    this.socialSharing.share('message', 'subject', null, 'https://www.gob.mx/bancodelbienestar');
+    this.socialSharing.share('Banco del Bienestar', null, null, 'https://www.gob.mx/bancodelbienestar');
+  }
+
+  public logout() {
+    this.authentication.logout();
   }
 
   private getPersonalInfo() {

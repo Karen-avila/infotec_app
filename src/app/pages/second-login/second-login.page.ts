@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { NavController } from '@ionic/angular';
@@ -33,7 +33,7 @@ export class SecondLoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage,
     private authenticationService: AuthenticationService,
-    private userService: UserService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -157,6 +157,12 @@ export class SecondLoginPage implements OnInit {
 
     var ciphertext = CryptoJS.AES.encrypt(userString, PIN).toString();
     this.storage.set('user-hash', ciphertext);
+  }
+
+  public goLogin() {
+    this.storage.remove('user-hash').then( () => {
+      this.authenticationService.logout();
+    } );
   }
 
   private async decryptUser() {
