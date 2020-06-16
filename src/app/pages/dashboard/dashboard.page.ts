@@ -9,6 +9,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,9 @@ export class DashboardPage implements OnInit {
     // }
   ];
 
+  private accountSelected: CardAccount;
   private personalInfo: PersonalInfo;
+
   public loginInfo: LoginInfo;
 
   constructor(
@@ -47,15 +50,17 @@ export class DashboardPage implements OnInit {
     private alertController: AlertController,
     private menuCtrl: MenuController,
     private clientsService: ClientsService,
-    private helpersService: HelpersService
+    private helpersService: HelpersService,
+    private authentication: AuthenticationService
   ) {
     this.checkPermissions();
-    
+
   }
 
   ngOnInit() {
     console.log('Dashboard page init...')
     this.menuCtrl.enable(true);
+    this.authentication.startIdleTimer();
   }
 
   ionViewDidEnter() {
@@ -133,7 +138,10 @@ export class DashboardPage implements OnInit {
   async presentModal() {
     this.color = 'secondary';
     const modal = await this.modalController.create({
-      component: MovementsPage
+      component: MovementsPage,
+      componentProps: {
+        'accountNumber': this.accountSelected.accountNo
+      }
     });
     return await modal.present();
   }
@@ -186,4 +194,12 @@ export class DashboardPage implements OnInit {
       })
   }
 
+  public onChangeAccount(param: CardAccount) {
+    this.accountSelected = param;
+  }
+
+  public onInitCardAccount(param: CardAccount) {
+    // seteamos nueva cuenta
+    this.accountSelected = param;
+  }
 }

@@ -20,10 +20,12 @@ export class AuthGuard implements CanActivate {
     if (!isAuth) {
       if (route.routeConfig.path === 'second-login') {
         return this.storage.get('user-hash').then( hash => {
-          const value: boolean = !!hash;
-          if (!value) throw new Error;
-          return value;
-        } ).catch( () => this.router.navigate(['/login']) );
+          if (!hash) throw new Error;
+          return true;
+        } ).catch( () => {
+          this.router.navigate(['/login']);
+          return false;
+        } );
       }
       this.router.navigate(['/login']);
       return false;

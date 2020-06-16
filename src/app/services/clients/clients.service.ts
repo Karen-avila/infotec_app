@@ -118,6 +118,10 @@ export class ClientsService {
     return this.httpClient.post(`${ENDPOINTS.registration}/user`, data);
   }
 
+  public getSelfie(clientId: string): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}/images`); 
+  }
+
   public postRegistrationSelfie(clientId: string, formData: FormData, token: string) {
 
     const httpOptions = {
