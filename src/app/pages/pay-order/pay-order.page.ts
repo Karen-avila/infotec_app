@@ -39,10 +39,10 @@ export class PayOrderPage implements OnInit {
    
     this.translate.get([
       'Cancel', 
-      '¿Do you want to cancel the withdrawal?'
+      'Do you want to cancel the withdrawal?'
     ]).subscribe( (resp: any) => {
       this.helpersService
-        .showAlert(resp.Reject, resp['¿Do you want to cancel the withdrawal?'])
+        .showAlert(resp.Reject, resp['Do you want to cancel the withdrawal?'])
         .then( () => this.router.navigate(['/dashboard']) );
     } )
   }
