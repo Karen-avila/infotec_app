@@ -11,6 +11,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
 import { MoneyFormatModule } from '@components/money-format/money-format.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import { TranslateModule } from '@ngx-translate/core';
     NgxQRCodeModule,
     RoundingButtonModule,
     MoneyFormatModule,
-    TranslateModule 
+    TranslateModule,
+    HeaderModule,
+    FooterModule
   ],
   declarations: [CollectCodiQrPage]
 })

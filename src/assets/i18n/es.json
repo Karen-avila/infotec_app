@@ -4,7 +4,7 @@
     "Password": "Contraseña",
     "Username": "Usuario",
     "Register ": "Registrarse",
-    "¿Did you forget your password?": "¿Olvidó su contraseña?",
+    "Did you forget your password?": "¿Olvidó su contraseña?",
     "Home": "Inicio",
     "How much do you want to charge": "Cuanto quieres cobrar",
     "Create QR": "Crear QR",
@@ -18,10 +18,10 @@
     "To Register": "Registrar",
     "Please wait...": "Por favor espera...",
     "Pay with CoDi": "Pagar con CoDi",
-    "¿Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
+    "Do you want to make the following payment?": "¿Desea realizar el siguiente pago?",
     "This transfer does not generate charge": "Esta transferencia no genera comisión",
     "Your operational soft token is:": "Tu clave dinámica para realizar tu operación es:",
-    "soft-token": "Clave Dinámica",
+    "Soft Token": "Clave Dinámica",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -194,5 +194,6 @@
     "Updating beneficiary...": "Actualizando beneficiario...",
     "Deleting beneficiary...": "Borrando beneficiario...",
     "Money Transfer": "Transferencia de dinero",
+    "Login with username and password": "Iniciar sesión con usuario y contraseña",
     "Own Account": "Cuenta Propia"
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-about-us',
@@ -10,10 +11,16 @@ export class AboutUsPage implements OnInit {
 
   public versionNumber: string = '1.0';
 
-  constructor(private appVersion: AppVersion) { }
+  public privacyPoliciesUrl: string = 'https://www.gob.mx/aviso_de_privacidad';
+
+  constructor(private appVersion: AppVersion, private storage: Storage) { }
 
   ngOnInit() {
     this.appVersion.getVersionNumber().then(value => this.versionNumber = value );
+    this.storage.get('globals').then( globals => {
+      if (!globals) return;
+      this.privacyPoliciesUrl = globals['privacyPoliciesUrl'].description;
+    } );
   }
 
 }

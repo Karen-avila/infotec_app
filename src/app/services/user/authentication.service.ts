@@ -13,6 +13,7 @@ import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { environment } from '@env';
 import { TranslateService } from '@ngx-translate/core';
+import { CodesService } from '@services/catalogs/codes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,8 @@ export class AuthenticationService {
     private idle: Idle, 
     private helpersService: HelpersService,
     private translate: TranslateService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private codesService: CodesService
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -74,9 +76,13 @@ export class AuthenticationService {
         this.userService.password = user.password;
         this.userService.displayName = client.displayName;
 
+        return this.codesService.getMOBILE().toPromise();
+      }).then( globals => {
+        
+        this.storage.set('globals', globals);
         if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
         else this.navCtrl.navigateRoot(['dashboard']);
-      })
+      } )
       .catch(err => {
         console.log(err);
         this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');

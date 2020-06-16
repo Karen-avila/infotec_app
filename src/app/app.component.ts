@@ -12,6 +12,7 @@ import { AuthenticationService } from '@services/user/authentication.service';
 import { Storage } from '@ionic/storage';
 import { ClientsService } from '@services/clients/clients.service';
 import { environment } from '@env';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-root',
@@ -74,7 +75,8 @@ export class AppComponent implements OnInit {
     private socialSharing: SocialSharing,
     private router: Router,
     private storage: Storage,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
   }
@@ -86,24 +88,11 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang(navigator.language.substring(0, 2));
     this.translate.get('Mobile Banking - Banco del Bienestar').subscribe((res: string) => this.titleService.setTitle(res));
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString("#285D4D");
-      this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString("##002c22");
+      this.splashScreen.hide();      
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).catch( () => {} );
     });
 
-    // this.router.navigate(['/dashboard']);
-    if (!environment.mockLogin) {
-      this.storage.get('user-hash')
-        .then(response => {
-          if (response) {
-            this.router.navigate(['/second-login', 'login']);
-          } else {
-            this.router.navigate(['/login']);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
   }
 
   public share(): void {

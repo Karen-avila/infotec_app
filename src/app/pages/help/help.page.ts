@@ -3,6 +3,8 @@ import { AlertController } from '@ionic/angular';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { CodesService } from '@services/catalogs/codes.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'app-help',
@@ -17,7 +19,8 @@ export class HelpPage implements OnInit {
     private alertController: AlertController, 
     private callNumber: CallNumber,
     private codesService: CodesService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private storage: Storage
   ) { }
 
   ngOnInit() {
@@ -30,13 +33,16 @@ export class HelpPage implements OnInit {
   }
 
   public callToOffice() {
-    this.callNumber.callNumber("18001010101", true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
+    this.storage.get('globals').then( globals => {
+      if (!globals) return;
+      this.callNumber.callNumber(globals['officePhoneNumber'].description, true)
+        .then(res => console.log('Launched dialer!', res))
+        .catch(err => console.log('Error launching dialer', err));
+    } );
   }
 
   async presentAlertPrompt() {
-    this.translate.get(['Send Email', 'Message', 'Cancel', 'Subject']).subscribe( async translate => {
+    this.translate.get(['Send Email', 'Send', 'Message', 'Cancel', 'Subject']).subscribe( async translate => {
       const alert = await this.alertController.create({
         header: translate['Send Email'],
         inputs: [
