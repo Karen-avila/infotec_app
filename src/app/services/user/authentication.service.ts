@@ -125,7 +125,7 @@ export class AuthenticationService {
   public startIdleTimer() {
     
      this.idle.setIdle(5);
-     this.idle.setTimeout(180);
+     this.idle.setTimeout(120);
      this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
  
      this.idle.onIdleEnd.subscribe(() => this.idle.watch());

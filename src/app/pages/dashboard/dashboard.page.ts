@@ -9,6 +9,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +48,8 @@ export class DashboardPage implements OnInit {
     private alertController: AlertController,
     private menuCtrl: MenuController,
     private clientsService: ClientsService,
-    private helpersService: HelpersService
+    private helpersService: HelpersService,
+    private authentication: AuthenticationService
   ) {
     this.checkPermissions();
     
@@ -56,6 +58,7 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     console.log('Dashboard page init...')
     this.menuCtrl.enable(true);
+    this.authentication.startIdleTimer();
   }
 
   ionViewDidEnter() {
