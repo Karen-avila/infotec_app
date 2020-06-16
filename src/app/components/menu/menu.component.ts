@@ -6,6 +6,8 @@ import { UserService } from '@services/user/user.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -20,7 +22,9 @@ export class MenuComponent implements OnInit {
     public userService: UserService,
     private socialSharing: SocialSharing,
     private storage: Storage,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private router: Router,
+    private menu: MenuController
   ) {
     this.getPersonalInfo();
   }
@@ -81,14 +85,22 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  //TODO: Agregar el translate y el servicios para traer los globals
   public share(index: number): void {
     this.selectedIndex = index;
-    this.socialSharing.share('Banco del Bienestar', null, null, 'https://www.gob.mx/bancodelbienestar');
+    this.storage.get('globals').then( globals => {
+      if (!globals) return;
+      this.socialSharing.share('Banco del Bienestar', null, null, globals['bancoBienestarUrl'].description);
+    } );
+
   }
 
   public logout() {
-    this.authentication.logout();
+    if (this.authentication.isAuthenticated()) {
+      this.authentication.logout();
+      this.menu.enable(false);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   private getPersonalInfo() {

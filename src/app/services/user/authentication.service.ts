@@ -76,6 +76,13 @@ export class AuthenticationService {
         this.userService.password = user.password;
         this.userService.displayName = client.displayName;
 
+        this.clientsService.getSelfie(client.id+'').toPromise()
+          .then( imageUrl => this.storage.set('image-profile', imageUrl) )
+          .catch( err => {
+            if (!(err.status && err.status === 200 && err.error.text)) return;
+            this.storage.set('image-profile', err.error.text.replace(/\s/g,''));
+          } )
+
         return this.codesService.getMOBILE().toPromise();
       }).then( globals => {
         
