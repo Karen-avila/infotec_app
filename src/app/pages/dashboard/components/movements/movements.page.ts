@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
-import { UserService } from '@services/user/user.service';
 import { Transaction } from '@globals/interfaces/transaction';
 import { HelpersService } from '@services/helpers/helpers.service';
 
@@ -13,15 +12,15 @@ import { HelpersService } from '@services/helpers/helpers.service';
 
 export class MovementsPage implements OnInit {
 
-  movements: Transaction[];
-  flag: boolean = false;
+  public movements: Transaction[];
+  public flag: boolean = false;
 
-  constructor(public modalController: ModalController, private clientsService: ClientsService, private userService: UserService, private helpersService: HelpersService) {
+  constructor(public modalController: ModalController, private clientsService: ClientsService, private helpersService: HelpersService, private navParams: NavParams) {
     this.initialize();
   }
 
   ngOnInit() {
-    console.log(this.userService.accountMovementsSelected);
+    
   }
 
   public dismissModal() {
@@ -29,8 +28,10 @@ export class MovementsPage implements OnInit {
   }
 
   private initialize() {
+    const { accountNumber } = this.navParams.data;
+
     this.helpersService.presentLoading()
-    this.clientsService.getMovements(this.userService.accountMovementsSelected.accountNo).toPromise()
+    this.clientsService.getMovements(accountNumber).toPromise()
       .then(response => {
         console.log(response);
         this.movements = response.transactions;
@@ -44,6 +45,4 @@ export class MovementsPage implements OnInit {
       }
       )
   }
-
-
 }
