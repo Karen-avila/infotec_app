@@ -139,4 +139,10 @@ ion-searchbar {
     app-footer {
         height: 34px;
     }
+    .swiper-container-horizontal > .swiper-pagination-bullets,
+    .swiper-pagination-custom,
+    .swiper-pagination-fraction {
+        bottom: 5px;
+    }
+    
 }

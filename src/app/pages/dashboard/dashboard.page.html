@@ -10,7 +10,7 @@
   <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts" (initComponent)='onInitCardAccount($event)'  (valueChange)='onChangeAccount($event)'></app-card-account>
   <ion-tabs>
 
-    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.2rem;" fill="clear" shape="round" size="small">
+    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0rem;" fill="clear" shape="round" size="small">
       <ion-icon slot="icon-only" name="chevron-up"></ion-icon>
     </ion-button>
 
