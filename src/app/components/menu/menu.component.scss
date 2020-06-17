@@ -105,6 +105,11 @@ app-menu {
     }
     ion-toolbar {
         --background: #275a4e;
+        .menu-size{
+            margin-left: 1.5rem; 
+            margin-top: 3rem;
+            margin-bottom: 1.1rem;
+        }
     }
     ion-content {
         --background: #275a4e;
@@ -127,5 +132,14 @@ app-menu {
 @media (min-width: 350px) {
     #inbox-list {
         margin-top: 30px !important;
+    }
+}
+@media (max-width: 350px) {
+    app-menu {
+            ion-toolbar {
+            .menu-size{
+                margin-top: 2rem;
+            }
+        }
     }
 }
