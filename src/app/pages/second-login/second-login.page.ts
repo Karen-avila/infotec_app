@@ -129,10 +129,10 @@ export class SecondLoginPage implements OnInit {
   }
 
   public headerTitle() {
-    if (this.type === 'login') return 'Enter pin';
-    if (this.type === 'pin') return 'Set pin to login';
-    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'Pin confirmation is incorrect';
-    if (this.type === 'confirm-pin') return 'Confirm pin';
+    if (this.type === 'login') return 'Enter PIN';
+    if (this.type === 'pin') return 'Set PIN to login';
+    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'PIN confirmation is incorrect';
+    if (this.type === 'confirm-pin') return 'Confirm PIN';
 
   }
 

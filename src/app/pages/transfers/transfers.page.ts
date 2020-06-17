@@ -218,6 +218,12 @@ export class TransfersPage implements OnInit {
 
   public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
+    
+    if(this.accountSelected.blocked) {
+      this.helpersService.showErrorMessage('Origin account blocked', 'The origin account selected is blocked. Please select another to transfer to the selected beneficiary' )
+      return;
+    }
+
     const prevSelected = this.savedAccountsFiltered.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
@@ -368,7 +374,7 @@ export class TransfersPage implements OnInit {
 
           //TODO que este configurable el muestreo de datos de loans
           // que haga todo si hay cuentas guardadas
-          if (response.savingsAccounts.length > 0 || response.loanAccounts.length) {
+          if (response.savingsAccounts.length > 0) {
     
             if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
               let savings = response.savingsAccounts;
@@ -385,21 +391,21 @@ export class TransfersPage implements OnInit {
               })
             }
 
-            if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
-              let loans = response.loanAccounts;
-              loans.forEach(element => {
-                // si es loans, es 1
-                if (element.status.active) {
-                  //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
-                  let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
-                  this.accounts.push(account);
+            // if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
+            //   let loans = response.loanAccounts;
+            //   loans.forEach(element => {
+            //     // si es loans, es 1
+            //     if (element.status.active) {
+            //       //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
+            //       let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
+            //       this.accounts.push(account);
 
-                  let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Loan'], element.id,
-                    element.accountNo, 1, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
-                  this.savedAccounts.push(ownBeneficiarieAccount);
-                }
-              })
-            }
+            //       let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Loan'], element.id,
+            //         element.accountNo, 1, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+            //       this.savedAccounts.push(ownBeneficiarieAccount);
+            //     }
+            //   })
+            // }
           }
 
           let accountNumberDefault = this.accounts[0].accountNo;

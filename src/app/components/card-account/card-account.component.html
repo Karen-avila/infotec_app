@@ -4,7 +4,7 @@
     <div class="slide">
       <div *ngIf="account.blocked === true">
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <p>Esta tarjeta se encuentra bloqueada momentaneamente</p>
+        <p>{{'This account is momentarily blocked' | translate}}</p>
       </div>
 
       <p *ngIf="settings.orientation === 'vertical'" class="ion-text-center">

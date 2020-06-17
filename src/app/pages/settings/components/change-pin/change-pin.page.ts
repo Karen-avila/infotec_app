@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AuthenticationService } from '@services/user/authentication.service';
 import { UserService } from '@services/user/user.service';
 import { Storage } from '@ionic/storage';
 import { HelpersService } from '@services/helpers/helpers.service';
@@ -33,7 +32,6 @@ export class ChangePinPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private storage: Storage,
-    private authenticationService: AuthenticationService,
     private userService: UserService,
     private helpersService: HelpersService
   ) { }
@@ -131,17 +129,14 @@ export class ChangePinPage implements OnInit {
         this.helpersService.hideLoading()
         this.helpersService.showSuccessMessage('Successful change','Your PIN has been modified correctly', '/dashboard')
         break;
-
-    
-        
     }
   }
 
   public headerTitle() {
     if (this.type === 'pin') return 'Enter current pin';
-    if (this.type === 'change-pin') return 'Set new pin to login';
-    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'Pin confirmation is incorrect';
-    if (this.type === 'confirm-pin') return 'Confirm new pin';
+    if (this.type === 'change-pin') return 'Set new PIN to login';
+    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'PIN confirmation is incorrect';
+    if (this.type === 'confirm-pin') return 'Confirm new PIN';
 
   }
 
