@@ -196,5 +196,8 @@
     "Money Transfer": "Transferencia de dinero",
     "Login with username and password": "Iniciar sesión con usuario y contraseña",
     "Own Account": "Cuenta Propia",
-    "Own Loan": "Préstamo Propio"
+    "Own Loan": "Préstamo Propio",
+    "I am already a bank client": "Ya soy cliente del banco",
+    "I am a beneficiary of a social program": "Soy beneficiario de un programa social",
+    "I want to be client": "Quiero ser cliente"
 }
