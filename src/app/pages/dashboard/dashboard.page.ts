@@ -9,6 +9,7 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { CodesService } from '@services/catalogs/codes.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,6 +39,7 @@ export class DashboardPage implements OnInit {
 
   private accountSelected: CardAccount;
   private personalInfo: PersonalInfo;
+  private globalConfig: any;
 
   public loginInfo: LoginInfo;
 
@@ -49,7 +51,8 @@ export class DashboardPage implements OnInit {
     private alertController: AlertController,
     private menuCtrl: MenuController,
     private clientsService: ClientsService,
-    private helpersService: HelpersService
+    private helpersService: HelpersService,
+    private codesService: CodesService
   ) {
     this.checkPermissions();
 
@@ -151,6 +154,11 @@ export class DashboardPage implements OnInit {
       .then((data: PersonalInfo) => {
         console.log(data);
         this.personalInfo = data;
+        return this.codesService.getMOBILE().toPromise();
+      })
+      .then((data: any) => {
+        console.log(data);
+        this.globalConfig = data;
         return this.clientsService.getLoginInfo();
       })
       .then(async (data: LoginInfo) => {
@@ -175,15 +183,31 @@ export class DashboardPage implements OnInit {
     return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
       .then((response: any) => {
         this.accounts = [];
-        let savings = response.savingsAccounts;
-        savings.forEach(element => {
-          // si es savings, es 2
-          if (element.status.active) {
-            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
-            this.accounts.push(account);
+        if (response.savingsAccounts.length > 0 || response.loanAccounts.length) {
+
+          if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+            let savings = response.savingsAccounts;
+            savings.forEach(element => {
+              // si es savings, es 2
+              if (element.status.active) {
+                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+                this.accounts.push(account);
+              }
+            })
           }
-        })
-        return savings;
+          if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
+            let loans = response.loanAccounts;
+            loans.forEach(element => {
+              // si es loans, es 1
+              if (element.status.active) {
+                //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
+                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
+                this.accounts.push(account);
+              }
+            })
+          }
+        }
+        return this.accounts;
       })
       .catch(err => {
         console.log(err);
