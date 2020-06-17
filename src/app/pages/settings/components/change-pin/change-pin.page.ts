@@ -128,6 +128,7 @@ export class ChangePinPage implements OnInit {
 
       case 'confirm-pin':
         this.encryptPIN();
+        this.helpersService.hideLoading()
         this.helpersService.showSuccessMessage('Successful change','Your PIN has been modified correctly', '/dashboard')
         break;
 
@@ -184,6 +185,7 @@ export class ChangePinPage implements OnInit {
       .catch(err => {
         console.log(err);
         //alert("El PIN ingresado es incorrecto");
+        this.helpersService.showErrorMessage();
         this.incorrectPin = true;
         this.seletedNumbers = [];
         this.errorNumberCount++;
