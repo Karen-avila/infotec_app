@@ -16,6 +16,7 @@ import { LoginInfo } from '@globals/interfaces/login-info';
 import * as CustomValidators from '@globals/custom.validator';
 import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
 import { environment } from '@env';
+import { CodesService } from '@services/catalogs/codes.service';
 
 export class accountTransferTPT {
   type: string = "tpt";
@@ -87,6 +88,8 @@ export class TransfersPage implements OnInit {
   public showRFC: boolean = false;
   public beneficiarieSearch: string = "";
 
+  private globalConfig: any;
+
   constructor(
     public formBuilder: FormBuilder,
     public alertController: AlertController,
@@ -95,7 +98,8 @@ export class TransfersPage implements OnInit {
     public translate: TranslateService,
     public router: Router,
     private clientsService: ClientsService,
-    private userService: UserService
+    private userService: UserService,
+    private codesService: CodesService
   ) {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
@@ -123,7 +127,8 @@ export class TransfersPage implements OnInit {
       this.clientsService.getBeneficiariesEXT().toPromise(),
 
       this.clientsService.getPersonalInfo(),
-      this.clientsService.getLoginInfo()
+      this.clientsService.getLoginInfo(),
+      this.codesService.getMOBILE().toPromise()
     ]
     )
       .then(async res => {
@@ -133,6 +138,7 @@ export class TransfersPage implements OnInit {
         this.savedAccountsFiltered = this.savedAccounts;
         this.personalInfo = res[2];
         this.loginInfo = res[3];
+        this.globalConfig = res[4];
 
         await this.getAccounts();
         return res;
@@ -212,6 +218,12 @@ export class TransfersPage implements OnInit {
 
   public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
+    
+    if(this.accountSelected.blocked) {
+      this.helpersService.showErrorMessage('Origin account blocked', 'The origin account selected is blocked. Please select another to transfer to the selected beneficiary' )
+      return;
+    }
+
     const prevSelected = this.savedAccountsFiltered.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
@@ -355,34 +367,51 @@ export class TransfersPage implements OnInit {
 
   // traemos los accounts del cliente
   private async getAccounts(): Promise<any> {
-    this.translate.get(['Own Account']).subscribe(async translate => {
+    this.translate.get(['Own Account', 'Own Loan']).subscribe(async translate => {
       return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
         .then((response: any) => {
           this.accounts = [];
 
           //TODO que este configurable el muestreo de datos de loans
-          let savings = response.savingsAccounts;
-          let accountNumberDefault;
           // que haga todo si hay cuentas guardadas
           if (response.savingsAccounts.length > 0) {
-            savings.forEach((element, index) => {
-              if (index == 0) {
-                accountNumberDefault = element.accountNo;
-                console.log("account number default", accountNumberDefault);
-              }
-              // si es savings, es 2
-              if (element.status.active) {
-                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
-                this.accounts.push(account);
+    
+            if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+              let savings = response.savingsAccounts;
+              savings.forEach(element => {
+                // si es savings, es 2
+                if (element.status.active) {
+                  let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+                  this.accounts.push(account);
 
-                let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
-                  element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
-                this.savedAccounts.push(ownBeneficiarieAccount);
-              }
-            })
-            this.resetBeneficiariesList(accountNumberDefault);
-            return savings;
+                  let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
+                    element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+                  this.savedAccounts.push(ownBeneficiarieAccount);
+                }
+              })
+            }
+
+            // if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
+            //   let loans = response.loanAccounts;
+            //   loans.forEach(element => {
+            //     // si es loans, es 1
+            //     if (element.status.active) {
+            //       //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
+            //       let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
+            //       this.accounts.push(account);
+
+            //       let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Loan'], element.id,
+            //         element.accountNo, 1, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+            //       this.savedAccounts.push(ownBeneficiarieAccount);
+            //     }
+            //   })
+            // }
           }
+
+          let accountNumberDefault = this.accounts[0].accountNo;
+
+          this.resetBeneficiariesList(accountNumberDefault);
+          return this.accounts;
 
         })
         .catch(err => {

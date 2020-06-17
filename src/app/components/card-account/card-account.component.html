@@ -2,9 +2,13 @@
 
   <ion-slide *ngFor="let account of accounts">
     <div class="slide">
+      <div *ngIf="account.blocked === true">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <p>{{'This account is momentarily blocked' | translate}}</p>
+      </div>
 
       <p *ngIf="settings.orientation === 'vertical'" class="ion-text-center">
-        <ion-text [ngStyle]="{'color': '#525252', 'font-size': settings.accountSize}">{{'Acc.' | translate }} {{account.accountNo}}
+        <ion-text [ngStyle]="{'color': '#525252', 'font-size': settings.accountSize}" >{{'Acc.' | translate }} {{account.accountNo}}
         </ion-text>
       </p>
 
@@ -20,7 +24,7 @@
 
 
       <div [ngStyle]="{'width': settings.cardWidth, 'margin': 'auto', 'position': 'relative'}">
-        <img src="./assets/card.png" />
+        <img [ngClass]="account.blocked ? 'account-blocked' : ''" src="./assets/card.png" />
         <span class="ion-text-uppercase"
           style="color: #CBC0AE; text-align: left; font-size: x-small; position: absolute; bottom: 2.5rem; left: 1.1rem;">
           {{account.displayName}}

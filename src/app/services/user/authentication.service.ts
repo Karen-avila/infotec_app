@@ -87,6 +87,7 @@ export class AuthenticationService {
       }).then( globals => {
         
         this.storage.set('globals', globals);
+        console.log(globals);
         if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
         else this.navCtrl.navigateRoot(['dashboard']);
       } )
