@@ -16,9 +16,9 @@ export class ProgramDetailsPage implements OnInit {
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    if (!this.userService.programaSocialSelected) {
-      this.router.navigate(["/plan-social"])
-    }
+    // if (!this.userService.programaSocialSelected) {
+    //   this.router.navigate(["/plan-social"])
+    // }
 
     this.program = this.userService.programaSocialSelected
   }

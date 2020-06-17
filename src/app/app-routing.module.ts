@@ -82,7 +82,7 @@ const routes: Routes = [
   },
   {
     path: 'plan-social',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/plan-social/plan-social.module').then(m => m.PlanSocialPageModule)
   },
   {

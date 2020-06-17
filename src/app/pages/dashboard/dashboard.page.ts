@@ -10,6 +10,7 @@ import { CardAccount } from '@globals/classes/card-account';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { AuthenticationService } from '@services/user/authentication.service';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-dashboard',
@@ -60,7 +61,9 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     console.log('Dashboard page init...')
     this.menuCtrl.enable(true);
-    this.authentication.startIdleTimer();
+    if (environment.production) {
+      this.authentication.startIdleTimer();
+    }
   }
 
   ionViewDidEnter() {

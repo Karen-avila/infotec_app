@@ -50,6 +50,8 @@ export class Tab2Page implements OnInit {
 
   registerResponse: any;
 
+  acceptTermsConditions: boolean = false;
+
   constructor(
       private router:Router, 
       public formBuilder: FormBuilder, 

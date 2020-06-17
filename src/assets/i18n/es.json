@@ -102,7 +102,7 @@
     "Middle name": "Apellido paterno",
     "Last name": "Apellido materno",
     "Account number": "Número de cuenta",
-    "The account number is invalid": "El número de cuenta no es válido",
+    "The client number is invalid": "El número de cliente no es válido",
     "The password format is invalid": "La contraseña debe tener 8 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
     "No movements": "No hay movimientos",
     "Last login": "Último ingreso",
@@ -195,5 +195,9 @@
     "Deleting beneficiary...": "Borrando beneficiario...",
     "Money Transfer": "Transferencia de dinero",
     "Login with username and password": "Iniciar sesión con usuario y contraseña",
-    "Own Account": "Cuenta Propia"
+    "Own Account": "Cuenta Propia",
+    "Program Details": "Detalles del Programa",
+    "Social Programs": "Programas Sociales",
+    "More info": "Más información",
+    "Client number": "Número de cliente"
 }
