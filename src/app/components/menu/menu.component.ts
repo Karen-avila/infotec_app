@@ -95,12 +95,8 @@ export class MenuComponent implements OnInit {
   }
 
   public logout() {
-    if (this.authentication.isAuthenticated()) {
-      this.authentication.logout();
-      this.menu.enable(false);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.authentication.logout();
+    this.menu.enable(false);
   }
 
   private getPersonalInfo() {

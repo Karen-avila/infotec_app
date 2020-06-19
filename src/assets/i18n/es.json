@@ -210,5 +210,6 @@
     "Set new PIN to login": "Ingrese su nuevo PIN",
     "Confirm new PIN": "Confirmar nuevo PIN",
     "Your PIN has been modified correctly": "Su PIN ha sido modificado correctamente",
-    "This account is momentarily blocked": "Esta cuenta está momentáneamente bloqueada"
+    "This account is momentarily blocked": "Esta cuenta está momentáneamente bloqueada",
+    "Welcome": "Bienvenido(a)"
 }
