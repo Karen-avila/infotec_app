@@ -1,6 +1,21 @@
-ion-tab-button {
-    font-size: 13px !important;
-}
-ion-tab-bar{
-    box-shadow: 5px 8px 22px 5px #757575;
+.container-small {
+    ion-button {
+        text-transform: uppercase;
+        height: 70px;
+        white-space: inherit;
+        text-align: inherit;
+        font-size: 13.5px;
+        width: 100%;
+        ion-icon {
+            background: #545454;
+            padding: 10px;
+            border-radius: 50%;
+            border: 1px white solid;
+            font-size: 25px;
+        }
+        ion-label {
+            width: 80%;
+            text-align: left;
+        }
+    }
 }

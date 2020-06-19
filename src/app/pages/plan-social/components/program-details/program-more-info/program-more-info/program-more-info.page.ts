@@ -16,9 +16,9 @@ export class ProgramMoreInfoPage implements OnInit {
 
   ngOnInit() {
 
-    if (!this.userService.programaSocialSelected) {
-      this.router.navigate(["/plan-social"])
-    }
+    // if (!this.userService.programaSocialSelected) {
+    //   this.router.navigate(["/plan-social"])
+    // }
     this.program = this.userService.programaSocialSelected
   }
 

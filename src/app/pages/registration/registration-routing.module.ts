@@ -6,8 +6,7 @@ import { RegistrationPage } from './registration.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/registration/tab1',
-    pathMatch: 'full'
+    component: RegistrationPage
   },
   {
     path: 'tab1',
@@ -17,7 +16,6 @@ const routes: Routes = [
     path: 'tab2',
     loadChildren: () => import('./components/tab2/tab2.module').then( m => m.Tab2PageModule)
   }
-
 ];
 
 @NgModule({
