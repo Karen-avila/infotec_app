@@ -78,7 +78,9 @@ export class AuthenticationService {
         this.userService.displayName = client.displayName;
 
         const displayName = client.displayName.trim().replace(/ +(?= )/g,'').split(' ');
-        this.storage.set('last-client', `${displayName[0]}${ displayName[1] ? ' '+displayName[1] : '' }`);
+        const shortName = `${displayName[0]}${ displayName[1] ? ' '+displayName[1] : '' }`;
+        this.userService.shortName = shortName;
+        this.storage.set('last-client', shortName);
 
         this.clientsService.getSelfie(client.id+'').toPromise()
           .then( imageUrl => this.storage.set('image-profile', imageUrl) )

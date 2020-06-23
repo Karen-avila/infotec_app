@@ -42,8 +42,8 @@ export class MenuComponent implements OnInit {
       icon: 'swap-horizontal-outline'
     },
     {
-      title: 'Pay Order',
-      url: '/pay-order',
+      title: 'Pay Orders',
+      url: '/pay-orders',
       icon: 'wallet-outline'
     },
     {
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit {
 
   public labels = ['V.0.0.1'];
   public personalInfo: PersonalInfo;
-  public avatarUrl: string = '/assets/header-icons/leona.png';
+  public avatarUrl: string = '/assets/header-icons/icon-user.png';
 
   ngOnInit() {
     this.storage.get('image-profile').then(image => {

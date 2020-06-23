@@ -10,7 +10,7 @@
 
           <ion-item>
             <ion-icon name="person-outline"></ion-icon>
-            <ion-input class="text-transform" type="text" placeholder="{{ 'First name' | translate }}"
+            <ion-input class="not-capitalize" type="text" placeholder="{{ 'First name' | translate | titlecase }}"
               formControlName="firstName" clearInput></ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
@@ -31,21 +31,23 @@
 
           <ion-item>
             <ion-icon name="mail-outline"></ion-icon>
-            <ion-input type="email" placeholder="{{ 'Email' | translate }}" formControlName="email" clearInput>
+            <ion-input type="email" placeholder="{{ 'Email' | translate | titlecase }}" formControlName="email" clearInput>
             </ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.email"></app-input-error>
 
-          <ion-item>
-            <ion-icon name="document-outline"></ion-icon>
-            <ion-input type="tel" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
-              clearInput></ion-input>
-          </ion-item>
-          <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+          <ng-container *ngIf="registrationType === 'client'">
+            <ion-item>
+              <ion-icon name="document-outline"></ion-icon>
+              <ion-input type="tel" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
+                clearInput></ion-input>
+            </ion-item>
+            <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>
+          </ng-container>
 
           <ion-item style="margin-top: 15px;">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-input formControlName="password" placeholder="{{ 'Password' | translate }}" [type]="type" clearInput>
+            <ion-input class="not-capitalize" formControlName="password" placeholder="{{ 'Password' | translate }}" [type]="type" clearInput>
             </ion-input>
             <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
             <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
@@ -54,7 +56,7 @@
 
           <ion-item style="margin-top: 15px;">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-input formControlName="confirmPassword" [type]="reType"
+            <ion-input class="not-capitalize" formControlName="confirmPassword" [type]="reType"
               placeholder="{{ 'Confirm Password' | translate }}" clearInput></ion-input>
             <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
             <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>
