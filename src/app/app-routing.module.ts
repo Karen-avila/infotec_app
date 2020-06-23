@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuard } from '@core/guards/auth/auth.guard';
 import { AuthPinGuard } from '@core/guards/auth-pin/auth-pin.guard';
+import { RegistrationGuard } from '@core/guards/registration/registration.guard';
 
 
 const routes: Routes = [
@@ -95,8 +96,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/pay-order/pay-order.module').then( m => m.PayOrderPageModule)
   },
+  {
+    path: 'pay-orders',
+    loadChildren: () => import('./pages/pay-orders/pay-orders/pay-orders.module').then( m => m.PayOrdersPageModule)
+  },
   { path: "**", redirectTo: "not-found" },
-
 ];
 
 @NgModule({

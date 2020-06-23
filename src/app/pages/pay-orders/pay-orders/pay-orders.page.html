@@ -1,0 +1,41 @@
+<app-header [menu]="true" [title]="'Pay Orders'" [img]="'/assets/header-icons/movimientos.png'">
+</app-header>
+<ion-content>
+  <!-- List of Text Items -->
+
+  <!-- <ion-label>
+    <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
+  </ion-label> -->
+  <ion-list style="width: 90%; margin: auto; margin-top: -0.8rem;">
+    <ion-item>
+      <ion-label position="stacked"></ion-label>
+      <ion-select style="text-transform: uppercase;" [(ngModel)]="payOrderStatus" [cancelText]="cancelText" [interfaceOptions]="selectOption" 
+        interface="action-sheet" placeholder="{{ 'Ver Ordenes de Pago' | translate }}">
+        <ion-select-option *ngFor="let item of payOrdersTypes" [value]="item.key">{{ item.value | uppercase }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+  </ion-list>
+  <br>
+  <ion-list style="width: 90%; margin: auto; margin-top: -0.8rem;">
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon
+          [ngStyle]="{'color': 'green', 'margin-top':'7px','font-size':'x-large' }"
+          src="assets/icon/logout.svg"></ion-icon>
+      </ion-avatar>
+    <ion-label>
+  
+        <h3> Orden de Pago Finalizada </h3>
+  
+        <h5 style="font-size: small; color: grey;">
+          Por un Monto de
+          {{ 1500 | number : '1.2-2' }}</h5>
+        
+        <h5 style="font-size: x-small;"> Folio: 000145553   <span style="float: right;">20/10/2020</span> </h5>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<app-footer></app-footer>

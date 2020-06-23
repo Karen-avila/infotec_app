@@ -1,6 +1,11 @@
-<app-header [svg]="true" [img]="'/assets/header-icons/leona.png'"></app-header>
+<app-header [svg]="true"></app-header>
 
 <ion-content>
+
+  <div class="container-image" style="width: 60%;margin:auto; margin-bottom: -1rem;">
+    <ion-img src="/assets/logo-banbi-green.png" alt="Logo"></ion-img>
+  </div>
+
   <ion-grid>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
@@ -31,10 +36,10 @@
         </ion-row>
       </form>
         <br>
-        <div class="soft-token">
+        <!-- <div class="soft-token">
           <ion-icon name="lock-closed-outline"></ion-icon>
           <ion-button [routerLink]="['/soft-token']" type="button" expand="block" color="primary">{{ 'Soft Token' | translate }}</ion-button>
-      </div>
+      </div> -->
     </div>
   </ion-grid>
 </ion-content>

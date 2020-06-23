@@ -4,7 +4,7 @@
       <img [src]="avatarUrl">
     </ion-avatar>
     <ion-text class="ion-text-capitalize" style="font-size: large; color: white;">{{ 'Hello' | translate}}
-      {{ this.userService?.displayName ? this.userService?.displayName?.toLowerCase() : this.personalInfo?.displayName?.toLowerCase() }}
+      {{ this.userService?.shortName | titlecase }}
     </ion-text>
   </div>
 </ion-toolbar>

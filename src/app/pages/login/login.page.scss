@@ -1,7 +1,7 @@
-ion-img {
-    padding: 12% 35% 0;
-    position: relative;
-}
+// ion-img {
+//     padding: 12% 35% 0;
+//     position: relative;
+// }
 ion-icon {
     margin: 0px 15px 0 0px;
     font-size: 22px;
@@ -11,10 +11,10 @@ ion-input {
 }
 ion-content {
     ion-grid {
-        ion-img {
-            padding: 12% 35% 0;
-            position: relative;
-        }
+        // ion-img {
+        //     padding: 12% 35% 0;
+        //     position: relative;
+        // }
         .container{
             width: 55%; 
             margin: auto; 
@@ -66,9 +66,9 @@ ion-col {
         }
     }
 
-    ion-img {
-        padding: 20% 35% 0 !important;
-    }
+    // ion-img {
+    //     padding: 20% 35% 0 !important;
+    // }
     
 }
 @media(max-width:350px) {

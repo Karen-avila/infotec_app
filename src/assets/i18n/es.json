@@ -103,7 +103,7 @@
     "Last name": "Apellido materno",
     "Account number": "Número de cuenta",
     "The client number is invalid": "El número de cliente no es válido",
-    "The password format is invalid": "La contraseña debe tener 8 dígitos, una mayúscula, una mínuscula, un número y un caracter especial",
+    "The password format is invalid": "La contraseña debe tener 8 dígitos, al menos una mayúscula, una mínuscula, un número y un caracter especial (!@#$&*_-)",
     "No movements": "No hay movimientos",
     "Last login": "Último ingreso",
     "Hello": "Hola",
@@ -210,5 +210,11 @@
     "Set new PIN to login": "Ingrese su nuevo PIN",
     "Confirm new PIN": "Confirmar nuevo PIN",
     "Your PIN has been modified correctly": "Su PIN ha sido modificado correctamente",
-    "This account is momentarily blocked": "Esta cuenta está momentáneamente bloqueada"
+    "This account is momentarily blocked": "Esta cuenta está momentáneamente bloqueada",
+    "Welcome": "Bienvenido(a)",
+    "Check your cell phone!": "¡Revisa tu celular!",
+    "You should have received an recovery code (if the code did not reach you, select the forward option) that you must provide below.": "Te debería haber llegado un código de recuperación (si el código no te llego, selecciona la opción de reenviar) que deberás proporcionar a continuación.",
+    "Recovery code": "Código de recuperación",
+    "Recovery code is required": "El código de recuperación es requerido",
+    "Pay Orders": "Órdenes de Pago"
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -24,6 +24,7 @@ import { FooterModule } from '@components/footer/footer.module';
     HeaderModule,
     FooterModule
   ],
+  providers: [TitleCasePipe],
   declarations: [Tab1Page]
 })
 export class Tab1PageModule {}
