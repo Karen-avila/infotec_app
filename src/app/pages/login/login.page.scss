@@ -1,6 +1,7 @@
 ion-img {
-    padding: 12% 35% 0;
-    position: relative;
+    width: 230px;
+    margin: -50px auto 0;
+    z-index: 100;
 }
 ion-icon {
     margin: 0px 15px 0 0px;
@@ -11,10 +12,6 @@ ion-input {
 }
 ion-content {
     ion-grid {
-        ion-img {
-            padding: 12% 35% 0;
-            position: relative;
-        }
         .container{
             width: 55%; 
             margin: auto; 
@@ -55,29 +52,32 @@ ion-col {
     ion-content ion-grid .container {
         width: 70%;
         text-align: center;
-        margin: 15px auto;
-    }
-    ion-item {
-        margin-top: 20px;
+        margin: -15px auto;
     }
     ion-grid {
         ion-img {
             padding: 20% 35% 0 !important;
         }
     }
-
-    ion-img {
-        padding: 20% 35% 0 !important;
+    .soft-token {
+        margin: 10px 0 0;
     }
-    
+    ion-item {
+        margin-top: 15px;
+    }
+}
+@media(max-width:370px) {
+    ion-item {
+        margin-top: 10px;
+    }
+    .soft-token {
+        margin: 5px 0 0;
+    }
 }
 @media(max-width:350px) {
     ion-content ion-grid .container {
         width: 78%;
         text-align: center;
-    }
-    .container{
-        margin: -20px auto !important;
     }
     ion-row{
         ion-col{
@@ -92,7 +92,11 @@ ion-col {
             }
         }
     }
+    ion-img {
+        width: 190px;
+    }
+
     .soft-token {
-        margin: 5px 0;
-    }    
+        margin: 0;
+    }
 }
