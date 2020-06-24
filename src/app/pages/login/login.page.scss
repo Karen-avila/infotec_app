@@ -15,22 +15,22 @@ ion-content {
         //     padding: 12% 35% 0;
         //     position: relative;
         // }
-        .container{
-            width: 55%; 
-            margin: auto; 
+        .container {
+            width: 55%;
+            margin: auto;
             text-align: center;
             margin: 50px auto;
         }
-        ion-row{
-            ion-col{
-                ion-button{
+        ion-row {
+            ion-col {
+                ion-button {
                     margin: 20px 0 20px;
                 }
             }
         }
         div {
-            form{
-                ion-button{
+            form {
+                ion-button {
                     margin: 20px 0 10px 0;
                 }
             }
@@ -51,7 +51,7 @@ ion-col {
     padding: 0;
 }
 
-@media(max-width:450px) {
+@media (max-width: 450px) {
     ion-content ion-grid .container {
         width: 70%;
         text-align: center;
@@ -66,22 +66,21 @@ ion-col {
     // ion-img {
     //     padding: 20% 35% 0 !important;
     // }
-    
 }
-@media(max-width:350px) {
+@media (max-width: 350px) {
     ion-content ion-grid .container {
         width: 78%;
         text-align: center;
     }
-    ion-row{
-        ion-col{
+    ion-row {
+        ion-col {
             ion-button {
                 height: 35px;
             }
-            ion-button:nth-child(1){
+            ion-button:nth-child(1) {
                 margin: 20px 0 10px !important;
             }
-            ion-button:nth-child(2){
+            ion-button:nth-child(2) {
                 margin: 5px 0 10px !important;
             }
         }
