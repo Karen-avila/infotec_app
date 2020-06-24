@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuard } from '@core/guards/auth/auth.guard';
 import { AuthPinGuard } from '@core/guards/auth-pin/auth-pin.guard';
+import { RegistrationGuard } from '@core/guards/registration/registration.guard';
 
 
 const routes: Routes = [
@@ -81,13 +82,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
   {
-    path: 'logout',
-    // canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/logout/logout.module').then(m => m.LogoutPageModule)
-  },
-  {
     path: 'plan-social',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/plan-social/plan-social.module').then(m => m.PlanSocialPageModule)
   },
   {
@@ -100,8 +96,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/pay-order/pay-order.module').then( m => m.PayOrderPageModule)
   },
+  {
+    path: 'pay-orders',
+    loadChildren: () => import('./pages/pay-orders/pay-orders/pay-orders.module').then( m => m.PayOrdersPageModule)
+  },
   { path: "**", redirectTo: "not-found" },
-
 ];
 
 @NgModule({

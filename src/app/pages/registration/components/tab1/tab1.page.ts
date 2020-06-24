@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { TitleCasePipe } from '@angular/common';
 
 
 @Component({
@@ -19,22 +20,24 @@ export class Tab1Page implements OnInit {
   type:string='password';
   reType:string='password';
   registerForm: FormGroup;
+  registrationType: 'client'|'social-program';
 
   constructor(
       private router:Router, 
+      private activatedRoute: ActivatedRoute,
       public formBuilder: FormBuilder, 
       public menuCtrl: MenuController,
       public storage: Storage,
-      public alertController: AlertController
+      public alertController: AlertController,
+      private titleCase: TitleCasePipe
     ) { 
+
+      this.registrationType = this.activatedRoute.snapshot.params['type'];
+
     this.registerForm = formBuilder.group({
       username: [""],
-      password: ["", [Validators.required, Validators.minLength(8)]],
-      confirmPassword : ["", [Validators.required, Validators.minLength(8)]],
-      accountNumber: ["", Validators.compose([
-        Validators.required, 
-        CustomValidators.ValidateAccountNumber
-      ])],
+      password: ["", [Validators.required, CustomValidators.ValidatePassword]],
+      confirmPassword : ["", [Validators.required]],
       email: ["", CustomValidators.ValidateEmail],
       firstName: ["", Validators.compose([
         Validators.required, 
@@ -51,6 +54,13 @@ export class Tab1Page implements OnInit {
     }, {
       validator: CustomValidators.ValidateMatch('password', 'confirmPassword')
     });
+
+    if (this.registrationType === 'client') {
+      this.registerForm.addControl('accountNumber', formBuilder.control('', [
+        Validators.required, 
+        CustomValidators.ValidateAccountNumber
+      ]));
+    }
   }
 
   ngOnInit() {
@@ -59,6 +69,8 @@ export class Tab1Page implements OnInit {
           this.registerForm.patchValue({...data, confirmPassword: data.password});
         }
       } );
+      const firstName = this.registerForm.get('firstName');
+      firstName.valueChanges.subscribe( value => firstName.setValue(this.titleCase.transform(value), {emitEvent: false}) );
   }
 
   register() {

@@ -28,6 +28,8 @@ export class SecondLoginPage implements OnInit {
 
   public incorrectPin: boolean = false;
 
+  public lastClientLogin: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
@@ -47,6 +49,8 @@ export class SecondLoginPage implements OnInit {
       this.type = type;
     }
     this.pin = code || '';
+
+    this.storage.get('last-client').then( lastCient => this.lastClientLogin = lastCient );
 
   }
 
@@ -160,9 +164,7 @@ export class SecondLoginPage implements OnInit {
   }
 
   public goLogin() {
-    this.storage.remove('user-hash').then( () => {
-      this.authenticationService.logout();
-    } );
+    this.authenticationService.logout(true);
   }
 
   private async decryptUser() {

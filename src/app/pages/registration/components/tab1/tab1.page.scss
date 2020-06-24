@@ -6,7 +6,7 @@ ion-input{
         padding-left: 10px;
     };
 }
-ion-input:not([type=email]){
+ion-input:not([type=email]):not(.not-capitalize){
     text-transform: capitalize;
 }
 ion-icon{
