@@ -216,5 +216,20 @@
     "You should have received an recovery code (if the code did not reach you, select the forward option) that you must provide below.": "Te debería haber llegado un código de recuperación (si el código no te llego, selecciona la opción de reenviar) que deberás proporcionar a continuación.",
     "Recovery code": "Código de recuperación",
     "Recovery code is required": "El código de recuperación es requerido",
-    "Pay Orders": "Órdenes de Pago"
+    "Pay Orders": "Órdenes de Pago",
+    "Select an account": "Selecciona una cuenta",
+    "Failed operation": "Operación fallida",
+    "We could not generate the Pay Order, please try again later": "No pudimos generar la orden de pago, intentalo de nuevo más tarde",
+    "Do you want to cancel the payment order?": "¿Desea cancelar la orden de pago?",
+    "My Accounts": "Mis Cuentas",
+    "Available Balance": "Saldo Disponible",
+    "You must write an integer": "Debe escribir un número entero",
+    "Insufficient balance": "Saldo insuficiente",
+    "For a total of": "Por un total de",
+    "See Pay Orders": "Ver Ordenes de Pago",
+    "Receivable": "Por Cobrar",
+    "Paid": "Cobrada",
+    "Canceled": "Cancelada",
+    "All": "Todos",
+    "Undefined": "Indefinido"
 }

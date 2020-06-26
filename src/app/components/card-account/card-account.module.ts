@@ -4,6 +4,7 @@ import { CardAccountComponent } from './card-account.component';
 import { IonicModule } from '@ionic/angular';
 import { MoneyFormatModule } from '@components/money-format/money-format.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MoneyPipeModule } from '@pipes/money/money.module';
 
 @NgModule({
   declarations: [CardAccountComponent],
@@ -11,7 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     IonicModule,
     MoneyFormatModule,
-    TranslateModule
+    TranslateModule,
+    MoneyPipeModule
   ],
   exports: [CardAccountComponent],
   providers: [CurrencyPipe]
