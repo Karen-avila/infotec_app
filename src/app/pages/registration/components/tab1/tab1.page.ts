@@ -79,7 +79,7 @@ export class Tab1Page implements OnInit {
     delete form.confirmPassword;
 
     this.storage.set('registration', form).then( () => {
-      this.router.navigateByUrl('/registration/tab2'); //second-login
+      this.router.navigateByUrl(`/registration/${this.registrationType}/tab2`); //second-login
     } );
     
   }

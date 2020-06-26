@@ -1,9 +1,9 @@
-<app-header [svg]="true" [backButton]="true" [title]="'Pay Order'"></app-header>
+<app-header [svg]="true" [title]="'Pay Order'"></app-header>
 <ion-content>
 
   <div style="text-align: center; width: 220px; margin: auto; margin-top: 1rem;">
     <ion-label style="text-align: center;">
-      <ngx-barcode [bc-value]="cbNumber" bc-format="EAN13" [bc-display-value]="true"></ngx-barcode>
+      <ngx-barcode [bc-value]="code" bc-format="EAN13" [bc-display-value]="true"></ngx-barcode>
     </ion-label>
   </div>
 
@@ -11,13 +11,13 @@
   <div class="container-small">
     <ion-list>
       <ion-item>
-        <p> <b><span translate>Beneficiary</span>:</b> <br> Emiliano Zapata Salazar </p> 
+        <p> <b><span translate>Beneficiary</span>:</b> <br> {{ displayName | titlecase }} </p> 
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <p> <b><span translate>Concept</span>:</b> <br> {{ concept }} </p> 
-      </ion-item>
+      </ion-item> -->
       <ion-item>
-        <p> <b><span translate>Reference</span>:</b> <br> {{ (reference || 'Doesn´t apply') | translate }} </p>  
+        <p> <b><span translate>Reference</span>:</b> <br> {{ (routingCode || 'Doesn´t apply') | translate }} </p>  
       </ion-item>
     </ion-list>
   </div>
@@ -25,7 +25,7 @@
   <br>
 
   <div style="font-size: 1.7rem; font-weight: bold; text-align: center;">
-    <app-money-format [amount]="amount"></app-money-format>
+    <app-money-format [amount]="transactionAmount"></app-money-format>
   </div>
 
   <div style="width: 70%; position: absolute;bottom: 0; right: 15%;">

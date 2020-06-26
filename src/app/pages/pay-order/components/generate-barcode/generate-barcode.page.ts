@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-generate-barcode',
@@ -8,23 +9,23 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GenerateBarcodePage implements OnInit {
 
-  public amount: number;
+  public transactionAmount: number;
 
-  public concept: string;
+  public routingCode: string;
 
-  public reference: string;
+  public code: string;
 
-  public isCBCreated = false;
+  public displayName: string;
 
-  public cbNumber = 7503007999351;
-
-  constructor(protected activatedRoute: ActivatedRoute) { }
+  constructor(protected activatedRoute: ActivatedRoute, protected storage: Storage) { }
 
   ngOnInit() {
-    const { amount, concept, reference } = this.activatedRoute.snapshot.queryParams;
-    this.amount = amount;
-    this.concept = concept;
-    this.reference = reference;
+    const { transactionAmount, code, routingCode } = this.activatedRoute.snapshot.queryParams;
+    this.code = code.substring(0,12);
+    this.transactionAmount = transactionAmount;
+    this.routingCode = routingCode;
+
+    this.storage.get("personal-info").then( personalInfo => this.displayName = personalInfo.displayName );
   }
 
 }

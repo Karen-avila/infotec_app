@@ -53,6 +53,13 @@ export function ValidatePassword(control: AbstractControl) {
     return null;
 }
 
+export function ValidateInteger(control: AbstractControl) {
+    if (!(/^[1-9]\d*$/.test(control.value))) {
+        return { integer: true };
+    }
+    return null;
+}
+
 export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
     // TODO borrar el de parametro 9 porque las cuentas del banco siempre van a ser de 11, se dejo asi para las pruebas en un comienzo
     if ((`${control.value}`).length === 9 || (`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {

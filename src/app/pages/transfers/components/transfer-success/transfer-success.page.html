@@ -31,7 +31,7 @@
      
       <h4>{{'Beneficiary' | translate}}:<span> {{clientName}}</span></h4>
       <h4>{{'Account Number' | translate}}:<span> {{accountNumber}}</span></h4>
-      <h4>{{'Concept' | translate}}:<span> {{concept}}</span></h4>
+      <h4>{{'Concept' | translate}}:<span> {{ (concept || 'Doesn´t apply') | translate }}</span></h4>
       <h4>{{'Reference' | translate}}:<span> {{reference}}</span></h4>
       <h4>{{'Invoice' | translate}}:<span> {{folio}}</span></h4>
       <!-- <div *ngIf="rfc">

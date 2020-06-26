@@ -186,40 +186,54 @@ export class DashboardPage implements OnInit {
   }
 
   private getAccounts(): Promise<any> {
-    return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
-      .then((response: any) => {
-        this.accounts = [];
-        if (response.savingsAccounts.length > 0 || response.loanAccounts.length) {
-
-          if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
-            let savings = response.savingsAccounts;
-            savings.forEach(element => {
-              // si es savings, es 2
-              if (element.status.active) {
-                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2, element.subStatus.block);
-                this.accounts.push(account);
-              }
-            })
-          }
-          if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
-            let loans = response.loanAccounts;
-            loans.forEach(element => {
-              // si es loans, es 1
-              if (element.status.active) {
-                //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
-                let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
-                this.accounts.push(account);
-              }
-            })
-          }
-        }
-        return this.accounts;
-      })
-      .catch(err => {
-        console.log(err);
-        throw err;
-      })
+    return this.clientsService.getSavingsAccounts().then( savings => {
+      this.accounts = [];
+      if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+        savings.forEach(element => {
+          console.log(element);
+          
+          let account: CardAccount = new CardAccount(element.id, element.accountNo, element.availableBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+          this.accounts.push(account);
+        })
+      }
+    } )
   }
+
+  // private getAccounts(): Promise<any> {
+  //   return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
+  //     .then((response: any) => {
+  //       this.accounts = [];
+  //       if (response.savingsAccounts.length > 0 || response.loanAccounts.length) {
+
+  //         if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+  //           let savings = response.savingsAccounts;
+  //           savings.forEach(element => {
+  //             // si es savings, es 2
+  //             if (element.status.active) {
+  //               let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+  //               this.accounts.push(account);
+  //             }
+  //           })
+  //         }
+  //         if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
+  //           let loans = response.loanAccounts;
+  //           loans.forEach(element => {
+  //             // si es loans, es 1
+  //             if (element.status.active) {
+  //               //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
+  //               let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
+  //               this.accounts.push(account);
+  //             }
+  //           })
+  //         }
+  //       }
+  //       return this.accounts;
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       throw err;
+  //     })
+  // }
 
   public onChangeAccount(param: CardAccount) {
     this.accountSelected = param;
