@@ -10,6 +10,7 @@ import { PayOrdersPage } from './pay-orders.page';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MoneyPipeModule } from '@pipes/money/money.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     PayOrdersPageRoutingModule,
     HeaderModule,
     FooterModule,
-    TranslateModule
+    TranslateModule,
+    MoneyPipeModule
   ],
   declarations: [PayOrdersPage]
 })

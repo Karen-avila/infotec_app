@@ -367,57 +367,26 @@ export class TransfersPage implements OnInit {
 
   // traemos los accounts del cliente
   private async getAccounts(): Promise<any> {
-    this.translate.get(['Own Account', 'Own Loan']).subscribe(async translate => {
-      return this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
-        .then((response: any) => {
+    return this.translate.get(['Own Account', 'Own Loan']).toPromise().then(async translate => {
+      return this.clientsService.getSavingsAccounts()
+        .then((savings: any) => {
           this.accounts = [];
 
-          //TODO que este configurable el muestreo de datos de loans
-          // que haga todo si hay cuentas guardadas
-          if (response.savingsAccounts.length > 0) {
-    
-            if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
-              let savings = response.savingsAccounts;
-              savings.forEach(element => {
-                // si es savings, es 2
-                if (element.status.active) {
-                  let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2, element.subStatus.block);
-                  this.accounts.push(account);
+          savings.forEach(element => {
+            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.availableBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+            this.accounts.push(account);
 
-                  let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
-                    element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
-                  this.savedAccounts.push(ownBeneficiarieAccount);
-                }
-              })
-            }
-
-            // if (JSON.parse(this.globalConfig.showLoanAccounts.description)) {
-            //   let loans = response.loanAccounts;
-            //   loans.forEach(element => {
-            //     // si es loans, es 1
-            //     if (element.status.active) {
-            //       //TODO no sabemos que variable poner si esta blockeado o no - por ahora es false
-            //       let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 1, false);
-            //       this.accounts.push(account);
-
-            //       let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Loan'], element.id,
-            //         element.accountNo, 1, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
-            //       this.savedAccounts.push(ownBeneficiarieAccount);
-            //     }
-            //   })
-            // }
-          }
+            let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
+              element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+            this.savedAccounts.push(ownBeneficiarieAccount);
+          })
 
           let accountNumberDefault = this.accounts[0].accountNo;
 
           this.resetBeneficiariesList(accountNumberDefault);
           return this.accounts;
 
-        })
-        .catch(err => {
-          console.log(err)
-          throw err;
-        })
+        });
     })
   }
 

@@ -30,6 +30,7 @@ import { MenuModule } from '@components/menu/menu.module';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 
 import es from '@angular/common/locales/es';
@@ -78,6 +79,7 @@ export function createTranslateLoader(http: HttpClient) {
     File,
     ScreenOrientation,
     Sim,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

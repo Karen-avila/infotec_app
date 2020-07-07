@@ -50,7 +50,7 @@ export class AuthInterceptorService implements HttpInterceptor {
                   this.router.navigateByUrl('/login');
                   break; 
                 case 504: 
-                  this.helpersService.showNoInternet();
+                  // this.helpersService.showNoInternet();
                   break;
                 default: 
                   break;
