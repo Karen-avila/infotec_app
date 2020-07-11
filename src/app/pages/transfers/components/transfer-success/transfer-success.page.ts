@@ -56,8 +56,18 @@ export class TransferSuccessPage implements OnInit {
 
     const element = this.pageShare.nativeElement;
     const textSuccess = await this.translate.get('Transfer Success').toPromise();
+    const scale = 750 / element.offsetWidth;
     
-    domtoimage.toPng(element)
+    domtoimage.toPng(element, {
+      height: element.offsetHeight * scale,
+      width: element.offsetWidth * scale,
+      style: {
+        transform: "scale(" + scale + ")",
+        transformOrigin: "top left",
+        width: element.offsetWidth + "px",
+        height: element.offsetHeight + "px"
+      }
+    })
       .then( (dataUrl) => {
           this.socialSharing.share(`${textSuccess} | Banco del Bienestar`, null, dataUrl);
       }).catch( (error) => {

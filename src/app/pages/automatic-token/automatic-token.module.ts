@@ -4,26 +4,24 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MovementsPageRoutingModule } from './movements-routing.module';
+import { AutomaticTokenPageRoutingModule } from './automatic-token-routing.module';
 
-import { MovementsPage } from './movements.page';
-import { TranslateModule } from '@ngx-translate/core';
+import { AutomaticTokenPage } from './automatic-token.page';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
-import { MoneyPipeModule } from '@pipes/money/money.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MovementsPageRoutingModule,
-    TranslateModule,
+    AutomaticTokenPageRoutingModule,
     HeaderModule,
     FooterModule,
-    MoneyPipeModule
+    TranslateModule
   ],
-  declarations: [MovementsPage],
-  entryComponents: [MovementsPage]
+  declarations: [AutomaticTokenPage],
+  entryComponents: [AutomaticTokenPage]
 })
-export class MovementsPageModule {}
+export class AutomaticTokenPageModule {}

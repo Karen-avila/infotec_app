@@ -15,6 +15,13 @@ export function ValidateCurp(control: AbstractControl) {
     return null;
 }
 
+export function ValidateRfc(control: AbstractControl) {
+    if (!(/^[a-zA-Z]{4}[\d]{6}[0-9]{2}[a-zA-Z]{1}$/.test(control.value))) {
+        return { rfc: true };
+    }
+    return null;
+}
+
 export function ValidateAccountNumber(control: AbstractControl) {
     if (!(/^([0-9]{8,9}|[0-9]{11})$/.test(control.value))) {
         return { accountNumber: true };
@@ -81,7 +88,7 @@ export function ValidateNameBeneficiary(controlName: string, beneficiaries: Bene
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         if (!control.value) { return null }
-        for (var i = 0; i < beneficiaries.length; i++) {
+        for (var i = 0; i < (beneficiaries || []).length; i++) {
             if (beneficiaries[i].name.toLowerCase() == control.value.toLowerCase()) {
                 control.setErrors({ beneficiaryAlreadyRegistered: true });
             }

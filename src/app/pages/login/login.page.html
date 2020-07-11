@@ -1,4 +1,4 @@
-<app-header [svg]="true"></app-header>
+<app-header [svg]="true" [bottomTitle]="timeTextTitle"></app-header>
 
 <ion-content>
 
@@ -11,13 +11,13 @@
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>
           <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-input formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
+          <ion-input [disabled]="disabledButtons" formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
         </ion-item>
         <app-input-error [control]="loginForm.controls.username"></app-input-error>
 
         <ion-item>
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
+          <ion-input [disabled]="disabledButtons" formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
             clearInput></ion-input>
           <ion-icon *ngIf="icon; else elseTemplate" (click)="viewPassword()" name="eye-off-outline" slot="end">
           </ion-icon>
@@ -28,7 +28,7 @@
         <app-input-error [control]="loginForm.controls.password"></app-input-error>
         <ion-row>
           <ion-col align-self-center class="text-center">
-            <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">{{ 'Sign in' | translate }}</ion-button>
+            <ion-button type="submit" [disabled]="loginForm.invalid || disabledButtons" expand="block" color="primary">{{ 'Sign in' | translate }}</ion-button>
             <ion-button [routerLink]="['/registration']" expand="block" color="medium">{{ 'Register ' | translate }}</ion-button>
             <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
             class="small-text">{{ 'Did you forget your password?' | translate }}</a>

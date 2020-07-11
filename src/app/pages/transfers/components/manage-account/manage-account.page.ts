@@ -187,10 +187,11 @@ export class ManageAccountPage implements OnInit {
   }
 
   async evaluateBank(x: string) {
-    let possibleBank = x.substring(0, 4);
+    let possibleBank = x.substring(0, 3);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
     // TODO borrar condicion de 9 cuando las account number sean de 11
     if (x.length == 11 || x.length == 9) {
+      const possibleBanks = this.banks.filter(u => u.name == '000');
       this.searchButtonEnabled = true;
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
     } else if (x.length == 16) {

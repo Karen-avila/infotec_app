@@ -75,7 +75,7 @@ export interface Transaction {
     date: number[];
     currency: Currency;
     paymentDetailData?: PaymentDetailData;
-    tTransfer?: Transfer
+    transfer?: Transfer
     amount: number;
     runningBalance: number;
     reversed: boolean;

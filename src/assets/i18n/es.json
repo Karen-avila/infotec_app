@@ -62,7 +62,7 @@
     "Recover password": "Recuperar contraseña",
     "Skip": "Omitir",
     "Continue": "Continuar",
-    "Set PIN to login": "Establecer pin para iniciar sesión",
+    "Set PIN": "Establecer pin",
     "PIN confirmation is incorrect": "La confirmación del pin es incorrecta",
     "Help": "Ayuda",
     "Frequently asked questions": "Preguntas frecuentes",
@@ -96,6 +96,7 @@
     "Next": "Siguiente",
     "Birthdate": "Fecha de nacimiento",
     "The curp is invalid": "La CURP no es valida",
+    "The RFC is invalid": "El RFC no es valido",
     "Offices": "Sucursales",
     "Change Email": "Cambiar correo",
     "First name": "Nombre(s)",
@@ -178,7 +179,6 @@
     "The credentials entered are incorrect": "Las credenciales ingresadas son incorrectas",
     "Pay Order": "Orden de Pago",
     "How much do you want to withdraw?": "¿Cuánto deseas retirar?",
-    "Generate Pay Order": "Generar Orden de Pago",
     "Do you want to cancel the withdrawal?": "¿Desea cancelar el retiro?",
     "Search": "Buscar",
     "No beneficiaries found": "No se encontraron beneficiarios",
@@ -231,5 +231,8 @@
     "Paid": "Cobrada",
     "Canceled": "Cancelada",
     "All": "Todos",
-    "Undefined": "Indefinido"
+    "Undefined": "Indefinido",
+    "PAYMENT_ORDER": "Orden de Pago", 
+    "Security Code": "Código de Seguridad",
+    "Barcode": "Código de barras"
 }

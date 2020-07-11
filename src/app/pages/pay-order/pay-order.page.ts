@@ -3,11 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
 import { formatDate } from '@angular/common';
 import { SavingsaccountsService } from '@services/savingsaccounts/savingsaccounts.service';
 import * as CustomValidators from '@globals/custom.validator';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
 
 @Component({
   selector: 'app-pay-order',
@@ -35,7 +36,8 @@ export class PayOrderPage implements OnInit {
     protected translate: TranslateService,
     protected alertController: AlertController,
     protected clientsService: ClientsService,
-    protected savingsAccService: SavingsaccountsService
+    protected savingsAccService: SavingsaccountsService,
+    protected modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -113,8 +115,8 @@ export class PayOrderPage implements OnInit {
   }
 
 
-  public onClick(): void {
-
+  public async onClick() {
+    
     if (!this.canGeneratePayOrder) return;
 
     const formData = {...this.formGroup.value};
@@ -127,7 +129,16 @@ export class PayOrderPage implements OnInit {
     ]).subscribe( (resp: any) => {
       this.helpersService
         .showAlert(resp.Accept, resp['The information is correct?'])
-        .then( () => {
+        .then( async () => {
+
+          const modal = await this.modalController.create({
+            component: AutomaticTokenPage
+          });
+          await modal.present();
+          const { data } = await modal.onDidDismiss();
+          
+          if (!data.accept) return;
+
           this.helpersService.presentLoading();
 
           this.savingsAccService.createPayOrder(accountId, formData).toPromise().then( result => {

@@ -14,6 +14,7 @@ import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { TransferSuccessPageModule } from './components/transfer-success/transfer-success.module';
+import { AutomaticTokenPageModule } from '@pages/automatic-token/automatic-token.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { TransferSuccessPageModule } from './components/transfer-success/transfe
     TransferSuccessPageModule,
     HeaderModule,
     FooterModule,
-    InputErrorModule
+    InputErrorModule,
+    AutomaticTokenPageModule
   ],
   declarations: [TransfersPage]
 })

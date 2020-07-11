@@ -116,7 +116,7 @@
               <ion-item *ngIf="showRFC">
                 <ion-label position="stacked"> {{ 'RFC' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="rfc" required inputmode="text" type="text"></ion-input>
+                <ion-input maxlength="13" formControlName="rfc" required inputmode="text" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.rfc"></app-input-error>
 

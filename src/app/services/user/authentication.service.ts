@@ -46,7 +46,7 @@ export class AuthenticationService {
   }
 
   // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
-  public login(user: User, askForPin: boolean) {
+  public login(user: User, askForPin: boolean): Promise<any> {
 
     this.storage.remove('token');
     this.storage.remove('personal-info');
@@ -54,7 +54,7 @@ export class AuthenticationService {
 
     this.helpersService.presentLoading();
 
-    this.httpClient.post(ENDPOINTS.authentication, user)
+    return this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
       .then((login: LoginInfo) => {
         console.log(login);
@@ -96,10 +96,13 @@ export class AuthenticationService {
         console.log(globals);
         if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
         else this.navCtrl.navigateRoot(['dashboard']);
+        this.storage.remove('timeLeft');
+        return true;
       } )
       .catch(err => {
         console.log(err);
         this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
+        throw err;
       }).finally( () => this.helpersService.hideLoading() );
   }
 
