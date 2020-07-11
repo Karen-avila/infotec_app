@@ -2,6 +2,12 @@
 //     padding: 12% 35% 0;
 //     position: relative;
 // }
+.dangerous {
+    color: var(--ion-color-danger);
+    font-size: medium;
+    padding-top: 3px;
+    padding-left: 20px;
+}
 ion-icon {
     margin: 0px 15px 0 0px;
     font-size: 22px;

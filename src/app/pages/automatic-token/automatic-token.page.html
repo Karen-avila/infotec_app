@@ -1,0 +1,59 @@
+<app-header [svg]="true" [img]="'assets/header-icons/pass.png'" [title]="'Security Code'"></app-header>
+
+<ion-content>
+
+  <div class="container-small" style="text-align: center;">
+    <span translate class="ion-text-center"
+      style="font-size: 18px; font-weight: 700; color: #545454">{{ 'El código de seguridad Token Móvil se ha generado automáticamente' | translate}}
+    </span>
+
+    <div style="border-radius: 10px;border: 2px solid #14322c; width: 70%; margin: auto; padding: 0.5rem 1rem 1rem 1rem; margin-top: 1.6rem;">
+      <ion-grid style="text-align: center;">
+        <ion-row>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+          <ion-col>
+            <div [ngClass]="'point-password'"></div>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    </div>
+
+    <div class="ion-text-center"
+      style="margin: auto; width: 100%; font-size: 16px; font-weight: 700; color: #545454; 
+        position: absolute; bottom: 9rem; left: 10%; width: 80%">{{ 'Presiona aceptar para continuar la operación' | translate}}
+    </div>
+
+    <div style="position: absolute; bottom: 2rem; left: 20%; width: 60%;">
+      <div style="width: 100%;">
+        <ion-button (click)="onAccept()" expand="block" style="text-transform: uppercase;" color="primary">
+          {{ 'Accept' | translate }}
+        </ion-button>
+        <ion-button (click)="onCancel()" expand="block" style="text-transform: uppercase; margin-top: 1rem;" color="medium">
+          {{ 'Cancel' | translate }}
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

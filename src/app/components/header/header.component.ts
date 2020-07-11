@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit {
 
   @Input() img?: string;
   @Input() title?: string;
+  @Input() bottomTitle?: string;
+  @Input() centerTitle: boolean = true;
   @Input() menu?: boolean;
   @Input() svg?: boolean;
   @Input() backButton?: boolean;

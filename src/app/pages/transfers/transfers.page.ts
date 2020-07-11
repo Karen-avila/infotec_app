@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ISettings } from '@components/card-account/card-account.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManageAccountPage } from './components/manage-account/manage-account.page';
 import { HelpersService } from '@services/helpers/helpers.service';
@@ -17,6 +17,7 @@ import * as CustomValidators from '@globals/custom.validator';
 import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
 import { environment } from '@env';
 import { CodesService } from '@services/catalogs/codes.service';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
 
 export class accountTransferTPT {
   type: string = "tpt";
@@ -63,7 +64,7 @@ export class TransfersPage implements OnInit {
   public settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
-    cardWidth: '70%',
+    cardWidth: '50%',
     spaceBetween: 0,
     orientation: 'horizontal'
   };
@@ -105,7 +106,7 @@ export class TransfersPage implements OnInit {
       transferAmount: ['', Validators.required],
       transferDescription: ['', Validators.required],
       concept: [''],
-      rfc: ['']
+      rfc: ['', CustomValidators.ValidateRfc]
     });
   }
 
@@ -241,7 +242,10 @@ export class TransfersPage implements OnInit {
     // apago o prendo campo de RFC dependiendo el beneficiario seleccionado
     this.showRFC = this.beneficiarieSelected.accountNumber.length != 9 && this.beneficiarieSelected.accountNumber.length != 11;
     // agrego validador de rfc si corresponde
-    if (this.showRFC) { this.transferForm.controls['rfc'].setValidators(Validators.required) } else { this.transferForm.controls['rfc'].clearValidators() }
+    if (this.showRFC) { 
+      this.transferForm.controls['rfc'].setValidators([Validators.required, CustomValidators.ValidateRfc]);
+      this.toUpperCase('rfc');
+    } else { this.transferForm.controls['rfc'].clearValidators() }
     // reseteo valores de formulario
     this.transferForm.reset();
     setTimeout(() => this.content.scrollToBottom(1000), 200);
@@ -262,7 +266,14 @@ export class TransfersPage implements OnInit {
           translate['Cancel'],
           {
             text: translate['Accept'],
-            handler: () => {
+            handler: async () => {
+              const modal = await this.modalController.create({
+                component: AutomaticTokenPage
+              });
+              await modal.present();
+              const { data } = await modal.onDidDismiss();
+              
+              if (!data.accept) return;
               this.makeTransfer();
             }
           }
@@ -438,5 +449,10 @@ export class TransfersPage implements OnInit {
     this.savedAccountsFiltered = this.savedAccounts;
     this.savedAccountsFiltered = this.savedAccounts.filter(u => (u.isOwnAccount && u.accountNumber != accountNumber) || !u.isOwnAccount);
     this.beneficiarieSearch = "";
+  }
+
+  toUpperCase(controlName: string) {
+    const control = this.transferForm.get(controlName);
+    control.valueChanges.subscribe( value => control.setValue((value || '').toUpperCase(), {emitEvent: false}) );
   }
 }

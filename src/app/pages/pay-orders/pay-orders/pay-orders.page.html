@@ -47,7 +47,7 @@
         </ion-item-option>
       </ion-item-options>
 
-      <ion-item>
+      <ion-item (click)="goToBarcode(item)">
         <ion-avatar slot="start">
           <ion-icon
             [ngStyle]="{'color': getConfig(item.status).color, 'margin-top':'7px','font-size':'x-large' }"

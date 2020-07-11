@@ -14,8 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RoundingButtonModule } from '@components/rounding-button/rounding-button.module';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { WrapperModule } from '@components/wrapper/wrapper.module';
-import { MoneyPipe } from '@pipes/money/money.pipe';
 import { MoneyPipeModule } from '@pipes/money/money.module';
+import { AutomaticTokenPageModule } from '@pages/automatic-token/automatic-token.module';
 
 @NgModule({
   imports: [
@@ -31,7 +31,8 @@ import { MoneyPipeModule } from '@pipes/money/money.module';
     RoundingButtonModule,
     InputErrorModule,
     WrapperModule,
-    MoneyPipeModule
+    MoneyPipeModule,
+    AutomaticTokenPageModule
   ],
   declarations: [PayOrderPage]
 })
