@@ -136,13 +136,21 @@ export class Tab2Page implements OnInit {
   }
 
   getActivationCode(): Promise<any> {
-
+    //TODO: falta validar la CURP con RENAPO
     const form = {...this.registerForm.value};
     delete form.curp;
 
     return this.storage.get('registration').then( value => {
     
-      this.completeForm = {...form, ...value, username: form.mobileNumber};
+      this.completeForm = {
+        ...form, 
+        ...value, 
+        firstName: value.firstName.trim(),
+        surName: value.surName.trim(),
+        lastName: value.lastName.trim(),
+        email: value.email.trim(),
+        username: form.mobileNumber
+      };
 
       return this.clientsService.postRegistration( this.completeForm )
         .toPromise().then( registerResponse => {
@@ -249,7 +257,7 @@ export class Tab2Page implements OnInit {
 
     this.helpersService.hideLoading();
     
-    return new Promise( async resolve => {
+    return new Promise( async (resolve, reject) => {
 
       const message = 'To complete the registration, check your email, an activation code must have arrived (if the code does not arrive, select the forward option) that you must provide below.';       
 
@@ -283,7 +291,7 @@ export class Tab2Page implements OnInit {
           {
             text: translate['Cancel'],
             role: 'cancel',
-            handler: () => resolve('cancelar')
+            handler: () => reject('cancelar')
           }, {
             text: translate['Resend'],
             handler: () => {

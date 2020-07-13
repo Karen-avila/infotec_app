@@ -38,7 +38,7 @@ export class Tab1Page implements OnInit {
       username: [""],
       password: ["", [Validators.required, CustomValidators.ValidatePassword]],
       confirmPassword : ["", [Validators.required]],
-      email: ["", CustomValidators.ValidateEmail],
+      email: ["", [Validators.required, CustomValidators.ValidateEmail]],
       firstName: ["", Validators.compose([
         Validators.required, 
         Validators.minLength(3)

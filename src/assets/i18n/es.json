@@ -234,5 +234,6 @@
     "Undefined": "Indefinido",
     "PAYMENT_ORDER": "Orden de Pago", 
     "Security Code": "Código de Seguridad",
-    "Barcode": "Código de barras"
+    "Barcode": "Código de barras",
+    "Login blocked": "Inicio de sesión bloqueado"
 }

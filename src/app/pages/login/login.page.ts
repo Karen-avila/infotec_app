@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { Storage } from '@ionic/storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,13 @@ export class LoginPage implements OnInit {
   disabledButtons: boolean = false;
   loginAttempts: number = 0;
   interval;
+  textTitle: string = '';
 
   constructor(
       public formBuilder: FormBuilder, 
       private authenticationService: AuthenticationService,
-      private storage: Storage
+      private storage: Storage,
+      private translate: TranslateService
     ) {
     this.loginForm = formBuilder.group({
       username: ["", Validators.compose([
@@ -39,12 +42,18 @@ export class LoginPage implements OnInit {
     // this.storage.remove('timeLeft');
     this.storage.get('timeLeft').then( timeLeft => {
       if (timeLeft && timeLeft.timeLeft > 0) this.startLoginBlocker();
+      this.setTextTitle();
     } )
+
   }
 
-  get timeTextTitle(): string {
+  public async setTextTitle() {
     let text: string = '';
-    if (!this.timeLeft) return '';
+
+    if (!this.timeLeft) {
+      this.textTitle = '';
+      return;
+    }
 
     const hours = parseInt(`${this.timeLeft / 3600}`);
     const minutes = parseInt(`${(this.timeLeft - (hours * 3600))/60}`);
@@ -54,23 +63,13 @@ export class LoginPage implements OnInit {
     text += `:${minutes < 10 ? '0' : ''}${minutes}`;
     text += `:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // if (hours) {
-    //   text += `${hours} ${hours > 1 ? 'horas' : 'hora'}`;
-    // }
-
-    // if (minutes) {
-    //   text += ` ${minutes} ${minutes > 1 ? 'minutos' : 'minuto'}`;
-    // }
-
-    // if (seconds) {
-    //   text += ` ${seconds} ${seconds > 1 ? 'segundos' : 'segundo'}`;
-    // }
+    const textBlocked = await this.translate.get('Login blocked').toPromise();
     
-    return `Inicio de sesión bloqueado ${text} hrs.`.trim();
+    this.textTitle = `${textBlocked} ${text} hrs.`.trim();
   }
 
   async startLoginBlocker() {
-    const blockingTimes = [0.5, 1, 2, 3, 10, 15, 30, 60, 180];
+    const blockingTimes = [15, 60, 360, 1440];
     let { attemptNumber, timeLeft = null } = await this.storage.get('timeLeft') || { attemptNumber: 0 };
 
     this.disabledButtons = true;
@@ -91,6 +90,7 @@ export class LoginPage implements OnInit {
 
     this.interval = setInterval( async() => {
       this.timeLeft--;
+      this.setTextTitle();
       console.log('setInterval');
       await this.storage.set('timeLeft', {
         attemptNumber: attemptNumber,
