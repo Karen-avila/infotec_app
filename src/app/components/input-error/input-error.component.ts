@@ -18,6 +18,7 @@ enum ErrorMessages {
   transferAmountLimit = 'Amount greather than transfer limit',
   transferAmountExceeded = "Transfer amount greather than account balance",
   integer = "You must write an integer",
+  text = "Only text accepted",
   rfc = 'The RFC is invalid',
 }
 

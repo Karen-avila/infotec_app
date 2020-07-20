@@ -41,15 +41,19 @@ export class Tab1Page implements OnInit {
       email: ["", [Validators.required, CustomValidators.ValidateEmail]],
       firstName: ["", Validators.compose([
         Validators.required, 
-        Validators.minLength(3)
+        Validators.minLength(3),
+        CustomValidators.ValidateText
+        
       ])],
       surName: ["", Validators.compose([
         Validators.required, 
-        Validators.minLength(3)
+        Validators.minLength(3),
+        CustomValidators.ValidateText
       ])],
       lastName: ["", Validators.compose([
         Validators.required, 
-        Validators.minLength(3)
+        Validators.minLength(3),
+        CustomValidators.ValidateText
       ])]
     }, {
       validator: CustomValidators.ValidateMatch('password', 'confirmPassword')

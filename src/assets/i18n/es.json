@@ -235,5 +235,7 @@
     "PAYMENT_ORDER": "Orden de Pago", 
     "Security Code": "Código de Seguridad",
     "Barcode": "Código de barras",
-    "Login blocked": "Inicio de sesión bloqueado"
+    "Login blocked": "Inicio de sesión bloqueado",
+    "Only text accepted":"Ingrese unicamente letras"
+    
 }
