@@ -100,7 +100,12 @@ const routes: Routes = [
     path: 'pay-orders',
     loadChildren: () => import('./pages/pay-orders/pay-orders/pay-orders.module').then( m => m.PayOrdersPageModule)
   },
+  {
+    path: 'automatic-token',
+    loadChildren: () => import('./pages/automatic-token/automatic-token.module').then( m => m.AutomaticTokenPageModule)
+  },
   { path: "**", redirectTo: "not-found" },
+
 ];
 
 @NgModule({

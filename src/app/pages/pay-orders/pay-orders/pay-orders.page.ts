@@ -5,6 +5,7 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { stat } from 'fs';
 import { ClientsService } from '@services/clients/clients.service';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pay-orders',
@@ -48,7 +49,8 @@ export class PayOrdersPage implements OnInit {
       private translate: TranslateService,
       private helpersService: HelpersService,
       private clientsService: ClientsService,
-      private localNotifications: LocalNotifications
+      private localNotifications: LocalNotifications,
+      private router: Router
     ) { }
 
   ngOnInit() {
@@ -76,6 +78,20 @@ export class PayOrdersPage implements OnInit {
       return this.payOrders.sort( (a, b) => b.id-a.id );
     }
     return this.payOrders.filter( item => item.status === this.payOrderStatus ).sort( (a, b) => b.id-a.id );
+  }
+
+  public goToBarcode(item: any) {
+    if (item.status !== 'ACTIVE') return;
+
+    this.router.navigate(['/pay-order', 'generate-barcode'], {
+      queryParams: {
+        transactionAmount: item.amount, 
+        code: item.code, 
+        routingCode: item.concept || '',
+        showBackButton: 'true'
+      }
+    });
+    
   }
 
   public getConfig(status: string): any {

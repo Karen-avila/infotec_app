@@ -22,9 +22,9 @@ export class CardAccountComponent implements OnInit {
   @Input() tabIndexSelected = 0;
 
   @Input() settings: ISettings = {
-    accountSize: 'x-large',
-    balanceSize: 'xx-large',
-    cardWidth: '80%',
+    accountSize: 'large',
+    balanceSize: 'x-large',
+    cardWidth: '50%',
     spaceBetween: 1,
     orientation: 'vertical'
   };

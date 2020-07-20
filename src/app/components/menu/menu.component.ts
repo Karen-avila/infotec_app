@@ -41,11 +41,11 @@ export class MenuComponent implements OnInit {
       url: '/transfers',
       icon: 'swap-horizontal-outline'
     },
-    {
-      title: 'Pay Orders',
-      url: '/pay-orders',
-      icon: 'wallet-outline'
-    },
+    // {
+    //   title: 'Pay Orders',
+    //   url: '/pay-orders',
+    //   icon: 'wallet-outline'
+    // },
     {
       title: 'Settings',
       url: '/settings',

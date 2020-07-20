@@ -38,7 +38,7 @@ export class Tab1Page implements OnInit {
       username: [""],
       password: ["", [Validators.required, CustomValidators.ValidatePassword]],
       confirmPassword : ["", [Validators.required]],
-      email: ["", CustomValidators.ValidateEmail],
+      email: ["", [Validators.required, CustomValidators.ValidateEmail]],
       firstName: ["", Validators.compose([
         Validators.required, 
         Validators.minLength(3)
@@ -69,8 +69,6 @@ export class Tab1Page implements OnInit {
           this.registerForm.patchValue({...data, confirmPassword: data.password});
         }
       } );
-      const firstName = this.registerForm.get('firstName');
-      firstName.valueChanges.subscribe( value => firstName.setValue(this.titleCase.transform(value), {emitEvent: false}) );
   }
 
   register() {
@@ -82,6 +80,11 @@ export class Tab1Page implements OnInit {
       this.router.navigateByUrl(`/registration/${this.registrationType}/tab2`); //second-login
     } );
     
+  }
+
+  toUpperCase(key: string) {
+    const inputName = this.registerForm.get(key);
+    inputName.valueChanges.subscribe( value => inputName.setValue(value.toUpperCase(), {emitEvent: false}) );
   }
 
   hello() {
