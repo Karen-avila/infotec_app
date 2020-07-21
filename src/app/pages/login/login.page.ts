@@ -3,6 +3,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginPage implements OnInit {
       public formBuilder: FormBuilder, 
       private authenticationService: AuthenticationService,
       private storage: Storage,
+      private navCtrl: NavController,
       private translate: TranslateService
     ) {
     this.loginForm = formBuilder.group({
@@ -45,6 +47,10 @@ export class LoginPage implements OnInit {
       this.setTextTitle();
     } )
 
+  }
+
+  public Route(route:string){
+    this.navCtrl.navigateRoot([route]);
   }
 
   public async setTextTitle() {

@@ -26,6 +26,21 @@
   <noscript>Please enable JavaScript to continue using this application.</noscript>
   <script src="assets/js/face-api.min.js"></script>
   <script src="assets/js/dom-to-image.min.js"></script>
+
+  <!-- extremely lightweight shim for hex conversion -->
+  <script src="assets/js/token/unibabel/index.js"></script>
+  <script src="assets/js/token/unibabel/unibabel.hex.js"></script>
+
+  <!-- base32 conversion (and binary string for forge) (works standalone from the above) -->
+  <script src="assets/js/token/unibabel/unibabel.base32.js"></script>
+
+
+  <!-- botp.totp -->
+  <script src="assets/js/token/botp/sha1-hmac.js"></script>
+  <script src="assets/js/token/botp/index.js"></script>
+
+  <!-- Authenticator -->
+  <script src="assets/js/token/authenticator.js"></script>
 </body>
 
 </html>
