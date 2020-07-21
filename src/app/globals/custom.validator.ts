@@ -54,7 +54,7 @@ export function ValidateMatch(controlName: string, matchingControlName: string) 
 }
 
 export function ValidatePassword(control: AbstractControl) {
-    if (!(/^(?=.*[A-Z]+)(?=.*[!@#$&*_-]+)(?=.*[0-9]+)(?=.*[a-z]+).{8}$/.test(control.value))) {
+    if (!(/^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*])(?=.{10,50})/.test(control.value))) {
         return { password: true };
     }
     return null;
@@ -66,6 +66,15 @@ export function ValidateInteger(control: AbstractControl) {
     }
     return null;
 }
+
+
+export function ValidateText(control: AbstractControl) {
+    if (!(/^[a-zA-Z\s]*$/.test(control.value))) {
+        return { text: true };
+    }
+    return null;
+}
+
 
 export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
     // TODO borrar el de parametro 9 porque las cuentas del banco siempre van a ser de 11, se dejo asi para las pruebas en un comienzo

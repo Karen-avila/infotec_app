@@ -15,41 +15,46 @@ import { TitleCasePipe } from '@angular/common';
 })
 export class Tab1Page implements OnInit {
 
-  icon:boolean=true;
-  reIcon:boolean=true;
-  type:string='password';
-  reType:string='password';
+  icon: boolean = true;
+  reIcon: boolean = true;
+  type: string = 'password';
+  reType: string = 'password';
   registerForm: FormGroup;
-  registrationType: 'client'|'social-program';
+  registrationType: 'client' | 'social-program';
 
   constructor(
-      private router:Router, 
-      private activatedRoute: ActivatedRoute,
-      public formBuilder: FormBuilder, 
-      public menuCtrl: MenuController,
-      public storage: Storage,
-      public alertController: AlertController,
-      private titleCase: TitleCasePipe
-    ) { 
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public formBuilder: FormBuilder,
+    public menuCtrl: MenuController,
+    public storage: Storage,
+    public alertController: AlertController,
+    private titleCase: TitleCasePipe
+  ) {
 
-      this.registrationType = this.activatedRoute.snapshot.params['type'];
+    this.registrationType = this.activatedRoute.snapshot.params['type'];
 
     this.registerForm = formBuilder.group({
       username: [""],
       password: ["", [Validators.required, CustomValidators.ValidatePassword]],
-      confirmPassword : ["", [Validators.required]],
+      confirmPassword: ["", [Validators.required]],
       email: ["", [Validators.required, CustomValidators.ValidateEmail]],
       firstName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        Validators.required,
+        Validators.minLength(3),
+        CustomValidators.ValidateText
+
       ])],
       surName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        // se comenta por QA 
+        //Validators.required,
+        Validators.minLength(3),
+        CustomValidators.ValidateText
       ])],
       lastName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        Validators.required,
+        Validators.minLength(3),
+        CustomValidators.ValidateText
       ])]
     }, {
       validator: CustomValidators.ValidateMatch('password', 'confirmPassword')
@@ -57,61 +62,61 @@ export class Tab1Page implements OnInit {
 
     if (this.registrationType === 'client') {
       this.registerForm.addControl('accountNumber', formBuilder.control('', [
-        Validators.required, 
+        Validators.required,
         CustomValidators.ValidateAccountNumber
       ]));
     }
   }
 
   ngOnInit() {
-      this.storage.get('registration').then( data => {
-        if (data) {
-          this.registerForm.patchValue({...data, confirmPassword: data.password});
-        }
-      } );
+    this.storage.get('registration').then(data => {
+      if (data) {
+        this.registerForm.patchValue({ ...data, confirmPassword: data.password });
+      }
+    });
   }
 
   register() {
 
-    const form = {...this.registerForm.value};
+    const form = { ...this.registerForm.value };
     delete form.confirmPassword;
 
-    this.storage.set('registration', form).then( () => {
+    this.storage.set('registration', form).then(() => {
       this.router.navigateByUrl(`/registration/${this.registrationType}/tab2`); //second-login
-    } );
-    
+    });
+
   }
 
   toUpperCase(key: string) {
     const inputName = this.registerForm.get(key);
-    inputName.valueChanges.subscribe( value => inputName.setValue(value.toUpperCase(), {emitEvent: false}) );
+    inputName.valueChanges.subscribe(value => inputName.setValue(value.toUpperCase(), { emitEvent: false }));
   }
 
   hello() {
     console.log('Hello Word');
   }
 
-  viewRePassword(){
-    if(this.reIcon){
+  viewRePassword() {
+    if (this.reIcon) {
       console.log("view repassword");
-      this.reIcon=false;
-      this.reType="text";
-    }else{
+      this.reIcon = false;
+      this.reType = "text";
+    } else {
       console.log("not view repassword");
-      this.reIcon=true;
-      this.reType="password";
+      this.reIcon = true;
+      this.reType = "password";
     }
   }
 
-  viewPassword(){
-    if(this.icon){
+  viewPassword() {
+    if (this.icon) {
       console.log("view password");
-      this.icon=false;
-      this.type="text";
-    }else{
+      this.icon = false;
+      this.type = "text";
+    } else {
       console.log("not view password");
-      this.icon=true;
-      this.type="password";
+      this.icon = true;
+      this.type = "password";
     }
   }
 

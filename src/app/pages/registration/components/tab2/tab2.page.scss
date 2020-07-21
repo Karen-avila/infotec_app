@@ -1,35 +1,36 @@
-#overlay, .overlay {
+#overlay,
+.overlay {
     position: absolute;
     top: 0;
     left: 0;
 }
 
-ion-item{
+ion-item {
     margin-top: 10px;
 }
-ion-input{
+ion-input {
     .native-input.sc-ion-input-ios {
         padding-left: 10px;
     }
 }
-ion-input:not([type=date]){
-    text-transform: capitalize;
+ion-input:not([type="date"]) {
+    //text-transform: capitalize;
 }
-ion-icon{
+ion-icon {
     margin: 0px 15px 0 0px;
 }
-ion-card{
+ion-card {
     margin: 0;
-    .card-content-ios{
+    .card-content-ios {
         padding-top: 0px;
     }
 }
-app-input-error{
-    div{
+app-input-error {
+    div {
         margin: 0 20px;
     }
 }
-ion-card-content{
+ion-card-content {
     padding: 0;
 }
 .container-small {
