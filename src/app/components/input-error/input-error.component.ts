@@ -16,9 +16,9 @@ enum ErrorMessages {
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
   transferAmountLimit = 'Amount greather than transfer limit',
-  transferAmountExceeded = "Transfer amount greather than account balance",
+  transferAmountExceeded = 'Transfer amount greather than account balance',
   integer = "You must write an integer",
-  text = "Only text accepted",
+  text = 'You must write text',
   rfc = 'The RFC is invalid',
 }
 

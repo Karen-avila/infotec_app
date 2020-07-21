@@ -10,21 +10,21 @@
 
           <ion-item>
             <ion-icon name="person-outline"></ion-icon>
-            <ion-input (input)="toUpperCase('firstName')" maxlength="16"  class="not-capitalize" type="text" placeholder="{{ 'First name' | translate | titlecase }}"
+            <ion-input (input)="toUpperCase('firstName')" maxlength="50"  class="not-capitalize" type="text" placeholder="{{ 'First name' | translate | titlecase }}"
               formControlName="firstName" clearInput></ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.firstName"></app-input-error>
 
           <ion-item>
             <ion-icon name="person-outline"></ion-icon>
-            <ion-input (input)="toUpperCase('lastName')" maxlength="16" type="text" placeholder="{{ 'Middle name' | translate }}" formControlName="lastName" clearInput>
+            <ion-input (input)="toUpperCase('lastName')" maxlength="50" type="text" placeholder="{{ 'Middle name' | translate }}" formControlName="lastName" clearInput>
             </ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.lastName"></app-input-error>
 
           <ion-item>
             <ion-icon name="person-outline"></ion-icon>
-            <ion-input (input)="toUpperCase('surName')" type="text" maxlength="16" placeholder="{{ 'Last name' | translate }}" formControlName="surName" clearInput>
+            <ion-input (input)="toUpperCase('surName')" type="text" maxlength="50" placeholder="{{ 'Last name' | translate }}" formControlName="surName" clearInput>
             </ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.surName"></app-input-error>
@@ -39,7 +39,7 @@
           <ng-container *ngIf="registrationType === 'client'">
             <ion-item>
               <ion-icon name="document-outline"></ion-icon>
-              <ion-input type="tel" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
+              <ion-input type="text" maxlength="11" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
                 clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>

@@ -46,14 +46,14 @@
 
           <ion-item>
             <ion-icon name="call-outline"></ion-icon>
-            <ion-input type="tel" placeholder="{{ 'Phone Number' | translate }}" formControlName="mobileNumber"
+            <ion-input type="tel" maxlength="10" placeholder="{{ 'Phone Number' | translate }}" formControlName="mobileNumber"
               clearInput></ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.mobileNumber"></app-input-error>
 
           <ion-item>
             <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-input type="text" placeholder="{{ 'CURP' | translate }}" formControlName="curp" clearInput></ion-input>
+            <ion-input type="text" maxlength="18" placeholder="{{ 'CURP' | translate }}" formControlName="curp" clearInput></ion-input>
           </ion-item>
           <app-input-error [control]="registerForm.controls.curp"></app-input-error>
 
