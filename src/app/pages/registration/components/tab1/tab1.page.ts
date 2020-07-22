@@ -89,7 +89,10 @@ export class Tab1Page implements OnInit {
 
   toUpperCase(key: string) {
     const inputName = this.registerForm.get(key);
-    inputName.valueChanges.subscribe(value => inputName.setValue(value.toUpperCase(), { emitEvent: false }));
+    inputName.valueChanges.subscribe(value => inputName.setValue(
+      value.toUpperCase().replace(/[^A-Za-znÑäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ ]/g, ""), 
+      { emitEvent: false }
+    ));
   }
 
   hello() {
