@@ -158,9 +158,11 @@
     "Check your email!": "¡Revisa tu correo!",
     "Transfer amount greather than account balance": "Monto mayor al saldo de la cuenta",
     "Finish": "terminar",
-    "To complete the registration, check your email, an activation code must have arrived (if the code does not arrive, select the forward option) that you must provide below.": "Para completar el registro, revisa tu correo, te deberá haber llegado un código de activación (si el código no te llego selecciona la opción de reenviar) que deberás proporcionar a continuación.",
-    "Activation code": "Código de activación",
-    "Activation code is required": "El código de activación es requerido",
+    "To complete the registration, check your email, an activation code must have arrived (if the code does not arrive, select the forward option) that you must provide below.": "Para completar el registro, revisa tu correo, te deberá haber llegado un código de autentificación (si el código no te llego selecciona la opción de reenviar) que deberás proporcionar a continuación.",
+    "Activation code": "Código de autentificación",
+    "Incorrect activation code": "Código de autentificación incorrecto",
+    "Try to register again, please enter the activation code correctly": "Intenta registrarte nuevamente, por favor ingresa correctamente el código de autentificación",
+    "Activation code is required": "El código de autentificación es requerido",
     "Resend": "Reenviar",
     "Close": "Cerrar",
     "Login with PIN": "Ingresar con PIN",
@@ -236,5 +238,8 @@
     "Security Code": "Código de Seguridad",
     "Barcode": "Código de barras",
     "Login blocked": "Inicio de sesión bloqueado",
-    "You must write text": "Debes escribir texto"
+    "You must write text": "Debes escribir texto",
+    "You can now login with your username (phone number) and password": "Ya puedes iniciar sesión con tu usuario (número telefónico) y contraseña",
+    "Phone number already exists": "El número telefónico ya existe",
+    "Please try to register with a different phone number": "Por favor intenta registrarte con un número telefónico diferente"
 }

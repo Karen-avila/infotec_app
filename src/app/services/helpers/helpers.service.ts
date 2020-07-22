@@ -126,8 +126,8 @@ export class HelpersService {
 
   }
 
-  public async showSuccessMessage(header: string, message: string, routerLink?: string) {
-    this.translate.get([header, message, 'Accept']).subscribe(async translate => {
+  public async showSuccessMessage(header: string, message: string, routerLink?: string): Promise<any> {
+    return this.translate.get([header, message, 'Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
         header: translate[header],
         message: translate[message],
@@ -140,14 +140,14 @@ export class HelpersService {
           }
         ]
       });
-      await alert.present();
+      return await alert.present();
     });
   }
 
-  public async showErrorMessage(title?: string, text?: string) {
+  public async showErrorMessage(title?: string, text?: string): Promise<any> {
     const message = text ? text : 'Can not proccess the request right now. Try again later'
     const header = title ? title : 'Error'
-    this.translate.get([title, message, 'Accept']).subscribe(async translate => {
+    return this.translate.get([title, message, 'Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
         header: translate[header],
         message: translate[message],
@@ -155,7 +155,7 @@ export class HelpersService {
           translate['Accept']
         ]
       });
-      await alert.present();
+      return await alert.present();
     });
   }
 

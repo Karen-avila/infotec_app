@@ -190,7 +190,17 @@ export class Tab2Page implements OnInit {
         return this.clientsService.postConfirmRegistration({
           requestId: this.registerResponse.resourceId,
           authenticationToken: parseInt(token.codigoActivacion)
-        }).toPromise();
+        }).toPromise().catch( async error => {
+          if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.resource.not.found') {
+            this.helpersService.hideLoading();
+
+            await this.helpersService.showErrorMessage(
+              'Incorrect activation code', 
+              'Try to register again, please enter the activation code correctly'
+            );
+          } 
+          throw error; 
+        } );
       }
       throw new Error('No se pudo obtener el código de activación');
     }).then((resp: any) => {
@@ -207,8 +217,13 @@ export class Tab2Page implements OnInit {
         .then(async (user: any) => {
           if (user.clientId) {
 
-            const text = await this.translate.get('User successfully registered').toPromise();
-            this.presentToast(text);
+            // const text = await this.translate.get('User successfully registered').toPromise();
+            // this.presentToast(text);
+
+            await this.helpersService.showSuccessMessage(
+              'User successfully registered', 
+              'You can now login with your username (phone number) and password'
+            );
 
             const file = this.dataURLtoFile(this.imageUrl);
 
@@ -228,10 +243,19 @@ export class Tab2Page implements OnInit {
     }).catch(async error => {
       console.error(error.error.userMessageGlobalisationCode);
       this.helpersService.hideLoading();
-      if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
+
+      if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.user.duplicate.username') {
+        this.helpersService.hideLoading();
+
+        await this.helpersService.showErrorMessage(
+          'Phone number already exists', 
+          'Please try to register with a different phone number'
+        );
+
+      } else if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
         const text = await this.translate.get('Could not register user, please try again later').toPromise();
         this.presentToast(text);
-      }
+      } 
     }).finally(() => {
       this.waiting = false;
     });
@@ -284,7 +308,7 @@ export class Tab2Page implements OnInit {
           {
             name: 'codigoActivacion',
             id: 'codigoActivacion',
-            type: 'number',
+            type: 'text',
             placeholder: translate['Activation code']
           }
         ],
@@ -302,11 +326,17 @@ export class Tab2Page implements OnInit {
           }, {
             text: translate['Accept'],
             handler: (alertData) => {
-              if (alertData.codigoActivacion) {
-                console.log('se resuelve la promesa');
+              let codigoActivacion: string = alertData.codigoActivacion.trim();
+              if (codigoActivacion) {
 
-                resolve({ codigoActivacion: alertData.codigoActivacion });
+                if (codigoActivacion.length === 11) {
+                  codigoActivacion = codigoActivacion.substring(7, 11);
+                }
+
+                resolve({ codigoActivacion });
                 return;
+              } else {
+                (document.getElementById('codigoActivacion') as any).value = '';
               }
 
               if (!document.getElementById('text-error')) {
@@ -321,7 +351,9 @@ export class Tab2Page implements OnInit {
         ]
       });
 
-      alert.present();
+      alert.present().then( () => {
+        document.getElementById('codigoActivacion').setAttribute('maxlength', '15');
+      } );
     })
 
 

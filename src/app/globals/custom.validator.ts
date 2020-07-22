@@ -69,7 +69,7 @@ export function ValidateInteger(control: AbstractControl) {
 
 
 export function ValidateText(control: AbstractControl) {
-    if (!(/^[a-zA-Z\s]*$/.test(control.value))) {
+    if (!(/^[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\s]*$/.test(control.value))) {
         return { text: true };
     }
     return null;

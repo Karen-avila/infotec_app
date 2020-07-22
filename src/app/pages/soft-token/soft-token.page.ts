@@ -9,7 +9,7 @@ declare var Authenticator: any;
 })
 export class SoftTokenPage implements OnInit {
 
-  key: string = 'avjañlsdjwqpiuerqowiejalsdfañsdjf';
+  key: string = 'QTCW6GSZNTHWH5BU';
 
   seconds: number = 30;
 

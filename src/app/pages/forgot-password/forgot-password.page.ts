@@ -28,7 +28,7 @@ export class ForgotPasswordPage implements OnInit {
     this.forgotForm = formBuilder.group({
       phoneNumber: ["", Validators.compose([
         Validators.required,
-        CustomValidators.ValidateEmail
+        CustomValidators.ValidatePhoneNumber
       ])]
   });
 
