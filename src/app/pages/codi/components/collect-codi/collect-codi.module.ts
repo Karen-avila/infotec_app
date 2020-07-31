@@ -12,6 +12,7 @@ import { RoundingButtonModule } from '@components/rounding-button/rounding-butto
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { WrapperModule } from '@components/wrapper/wrapper.module';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { FooterModule } from '@components/footer/footer.module';
     ReactiveFormsModule,
     InputErrorModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    WrapperModule
   ],
   declarations: [CollectCodiPage]
 })

@@ -11,12 +11,15 @@ enum ErrorMessages {
   email = 'The email format is invalid',
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
-  accountNumber = 'The account number is invalid',
+  accountNumber = 'The client number is invalid',
   password = 'The password format is invalid',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
   transferAmountLimit = 'Amount greather than transfer limit',
-  transferAmountExceeded = "Transfer amount greather than account balance"
+  transferAmountExceeded = 'Transfer amount greather than account balance',
+  integer = "You must write an integer",
+  text = 'You must write text',
+  rfc = 'The RFC is invalid',
 }
 
 @Component({
@@ -45,7 +48,7 @@ export class InputErrorComponent implements OnInit {
   }
 
   get hasError(): any {
-    return this.control && this.control.touched && this.control.errors;
+    return this.control && this.control.dirty && this.control.errors;
   }
 
   get messageError(): string {

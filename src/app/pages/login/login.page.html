@@ -1,18 +1,23 @@
-<app-header [svg]="true" [img]="'/assets/header-icons/leona.png'"></app-header>
+<app-header [svg]="true" [bottomTitle]="textTitle"></app-header>
 
 <ion-content>
+
+  <div class="container-image" style="width: 60%;margin:auto; margin-bottom: -1rem;">
+    <ion-img src="/assets/logo-banbi-green.png" alt="Logo"></ion-img>
+  </div>
+
   <ion-grid>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>
           <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-input formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
+          <ion-input [disabled]="disabledButtons" formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
         </ion-item>
         <app-input-error [control]="loginForm.controls.username"></app-input-error>
 
         <ion-item>
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
+          <ion-input [disabled]="disabledButtons" formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
             clearInput></ion-input>
           <ion-icon *ngIf="icon; else elseTemplate" (click)="viewPassword()" name="eye-off-outline" slot="end">
           </ion-icon>
@@ -21,23 +26,24 @@
           </ng-template>
         </ion-item>
         <app-input-error [control]="loginForm.controls.password"></app-input-error>
-        <ion-button type="submit" [disabled]="!loginForm.valid" expand="block" color="primary">
-          {{ 'Sign in' | translate }}</ion-button>
+        <ion-row>
+          <ion-col align-self-center class="text-center">
+            <ion-button type="submit" [disabled]="loginForm.invalid || disabledButtons" expand="block" color="primary">{{ 'Sign in' | translate }}</ion-button>
+            <ion-button routerLink="/registration" expand="block" style="text-transform: uppercase; margin-top: 1rem;" color="medium">
+              {{ 'Register ' | translate }}
+            </ion-button>
+            <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
+            class="small-text">{{ 'Did you forget your password?' | translate }}</a>
+          </ion-col>
+        </ion-row>
       </form>
-      <ion-row>
-        <ion-col align-self-center class="text-center">
-          <ion-button [routerLink]="['/registration']" expand="block" color="medium">{{ 'Register ' | translate }}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-      <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"
-        class="small-text">{{ '¿Did you forget your password?' | translate }}</a>
+        <br>
+        <!-- <div class="soft-token">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-button [routerLink]="['/soft-token']" type="button" expand="block" color="primary">{{ 'Soft Token' | translate }}</ion-button>
+      </div> -->
     </div>
   </ion-grid>
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

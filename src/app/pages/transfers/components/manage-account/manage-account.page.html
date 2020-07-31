@@ -8,11 +8,12 @@
       <ion-list>
 
         <ion-item>
-          <ion-label position="stacked"> {{ 'Card Number / Account / CLABE' | translate }} <ion-text color="danger">*</ion-text>
+          <ion-label position="stacked"> {{ 'Card Number / Account / CLABE' | translate }} <ion-text color="danger">*
+            </ion-text>
           </ion-label>
           <ion-input formControlName="accountNumber" required inputmode="text" type="text"></ion-input>
           <ion-icon *ngIf="searchButtonEnabled" (click)="search()"
-            style=" position: relative; top: 32px; left: 6px; font-size: 27px; margin: 0px;" name="eye" slot="end">
+            style=" position: relative; top: 29px; left: 4px; font-size: 22px; margin: 0px;" name="search" slot="end">
           </ion-icon>
         </ion-item>
         <app-input-error [control]="form.controls.accountNumber"></app-input-error>
@@ -33,9 +34,8 @@
         <ion-item>
           <ion-label position="stacked"> {{ 'Kind of product' | translate }} <ion-text color="danger">*</ion-text>
           </ion-label>
-          <ion-select formControlName="accountType" [cancelText]="cancelText"
-            [interfaceOptions]="accountTypeOption" interface="action-sheet"
-            placeholder="{{ 'Select an option' | translate }}">
+          <ion-select formControlName="accountType" [cancelText]="cancelText" [interfaceOptions]="accountTypeOption"
+            interface="action-sheet" placeholder="{{ 'Select an option' | translate }}">
             <ion-select-option *ngFor="let item of beneficiaryAccountTypes" value="{{item.id}}">{{item.name}}
             </ion-select-option>
           </ion-select>
@@ -45,9 +45,8 @@
         <ion-item>
           <ion-label position="stacked"> {{ 'Bank / Institution' |  translate }} <ion-text color="danger">*</ion-text>
           </ion-label>
-          <ion-select formControlName="bankId" [cancelText]="cancelText"
-            [interfaceOptions]="bankIdOption" interface="action-sheet"
-            placeholder="{{ 'Select an option' | translate }}">
+          <ion-select formControlName="bankId" [cancelText]="cancelText" [interfaceOptions]="bankIdOption"
+            interface="action-sheet" placeholder="{{ 'Select an option' | translate }}">
             <ion-select-option *ngFor="let item of banks" value="{{item.id}}">{{item.description}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -64,10 +63,10 @@
 
       <br>
       <br>
-      <br>
 
       <div class="ion-padding">
-        <ion-button [disabled]="form.invalid" expand="block" type="submit" class="ion-no-margin">{{ 'Save' | translate }}</ion-button>
+        <ion-button [disabled]="form.invalid" expand="block" type="submit" class="ion-no-margin">
+          {{ 'Save' | translate }}</ion-button>
       </div>
     </form>
 
@@ -75,8 +74,4 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

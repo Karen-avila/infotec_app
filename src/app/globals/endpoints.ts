@@ -13,4 +13,5 @@ export const ENDPOINTS = {
   office: `${environment.baseUrl}/office`,
   codesOptions: `${environment.baseUrl}/codes`,
   socialPrograms: `${environment.baseUrl}/socialprogram`,
+  savingsAccounts: `${environment.baseUrl}/savingsaccounts`,
 }

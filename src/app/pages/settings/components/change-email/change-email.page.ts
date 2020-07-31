@@ -7,6 +7,8 @@ import { UserService } from '@services/user/user.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Storage } from '@ionic/storage';
 import { LoginInfo } from '@globals/interfaces/login-info';
+import { ClientsService } from '@services/clients/clients.service';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class ChangeEmailPage implements OnInit {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private navCtrl: NavController,private userService: UserService, private storage: Storage) {
+  constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
 
     this.form = formBuilder.group({
       email: ["", Validators.compose([
@@ -29,30 +31,36 @@ export class ChangeEmailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.get('login-info')
-      .then((login: LoginInfo) => {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
         this.form.patchValue({
-          email: login.email
+          email: data.email
         });
-        console.log(login.email)
-      })
-      .catch(err => {
-        console.log(err)
       });
   }
 
   changeEmail() {
     const form = { ...this.form.value };
-
+    this.helpersService.presentLoading()
     this.userService.changeData(form)
       .toPromise()
       .then(response => {
-        console.log(response)
-        this.navCtrl.navigateRoot(['/dashboard'])
+        this.updateEmail(form.email)
+        this.helpersService.showSuccessMessage('Successful change', 'Your email has been modified correctly', '/dashboard')
       })
       .catch(err => {
         console.log(err)
+        this.helpersService.showErrorMessage();
       })
+      .finally(() => this.helpersService.hideLoading())
+  }
+
+  private updateEmail(email: string): void {
+    this.clientsService.getLoginInfo()
+      .then((data: LoginInfo) => {
+        data.email = email;
+        this.storage.set('login-info', data);
+      });
   }
 
 }

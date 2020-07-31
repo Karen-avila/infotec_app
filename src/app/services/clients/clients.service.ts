@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertController, NavController } from '@ionic/angular';
+import { SavingsaccountsService } from '@services/savingsaccounts/savingsaccounts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +19,15 @@ export class ClientsService {
     private httpClient: HttpClient,
     private storage: Storage,
     private handler: HttpBackend,
+    private translate: TranslateService,
+    private alertController: AlertController,
+    private navCtrl: NavController,
+    private savingsService: SavingsaccountsService
   ) {
     this.httpWithoutInterceptors = new HttpClient(this.handler);
   }
 
   public getClient(clientId: string): Observable<any> {
-    this.storage.set('clientId', clientId);
     return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}`);
   }
   //#region beneficiaries TPT
@@ -51,6 +57,42 @@ export class ClientsService {
   // traemos los accounts del cliente
   public getAccounts(clientId: number): Observable<any> {
     return this.httpClient.get(`${ENDPOINTS.accounts.replace('{clientId}', clientId.toString())}`);
+  }
+
+  
+  public getAccountSummary(accountId: number): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.savingsAccounts}/${accountId}`);
+  }
+
+  // traemos los savings accounts del cliente
+  public async getSavingsAccounts(summaryRequired: boolean = true): Promise<any> {
+    const clientId = (await this.storage.get('personal-info')).id;
+    const globalConfig = await this.storage.get('globals');
+    return this.getAccounts(clientId).toPromise().then( response => {
+      
+      if (!globalConfig.showSavingAccounts.description) return [];
+
+      if (!summaryRequired) return response.savingsAccounts.filter( item => item.status.active );    
+
+      const savings = response.savingsAccounts.filter( item => item.status.active );
+      const arrayPoms = [];
+
+      for (const key in savings) {
+        arrayPoms.push(
+          this.getAccountSummary(savings[key].id).toPromise()
+        );
+      }
+
+      return Promise.all(arrayPoms)
+        .then( (proms: any) => {
+          return savings.map( item => {
+            const summary = proms.find( summary => item.id === summary.id ).summary;
+            const availableBalance = summary.availableBalance;
+            return ({ ...item, summary, availableBalance })
+          } );
+        } );
+
+    });
   }
 
   public getPersonalInfo() {
@@ -114,6 +156,10 @@ export class ClientsService {
     return this.httpClient.post(`${ENDPOINTS.registration}/user`, data);
   }
 
+  public getSelfie(clientId: string): Observable<any> {
+    return this.httpClient.get(`${ENDPOINTS.clients}/${clientId}/images`); 
+  }
+
   public postRegistrationSelfie(clientId: string, formData: FormData, token: string) {
 
     const httpOptions = {
@@ -128,5 +174,4 @@ export class ClientsService {
   public getSocialPrograms(): Observable<any> {
     return this.httpClient.get(`${ENDPOINTS.socialPrograms}`);
   }
-
 }

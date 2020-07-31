@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { HelpersService } from '@services/helpers/helpers.service';
+import { ClientsService } from '@services/clients/clients.service';
 
 
 
@@ -21,9 +23,9 @@ export class ChangePasswordPage implements OnInit {
   reType: string = 'password';
   form: FormGroup;
 
-  
 
-  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService) {
+
+  constructor(private router: Router, public formBuilder: FormBuilder, public menuCtrl: MenuController, private userService: UserService, private clientsService: ClientsService, private helpersService: HelpersService) {
     this.form = formBuilder.group({
       password: ["", Validators.required],
       newPassword: ["",
@@ -64,7 +66,7 @@ export class ChangePasswordPage implements OnInit {
 
   changePassword() {
     const form = { ...this.form.value };
-
+    this.helpersService.presentLoading()
     const data = {
       "password": form.newPassword,
       "repeatPassword": form.confirmPassword
@@ -73,11 +75,13 @@ export class ChangePasswordPage implements OnInit {
     this.userService.changeData(data)
       .toPromise()
       .then(response => {
-        this.router.navigate(['/logout'])
+        this.helpersService.showSuccessMessage('Successful change','Your password has been modified correctly', '/logout')
       })
       .catch(err => {
         console.log(err)
+        this.helpersService.showErrorMessage();
       })
+      .finally(() => this.helpersService.hideLoading())
   }
 
   viewPassword() {

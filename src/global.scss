@@ -28,27 +28,27 @@
 /*Add Font Montserrat*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
 
-ion-footer {
+app-footer {
     height: 38px;
 }
 
-ion-toolbar{
+ion-toolbar {
     --padding-end: 0;
     --padding-start: 0;
     --padding-top: 0;
     --padding-bottom: 0;
 }
 
-.container{
+.container {
     margin-top: 30px;
 }
 
-.container-big{
+.container-big {
     width: 90%;
     margin: 25px auto;
 }
 
-.container-small{
+.container-small {
     width: 80%;
     margin: 25px auto;
 }
@@ -61,13 +61,13 @@ ion-input {
     font-size: 13px !important;
 }
 
-ion-icon{
+ion-icon {
     margin: 0px 15px 0 0px;
     font-size: 16px;
 }
 
-.alert-wrapper{
-    background: linear-gradient(180deg, rgba(254,254,254,1) 0%, rgba(220,202,160,1) 100%) !important;
+.alert-wrapper {
+    background: linear-gradient(180deg, rgba(254, 254, 254, 1) 0%, rgba(220, 202, 160, 1) 100%) !important;
 }
 
 .alert-title {
@@ -75,22 +75,74 @@ ion-icon{
     text-align: center;
 }
 
-.alert-button-inner, .alert-input, .alert-title  {
+.alert-button-inner,
+.alert-input,
+.alert-title {
     font-weight: 600 !important;
-    
 }
-.alert-input  {
+.alert-input {
     border-bottom: 1px solid #c6c6c6 !important;
 }
 
-.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+.swiper-container-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
     position: relative;
     bottom: 0px;
     padding-bottom: 3px;
 }
 
+.custom-error-message {
+    font-size: small;
+    padding-top: 3px;
+    padding-left: 20px;
+    color: var(--ion-color-danger);
+    text-align: center;
+}
+
+ion-searchbar {
+    .searchbar-input-container {
+        height: 32px !important;
+        input {
+            font-size: 14px !important;
+        }
+    }
+}
+
+.soft-token{
+    ion-icon{
+        color: white;
+        background: #285d4d;
+        padding: 10px;
+        border-radius: 50%;
+        display: inline-block; 
+        margin: 0 !important; 
+        position: relative; 
+        left: 10px; 
+        border: #ffffff 1px solid; 
+        z-index: 10;
+    }
+    ion-button{
+        display: inline-block; 
+        margin: 0; 
+        height: 26px; 
+        --border-radius: 0px;
+    }
+    display: inline-flex; 
+    align-items: center; 
+    margin-top: 20px;
+    position: relative;
+    right: 10px;
+}
+
 @media (max-width: 350px) {
-    ion-footer {
+    app-footer {
         height: 34px;
     }
+    .swiper-container-horizontal > .swiper-pagination-bullets,
+    .swiper-pagination-custom,
+    .swiper-pagination-fraction {
+        bottom: 5px;
+    }
+    
 }

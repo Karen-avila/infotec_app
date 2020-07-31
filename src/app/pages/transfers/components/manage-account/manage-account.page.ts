@@ -9,6 +9,7 @@ import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 import { TranslateService } from '@ngx-translate/core';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 export interface Bank {
   id: number;
@@ -55,10 +56,10 @@ export class ManageAccountPage implements OnInit {
   public beneficiaryAccountTypes: BeneficiaryAccountType[] = [];
 
   public accountTypeOption: any;
-  
-  public bankIdOption: any; 
 
-  public cancelText: string; 
+  public bankIdOption: any;
+
+  public cancelText: string;
 
   constructor(
     protected modalController: ModalController,
@@ -68,7 +69,8 @@ export class ManageAccountPage implements OnInit {
     protected http: HttpClient,
     private clientsService: ClientsService,
     private userService: UserService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private helpersService: HelpersService
   ) {
     this.initializeApp();
   }
@@ -82,14 +84,14 @@ export class ManageAccountPage implements OnInit {
 
   private initializeApp() {
 
-    this.translateService.get(['Kind of product', 'Bank / Institution', 'Cancel']).subscribe( translate => {
+    this.translateService.get(['Kind of product', 'Bank / Institution', 'Cancel']).subscribe(translate => {
       console.log(translate);
 
-      this.accountTypeOption =  {header: translate['Kind of product']};
-      this.bankIdOption = {header: translate['Bank / Institution']};
+      this.accountTypeOption = { header: translate['Kind of product'] };
+      this.bankIdOption = { header: translate['Bank / Institution'] };
       this.cancelText = translate['Cancel'];
-      
-    } )
+
+    })
 
 
     this.form = this.formBuilder.group({
@@ -115,6 +117,8 @@ export class ManageAccountPage implements OnInit {
     this.form.controls['accountType'].disable();
     this.form.controls['bankId'].disable();
     this.form.controls['name'].disable();
+
+    this.helpersService.presentLoading();
 
     Promise.all([
       this.clientsService.getPersonalInfo(),
@@ -158,8 +162,12 @@ export class ManageAccountPage implements OnInit {
       })
       .catch(err => {
         console.log(err);
+        this.helpersService.showErrorMessage();
       })
-      .finally(() => this.flag = true)
+      .finally(() => {
+        this.flag = true
+        this.helpersService.hideLoading();
+      })
 
     // Si el valor cambia => configuramos las variables necesarias
     this.form.get("accountNumber").valueChanges.subscribe((x: string) => {
@@ -179,10 +187,11 @@ export class ManageAccountPage implements OnInit {
   }
 
   async evaluateBank(x: string) {
-    let possibleBank = x.substring(0, 4);
+    let possibleBank = x.substring(0, 3);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
     // TODO borrar condicion de 9 cuando las account number sean de 11
     if (x.length == 11 || x.length == 9) {
+      const possibleBanks = this.banks.filter(u => u.name == '000');
       this.searchButtonEnabled = true;
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
     } else if (x.length == 16) {
@@ -208,6 +217,7 @@ export class ManageAccountPage implements OnInit {
   }
 
   async search() {
+    this.helpersService.presentLoading('Searching client...');
     const form = { ...this.form.value };
     //TODO borrar cuando las accounts number tengan 11 digitos
     let accountNumber = form.accountNumber.substring(2);
@@ -227,22 +237,23 @@ export class ManageAccountPage implements OnInit {
       })
       .catch(err => {
         console.log(err);
-      });
+        this.helpersService.showErrorMessage();
+      })
+      .finally(() => this.helpersService.hideLoading())
   }
 
   async submit() {
 
     const form = { ...this.form.getRawValue() };
 
-    console.log("formulario", form);
     if (this.form.invalid) { return }
 
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (form.accountNumber.length == 9 || form.accountNumber.length == 11) ? 'TPT' : 'EXT';
     let promise: any;
     let beneficiary: any;
-
-    console.log("classification", accountClassificaction);
+    const message = this.type == 'Create' ? "Creating beneficiary..." : "Updating beneficiary..."
+    this.helpersService.presentLoading(message);
 
     if (this.type == 'Create' && accountClassificaction == 'TPT') {
       // aca metemos un beneficiario TPT a mifos
@@ -304,6 +315,8 @@ export class ManageAccountPage implements OnInit {
     })
       .catch(err => {
         console.log(err);
-      });
+        this.helpersService.showErrorMessage();
+      })
+      .finally(() => this.helpersService.hideLoading())
   }
 }

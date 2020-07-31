@@ -1,15 +1,12 @@
-// app-login{
-//     app-header{
-//         ion-header{
-//             ion-img{
-//                 padding: 23% 30% 0 !important;
-//             }   
-//         }
-//     }
+// ion-img {
+//     padding: 12% 35% 0;
+//     position: relative;
 // }
-ion-img {
-    padding: 12% 35% 0;
-    position: relative;
+.dangerous {
+    color: var(--ion-color-danger);
+    font-size: medium;
+    padding-top: 3px;
+    padding-left: 20px;
 }
 ion-icon {
     margin: 0px 15px 0 0px;
@@ -20,27 +17,27 @@ ion-input {
 }
 ion-content {
     ion-grid {
-        ion-img {
-            padding: 12% 35% 0;
-            position: relative;
-        }
-        .container{
-            width: 55%; 
-            margin: auto; 
+        // ion-img {
+        //     padding: 12% 35% 0;
+        //     position: relative;
+        // }
+        .container {
+            width: 55%;
+            margin: auto;
             text-align: center;
             margin: 50px auto;
         }
-        ion-row{
-            ion-col{
-                ion-button{
+        ion-row {
+            ion-col {
+                ion-button {
                     margin: 20px 0 20px;
                 }
             }
         }
         div {
-            form{
-                ion-button{
-                    margin: 20px 0 0 0;
+            form {
+                ion-button {
+                    margin: 20px 0 10px 0;
                 }
             }
         }
@@ -60,13 +57,11 @@ ion-col {
     padding: 0;
 }
 
-@media(max-width:450px) {
+@media (max-width: 450px) {
     ion-content ion-grid .container {
         width: 70%;
         text-align: center;
-    }
-    ion-item {
-        margin-top: 30px;
+        margin: -15px auto;
     }
     ion-grid {
         ion-img {
@@ -74,20 +69,33 @@ ion-col {
         }
     }
 
-    ion-img {
-        padding: 20% 35% 0 !important;
-    }
-    
+    // ion-img {
+    //     padding: 20% 35% 0 !important;
+    // }
 }
-@media(max-width:350px) {
+@media (max-width: 350px) {
     ion-content ion-grid .container {
         width: 78%;
         text-align: center;
     }
-    ion-item {
-        margin-top: 30px;
+    ion-row {
+        ion-col {
+            ion-button {
+                height: 35px;
+            }
+            ion-button:nth-child(1) {
+                margin: 20px 0 10px !important;
+            }
+            ion-button:nth-child(2) {
+                margin: 5px 0 10px !important;
+            }
+        }
     }
-    .container{
-        margin: -20px auto !important;
+    ion-img {
+        width: 190px;
+    }
+
+    .soft-token {
+        margin: 0;
     }
 }

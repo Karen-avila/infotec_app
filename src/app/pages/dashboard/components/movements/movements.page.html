@@ -1,41 +1,47 @@
-<app-header [svg]="true" [dismissButton]="true" [title]="'Movimientos'" [img]="'/assets/header-icons/movimientos.png'"></app-header>
+<app-header [svg]="true" [dismissButton]="true" [title]="'Movements'" [img]="'/assets/header-icons/movimientos.png'">
+</app-header>
 <ion-content *ngIf="flag">
   <!-- List of Text Items -->
 
   <ion-label *ngIf="!movements || movements.length==0 ">
     <ion-title size="small">{{ 'No movements' | translate }}</ion-title>
   </ion-label>
-  <ion-list style="width: 90%;margin: auto;">
-    <ion-item *ngFor="let item of movements">
-      <ion-avatar slot="start">
-        <ion-icon
-          [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
-          src="assets/icon/logout.svg"></ion-icon>
-      </ion-avatar>
-      <ion-label>
-
-        <h3 *ngIf="item.paymentDetailData">
-          {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }}</h3>
-        <h3 *ngIf="item.transfer">
-          {{ item.transactionType.id === 2  ? ('Transfer made' | translate) : ('Transfer received' | translate) }}</h3>
-
-        <h5 style="font-size: x-small; color: grey;" *ngIf="item.paymentDetailData">
-          {{ item.transactionType.id === 1 ? ('Made a deposit for' | translate) : ('Made a withdrawal for' | translate)}}
-          {{ item.currency.displaySymbol}}{{item.amount | number : '1.2-2' }}</h5>
-        <h5 style="font-size: x-small; color: grey;" *ngIf="item.transfer">
-          {{ item.transactionType.id === 2 ? ('Made a transfer for' | translate) : ('Received a transfer for' | translate)}}
-          {{ item.currency.displaySymbol}}{{item.amount | number : '1.2-2' }}</h5>
-
-        <h5 style="font-size: small;">{{ 'Balance' | translate }}:
-          {{ item.currency.displaySymbol}}{{item.runningBalance | number : '1.2-2' }}</h5>
-      </ion-label>
+  <ion-list style="width: 90%; margin: auto;">
+    <ion-item *ngFor="let item of movements; index as index">
+        <ion-avatar slot="start">
+          <ion-icon
+            [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
+            src="assets/icon/logout.svg"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+  
+          <ng-container *ngIf="item.paymentDetailData">
+            <h3 *ngIf="item.paymentDetailData && item.paymentDetailData.paymentType && item.paymentDetailData.paymentType.name === 'PAYMENT_ORDER'; else elseTemplate">
+              {{ ('PAYMENT_ORDER' | translate) }} </h3>
+            
+            <ng-template #elseTemplate>
+              <h3>
+                {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} -
+                {{ item.paymentDetailData.paymentType.name | translate }}</h3>
+            </ng-template>
+           
+          </ng-container>
+         
+          <h3 *ngIf="item.transfer">
+            {{ item.transactionType.id === 2  ? ('Transfer made' | translate) : ('Transfer received' | translate) }}</h3>
+  
+          <h5 style="font-size: x-small; color: grey;" *ngIf="item.paymentDetailData">
+            {{ item.transactionType.id === 1 ? ('Made a deposit for' | translate) : ('Made a withdrawal for' | translate)}}
+            {{ item.currency.displaySymbol}}{{item.amount | money }}</h5>
+          <h5 style="font-size: x-small; color: grey;" *ngIf="item.transfer">
+            {{ item.transactionType.id === 2 ? ('Made a transfer for' | translate) : ('Received a transfer for' | translate)}}
+            {{ item.currency.displaySymbol}}{{item.amount | money }}</h5>
+  
+          <h5 style="font-size: small;">{{ 'Balance' | translate }}:
+            {{ item.currency.displaySymbol}}{{item.runningBalance | money }} </h5>
+        </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
-
+<app-footer></app-footer>

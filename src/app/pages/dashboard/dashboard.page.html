@@ -1,15 +1,3 @@
-<!-- <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button color="secondary"></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/notifications']" color="secondary">
-        <ion-icon name="notifications"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header> -->
 <app-header [svg]="true" [notifications]="true" [menu]="true"></app-header>
 
 <ion-content>
@@ -19,27 +7,32 @@
   </div>
 
 
-  <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts"></app-card-account>
+  <app-card-account *ngIf="accounts.length > 0" style="margin: auto" [accounts]="accounts" (initComponent)='onInitCardAccount($event)'  (valueChange)='onChangeAccount($event)'></app-card-account>
   <ion-tabs>
 
-    <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0.2rem;" fill="clear" shape="round" size="small">
+    <!-- <ion-button (click)="presentModal()" style="margin: auto; margin-bottom: 0rem;" fill="clear" shape="round" size="small">
       <ion-icon slot="icon-only" name="chevron-up"></ion-icon>
-    </ion-button>
+    </ion-button> -->
 
-    <ion-img (click)="scannerQRCode()" style="width: 4rem; height: 4rem; margin: auto; margin-bottom: -1rem; z-index: 2;" src="./assets/btn-codi.png"></ion-img>
+    <!-- <ion-img (click)="scannerQRCode()" style="width: 4rem; height: 4rem; margin: auto; margin-bottom: -1rem; z-index: 2;" src="./assets/btn-codi.png"></ion-img> -->
     <ion-tab-bar slot="bottom" style="z-index: 1;">
   
-      <ion-tab-button (click)="presentModal()">
+      <!-- <ion-tab-button [routerLink]="['/pay-order']">
         <ion-icon name="document-text-outline"></ion-icon>
-        <ion-label translate>Movements</ion-label>
-      </ion-tab-button>
+        <ion-label translate>Pay Order</ion-label>
+      </ion-tab-button> -->
 
       <ion-tab-button [routerLink]="['/transfers']">
         <ion-icon name="swap-horizontal-outline"></ion-icon>
         <ion-label translate>Transfer</ion-label>
       </ion-tab-button>
+
+      <ion-tab-button (click)="presentModal()">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label translate>Movements</ion-label>
+      </ion-tab-button>
   
-      <ion-tab-button [routerLink]="['/collect-codi']">
+      <!-- <ion-tab-button [routerLink]="['/collect-codi']">
         <ion-icon name="cash-outline"></ion-icon>
         <ion-label translate>Charge</ion-label>
       </ion-tab-button>
@@ -47,7 +40,7 @@
       <ion-tab-button [routerLink]="['/postponed']">
         <ion-icon name="time-outline"></ion-icon>
         <ion-label translate>Postponed</ion-label>
-      </ion-tab-button>
+      </ion-tab-button> -->
 
     </ion-tab-bar>
     

@@ -3,14 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ENDPOINTS } from '@globals/endpoints';
 import { Storage } from '@ionic/storage';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, AlertController, MenuController } from '@ionic/angular';
 import { ClientsService } from '@services/clients/clients.service';
 import { UserService } from './user.service';
 import { User } from '@globals/interfaces/user';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { Keepalive } from '@ng-idle/keepalive';
+import { HelpersService } from '@services/helpers/helpers.service';
+import { environment } from '@env';
+import { TranslateService } from '@ngx-translate/core';
+import { CodesService } from '@services/catalogs/codes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +34,11 @@ export class AuthenticationService {
     private navCtrl: NavController,
     private userService: UserService,
     private idle: Idle, 
-    private keepalive: Keepalive
+    private helpersService: HelpersService,
+    private translate: TranslateService,
+    private alertController: AlertController,
+    private codesService: CodesService,
+    private menu: MenuController
   ) {
     // this.platform.ready().then(() => {
     //   this.ifLoggedIn();
@@ -39,13 +46,15 @@ export class AuthenticationService {
   }
 
   // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
-  public login(user: User, askForPin: boolean) {
+  public login(user: User, askForPin: boolean): Promise<any> {
 
     this.storage.remove('token');
     this.storage.remove('personal-info');
     this.storage.remove('login-info');
 
-    this.httpClient.post(ENDPOINTS.authentication, user)
+    this.helpersService.presentLoading();
+
+    return this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
       .then((login: LoginInfo) => {
         console.log(login);
@@ -68,12 +77,33 @@ export class AuthenticationService {
         this.userService.password = user.password;
         this.userService.displayName = client.displayName;
 
+        const displayName = client.displayName.trim().replace(/ +(?= )/g,'').split(' ');
+        const shortName = `${displayName[0]}${ displayName[1] ? ' '+displayName[1] : '' }`;
+        this.userService.shortName = shortName;
+        this.storage.set('last-client', shortName);
+
+        this.clientsService.getSelfie(client.id+'').toPromise()
+          .then( imageUrl => this.storage.set('image-profile', imageUrl) )
+          .catch( err => {
+            if (!(err.status && err.status === 200 && err.error.text)) return;
+            this.storage.set('image-profile', err.error.text.replace(/\s/g,''));
+          } )
+
+        return this.codesService.getMOBILE().toPromise();
+      }).then( globals => {
+        
+        this.storage.set('globals', globals);
+        console.log(globals);
         if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
         else this.navCtrl.navigateRoot(['dashboard']);
-      })
+        this.storage.remove('timeLeft');
+        return true;
+      } )
       .catch(err => {
         console.log(err);
-      });
+        this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
+        throw err;
+      }).finally( () => this.helpersService.hideLoading() );
   }
 
   public ifLoggedIn() {
@@ -88,31 +118,33 @@ export class AuthenticationService {
     return this.httpClient.post(ENDPOINTS.authentication, user);
   }
 
-  public logout() {
-    this.storage.remove('personal-info')
-      .then(() => {
-        return this.storage.remove('login-info')
-      })
-      .then(() => {
-        return this.storage.remove('token')
-      })
-      .then(() => {
-        return this.storage.get('user-hash')
-      })
-      .then(response => {
-        this.authState.next(false);
-        if (response) {
-          this.navCtrl.navigateRoot(['/second-login', 'login']);
-        } else {
-          this.navCtrl.navigateRoot(['/login']);
-        }
-      })
+  public async logout(removeAllStorage: boolean = false) {
+  
+    const keep: string[] = ['user-hash', 'last-client'];
+    const saved: any[] = [];
+    
+    if (!removeAllStorage) {
+      for (const key in keep) {
+        const value = await this.storage.get(keep[key]);
+        saved.push({ key: keep[key], value });
+      }
+    }
+
+    this.storage.clear();
+
+    for (const key in saved) {
+      this.storage.set(saved[key].key, saved[key].value);
+    }    
+
+    this.authState.next(false);
+    this.navCtrl.navigateRoot(['/login']);
+
   }
 
   public startIdleTimer() {
     
      this.idle.setIdle(5);
-     this.idle.setTimeout(180);
+     this.idle.setTimeout(120);
      this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
  
      this.idle.onIdleEnd.subscribe(() => this.idle.watch());
@@ -123,6 +155,6 @@ export class AuthenticationService {
   }
 
   public isAuthenticated() {
-    return this.authState.value || true;
+    return this.authState.value || environment.mockLogin;
   }
 }

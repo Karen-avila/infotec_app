@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { TitleCasePipe } from '@angular/common';
 
 
 @Component({
@@ -14,89 +15,111 @@ import { AlertController } from '@ionic/angular';
 })
 export class Tab1Page implements OnInit {
 
-  icon:boolean=true;
-  reIcon:boolean=true;
-  type:string='password';
-  reType:string='password';
+  icon: boolean = true;
+  reIcon: boolean = true;
+  type: string = 'password';
+  reType: string = 'password';
   registerForm: FormGroup;
+  registrationType: 'client' | 'social-program';
 
   constructor(
-      private router:Router, 
-      public formBuilder: FormBuilder, 
-      public menuCtrl: MenuController,
-      public storage: Storage,
-      public alertController: AlertController
-    ) { 
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public formBuilder: FormBuilder,
+    public menuCtrl: MenuController,
+    public storage: Storage,
+    public alertController: AlertController,
+    private titleCase: TitleCasePipe
+  ) {
+
+    this.registrationType = this.activatedRoute.snapshot.params['type'];
+
     this.registerForm = formBuilder.group({
       username: [""],
-      password: ["", [Validators.required, Validators.minLength(8)]],
-      confirmPassword : ["", [Validators.required, Validators.minLength(8)]],
-      accountNumber: ["", Validators.compose([
-        Validators.required, 
-        CustomValidators.ValidateAccountNumber
-      ])],
-      email: ["", CustomValidators.ValidateEmail],
+      password: ["", [Validators.required, CustomValidators.ValidatePassword]],
+      confirmPassword: ["", [Validators.required]],
+      email: ["", [Validators.required, CustomValidators.ValidateEmail]],
       firstName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        Validators.required,
+        Validators.minLength(2),
+        CustomValidators.ValidateText
+
       ])],
       surName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        // se comenta por QA 
+        //Validators.required,
+        Validators.minLength(2),
+        CustomValidators.ValidateText
       ])],
       lastName: ["", Validators.compose([
-        Validators.required, 
-        Validators.minLength(3)
+        Validators.required,
+        Validators.minLength(2),
+        CustomValidators.ValidateText
       ])]
     }, {
       validator: CustomValidators.ValidateMatch('password', 'confirmPassword')
     });
+
+    if (this.registrationType === 'client') {
+      this.registerForm.addControl('accountNumber', formBuilder.control('', [
+        Validators.required,
+        CustomValidators.ValidateAccountNumber
+      ]));
+    }
   }
 
   ngOnInit() {
-      this.storage.get('registration').then( data => {
-        if (data) {
-          this.registerForm.patchValue({...data, confirmPassword: data.password});
-        }
-      } );
+    this.storage.get('registration').then(data => {
+      if (data) {
+        this.registerForm.patchValue({ ...data, confirmPassword: data.password });
+      }
+    });
   }
 
   register() {
 
-    const form = {...this.registerForm.value};
+    const form = { ...this.registerForm.value };
     delete form.confirmPassword;
 
-    this.storage.set('registration', form).then( () => {
-      this.router.navigateByUrl('/registration/tab2'); //second-login
-    } );
-    
+    this.storage.set('registration', form).then(() => {
+      this.router.navigateByUrl(`/registration/${this.registrationType}/tab2`); //second-login
+    });
+
+  }
+
+  toUpperCase(key: string) {
+    const inputName = this.registerForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue(
+      value.toUpperCase().replace(/[^A-Za-znÑäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ ]/g, ""), 
+      { emitEvent: false }
+    ));
   }
 
   hello() {
     console.log('Hello Word');
   }
 
-  viewRePassword(){
-    if(this.reIcon){
+  viewRePassword() {
+    if (this.reIcon) {
       console.log("view repassword");
-      this.reIcon=false;
-      this.reType="text";
-    }else{
+      this.reIcon = false;
+      this.reType = "text";
+    } else {
       console.log("not view repassword");
-      this.reIcon=true;
-      this.reType="password";
+      this.reIcon = true;
+      this.reType = "password";
     }
   }
 
-  viewPassword(){
-    if(this.icon){
+  viewPassword() {
+    if (this.icon) {
       console.log("view password");
-      this.icon=false;
-      this.type="text";
-    }else{
+      this.icon = false;
+      this.type = "text";
+    } else {
       console.log("not view password");
-      this.icon=true;
-      this.type="password";
+      this.icon = true;
+      this.type = "password";
     }
   }
 

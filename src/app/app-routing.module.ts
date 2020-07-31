@@ -2,27 +2,21 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuard } from '@core/guards/auth/auth.guard';
+import { AuthPinGuard } from '@core/guards/auth-pin/auth-pin.guard';
+import { RegistrationGuard } from '@core/guards/registration/registration.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'second-login',
-    loadChildren: () => import('@pages/second-login/second-login.module').then(m => m.SecondLoginPageModule)
-  },
-  {
-    path: 'folder/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('@pages/folder/folder.module').then(m => m.FolderPageModule)
+    loadChildren: () => import('@pages/second-login/second-login.module').then(m => m.SecondLoginPageModule)
   },
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
     loadChildren: () => import('@pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('@pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'registration',
@@ -49,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'soft-token',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('@pages/soft-token/soft-token.module').then(m => m.SoftTokenPageModule)
   },
   {
@@ -58,51 +52,59 @@ const routes: Routes = [
     loadChildren: () => import('@pages/transfers/transfers.module').then(m => m.TransfersPageModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
-  },
-  {
     path: 'notifications',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
   },
   {
     path: 'postponed',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/postponed/postponed.module').then(m => m.PostponedPageModule)
   },
   {
     path: 'login',
+    canActivate: [AuthPinGuard],
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'help',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/help/help.module').then(m => m.HelpPageModule)
   },
   {
     path: 'about-us',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/about-us/about-us.module').then(m => m.AboutUsPageModule)
   },
   {
     path: 'settings',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
   {
-    path: 'logout',
-    loadChildren: () => import('./pages/logout/logout.module').then(m => m.LogoutPageModule)
-  },
-  {
     path: 'plan-social',
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./pages/plan-social/plan-social.module').then(m => m.PlanSocialPageModule)
   },
   {
     path: 'not-found',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
   },
-  { path: "**", redirectTo: "not-found" },
   {
-    path: 'soft-token',
-    loadChildren: () => import('./pages/soft-token/soft-token.module').then( m => m.SoftTokenPageModule)
-  }
-
+    path: 'pay-order',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/pay-order/pay-order.module').then( m => m.PayOrderPageModule)
+  },
+  {
+    path: 'pay-orders',
+    loadChildren: () => import('./pages/pay-orders/pay-orders/pay-orders.module').then( m => m.PayOrdersPageModule)
+  },
+  {
+    path: 'automatic-token',
+    loadChildren: () => import('./pages/automatic-token/automatic-token.module').then( m => m.AutomaticTokenPageModule)
+  },
+  { path: "**", redirectTo: "not-found" },
 
 ];
 

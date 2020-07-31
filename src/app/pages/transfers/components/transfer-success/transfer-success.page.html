@@ -1,55 +1,55 @@
-<app-header [svg]="true" [dismissButton]="true" [title]="'Transfer Success'" [img]="'/assets/header-icons/transferir-exitoso.png'"></app-header>
+<!-- <app-header [svg]="true" [dismissButton]="true" [title]="'Transfer Success'"
+  [img]="'/assets/header-icons/transferir-exitoso.png'"></app-header> -->
 
 <ion-content>
 
-  <div class="container-big" style="font-size: xx-large; text-align: center;">
-    <div>
-      <span style="font-size: 20px; font-weight: 600; color: #464646;">{{fecha}}</span>
-      <h1><b>$ {{transferAmount | number : '1.2-2'}}</b></h1>
+  <div style="background-color: white;" #pageShare>
+    
+    <div class="header svg-correction ion-no-border" [ngStyle]="{'margin-bottom': '80px' }" no-border>
+      <img style="z-index: 105" class="profile-photo ion-img" src="/assets/header-icons/transferir-exitoso.png">
+      <ion-toolbar>
+        <ion-button (click)="modalController.dismiss()" style="--background: none; --box-shadow: none;" slot="end">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+      <ion-title color="secondary">
+        <div style="white-space: normal; text-align: center; text-transform: uppercase;">{{'Transfer Success' | translate}}</div></ion-title>
     </div>
-    <span translate class="ion-text-center" style="font-size: 14px; font-weight: 100; color: #cca578;">This transfer does not generate charge
-    </span>
+
+    <div class="container-big" style="font-size: xx-large; text-align: center;">
+      <div>
+        <span style="font-size: 20px; font-weight: 600; color: #464646; display: block;margin-bottom: 0.5rem;">{{fecha}}</span>
+        <!-- <h1><b>$ {{transferAmount | number : '1.2-2'}}</b></h1> -->
+        <app-money-format [amount]="transferAmount"></app-money-format>
+      </div>
+      <span translate class="ion-text-center" style="font-size: 14px; font-weight: 400; color: #cca578;">This transfer
+        does not generate charge
+      </span>
+    </div>
+  
+    <div class="container-big" style="margin-top:20px">
+     
+      <h4>{{'Beneficiary' | translate}}:<span> {{clientName}}</span></h4>
+      <h4>{{'Account Number' | translate}}:<span> {{accountNumber}}</span></h4>
+      <h4>{{'Concept' | translate}}:<span> {{ (concept || 'Doesn´t apply') | translate }}</span></h4>
+      <h4>{{'Reference' | translate}}:<span> {{reference}}</span></h4>
+      <h4>{{'Invoice' | translate}}:<span> {{folio}}</span></h4>
+      <!-- <div *ngIf="rfc">
+          <h4>{{'RFC' | translate}}:<span> {{rfc}}</span></h4>
+      </div> -->
+    
+    </div>
+  
+    <br><br>
+  
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button (click)="onShare()" color="light">
+        <ion-icon style="font-size: xx-large;color: #3880FF; margin: auto;" name="share-social-sharp"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
-
-  <ion-list class="container-big" style="margin-top:20px">
-    <ion-item>
-      <ion-label>
-        <h4>Beneficiario:<span>{{clientName}}</span></h4>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h4>Nº Cuenta:<span>{{accountNumber}}</span></h4>
-      </ion-label>
-    </ion-item>
-    <!-- <ion-item>
-      <ion-label>
-        <h4>Concepto:<span>{{concepto}}</span></h4>
-      </ion-label>
-    </ion-item> -->
-    <ion-item>
-      <ion-label>
-        <h4>Referencia:<span>{{referencia}}</span></h4>
-      </ion-label>
-    </ion-item>
-    <!-- <ion-item>
-      <ion-label>
-        <h4>Comisión:<span></span></h4>
-      </ion-label>
-    </ion-item> -->
-    <ion-item>
-      <ion-label>
-        <h4>Folio:<span>{{folio}}</span></h4>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
 
 </ion-content>
 
 
-<ion-footer class="ion-no-border">
-  <ion-toolbar style="text-align: center;" no-padding>
-    <app-footer></app-footer>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { Tab1Page } from './tab1.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
+import { FooterModule } from '@components/footer/footer.module';
 
 @NgModule({
   imports: [
@@ -20,8 +21,10 @@ import { HeaderModule } from '@components/header/header.module';
     TranslateModule,
     ReactiveFormsModule,
     InputErrorModule,
-    HeaderModule
+    HeaderModule,
+    FooterModule
   ],
+  providers: [TitleCasePipe],
   declarations: [Tab1Page]
 })
 export class Tab1PageModule {}

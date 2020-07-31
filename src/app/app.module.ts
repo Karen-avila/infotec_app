@@ -29,9 +29,14 @@ import { AES256 } from '@ionic-native/aes-256/ngx';
 import { MenuModule } from '@components/menu/menu.module';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+
+
 registerLocaleData(es);
 
 export function createTranslateLoader(http: HttpClient) {
@@ -56,7 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
   ],
@@ -72,7 +77,9 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     Camera,
     File,
+    ScreenOrientation,
     Sim,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

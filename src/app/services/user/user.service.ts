@@ -13,9 +13,10 @@ export class UserService {
   public username: string;
   public password: string;
   public displayName: string;
-  public accountMovementsSelected: CardAccount;
+  public shortName: string;
+  //public accountMovementsSelected: CardAccount;
   public beneficiaries: Beneficiarie[];
-public programaSocialSelected: Programs;
+  public programaSocialSelected: Programs;
 
   constructor(private httpClient: HttpClient) { }
 

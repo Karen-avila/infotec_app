@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ISettings } from '@components/card-account/card-account.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ManageAccountPage } from './components/manage-account/manage-account.page';
 import { HelpersService } from '@services/helpers/helpers.service';
@@ -16,6 +16,8 @@ import { LoginInfo } from '@globals/interfaces/login-info';
 import * as CustomValidators from '@globals/custom.validator';
 import { TransferSuccessPage } from './components/transfer-success/transfer-success.page';
 import { environment } from '@env';
+import { CodesService } from '@services/catalogs/codes.service';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
 
 export class accountTransferTPT {
   type: string = "tpt";
@@ -44,6 +46,8 @@ export class accountTransferEXT {
   dateFormat: string = environment.dateFormat;
   locale: string = environment.locale;
   note: string;
+  routingCode: string;
+  receiptNumber: string;
   // siempre es 2 porque es SPEI
   paymentTypeId: number = 2;
   transactionAmount: number;
@@ -60,27 +64,32 @@ export class TransfersPage implements OnInit {
   public settings: ISettings = {
     accountSize: 'small',
     balanceSize: 'large',
-    cardWidth: '80%',
+    cardWidth: '50%',
     spaceBetween: 0,
     orientation: 'horizontal'
   };
 
-  public accounts: CardAccount[] = [
-  ];
+  private accountSelected: CardAccount;
 
-  public savedAccounts: Beneficiarie[] = [
-  ]
+  public accounts: CardAccount[] = [];
+
+  public savedAccounts: Beneficiarie[] = []
+  public savedAccountsFiltered: Beneficiarie[] = []
 
   public transferForm: FormGroup;
 
-  public isAccountSelected = false;
+  public isBeneficiarieSelected = false;
 
-  public personalInfo: PersonalInfo;
+  private personalInfo: PersonalInfo;
   private loginInfo: LoginInfo;
 
-  private accountSelected: Beneficiarie;
+  private beneficiarieSelected: Beneficiarie;
 
   public flag: boolean = false;
+  public showRFC: boolean = false;
+  public beneficiarieSearch: string = "";
+
+  private globalConfig: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -90,46 +99,59 @@ export class TransfersPage implements OnInit {
     public translate: TranslateService,
     public router: Router,
     private clientsService: ClientsService,
-    private storage: Storage,
-    private userService: UserService
+    private userService: UserService,
+    private codesService: CodesService
   ) {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
-      transferDescription: ['', Validators.required]
+      transferDescription: ['', Validators.required],
+      concept: [''],
+      rfc: ['', CustomValidators.ValidateRfc]
     });
-    this.initialize();
   }
 
   ngOnInit() {
-    console.log(this.helpersService.getFormattedDate());
+    console.log('Transfer page init...')
   }
 
+  ionViewDidEnter() {
+    this.initialize();
+  }
 
   private initialize() {
     this.flag = false;
-    this.isAccountSelected = false;
+    this.isBeneficiarieSelected = false;
+    this.helpersService.presentLoading();
 
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
       this.clientsService.getBeneficiariesEXT().toPromise(),
 
       this.clientsService.getPersonalInfo(),
-      this.clientsService.getLoginInfo()
+      this.clientsService.getLoginInfo(),
+      this.codesService.getMOBILE().toPromise()
     ]
     )
-      .then(res => {
+      .then(async res => {
         console.log(res);
         this.savedAccounts = [...res[0], ...res[1]];
         this.userService.beneficiaries = this.savedAccounts;
+        this.savedAccountsFiltered = this.savedAccounts;
         this.personalInfo = res[2];
         this.loginInfo = res[3];
+        this.globalConfig = res[4];
 
-        this.getAccounts();
+        await this.getAccounts();
+        return res;
       })
       .catch(err => {
         console.log(err);
+        this.helpersService.showErrorMessage();
       })
-      .finally(() => this.flag = true)
+      .finally(() => {
+        this.flag = true;
+        this.helpersService.hideLoading();
+      })
   }
 
   get content(): any {
@@ -155,18 +177,15 @@ export class TransfersPage implements OnInit {
       });
       return await modal.present();
     } else {
-      this.translate.get([
-        'Update',
-        'Do you want to update the bank account?'
-      ]).subscribe((resp: any) => {
+      this.translate.get(['Update', 'Do you want to update the bank account?']).subscribe(async translate => {
         this.helpersService
-          .showAlert(resp.Update, resp['Do you want to update the bank account?'])
+          .showAlert(translate.Update, translate['Do you want to update the bank account?'])
           .then(async () => {
             const modal = await this.modalController.create({
               component: ManageAccountPage,
               componentProps: {
                 'type': 'Update',
-                ...this.savedAccounts[index]
+                ...this.savedAccountsFiltered[index]
               }
             });
             modal.onDidDismiss().then(() => {
@@ -179,74 +198,100 @@ export class TransfersPage implements OnInit {
   }
 
   async onDelete(id, accountNumber, index) {
-    const alert = await this.alertController.create({
-      header: 'Eliminar',
-      message: 'Desea eliminar la cuenta de banco?',
-      buttons: [
-        'Cancelar',
-        {
-          text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Ok');
-            this.deleteBeneficiarie(id, accountNumber, index);
+    this.translate.get(['Delete', 'Do you want to delete the beneficiary?', 'Cancel', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Delete'],
+        message: translate['Do you want to delete the beneficiary?'],
+        buttons: [
+          translate['Cancel'],
+          {
+            text: translate['Accept'],
+            handler: () => {
+              this.deleteBeneficiarie(id, accountNumber, index);
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    });
   }
 
   public selectAccount(index: number, item: Beneficiarie) {
     console.log('Click Me', index, item);
-    const prevSelected = this.savedAccounts.find((account: Beneficiarie) => account.selected);
+    
+    if(this.accountSelected.blocked) {
+      this.helpersService.showErrorMessage('Origin account blocked', 'The origin account selected is blocked. Please select another to transfer to the selected beneficiary' )
+      return;
+    }
+
+    const prevSelected = this.savedAccountsFiltered.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
       prevSelected.selected = false;
     }
     item.selected = true;
     item.color = 'light';
-    this.accountSelected = item;
-    this.isAccountSelected = true;
+    this.beneficiarieSelected = item;
+    this.isBeneficiarieSelected = true;
+
+    // borro validadores del formulario de transferencia
     this.transferForm.clearValidators();
-    this.transferForm.setValidators([CustomValidators.ValidateTransferAmountLimit('transferAmount', this.accountSelected.transferLimit)])
+    // seteo validador de transfer amount
+    this.transferForm.setValidators([CustomValidators.ValidateTransferAmountLimit('transferAmount', this.beneficiarieSelected.transferLimit)])
+    // apago o prendo campo de RFC dependiendo el beneficiario seleccionado
+    this.showRFC = this.beneficiarieSelected.accountNumber.length != 9 && this.beneficiarieSelected.accountNumber.length != 11;
+    // agrego validador de rfc si corresponde
+    if (this.showRFC) { 
+      this.transferForm.controls['rfc'].setValidators([Validators.required, CustomValidators.ValidateRfc]);
+      this.toUpperCase('rfc');
+    } else { this.transferForm.controls['rfc'].clearValidators() }
+    // reseteo valores de formulario
     this.transferForm.reset();
     setTimeout(() => this.content.scrollToBottom(1000), 200);
   }
 
   async onMakeTransfer() {
     const form = { ...this.transferForm.value };
-    if (form.transferAmount > this.userService.accountMovementsSelected.accountBalance) {
+    if (form.transferAmount > this.accountSelected.accountBalance) {
       this.transferForm.controls['transferAmount'].setErrors({ transferAmountExceeded: true })
       return;
     }
 
-    const alert = await this.alertController.create({
-      header: 'Confirmar transferencia',
-      message: 'Desea confirmar la transferencia?',
-      buttons: [
-        'Cancelar',
-        {
-          text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Ok');
-            this.makeTransfer();
+    this.translate.get(['Confirm transfer', 'Do you want to confirm the transfer?', 'Cancel', 'Accept']).subscribe(async translate => {
+      const alert = await this.alertController.create({
+        header: translate['Confirm transfer'],
+        message: translate['Do you want to confirm the transfer?'],
+        buttons: [
+          translate['Cancel'],
+          {
+            text: translate['Accept'],
+            handler: async () => {
+              const modal = await this.modalController.create({
+                component: AutomaticTokenPage
+              });
+              await modal.present();
+              const { data } = await modal.onDidDismiss();
+              
+              if (!data.accept) return;
+              this.makeTransfer();
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
+      await alert.present();
+    });
   }
 
-  public makeTransfer(): void {
+  private makeTransfer(): void {
 
     console.log("Transfering...");
     const form = { ...this.transferForm.value };
 
     let transfer: any;
     let accountClassificaction = 'TPT' || 'EXT';
-    accountClassificaction = (this.accountSelected.accountNumber.length == 9 || this.accountSelected.accountNumber.length == 11) ? 'TPT' : 'EXT';
+    accountClassificaction = (this.beneficiarieSelected.accountNumber.length == 9 || this.beneficiarieSelected.accountNumber.length == 11) ? 'TPT' : 'EXT';
     if (accountClassificaction == 'TPT') {
       transfer = new accountTransferTPT();
       transfer.transferDate = this.helpersService.getFormattedDate();
@@ -255,13 +300,13 @@ export class TransfersPage implements OnInit {
       transfer.fromOfficeId = this.loginInfo.officeId;
       transfer.fromClientId = this.loginInfo.clientId;
       //TODO revisar aca porque SIEMPRE es 2
-      transfer.fromAccountType = this.userService.accountMovementsSelected.accountType;
-      transfer.fromAccountId = this.userService.accountMovementsSelected.id;
+      transfer.fromAccountType = this.accountSelected.accountType;
+      transfer.fromAccountId = this.accountSelected.id;
 
-      transfer.toOfficeId = this.accountSelected.officeId;
-      transfer.toClientId = this.accountSelected.clientId;
-      transfer.toAccountType = this.accountSelected.accountType.id;
-      transfer.toAccountId = this.accountSelected.accountId;
+      transfer.toOfficeId = this.beneficiarieSelected.officeId;
+      transfer.toClientId = this.beneficiarieSelected.clientId;
+      transfer.toAccountType = this.beneficiarieSelected.accountType.id;
+      transfer.toAccountId = this.beneficiarieSelected.accountId;
 
       transfer.transferAmount = form.transferAmount;
       transfer.transferDescription = form.transferDescription;
@@ -270,13 +315,18 @@ export class TransfersPage implements OnInit {
     } else if (accountClassificaction == 'EXT') {
       transfer = new accountTransferEXT();
 
-      transfer.fromAccountId = this.userService.accountMovementsSelected.id;
-      transfer.accountNumber = this.accountSelected.accountNumber;
+      transfer.fromAccountId = this.accountSelected.id;
+      transfer.accountNumber = this.beneficiarieSelected.accountNumber;
       transfer.transactionDate = this.helpersService.getFormattedDate();
       transfer.locale = environment.locale;
       transfer.dateFormat = environment.dateFormat;
       transfer.transactionAmount = form.transferAmount;
-      transfer.note = form.transferDescription;
+      // concepto
+      transfer.note = form.concept;
+      // referencia
+      transfer.routingCode = form.transferDescription;
+      // rfc
+      transfer.receiptNumber = form.rfc;
     } else {
       return;
     }
@@ -284,12 +334,16 @@ export class TransfersPage implements OnInit {
     console.log(JSON.stringify(transfer));
     //TODO mejorar cuando sepamos que se necesita
     let transferSuccess: any = {};
-    transferSuccess.accountNumber = this.accountSelected.accountNumber;
-    transferSuccess.clientName = this.accountSelected.clientName ? this.accountSelected.clientName : this.accountSelected.name;
+    transferSuccess.accountNumber = this.beneficiarieSelected.accountNumber;
+    transferSuccess.clientName = this.beneficiarieSelected.clientName ? this.beneficiarieSelected.clientName : this.beneficiarieSelected.name;
     transferSuccess.transferAmount = form.transferAmount;
-    transferSuccess.referencia = form.transferDescription;
+    transferSuccess.reference = form.transferDescription;
+    transferSuccess.concept = form.concept;
+    transferSuccess.rfc = form.rfc;
 
-    this.clientsService.accountTransfers("asd").toPromise()
+    this.helpersService.presentLoading('Transfering...');
+
+    this.clientsService.accountTransfers(transfer).toPromise()
       .then((response: any) => {
         console.log(response)
         transferSuccess.folio = response.resourceId;
@@ -298,19 +352,9 @@ export class TransfersPage implements OnInit {
       .catch(err => {
         console.log(err)
         this.transferForm.reset();
-        this.showErrorTransactionMessage();
+        this.helpersService.showErrorMessage('Transfer error', 'We could not proccess the transfer. Try later');
       })
-  }
-
-  private async showErrorTransactionMessage() {
-    const alert = await this.alertController.create({
-      header: 'Error en la transferencia',
-      message: 'No se pudo realizar la transferencia. Intente más tarde.',
-      buttons: [
-        'Aceptar'
-      ]
-    });
-    await alert.present();
+      .finally(() => this.helpersService.hideLoading())
   }
 
   private async openSuccessModal(transfer: any) {
@@ -322,34 +366,44 @@ export class TransfersPage implements OnInit {
       }
     });
     modal.onDidDismiss().then(() => {
+      this.beneficiarieSelected = null;
+      this.isBeneficiarieSelected = false;
+      this.resetBeneficiariesList();
       this.initialize();
+      //setTimeout(() => this.content.scrollToTop(1000), 200);
     });
 
     return await modal.present();
   }
+
   // traemos los accounts del cliente
-  private getAccounts(): void {
-    this.clientsService.getAccounts(this.loginInfo.clientId).toPromise()
-      .then((response: any) => {
-        this.accounts = [];
-        //TODO que este configurable el muestreo de datos de loans
-        let savings = response.savingsAccounts;
-        savings.forEach(element => {
-          // si es savings, es 2
-          if (element.status.active) {
-            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.accountBalance, this.personalInfo.displayName, 2);
+  private async getAccounts(): Promise<any> {
+    return this.translate.get(['Own Account', 'Own Loan']).toPromise().then(async translate => {
+      return this.clientsService.getSavingsAccounts()
+        .then((savings: any) => {
+          this.accounts = [];
+
+          savings.forEach(element => {
+            let account: CardAccount = new CardAccount(element.id, element.accountNo, element.availableBalance, this.personalInfo.displayName, 2, element.subStatus.block);
             this.accounts.push(account);
-          }
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
+            let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
+              element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
+            this.savedAccounts.push(ownBeneficiarieAccount);
+          })
+
+          let accountNumberDefault = this.accounts[0].accountNo;
+
+          this.resetBeneficiariesList(accountNumberDefault);
+          return this.accounts;
+
+        });
+    })
   }
 
 
-  public deleteBeneficiarie(id, accountNumber: string, index): void {
-
+  public deleteBeneficiarie(id: string, accountNumber: string, index: number): void {
+    this.helpersService.presentLoading('Deleting beneficiary...');
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (accountNumber.length == 9 || accountNumber.length == 11) ? 'TPT' : 'EXT';
     let promise: any;
@@ -360,11 +414,45 @@ export class TransfersPage implements OnInit {
       promise = this.clientsService.deleteBeneficiarieEXT(id)
     }
     promise.toPromise().then((response: any) => {
-      console.log(response);
-      this.savedAccounts.splice(index, 1);
+      this.savedAccountsFiltered = this.savedAccounts;
+      this.savedAccountsFiltered.splice(index, 1);
     })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        this.helpersService.showErrorMessage();
       })
+      .finally(() => this.helpersService.hideLoading())
+  }
+
+  public onChangeText(text: string) {
+    this.isBeneficiarieSelected = false;
+    this.beneficiarieSelected = null;
+    // filtramos la cuenta seleccionada
+    this.savedAccountsFiltered = this.savedAccounts.filter(u => (u.isOwnAccount && u.accountNumber !== this.accountSelected.accountNo) || !u.isOwnAccount);
+    // filtramos por el texto introducido
+    this.savedAccountsFiltered = this.savedAccountsFiltered.filter(function (str) { return str.name.toLowerCase().indexOf(text.toLowerCase()) !== -1 || str.alias.toLowerCase().indexOf(text.toLowerCase()) !== -1; });
+  }
+
+  public onChangeAccount(param: CardAccount) {
+    // seteamos nueva cuenta
+    this.accountSelected = param;
+    this.resetBeneficiariesList(this.accountSelected.accountNo);
+  }
+
+  public onInitCardAccount(param: CardAccount) {
+    // seteamos nueva cuenta
+    this.accountSelected = param;
+  }
+
+  private resetBeneficiariesList(accountNumber?: string) {
+    // reseteamos el filtro
+    this.savedAccountsFiltered = this.savedAccounts;
+    this.savedAccountsFiltered = this.savedAccounts.filter(u => (u.isOwnAccount && u.accountNumber != accountNumber) || !u.isOwnAccount);
+    this.beneficiarieSearch = "";
+  }
+
+  toUpperCase(controlName: string) {
+    const control = this.transferForm.get(controlName);
+    control.valueChanges.subscribe( value => control.setValue((value || '').toUpperCase(), {emitEvent: false}) );
   }
 }
