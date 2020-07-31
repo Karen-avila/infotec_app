@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <div class="container-image" style="width: 60%;margin:auto; margin-bottom: -1rem;">
+  <div  *ngIf="showImage" class="container-image" style="width: 60%;margin:auto; margin-bottom: -1rem;">
     <ion-img src="/assets/logo-banbi-green.png" alt="Logo"></ion-img>
   </div>
 
@@ -11,13 +11,13 @@
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">
         <ion-item>
           <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-input [disabled]="disabledButtons" formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
+          <ion-input [disabled]="disabledButtons" (input)="toOnlyRegex('username', '[^0-9]')" maxlength="10" type="tel" formControlName="username" placeholder="{{ 'Username' | translate }}" clearInput></ion-input>
         </ion-item>
         <app-input-error [control]="loginForm.controls.username"></app-input-error>
 
         <ion-item>
           <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-          <ion-input [disabled]="disabledButtons" formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
+          <ion-input [disabled]="disabledButtons" maxlength="50" formControlName="password" [type]="type" placeholder="{{ 'Password' | translate }}"
             clearInput></ion-input>
           <ion-icon *ngIf="icon; else elseTemplate" (click)="viewPassword()" name="eye-off-outline" slot="end">
           </ion-icon>
@@ -29,7 +29,7 @@
         <ion-row>
           <ion-col align-self-center class="text-center">
             <ion-button type="submit" [disabled]="loginForm.invalid || disabledButtons" expand="block" color="primary">{{ 'Sign in' | translate }}</ion-button>
-            <ion-button routerLink="/registration" expand="block" style="text-transform: uppercase; margin-top: 1rem;" color="medium">
+            <ion-button (click)="Route('/registration')" expand="block" style="text-transform: uppercase; margin-top: 1rem;" color="medium">
               {{ 'Register ' | translate }}
             </ion-button>
             <a style="text-decoration: none; font-size: 12px;" [routerLink]="['/forgot-password']"

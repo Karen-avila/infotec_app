@@ -95,8 +95,8 @@
     "Phone Number": "Número de Celular",
     "Next": "Siguiente",
     "Birthdate": "Fecha de nacimiento",
-    "The curp is invalid": "La CURP no es valida",
-    "The RFC is invalid": "El RFC no es valido",
+    "The curp is invalid": "La CURP no es válida",
+    "The RFC is invalid": "El RFC no es válido",
     "Offices": "Sucursales",
     "Change Email": "Cambiar correo",
     "First name": "Nombre(s)",
@@ -152,7 +152,7 @@
     "No face was detected*": "No se detectó ningún rostro*",
     "Only one face should appear in the selfie*": "Solo deber salir un rostro en la selfie*",
     "User successfully registered": "Usuario registrado exitosamente",
-    "Could not register user, please try again later": "No se pudo registrar al usuario, intentelo más tarde",
+    "Could not register user, please try again later": "No se pudo registrar al usuario, inténtelo más tarde",
     "Customer details are incorrect, please contact support area": "Los datos de cliente son incorrectos, comuníquese con el área de soporte",
     "Just one more step": "Solo un paso más",
     "Check your email!": "¡Revisa tu correo!",
@@ -241,5 +241,9 @@
     "You must write text": "Debes escribir texto",
     "You can now login with your username (phone number) and password": "Ya puedes iniciar sesión con tu usuario (número telefónico) y contraseña",
     "Phone number already exists": "El número telefónico ya existe",
-    "Please try to register with a different phone number": "Por favor intenta registrarte con un número telefónico diferente"
+    "Please try to register with a different phone number": "Por favor intenta registrarte con un número telefónico diferente",
+    "Email already exists": "El correo electrónico ya existe",
+    "Please try to register with a different email": "Por favor intenta registrarte con un correo electrónico diferente",
+    "No internet connection": "Sin conexión a internet",
+    "To register you need to be connected to the internet, check your connection and try again": "Para el registro es necesario estar conectado a internet, revise su conexión y vuelva a intentar"
 }

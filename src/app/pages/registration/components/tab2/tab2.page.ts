@@ -93,7 +93,7 @@ export class Tab2Page implements OnInit {
     curp.valueChanges.subscribe(value => curp.setValue(value.toUpperCase(), { emitEvent: false }));
 
     await faceapi.nets.ssdMobilenetv1.loadFromUri('https://raw.githubusercontent.com/nestorlazcano-fintecheando/testing-face-api/master');
-
+    
     // this.imageUrl = localStorage.getItem('image');
 
     // setTimeout(() => this.updateResults(), 100);
@@ -150,6 +150,8 @@ export class Tab2Page implements OnInit {
         surName: value.surName.trim(),
         lastName: value.lastName.trim(),
         email: value.email.trim(),
+        shaded: true,
+        channel: "Movil",
         username: form.mobileNumber
       };
 
@@ -160,10 +162,22 @@ export class Tab2Page implements OnInit {
         });
 
     }).catch(async error => {
+      
       if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.resource.not.found') {
-        const text = await this.translate.get('Customer details are incorrect, please contact support area').toPromise();
-        this.presentToast(text);
+        if (
+          error.error.errors.length && 
+          error.error.errors[0].userMessageGlobalisationCode === 'error.msg.user.email.is.in.use'
+        ) {
+          await this.helpersService.showErrorMessage(
+            'Email already exists', 
+            'Please try to register with a different email'
+          );
+        } else {
+          const text = await this.translate.get('Customer details are incorrect, please contact support area').toPromise();
+          this.presentToast(text); 
+        }
       }
+
       throw error;
     });
   }
@@ -243,7 +257,7 @@ export class Tab2Page implements OnInit {
     }).catch(async error => {
       console.error(error.error.userMessageGlobalisationCode);
       this.helpersService.hideLoading();
-
+      
       if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.user.duplicate.username') {
         this.helpersService.hideLoading();
 
@@ -252,6 +266,11 @@ export class Tab2Page implements OnInit {
           'Please try to register with a different phone number'
         );
 
+      } else if (error.status === 504) {
+        await this.helpersService.showErrorMessage(
+          'No internet connection', 
+          'To register you need to be connected to the internet, check your connection and try again'
+        );
       } else if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
         const text = await this.translate.get('Could not register user, please try again later').toPromise();
         this.presentToast(text);
@@ -261,6 +280,11 @@ export class Tab2Page implements OnInit {
     });
     //this.router.navigateByUrl('/dashboard'); //second-login
 
+  }
+
+  toOnlyRegex(key: string, regex: string) {
+    const inputName = this.registerForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   dataURLtoFile(dataurl, filename = 'image-profile.jpg') {
@@ -341,7 +365,7 @@ export class Tab2Page implements OnInit {
 
               if (!document.getElementById('text-error')) {
                 document.getElementById('codigoActivacion')
-                  .insertAdjacentHTML('afterend', `<span id="text-error">${translate['Activation code is required']}<span>`);
+                  .insertAdjacentHTML('afterend', `<span id="text-error" style="color: #EB445A">${translate['Activation code is required']}<span>`);
               }
 
               return false;

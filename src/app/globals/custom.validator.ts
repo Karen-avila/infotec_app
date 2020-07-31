@@ -9,7 +9,7 @@ export function ValidatePhoneNumber(control: AbstractControl) {
 }
 
 export function ValidateCurp(control: AbstractControl) {
-    if (!(/^[a-zA-Z]{4}[\d]{6}(H|h|M|m)[a-zA-Z]{5}[a-zA-Z0-9]{2}$/.test(control.value))) {
+    if (!(/^[a-zA-ZñÑ]{4}[\d]{6}(H|h|M|m)[a-zA-Z]{5}[a-zA-Z0-9]{2}$/.test(control.value))) {
         return { curp: true };
     }
     return null;

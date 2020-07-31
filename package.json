@@ -4,7 +4,8 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "serve": "ionic serve",
+    "serve": "ts-node ./setenv.ts && ionic serve",
+    "config": "ts-node ./setenv.ts ${@:1}",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -102,6 +103,7 @@
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
+    "dotenv": "^8.2.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -112,7 +114,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "yargs": "^15.4.1"
   },
   "description": "An Ionic project",
   "cordova": {

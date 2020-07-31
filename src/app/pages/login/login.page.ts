@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { NavController } from '@ionic/angular';
 
+var CryptoJS = require("crypto-js");
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,6 +22,7 @@ export class LoginPage implements OnInit {
   loginAttempts: number = 0;
   interval;
   textTitle: string = '';
+  showImage: boolean = true;
 
   constructor(
       public formBuilder: FormBuilder, 
@@ -31,11 +34,11 @@ export class LoginPage implements OnInit {
     this.loginForm = formBuilder.group({
       username: ["", Validators.compose([
         Validators.required,
-        Validators.minLength(5)
+        Validators.minLength(10)
       ])],
       password: ["", Validators.compose([
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(10)
       ])]
     });
   }
@@ -49,8 +52,22 @@ export class LoginPage implements OnInit {
 
   }
 
+  ionViewWillEnter() {
+    this.showImage = true;
+  }
+
+  ionViewWillLeave() {
+    this.showImage = false;
+  }
+
   public Route(route:string){
+    this.showImage = false;
     this.navCtrl.navigateRoot([route]);
+  }
+
+  toOnlyRegex(key: string, regex: string) {
+    const inputName = this.loginForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   public async setTextTitle() {
@@ -113,6 +130,7 @@ export class LoginPage implements OnInit {
   signIn() {
     console.log("INICIA LOGIN");
     const form = { ...this.loginForm.value };
+    form.password = CryptoJS.SHA256(form.password).toString(CryptoJS.enc.Hex);
     this.authenticationService.login(form, true).catch( async err => {
       if (err.error && err.error.userMessageGlobalisationCode === 'error.msg.not.authenticated') {
         this.loginAttempts++;
