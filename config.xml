@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="gob.mx.bancodelbienestar.movil" version="1.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="gob.mx.bancodelbienestar.movil" version="1.18" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Bienestar Móvil</name>
     <description>El Banco de los Mexicanos.</description>
     <author email="dgatyo@bancodelbienestar.com.mx" href="http://bancodelbienestar.com.mx/">Banco del Bienestar</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
+    <allow-intent href="*" />
+    <allow-navigation href="*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
@@ -111,7 +111,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <allow-navigation href="http://localhost:8100" sessionid="437b85a2" />
     <platform name="windows">
         <icon src="resources/windows/icon/Square44x44Logo.png" target="Square44x44Logo" />
         <icon src="resources/windows/icon/SmallTile.png" target="Square71x71Logo" />
