@@ -5,8 +5,8 @@
     <author email="dgatyo@bancodelbienestar.com.mx" href="http://bancodelbienestar.com.mx/">Banco del Bienestar</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="*" />
     <allow-navigation href="*" />
+    <allow-intent href="*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />

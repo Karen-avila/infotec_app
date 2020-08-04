@@ -215,7 +215,7 @@
     "This account is momentarily blocked": "Esta cuenta está momentáneamente bloqueada",
     "Welcome": "Bienvenido(a)",
     "Check your cell phone!": "¡Revisa tu celular!",
-    "You should have received an recovery code (if the code did not reach you, select the forward option) that you must provide below.": "Te debería haber llegado un código de recuperación (si el código no te llego, selecciona la opción de reenviar) que deberás proporcionar a continuación.",
+    "You should have received an activation code (if the code did not reach you, select the forward option) that you must provide below.": "Te debería haber llegado un código de autentificación (si el código no te llego, selecciona la opción de reenviar) que deberás proporcionar a continuación.",
     "Recovery code": "Código de recuperación",
     "Recovery code is required": "El código de recuperación es requerido",
     "Pay Orders": "Órdenes de Pago",
@@ -245,5 +245,13 @@
     "Email already exists": "El correo electrónico ya existe",
     "Please try to register with a different email": "Por favor intenta registrarte con un correo electrónico diferente",
     "No internet connection": "Sin conexión a internet",
-    "To register you need to be connected to the internet, check your connection and try again": "Para el registro es necesario estar conectado a internet, revise su conexión y vuelva a intentar"
+    "To register you need to be connected to the internet, check your connection and try again": "Para el registro es necesario estar conectado a internet, revise su conexión y vuelva a intentar",
+    "We did not find any user with the data provided": "No encontramos a ningún usuario con los datos proporcionados",
+    "Incorrect data": "Datos incorrectos",
+    "You need to be connected to the internet, check your connection and try again": "Es necesario estar conectado a internet, revise su conexión y vuelva a intentar",
+    "Recovery": "Recuperación",
+    "New Password": "Nueva Contraseña",
+    "The password was updated correctly, you can now access mobile banking with your new password": "La contraseña se actualizó correctamente, ya puedes acceder a tu banca móvil con tu nueva contraseña",
+    "Updated password": "Contraseña actualizada",
+    "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto"
 }

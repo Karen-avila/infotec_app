@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: ForgotPasswordPage
+  },
+  {
+    path: 'renew-password/:token',
+    loadChildren: () => import('./components/renew-password/renew-password.module').then( m => m.RenewPasswordPageModule)
   }
+
 ];
 
 @NgModule({

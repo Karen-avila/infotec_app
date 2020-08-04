@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '@services/user/user.service';
 
 
 @Component({
@@ -22,13 +23,19 @@ export class ForgotPasswordPage implements OnInit {
               public formBuilder: FormBuilder, 
               public menuCtrl: MenuController,
               private helpersService: HelpersService,
-              private translate: TranslateService
+              private translate: TranslateService,
+              private userService: UserService,
+              private toastController: ToastController
             ) {
 
     this.forgotForm = formBuilder.group({
-      phoneNumber: ["", Validators.compose([
+      curp: ["", Validators.compose([
         Validators.required,
-        CustomValidators.ValidatePhoneNumber
+        CustomValidators.ValidateCurp
+      ])],
+      email: ["", Validators.compose([
+        Validators.required,
+        CustomValidators.ValidateEmail
       ])]
   });
 
@@ -46,8 +53,40 @@ export class ForgotPasswordPage implements OnInit {
 
   getActivationCode() {
 
-    console.log('Get Recovery code');
-    
+    this.helpersService.presentLoading();
+    this.userService.recoverPassword(this.forgotForm.value, 'request').toPromise().then( resp => {
+      return this.presentAlertPrompt().then( resp => {
+        const { codigoActivacion } = resp;
+        this.router.navigate([ '/forgot-password', 'renew-password', codigoActivacion ]);
+      } );
+    } ).catch( async error => {
+
+      if (error.status === 504 || error.status === 0) {
+        await this.helpersService.showErrorMessage(
+          'No internet connection', 
+          'You need to be connected to the internet, check your connection and try again'
+        );
+      } else {
+        await this.helpersService.showErrorMessage(
+          'Incorrect data', 
+          'We did not find any user with the data provided'
+        );
+      } 
+      
+    } ) .finally( () => this.helpersService.hideLoading() );
+
+  }
+
+  presentToast(message): boolean {
+    this.toastController.create({
+      message,
+      duration: 5000
+    }).then(toastData => {
+      toastData.present();
+    });
+
+    return false;
+
   }
 
   presentAlertPrompt(): Promise<any> {
@@ -56,16 +95,16 @@ export class ForgotPasswordPage implements OnInit {
     
     return new Promise( async resolve => {
 
-      const message = 'You should have received an recovery code (if the code did not reach you, select the forward option) that you must provide below.';
+      const message = 'You should have received an activation code (if the code did not reach you, select the forward option) that you must provide below.';
       
       const translate = await this.translate.get([
         'Just one more step', 
-        'Check your cell phone!', 
+        'Check your email!', 
         'Transfer amount greather than account balance',
         message,
         'Finish',
-        'Recovery code',
-        'Recovery code is required',
+        'Activation code',
+        'Activation code is required',
         'Resend',
         'Cancel',
         'Accept'
@@ -73,15 +112,15 @@ export class ForgotPasswordPage implements OnInit {
 
       const alert = await this.alertController.create({
         header: translate['Just one more step'],
-        subHeader: translate['Check your cell phone!'],
+        subHeader: translate['Check your email!'],
         backdropDismiss: false,
         message: translate[message],
         inputs: [
           {
             name: 'codigoActivacion',
             id: 'codigoActivacion',
-            type: 'number',
-            placeholder: translate['Recovery code']
+            type: 'text',
+            placeholder: translate['Activation code']
           }
         ],
         buttons: [
@@ -107,7 +146,7 @@ export class ForgotPasswordPage implements OnInit {
 
               if (!document.getElementById('text-error')) {
                 document.getElementById('codigoActivacion')
-                  .insertAdjacentHTML('afterend', `<span id="text-error">${translate['Recovery code is required']}<span>`);
+                  .insertAdjacentHTML('afterend', `<span id="text-error" style="color: #EB445A">${translate['Activation code is required']}<span>`);
               }
                 
               return false;
@@ -117,30 +156,17 @@ export class ForgotPasswordPage implements OnInit {
         ]
       });
   
-      alert.present();
+      alert.present().then( () => {
+        document.getElementById('codigoActivacion').setAttribute('maxlength', '10');
+      } );
     } )
 
    
   }
 
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: '¡Aviso!',
-      subHeader: 'Recuperación de la contraseña',
-      message: 'Se ha enviado un correo con las instrucciones para la recuperación de la contraseña.',
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            console.log('Confirm Okay');
-            this.forgot();
-          }
-        }
-      ]
-      
-    });
-
-    await alert.present();
+  toOnlyRegex(key: string, regex: string) {
+    const inputName = this.forgotForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
 }

@@ -266,7 +266,7 @@ export class Tab2Page implements OnInit {
           'Please try to register with a different phone number'
         );
 
-      } else if (error.status === 504) {
+      } else if (error.status === 504 || error.status === 0) {
         await this.helpersService.showErrorMessage(
           'No internet connection', 
           'To register you need to be connected to the internet, check your connection and try again'
