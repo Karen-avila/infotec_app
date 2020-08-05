@@ -70,7 +70,7 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.initialize();
+    this.initialize(null);
   }
 
   protected checkPermissions() {
@@ -92,6 +92,7 @@ export class DashboardPage implements OnInit {
       this.tabIdex = index;
     });
   }
+
 
   public scannerQRCode() {
 
@@ -146,15 +147,18 @@ export class DashboardPage implements OnInit {
     const modal = await this.modalController.create({
       component: MovementsPage,
       componentProps: {
-        'accountNumber': this.accountSelected.accountNo
+        'accountNumber': this.accountSelected.id
       }
     });
     return await modal.present();
   }
 
-  private initialize() {
+  public initialize(event: any) {
 
-    this.helpersService.presentLoading();
+    console.log('Enter here');
+    
+    if (!event)
+      this.helpersService.presentLoading();
 
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
@@ -180,7 +184,11 @@ export class DashboardPage implements OnInit {
         throw err;
       })
       .finally(() => {
-        this.helpersService.hideLoading()
+        if (event) {
+          event.target.complete();
+        } else {
+          this.helpersService.hideLoading();
+        }
       });
 
   }

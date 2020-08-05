@@ -220,7 +220,8 @@ export class ManageAccountPage implements OnInit {
     this.helpersService.presentLoading('Searching client...');
     const form = { ...this.form.value };
     //TODO borrar cuando las accounts number tengan 11 digitos
-    let accountNumber = form.accountNumber.substring(2);
+    // let accountNumber = form.accountNumber.substring(2);
+    let accountNumber = form.accountNumber;
     this.clientsService.searchAccount(accountNumber)
       .toPromise()
       .then((res: Beneficiarie[]) => {
@@ -262,7 +263,8 @@ export class ManageAccountPage implements OnInit {
         "name": form.name,
         "alias": form.alias,
         //TODO borrar el substring cuando admita 11 parametros
-        "accountNumber": form.accountNumber.substring(2),
+        // "accountNumber": form.accountNumber.substring(2),
+        "accountNumber": form.accountNumber,
         "officeName": this.officeNameFound,
         "accountType": this.accountTypeFound,
         "transferLimit": form.transferLimit
