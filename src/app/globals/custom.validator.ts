@@ -16,7 +16,7 @@ export function ValidateCurp(control: AbstractControl) {
 }
 
 export function ValidateRfc(control: AbstractControl) {
-    if (!(/^[a-zA-Z]{4}[\d]{6}[0-9]{2}[a-zA-Z]{1}$/.test(control.value))) {
+    if (!(/^[a-zA-Z]{4}[\d]{6}[a-zA-Z0-9]{3}$/.test(control.value))) {
         return { rfc: true };
     }
     return null;

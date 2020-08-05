@@ -32,7 +32,6 @@ export class RenewPasswordPage implements OnInit {
 
     this.renewForm = this.formBuilder.group({
       shaded: [true],
-      channel: ["Movil"],
       token: ["", [Validators.required]],
       password: ["", [Validators.required, CustomValidators.ValidatePassword]],
       repeatPassword: ["", [Validators.required]],
