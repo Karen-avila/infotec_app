@@ -21,8 +21,8 @@
             
             <ng-template #elseTemplate>
               <h3>
-                {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} -
-                {{ item.paymentDetailData.paymentType.name | translate }}</h3>
+                {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} 
+                ({{ item.paymentDetailData.paymentType.name | translate }})</h3>
             </ng-template>
            
           </ng-container>
@@ -36,9 +36,18 @@
           <h5 style="font-size: x-small; color: grey;" *ngIf="item.transfer">
             {{ item.transactionType.id === 2 ? ('Made a transfer for' | translate) : ('Received a transfer for' | translate)}}
             {{ item.currency.displaySymbol}}{{item.amount | money }}</h5>
-  
-          <h5 style="font-size: small;">{{ 'Balance' | translate }}:
-            {{ item.currency.displaySymbol}}{{item.runningBalance | money }} </h5>
+
+          <div style="font-size: x-small; color: grey;">
+            {{ 'Balance' | translate }}: {{ item.currency.displaySymbol}}{{item.runningBalance | money }}
+          </div>
+          <div style="font-size: x-small;">
+            <span>
+              {{ 'Folio' | translate }}: {{ item.transfer?.id || item.id }}            
+            </span>
+            <span style="float: right;">
+              {{item.submittedOnDate | date }}
+            </span>
+          </div>
         </ion-label>
     </ion-item>
   </ion-list>

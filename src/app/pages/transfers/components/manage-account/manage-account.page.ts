@@ -139,13 +139,11 @@ export class ManageAccountPage implements OnInit {
           return;
         }
 
-        //BORRAR cuando no haya problemas con 9 digitos u 11
-        let accountFixed = accountNumber.length == 9 ? "00" + accountNumber : accountNumber;
         this.form.patchValue({
           id: id,
           name: name,
           alias: alias,
-          accountNumber: accountFixed.replace(/ /gi, ''),
+          accountNumber: accountNumber.replace(/ /gi, ''),
           transferLimit: transferLimit,
           bankId: bankEntity
         });
@@ -189,8 +187,7 @@ export class ManageAccountPage implements OnInit {
   async evaluateBank(x: string) {
     let possibleBank = x.substring(0, 3);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
-    // TODO borrar condicion de 9 cuando las account number sean de 11
-    if (x.length == 11 || x.length == 9) {
+    if (x.length == 11) {
       const possibleBanks = this.banks.filter(u => u.name == '000');
       this.searchButtonEnabled = true;
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
@@ -214,6 +211,11 @@ export class ManageAccountPage implements OnInit {
 
   public dismissModal() {
     this.modalController.dismiss();
+  }
+
+  toOnlyRegex(key: string, regex: string) {
+    const inputName = this.form.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   async search() {
@@ -316,8 +318,11 @@ export class ManageAccountPage implements OnInit {
       this.dismissModal();
     })
       .catch(err => {
-        console.log(err);
-        this.helpersService.showErrorMessage();
+        if (err.status === 504 || err.status === 0) {
+          this.helpersService.showNoInternet();
+        } else {
+          this.helpersService.showErrorMessage();
+        }
       })
       .finally(() => this.helpersService.hideLoading())
   }

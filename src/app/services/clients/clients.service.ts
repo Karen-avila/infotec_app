@@ -68,7 +68,25 @@ export class ClientsService {
   public async getSavingsAccounts(summaryRequired: boolean = true): Promise<any> {
     const clientId = (await this.storage.get('personal-info')).id;
     const globalConfig = await this.storage.get('globals');
-    return this.getAccounts(clientId).toPromise().then( response => {
+    const now = (new Date).getTime();
+      
+    return this.storage.get('lastAccountRequest').then( (lastAccountRequest: any) => {
+
+      if (lastAccountRequest && (lastAccountRequest.date + 8.64e+7) > now) {
+        return { response: lastAccountRequest.response, updateAccountRequest: false};      
+      } 
+
+      return this.getAccounts(clientId).toPromise()
+        .then( response => ({response, updateAccountRequest: true}) );
+
+    } ).then( ({response, updateAccountRequest}) => {
+
+      if (updateAccountRequest) {
+        this.storage.set('lastAccountRequest', {
+          date: (new Date).getTime(),
+          response
+        });
+      }
       
       if (!globalConfig.showSavingAccounts.description) return [];
 

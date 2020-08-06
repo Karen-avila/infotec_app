@@ -51,13 +51,13 @@ export class ForgotPasswordPage implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  getActivationCode() {
+  getActivationCode(presentAlert: boolean = true) {
 
     this.helpersService.presentLoading();
     this.userService.recoverPassword(this.forgotForm.value, 'request').toPromise().then( resp => {
-      return this.presentAlertPrompt().then( resp => {
-        const { codigoActivacion } = resp;
-        this.router.navigate([ '/forgot-password', 'renew-password', codigoActivacion ]);
+      return (presentAlert ? this.presentAlertPrompt() : Promise.resolve() ).then( resp => {
+        // const { codigoActivacion } = resp;
+        if (presentAlert && resp !== 'cancelar') this.router.navigate([ '/forgot-password', 'renew-password' ]);
       } );
     } ).catch( async error => {
 
@@ -107,7 +107,7 @@ export class ForgotPasswordPage implements OnInit {
         'Activation code is required',
         'Resend',
         'Cancel',
-        'Accept'
+        'Continue'
       ]).toPromise();
 
       const alert = await this.alertController.create({
@@ -115,14 +115,14 @@ export class ForgotPasswordPage implements OnInit {
         subHeader: translate['Check your email!'],
         backdropDismiss: false,
         message: translate[message],
-        inputs: [
-          {
-            name: 'codigoActivacion',
-            id: 'codigoActivacion',
-            type: 'text',
-            placeholder: translate['Activation code']
-          }
-        ],
+        // inputs: [
+        //   {
+        //     name: 'codigoActivacion',
+        //     id: 'codigoActivacion',
+        //     type: 'text',
+        //     placeholder: translate['Activation code']
+        //   }
+        // ],
         buttons: [
           {
             text: translate['Cancel'],
@@ -131,12 +131,14 @@ export class ForgotPasswordPage implements OnInit {
           }, {
             text: translate['Resend'],
             handler: () => {
-              this.getActivationCode();
+              this.getActivationCode(false);
               return false;
             }
           }, {
-            text: translate['Accept'],
+            text: translate['Continue'],
             handler: (alertData) => {
+              resolve();
+              return;
               if (alertData.codigoActivacion) {
                 console.log('se resuelve la promesa');
                 

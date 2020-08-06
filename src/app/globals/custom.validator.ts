@@ -77,8 +77,7 @@ export function ValidateText(control: AbstractControl) {
 
 
 export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
-    // TODO borrar el de parametro 9 porque las cuentas del banco siempre van a ser de 11, se dejo asi para las pruebas en un comienzo
-    if ((`${control.value}`).length === 9 || (`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {
+    if ((`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {
         return null;
     }
     return { accountNumber: true };

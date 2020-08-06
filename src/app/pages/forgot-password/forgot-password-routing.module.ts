@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ForgotPasswordPage
   },
   {
-    path: 'renew-password/:token',
+    path: 'renew-password',
     loadChildren: () => import('./components/renew-password/renew-password.module').then( m => m.RenewPasswordPageModule)
   }
 

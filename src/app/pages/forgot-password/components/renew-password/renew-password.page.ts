@@ -32,14 +32,12 @@ export class RenewPasswordPage implements OnInit {
 
     this.renewForm = this.formBuilder.group({
       shaded: [true],
-      token: ["", [Validators.required]],
+      token: ["", [Validators.required, Validators.minLength(10)]],
       password: ["", [Validators.required, CustomValidators.ValidatePassword]],
       repeatPassword: ["", [Validators.required]],
     }, {
       validator: CustomValidators.ValidateMatch('password', 'repeatPassword')
     });
-
-    this.renewForm.get('token').setValue(this.activatedRoute.snapshot.params.token);
 
   }
 

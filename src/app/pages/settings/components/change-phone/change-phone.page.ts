@@ -56,6 +56,11 @@ export class ChangePhonePage implements OnInit {
       .finally(() => this.helpersService.hideLoading())
   }
 
+  toOnlyRegex(key: string, regex: string) {
+    const inputName = this.form.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
+  }
+
   private updatePhone(phone: string): void {
     this.clientsService.getLoginInfo()
       .then((data: LoginInfo) => {

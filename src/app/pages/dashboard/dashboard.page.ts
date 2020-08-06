@@ -12,6 +12,7 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { environment } from '@env';
 import { CodesService } from '@services/catalogs/codes.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-dashboard',
@@ -55,7 +56,8 @@ export class DashboardPage implements OnInit {
     private clientsService: ClientsService,
     private helpersService: HelpersService,
     private authentication: AuthenticationService,
-    private codesService: CodesService
+    private codesService: CodesService,
+    private storage: Storage
   ) {
     this.checkPermissions();
 
@@ -164,7 +166,7 @@ export class DashboardPage implements OnInit {
       .then((data: PersonalInfo) => {
         console.log(data);
         this.personalInfo = data;
-        return this.codesService.getMOBILE().toPromise();
+        return this.storage.get('globals');
       })
       .then((data: any) => {
         console.log(data);
@@ -196,7 +198,7 @@ export class DashboardPage implements OnInit {
   private getAccounts(): Promise<any> {
     return this.clientsService.getSavingsAccounts().then( savings => {
       this.accounts = [];
-      if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+      if (this.globalConfig.showSavingAccounts.description) {
         savings.forEach(element => {
           console.log(element);
           

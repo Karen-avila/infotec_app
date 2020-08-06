@@ -253,5 +253,8 @@
     "New Password": "Nueva Contraseña",
     "The password was updated correctly, you can now access mobile banking with your new password": "La contraseña se actualizó correctamente, ya puedes acceder a tu banca móvil con tu nueva contraseña",
     "Updated password": "Contraseña actualizada",
-    "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto"
+    "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
+    "Cash": "Efectivo", 
+    "Account": "Cuenta",
+    "New Phone": "Nuevo número de celular"
 }
