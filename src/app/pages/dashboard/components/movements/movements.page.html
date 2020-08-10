@@ -9,9 +9,14 @@
   <ion-list style="width: 90%; margin: auto;">
     <ion-item *ngFor="let item of movements; index as index">
         <ion-avatar slot="start">
-          <ion-icon
-            [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
-            src="assets/icon/logout.svg"></ion-icon>
+          <ion-icon *ngIf="item.transactionType.id === 1; else elseTemplateSvg"
+            [ngStyle]="{'color':  'green', 'margin-top':'7px','font-size':'x-large' }"
+            src="assets/icon/login.svg"></ion-icon>
+          <ng-template #elseTemplateSvg>
+            <ion-icon
+              [ngStyle]="{'color':  'red', 'margin-top':'7px','font-size':'x-large' }"
+              src="assets/icon/logout.svg"></ion-icon>
+          </ng-template>
         </ion-avatar>
         <ion-label>
   

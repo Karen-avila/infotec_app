@@ -47,7 +47,7 @@
 
           <ion-item style="margin-top: 15px;">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-input class="not-capitalize" maxlength="50" formControlName="password" placeholder="{{ 'Password' | translate }}" [type]="type" clearInput>
+            <ion-input (input)="toOnlyRegex('password', '[^A-Za-z0-9]', false)" maxlength="8" formControlName="password" placeholder="{{ 'Password' | translate }}" [type]="type" clearInput>
             </ion-input>
             <ion-icon *ngIf="icon" (click)="viewPassword()" name="eye-off-outline" slot="end"></ion-icon>
             <ion-icon *ngIf="!icon" (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
@@ -56,7 +56,7 @@
 
           <ion-item style="margin-top: 15px;">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-input class="not-capitalize" maxlength="50" formControlName="confirmPassword" [type]="reType"
+            <ion-input (input)="toOnlyRegex('confirmPassword', '[^A-Za-z0-9]', false)" maxlength="8" formControlName="confirmPassword" [type]="reType"
               placeholder="{{ 'Confirm Password' | translate }}" clearInput></ion-input>
             <ion-icon *ngIf="reIcon" (click)="viewRePassword()" name="eye-off-outline" slot="end"></ion-icon>
             <ion-icon *ngIf="!reIcon" (click)="viewRePassword()" name="eye-outline" slot="end"></ion-icon>

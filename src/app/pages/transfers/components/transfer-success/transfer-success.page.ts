@@ -22,6 +22,7 @@ export class TransferSuccessPage implements OnInit {
   public transferAmount: number;
   public fecha: string;
   public rfc: string;
+  public accountNoSelected: string;
 
   @ViewChild('pageShare',{static:true}) pageShare: ElementRef;
 
@@ -35,7 +36,7 @@ export class TransferSuccessPage implements OnInit {
   ngOnInit() {
     console.log("transfer data", this.navParams.data);
 
-    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc } = this.navParams.data;
+    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc, accountNoSelected } = this.navParams.data;
 
     this.accountNumber = accountNumber;
     this.clientName = clientName;
@@ -44,12 +45,17 @@ export class TransferSuccessPage implements OnInit {
     this.reference = reference;
     this.transferAmount = transferAmount;
     this.rfc = rfc;
+    this.accountNoSelected = accountNoSelected;
 
     const date = new Date();
     const formattedDate = date.toLocaleDateString(environment.locale, {
       day: '2-digit', month: 'short', year: 'numeric'
     })
     this.fecha = formattedDate;
+  }
+
+  hideAccountNumber(accountNumber: string): string {
+    return '*'.repeat(accountNumber.length - 4) + accountNumber.substr(-4);
   }
 
   async onShare() {

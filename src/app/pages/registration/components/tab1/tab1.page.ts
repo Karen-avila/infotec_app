@@ -90,9 +90,9 @@ export class Tab1Page implements OnInit {
 
   }
 
-  toOnlyRegex(key: string, regex: string) {
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
     const inputName = this.registerForm.get(key);
-    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? value.toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   viewRePassword() {

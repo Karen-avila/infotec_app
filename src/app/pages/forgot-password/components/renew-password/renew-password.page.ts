@@ -74,6 +74,11 @@ export class RenewPasswordPage implements OnInit {
 
   }
 
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
+    const inputName = this.renewForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? value.toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
+  }
+
   viewRePassword() {
     if (this.reIcon) {
       console.log("view repassword");

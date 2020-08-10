@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
       ])],
       password: ["", Validators.compose([
         Validators.required,
-        Validators.minLength(10)
+        Validators.minLength(8)
       ])]
     });
   }
@@ -65,9 +65,9 @@ export class LoginPage implements OnInit {
     this.navCtrl.navigateRoot([route]);
   }
 
-  toOnlyRegex(key: string, regex: string) {
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
     const inputName = this.loginForm.get(key);
-    inputName.valueChanges.subscribe(value => inputName.setValue( value.toUpperCase().replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? value.toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   public async setTextTitle() {

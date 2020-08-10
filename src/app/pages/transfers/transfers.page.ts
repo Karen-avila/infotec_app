@@ -341,6 +341,7 @@ export class TransfersPage implements OnInit {
     transferSuccess.reference = form.transferDescription;
     transferSuccess.concept = form.concept;
     transferSuccess.rfc = form.rfc;
+    transferSuccess.accountNoSelected = this.accountSelected.accountNo;
 
     this.helpersService.presentLoading('Transfering...');
 

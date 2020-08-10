@@ -256,5 +256,18 @@
     "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
     "Cash": "Efectivo", 
     "Account": "Cuenta",
-    "New Phone": "Nuevo número de celular"
+    "New Phone": "Nuevo número de celular",
+    "The password must not contain more than 2 consecutive equal numbers and/or letters": "La contraseña no debe contener más de 2 números y/o letras consecutivas iguales",
+    "The password must not contain the letter Ñ": "La contraseña no debe contener la letra Ñ",
+    "The password must not contain blanks": "La contraseña no debe contener espacios en blanco",
+    "The password must not contain special characters": "La contraseña no debe contener caracteres especiales",
+    "The password must not contain more than 2 descending numbers": "La contraseña no debe contener más de 2 números descendentes",
+    "The password must not contain more than 2 ascending numbers": "La contraseña no debe contener más de 2 números ascendentes",
+    "The password should not contain the name of the institution": "La contraseña no debe contener el nombre de la institución",
+    "The password must not contain more than 2 ascending letters": "La contraseña no debe contener más de 2 letras ascendentes",
+    "The password must contain at least one uppercase, one lowercase, a number and a length of 8 characters": "La contraseña debe contener al menos una mayúscula, una minúscula, un número y una longitud de 8 caracteres",
+    "The password must start with a letter": "La contraseña debe comenzar con una letra",
+    "Please verify that your PIN is correct and try again": "Por favor verifica que tu PIN sea correcto e intenta nuevamente",
+    "New Email": "Nuevo Correo",
+    "Check your connection to continue": "Verifica tu conexión para continuar"
 }
