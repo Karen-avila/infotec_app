@@ -109,6 +109,12 @@ export class HelpersService {
 
         wrapper.insertAdjacentHTML('afterbegin', `
         <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
+        <ion-text style="position: absolute; top: 13%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
+          ${ await this.translate.get('No internet connection').toPromise() }
+        </ion-text>
+        <ion-text style="position: absolute; top: 62%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
+          ${ await this.translate.get('Check your connection to continue').toPromise() }
+        </ion-text>
         <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button> 
       `);
 

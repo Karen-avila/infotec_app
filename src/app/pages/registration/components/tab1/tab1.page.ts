@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { TitleCasePipe } from '@angular/common';
 
+var CryptoJS = require("crypto-js");
 
 @Component({
   selector: 'app-tab1',
@@ -69,16 +70,18 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.get('registration').then(data => {
-      if (data) {
-        this.registerForm.patchValue({ ...data, confirmPassword: data.password });
-      }
-    });
+    // this.storage.get('registration').then(data => {
+    //   if (data) {
+    //     this.registerForm.patchValue({ ...data, confirmPassword: data.password });
+    //   }
+    // });
+    this.storage.remove('registration');
   }
 
   register() {
 
     const form = { ...this.registerForm.value };
+    form.password = CryptoJS.SHA256(form.password).toString(CryptoJS.enc.Hex)
     delete form.confirmPassword;
 
     this.storage.set('registration', form).then(() => {
@@ -87,16 +90,9 @@ export class Tab1Page implements OnInit {
 
   }
 
-  toUpperCase(key: string) {
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
     const inputName = this.registerForm.get(key);
-    inputName.valueChanges.subscribe(value => inputName.setValue(
-      value.toUpperCase().replace(/[^A-Za-znÑäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ ]/g, ""), 
-      { emitEvent: false }
-    ));
-  }
-
-  hello() {
-    console.log('Hello Word');
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? value.toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   viewRePassword() {

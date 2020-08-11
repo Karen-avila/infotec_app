@@ -14,4 +14,5 @@ export const ENDPOINTS = {
   codesOptions: `${environment.baseUrl}/codes`,
   socialPrograms: `${environment.baseUrl}/socialprogram`,
   savingsAccounts: `${environment.baseUrl}/savingsaccounts`,
+  password: `${environment.baseUrl}/password`,
 }

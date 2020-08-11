@@ -12,7 +12,7 @@ enum ErrorMessages {
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
   accountNumber = 'The client number is invalid',
-  password = 'The password format is invalid',
+  password = 'The password must contain at least one uppercase, one lowercase, a number and a length of 8 characters',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
   transferAmountLimit = 'Amount greather than transfer limit',
@@ -20,6 +20,15 @@ enum ErrorMessages {
   integer = "You must write an integer",
   text = 'You must write text',
   rfc = 'The RFC is invalid',
+  passwordRepeatLetters = 'The password must not contain more than 2 consecutive equal numbers and/or letters',
+  passwordContainsÑ = 'The password must not contain the letter Ñ',
+  passwordContainsBlanks = 'The password must not contain blanks',
+  passwordSpecialCharacters = 'The password must not contain special characters',
+  passwordContainsRepeatAscNumbers = 'The password must not contain more than 2 ascending numbers',
+  passwordContainsRepeatDesNumbers = 'The password must not contain more than 2 descending numbers',
+  passwordContainsInstitutionName = 'The password should not contain the name of the institution',
+  passwordContainsRepeatAscLetters = 'The password must not contain more than 2 ascending letters',
+  passwordStartLetter = 'The password must start with a letter'
 }
 
 @Component({

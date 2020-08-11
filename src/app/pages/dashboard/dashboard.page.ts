@@ -12,6 +12,7 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { environment } from '@env';
 import { CodesService } from '@services/catalogs/codes.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-dashboard',
@@ -55,7 +56,8 @@ export class DashboardPage implements OnInit {
     private clientsService: ClientsService,
     private helpersService: HelpersService,
     private authentication: AuthenticationService,
-    private codesService: CodesService
+    private codesService: CodesService,
+    private storage: Storage
   ) {
     this.checkPermissions();
 
@@ -70,7 +72,7 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.initialize();
+    this.initialize(null);
   }
 
   protected checkPermissions() {
@@ -92,6 +94,7 @@ export class DashboardPage implements OnInit {
       this.tabIdex = index;
     });
   }
+
 
   public scannerQRCode() {
 
@@ -146,21 +149,24 @@ export class DashboardPage implements OnInit {
     const modal = await this.modalController.create({
       component: MovementsPage,
       componentProps: {
-        'accountNumber': this.accountSelected.accountNo
+        'accountNumber': this.accountSelected.id
       }
     });
     return await modal.present();
   }
 
-  private initialize() {
+  public initialize(event: any) {
 
-    this.helpersService.presentLoading();
+    console.log('Enter here');
+    
+    if (!event)
+      this.helpersService.presentLoading();
 
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
         console.log(data);
         this.personalInfo = data;
-        return this.codesService.getMOBILE().toPromise();
+        return this.storage.get('globals');
       })
       .then((data: any) => {
         console.log(data);
@@ -180,7 +186,11 @@ export class DashboardPage implements OnInit {
         throw err;
       })
       .finally(() => {
-        this.helpersService.hideLoading()
+        if (event) {
+          event.target.complete();
+        } else {
+          this.helpersService.hideLoading();
+        }
       });
 
   }
@@ -188,7 +198,7 @@ export class DashboardPage implements OnInit {
   private getAccounts(): Promise<any> {
     return this.clientsService.getSavingsAccounts().then( savings => {
       this.accounts = [];
-      if (JSON.parse(this.globalConfig.showSavingAccounts.description)) {
+      if (this.globalConfig.showSavingAccounts.description) {
         savings.forEach(element => {
           console.log(element);
           

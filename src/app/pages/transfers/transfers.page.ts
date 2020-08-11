@@ -100,7 +100,8 @@ export class TransfersPage implements OnInit {
     public router: Router,
     private clientsService: ClientsService,
     private userService: UserService,
-    private codesService: CodesService
+    private codesService: CodesService,
+    private storage: Storage
   ) {
     this.transferForm = formBuilder.group({
       transferAmount: ['', Validators.required],
@@ -129,7 +130,7 @@ export class TransfersPage implements OnInit {
 
       this.clientsService.getPersonalInfo(),
       this.clientsService.getLoginInfo(),
-      this.codesService.getMOBILE().toPromise()
+      this.storage.get('globals')
     ]
     )
       .then(async res => {
@@ -340,6 +341,7 @@ export class TransfersPage implements OnInit {
     transferSuccess.reference = form.transferDescription;
     transferSuccess.concept = form.concept;
     transferSuccess.rfc = form.rfc;
+    transferSuccess.accountNoSelected = this.accountSelected.accountNo;
 
     this.helpersService.presentLoading('Transfering...');
 

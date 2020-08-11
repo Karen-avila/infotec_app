@@ -30,7 +30,8 @@
     <div class="container-big" style="margin-top:20px">
      
       <h4>{{'Beneficiary' | translate}}:<span> {{clientName}}</span></h4>
-      <h4>{{'Account Number' | translate}}:<span> {{accountNumber}}</span></h4>
+      <h4>{{'Origin Account' | translate}}:<span> {{hideAccountNumber(accountNoSelected)}}</span></h4>
+      <h4>{{'Destination Account' | translate}}:<span> {{hideAccountNumber(accountNumber)}}</span></h4>
       <h4>{{'Concept' | translate}}:<span> {{ (concept || 'Doesn´t apply') | translate }}</span></h4>
       <h4>{{'Reference' | translate}}:<span> {{reference}}</span></h4>
       <h4>{{'Invoice' | translate}}:<span> {{folio}}</span></h4>

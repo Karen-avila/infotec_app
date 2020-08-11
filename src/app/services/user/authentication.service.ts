@@ -148,7 +148,10 @@ export class AuthenticationService {
      this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
  
      this.idle.onIdleEnd.subscribe(() => this.idle.watch());
-     this.idle.onTimeout.subscribe(() => this.logout());
+     this.idle.onTimeout.subscribe(() => {
+       this.logout();
+       this.menu.enable(false);
+      });
 
      this.idle.watch();
  

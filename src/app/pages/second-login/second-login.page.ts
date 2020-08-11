@@ -108,6 +108,7 @@ export class SecondLoginPage implements OnInit {
   }
 
   public delete(): void {
+    this.incorrectPin = false;
     if (!this.seletedNumbers.length) {
       return;
     }
@@ -135,7 +136,9 @@ export class SecondLoginPage implements OnInit {
   public headerTitle() {
     if (this.type === 'login') return 'Enter PIN';
     if (this.type === 'pin') return 'Set PIN';
-    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'PIN confirmation is incorrect';
+    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) {
+      this.incorrectPin = true;
+    };
     if (this.type === 'confirm-pin') return 'Confirm PIN';
 
   }

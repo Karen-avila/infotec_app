@@ -9,9 +9,14 @@
   <ion-list style="width: 90%; margin: auto;">
     <ion-item *ngFor="let item of movements; index as index">
         <ion-avatar slot="start">
-          <ion-icon
-            [ngStyle]="{'color': item.transactionType.id === 1 ? 'green' : 'red', 'margin-top':'7px','font-size':'x-large' }"
-            src="assets/icon/logout.svg"></ion-icon>
+          <ion-icon *ngIf="item.transactionType.id === 1; else elseTemplateSvg"
+            [ngStyle]="{'color':  'green', 'margin-top':'7px','font-size':'x-large' }"
+            src="assets/icon/login.svg"></ion-icon>
+          <ng-template #elseTemplateSvg>
+            <ion-icon
+              [ngStyle]="{'color':  'red', 'margin-top':'7px','font-size':'x-large' }"
+              src="assets/icon/logout.svg"></ion-icon>
+          </ng-template>
         </ion-avatar>
         <ion-label>
   
@@ -21,8 +26,8 @@
             
             <ng-template #elseTemplate>
               <h3>
-                {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} -
-                {{ item.paymentDetailData.paymentType.name | translate }}</h3>
+                {{ item.transactionType.id === 1  ? ('Deposit' | translate) : ('Withdrawal' | translate) }} 
+                ({{ item.paymentDetailData.paymentType.name | translate }})</h3>
             </ng-template>
            
           </ng-container>
@@ -36,9 +41,18 @@
           <h5 style="font-size: x-small; color: grey;" *ngIf="item.transfer">
             {{ item.transactionType.id === 2 ? ('Made a transfer for' | translate) : ('Received a transfer for' | translate)}}
             {{ item.currency.displaySymbol}}{{item.amount | money }}</h5>
-  
-          <h5 style="font-size: small;">{{ 'Balance' | translate }}:
-            {{ item.currency.displaySymbol}}{{item.runningBalance | money }} </h5>
+
+          <div style="font-size: x-small; color: grey;">
+            {{ 'Balance' | translate }}: {{ item.currency.displaySymbol}}{{item.runningBalance | money }}
+          </div>
+          <div style="font-size: x-small;">
+            <span>
+              {{ 'Folio' | translate }}: {{ item.transfer?.id || item.id }}            
+            </span>
+            <span style="float: right;">
+              {{item.submittedOnDate | date }}
+            </span>
+          </div>
         </ion-label>
     </ion-item>
   </ion-list>

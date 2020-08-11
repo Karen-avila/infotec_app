@@ -11,7 +11,7 @@
 
         <ion-item style="margin-top: 15px;">
           <ion-icon style="margin: 0px 15px 0 0px;" name="call-outline"></ion-icon>
-          <ion-input formControlName="phone" placeholder="{{ 'New Phone' | translate }}" clearInput></ion-input>
+          <ion-input (input)="toOnlyRegex('phone', '[^0-9]')" maxlength="10" formControlName="phone" placeholder="{{ 'New Phone' | translate }}" clearInput></ion-input>
         </ion-item>
         <app-input-error [control]="form.controls.phone"></app-input-error>
         <br>
