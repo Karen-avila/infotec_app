@@ -15,7 +15,7 @@ enum ErrorMessages {
   password = 'The password must contain at least one uppercase, one lowercase, a number and a length of 8 characters',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
-  transferAmountLimit = 'Amount greather than transfer limit',
+  transferAmountLimit = 'Amount greather than transfer limit of {{value}}',
   transferAmountExceeded = 'Transfer amount greather than account balance',
   integer = "You must write an integer",
   text = 'You must write text',

@@ -10,6 +10,7 @@ import { UserService } from '@services/user/user.service';
 import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { Storage } from '@ionic/storage';
 
 export interface Bank {
   id: number;
@@ -70,7 +71,8 @@ export class ManageAccountPage implements OnInit {
     private clientsService: ClientsService,
     private userService: UserService,
     private translateService: TranslateService,
-    private helpersService: HelpersService
+    private helpersService: HelpersService,
+    private storage: Storage
   ) {
     this.initializeApp();
   }
@@ -113,7 +115,6 @@ export class ManageAccountPage implements OnInit {
       validator: CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries)
     });
 
-
     this.form.controls['accountType'].disable();
     this.form.controls['bankId'].disable();
     this.form.controls['name'].disable();
@@ -134,6 +135,12 @@ export class ManageAccountPage implements OnInit {
         this.beneficiaryAccountTypes = response[2];
 
         const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
+
+        this.storage.get('globals').then( globals => {
+          if (globals && globals.transferLimit) {
+            this.form.setValidators(CustomValidators.ValidateTransferAmountLimit('transferLimit', parseInt(globals.transferLimit.description)));
+          }
+        } );
 
         if (this.type === 'Create') {
           return;

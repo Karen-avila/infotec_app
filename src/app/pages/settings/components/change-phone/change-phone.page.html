@@ -3,11 +3,11 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card class="container-small">
 
     <ion-card-content>
 
-      <form class="container-small" [formGroup]="form" (ngSubmit)="changePhone()">
+      <form [formGroup]="form" (ngSubmit)="changePhone()">
 
         <ion-item style="margin-top: 15px;">
           <ion-icon style="margin: 0px 15px 0 0px;" name="call-outline"></ion-icon>
@@ -15,12 +15,11 @@
         </ion-item>
         <app-input-error [control]="form.controls.phone"></app-input-error>
         <br>
-        <div class="ion-padding">
-          <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change">
-          </ion-button>
-          <ion-button [routerLink]="['/settings']" routerDirection="backward" expand="block" fill="clear">
-            {{ 'Cancel' | translate }}</ion-button>
-        </div>
+        
+        <ion-button type="submit" [disabled]="!form.valid" expand="block" color="primary" translate="Change">
+        </ion-button>
+        <ion-button [routerLink]="['/settings']" routerDirection="backward" expand="block" fill="clear">
+          {{ 'Cancel' | translate }}</ion-button>
       </form>
     </ion-card-content>
 

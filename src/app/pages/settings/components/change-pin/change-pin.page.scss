@@ -13,6 +13,14 @@ ion-img:active {
     opacity: 0.6;
 }
 
+.custom-error-message {
+    text-transform: uppercase; 
+    font-weight: bold;
+    text-align: center;
+    padding: 0;
+    font-size: 14px;
+}
+
 .point-password {
     border-radius: 10px; margin:auto; width: 10px;height: 10px;background-color: grey;
     margin-top: 10px;

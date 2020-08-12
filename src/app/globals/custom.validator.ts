@@ -152,7 +152,7 @@ export function ValidateTransferAmountLimit(controlName: string, transferLimit: 
         const control = formGroup.controls[controlName];
         if (!control.value) { return null }
         if (control.value > transferLimit)
-            control.setErrors({ transferAmountLimit: true });
+            control.setErrors({ transferAmountLimit: { transferAmountLimit: '$'+transferLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } });
         return null;
     }
 }

@@ -92,7 +92,7 @@ export class Tab2Page implements OnInit {
     const curp = this.registerForm.get('curp');
     curp.valueChanges.subscribe(value => curp.setValue(value.toUpperCase(), { emitEvent: false }));
 
-    await faceapi.nets.ssdMobilenetv1.loadFromUri('https://raw.githubusercontent.com/nestorlazcano-fintecheando/testing-face-api/master');
+    await faceapi.nets.ssdMobilenetv1.load(await faceapi.fetchNetWeights('/assets/models/ssd_mobilenetv1.weights'));
     
     // this.imageUrl = localStorage.getItem('image');
 

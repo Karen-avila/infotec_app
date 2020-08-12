@@ -20,16 +20,16 @@
           <p style="text-align: center;" translate="Detecting face..."></p>
         </div>
         <div *ngSwitchCase="0">
-          <p style="text-align: center; color: #EB445A;" translate="No face was detected*"></p>
+          <p style="text-align: center; color: #EB445A; max-width: 250px; margin: auto;" translate="No face was detected*"></p>
         </div>
         <div *ngSwitchCase="1">
-          <p style="text-align: center; color: #285D4D;" translate="A face was detected correctly*"></p>
+          <p style="text-align: center; color: #285D4D; max-width: 250px; margin: auto;" translate="A face was detected correctly*"></p>
         </div>
         <div *ngSwitchCase="null">
-          <p style="text-align: center;" translate="Take a selfie*"></p>
+          <p style="text-align: center; max-width: 250px; margin: auto;" translate="Take a selfie*"></p>
         </div>
         <div *ngSwitchDefault>
-          <p style="text-align: center; color: rgb(219, 164, 0);"
+          <p style="text-align: center; color: rgb(219, 164, 0); max-width: 250px; margin: auto;"
             translate="Only one face should appear in the selfie*"></p>
         </div>
       </div>

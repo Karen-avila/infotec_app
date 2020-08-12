@@ -23,6 +23,7 @@ export class ChangeEmailPage implements OnInit {
   constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
 
     this.form = formBuilder.group({
+      shaded: true,
       email: ["", Validators.compose([
         Validators.required,
         CustomValidators.ValidateEmail
@@ -44,13 +45,21 @@ export class ChangeEmailPage implements OnInit {
     this.helpersService.presentLoading()
     this.userService.changeData(form)
       .toPromise()
-      .then(response => {
-        this.updateEmail(form.email)
-        this.helpersService.showSuccessMessage('Successful change', 'Your email has been modified correctly', '/dashboard')
+      .then( () => {
+        this.updateEmail(form.email);
+        this.helpersService.showSuccessMessage('Successful change', 'Your email has been modified correctly');
       })
-      .catch(err => {
-        console.log(err)
-        this.helpersService.showErrorMessage();
+      .catch( async error => {
+        if (error.status === 504 || error.status === 0) {
+          await this.helpersService.showNoInternet();
+        } else if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.unknown.data.integrity.issue') {
+          await this.helpersService.showErrorMessage(
+            'Email already exists', 
+            'Please try using a different email'
+          );
+        } else {
+          this.helpersService.showErrorMessage();
+        }
       })
       .finally(() => this.helpersService.hideLoading())
   }
