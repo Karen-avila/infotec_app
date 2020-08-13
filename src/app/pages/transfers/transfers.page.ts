@@ -113,6 +113,24 @@ export class TransfersPage implements OnInit {
 
   ngOnInit() {
     console.log('Transfer page init...')
+    this.transferForm.get('transferAmount').valueChanges.subscribe( (data: string) => {
+
+      const stringText = (data || '').replace(/[^0-9]/g, '');
+      let text: string;
+      const len = stringText.length;
+
+      if (len === 0 || parseInt(stringText) === 0) {
+        text = '';   
+      }  else if (len >= 3) {
+        const pos = len - 2;
+        text = stringText.slice( stringText.slice(0, 1) === '0' && len > 3 ? 1 : 0, pos) + '.' + stringText.slice(pos);
+      } else {
+        text = '0.'+stringText;
+      }
+
+      this.transferForm.get('transferAmount').setValue( text.replace(/\B(?=(\d{3})+(?!\d))/g, ","), {emitEvent: false});
+
+    } );
   }
 
   ionViewDidEnter() {
@@ -309,7 +327,7 @@ export class TransfersPage implements OnInit {
       transfer.toAccountType = this.beneficiarieSelected.accountType.id;
       transfer.toAccountId = this.beneficiarieSelected.accountId;
 
-      transfer.transferAmount = form.transferAmount;
+      transfer.transferAmount = parseFloat(form.transferAmount.replace(/,/g, ''));
       transfer.transferDescription = form.transferDescription;
 
 
@@ -321,7 +339,7 @@ export class TransfersPage implements OnInit {
       transfer.transactionDate = this.helpersService.getFormattedDate();
       transfer.locale = environment.locale;
       transfer.dateFormat = environment.dateFormat;
-      transfer.transactionAmount = form.transferAmount;
+      transfer.transactionAmount = parseFloat(form.transferAmount.replace(/,/g, ''));
       // concepto
       transfer.note = form.concept;
       // referencia

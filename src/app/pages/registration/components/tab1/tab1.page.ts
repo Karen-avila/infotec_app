@@ -64,7 +64,7 @@ export class Tab1Page implements OnInit {
     if (this.registrationType === 'client') {
       this.registerForm.addControl('accountNumber', formBuilder.control('', [
         Validators.required,
-        CustomValidators.ValidateAccountNumber
+        CustomValidators.ValidateClientNumber
       ]));
     }
   }

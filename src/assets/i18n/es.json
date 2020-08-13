@@ -104,6 +104,7 @@
     "Last name": "Apellido Materno",
     "Account number": "Número de cuenta",
     "The client number is invalid": "El número de cliente no es válido",
+    "The account number is invalid": "El número de cuenta no es válido",
     "The password format is invalid": "La contraseña debe tener entre 10 y 50 dígitos, al menos una mayúscula, una mínuscula, un número y un caracter especial (!@#$&*%)",
     "No movements": "No hay movimientos",
     "Last login": "Último ingreso",
@@ -270,5 +271,7 @@
     "The password must start with a letter": "La contraseña debe comenzar con una letra",
     "Please verify that your PIN is correct and try again": "Por favor verifica que tu PIN sea correcto e intenta nuevamente",
     "New Email": "Nuevo Correo",
-    "Check your connection to continue": "Verifica tu conexión para continuar"
+    "Check your connection to continue": "Verifica tu conexión para continuar",
+    "Check your location": "Revisa tu ubicación",
+    "You need to activate your location to continue": "Es necesario activar tu ubicación para continuar"
 }

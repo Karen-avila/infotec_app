@@ -21,7 +21,6 @@ export class HelpersService {
   ) { }
 
   async presentLoading(text?: string) {
-    this.isLoading = true;
     // console.log("Presenting loading...")
     const message = text ? text : 'Please wait...';
     this.translate.get(message).subscribe(async message => {
@@ -30,6 +29,7 @@ export class HelpersService {
         // duration: 5000,
       }).then(a => {
         a.present().then(() => {
+          this.isLoading = true;
           //console.log('presented');
           if (!this.isLoading) {
             a.dismiss().then(() => console.log('abort presenting'));
@@ -42,20 +42,20 @@ export class HelpersService {
     });
   }
 
-  async hideLoading() {
-    this.isLoading = false;
-    return await this.loadingController.dismiss().then(() => {}//console.log('dismissed'
-    );
-  }
-
-  // public async hideLoading() {
-  //   console.log("Loading exists:", this.loading);
-  //   if (!this.loading) {
-  //     return;
-  //   }
-  //   //this.loading.dismiss();
-  //   return await this.loadingController.dismiss().then(() => console.log('dismissed'));
+  // async hideLoading() {
+  //   this.isLoading = false;
+  //   return await this.loadingController.dismiss().then(() => {}//console.log('dismissed'
+  //   );
   // }
+
+  public async hideLoading() {
+    if (!this.isLoading) {
+      return;
+    }
+    return await this.loadingController.dismiss().then(() =>{ 
+      this.isLoading = false;
+    });
+  }
 
   public async showAlert(header: string, message: string): Promise<any> {
 

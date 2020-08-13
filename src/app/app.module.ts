@@ -35,6 +35,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 
 registerLocaleData(es);
@@ -79,6 +80,7 @@ export function createTranslateLoader(http: HttpClient) {
     File,
     ScreenOrientation,
     Sim,
+    LocationAccuracy,
     LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

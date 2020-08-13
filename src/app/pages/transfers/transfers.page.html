@@ -95,7 +95,7 @@
               <ion-item>
                 <ion-label position="stacked"> {{ 'Amount' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="transferAmount" maxlength="5" required inputmode="decimal" type="text"></ion-input>
+                <ion-input formControlName="transferAmount" maxlength="9" required inputmode="decimal" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferAmount"></app-input-error>
 
