@@ -37,6 +37,10 @@ export class OfficesPage implements OnInit {
     this.startInit();    
   }
 
+  ionViewWillLeave() {
+    this.helpersService.hideLoading();
+  }
+
   async startInit() {
 
     try {
@@ -46,7 +50,7 @@ export class OfficesPage implements OnInit {
       
       locationActivated = await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).catch( () => {
         return false;
-      });
+      });  
   
       if (!locationActivated) {
         throw new Error('No se pudo activar la ubicación');
@@ -62,8 +66,8 @@ export class OfficesPage implements OnInit {
   
       this.center = [geolocation.coords.latitude, geolocation.coords.longitude];
       this.myPosition = {lat: geolocation.coords.latitude, lng: geolocation.coords.longitude};
-  
-      setTimeout(() => this.start(), 250);
+
+      setTimeout(() => this.start(), 350);
 
     } catch(e) {
       await this.helpersService.hideLoading();

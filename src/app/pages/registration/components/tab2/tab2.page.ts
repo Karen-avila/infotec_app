@@ -52,6 +52,8 @@ export class Tab2Page implements OnInit {
 
   acceptTermsConditions: boolean = false;
 
+  canRecognizeFace: boolean = false;
+
   constructor(
     private router: Router,
     public formBuilder: FormBuilder,
@@ -92,7 +94,12 @@ export class Tab2Page implements OnInit {
     const curp = this.registerForm.get('curp');
     curp.valueChanges.subscribe(value => curp.setValue(value.toUpperCase(), { emitEvent: false }));
 
-    await faceapi.nets.ssdMobilenetv1.load(await faceapi.fetchNetWeights('/assets/models/ssd_mobilenetv1.weights'));
+    const deviceMemory = (navigator as any).deviceMemory;
+    
+    if (deviceMemory && deviceMemory >= 1) {
+      await faceapi.nets.ssdMobilenetv1.load(await faceapi.fetchNetWeights('/assets/models/ssd_mobilenetv1.weights'));
+      this.canRecognizeFace = true;
+    }
     
     // this.imageUrl = localStorage.getItem('image');
 
@@ -127,12 +134,20 @@ export class Tab2Page implements OnInit {
   takePhoto(): void {
     this.camera.getPicture(this.options).then((imageData) => {
 
-      this.facesDetected = -1;
-      this.imageUrl = 'data:image/jpeg;base64,' + imageData;
-      setTimeout(() => this.updateResults(), 200);
+      if (imageData) {
+        this.imageUrl = 'data:image/jpeg;base64,' + imageData;
+      } else {
+        throw new Error('No se capturo foto');
+      }
 
+      if (this.canRecognizeFace) {
+        this.facesDetected = -1;
+        setTimeout(() => this.updateResults(), 200);
+      }
+      
     }, (err) => {
       this.imageUrl = null;
+      this.facesDetected = null;
     });
   }
 

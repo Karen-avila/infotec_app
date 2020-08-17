@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,8 +10,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { Storage } from '@ionic/storage';
-import { ClientsService } from '@services/clients/clients.service';
-import { environment } from '@env';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
@@ -74,7 +72,6 @@ export class AppComponent implements OnInit {
     private helpersService: HelpersService,
     private socialSharing: SocialSharing,
     private router: Router,
-    private storage: Storage,
     private authenticationService: AuthenticationService,
     private screenOrientation: ScreenOrientation
   ) {

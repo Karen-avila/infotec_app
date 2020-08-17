@@ -99,9 +99,12 @@ export class AuthenticationService {
         this.storage.remove('timeLeft');
         return true;
       } )
-      .catch(err => {
-        console.log(err);
-        this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
+      .catch( async err => {
+        if (err.status === 504 || err.status === 0) {
+          await this.helpersService.showNoInternet();
+        } else {
+          this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
+        }
         throw err;
       }).finally( () => this.helpersService.hideLoading() );
   }
