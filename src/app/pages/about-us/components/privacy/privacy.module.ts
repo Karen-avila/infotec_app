@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AboutUsPageRoutingModule } from './about-us-routing.module';
+import { PrivacyPageRoutingModule } from './privacy-routing.module';
 
-import { AboutUsPage } from './about-us.page';
+import { PrivacyPage } from './privacy.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { SvgModule } from '@components/svg/svg.module';
 import { FooterModule } from '@components/footer/footer.module';
@@ -17,12 +17,12 @@ import { HeaderModule } from '@components/header/header.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    AboutUsPageRoutingModule,
+    PrivacyPageRoutingModule,
     TranslateModule,
     SvgModule,
     FooterModule,
     HeaderModule
   ],
-  declarations: [AboutUsPage]
+  declarations: [PrivacyPage]
 })
-export class AboutUsPageModule {}
+export class PrivacyPageModule {}
