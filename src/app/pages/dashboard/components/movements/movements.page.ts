@@ -34,7 +34,9 @@ export class MovementsPage implements OnInit {
     this.clientsService.getMovements(accountNumber).toPromise()
       .then(response => {
         console.log(response);
-        this.movements = response.transactions.filter( item => item.transfer || item.paymentDetailData ).sort( (a, b) => b.id-a.id );
+        this.movements = response.transactions.filter( item => item.transfer || item.paymentDetailData ).sort( (a, b) => {
+          return (new Date(b.date)).getTime() - (new Date(a.date)).getTime();
+        } );
       })
       .catch(err => {
         console.log(err)

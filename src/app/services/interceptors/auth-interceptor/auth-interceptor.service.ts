@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { environment } from '@env';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     request = request.clone({
       setHeaders: {
-        'Fineract-Platform-TenantId': 'default',
-        'Content-Type': 'application/json'
+        // 'Fineract-Platform-TenantId': 'default',
+        'Content-Type': 'application/json',
+        'X-Gravitee-Api-Key': /\/otp\//g.test(req.url) ? environment.totpGraviteeApiKey : environment.graviteeApiKey,
       }
     });
 

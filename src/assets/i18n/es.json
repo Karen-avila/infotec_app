@@ -273,5 +273,9 @@
     "New Email": "Nuevo Correo",
     "Check your connection to continue": "Verifica tu conexión para continuar",
     "Check your location": "Revisa tu ubicación",
-    "You need to activate your location to continue": "Es necesario activar tu ubicación para continuar"
+    "You need to activate your location to continue": "Es necesario activar tu ubicación para continuar",
+    "PIN is required": "El PIN es requerido",
+    "To continue": "Para continuar",
+    "Enter your security PIN": "Ingresa tu PIN de seguridad",
+    "Write your PIN": "Escribe tu PIN"
 }
