@@ -18,15 +18,13 @@ import { CodesService } from '@services/catalogs/codes.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  timetoSessionAlert = 90;
-  timetoSessionClose = 30;
+  timetoSessionAlert = 5;
+  timetoSessionClose = 5;
   sessionAlert = null;
   authState = new BehaviorSubject(false);
   timedOut = false;
   lastPing?: Date = null;
   title = 'angular-idle-timeout';
-  alerta: HTMLIonAlertElement;
 
   constructor(
     private httpClient: HttpClient,
@@ -41,7 +39,7 @@ export class AuthenticationService {
     private alertController: AlertController,
     private codesService: CodesService,
     private menu: MenuController
-  ) { }
+  ) {}
 
   // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
   public login(user: User, askForPin: boolean): Promise<any> {
@@ -124,17 +122,24 @@ export class AuthenticationService {
   }
 
   public startIdleTimer() {
-
     this.idle.setIdle(this.timetoSessionAlert);
     this.idle.setTimeout(this.timetoSessionClose);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
+    const stop = (() => {
+      this.idle.stop();
+      this.idle.onTimeout.observers.length = 0;
+      this.idle.onIdleStart.observers.length = 0;
+      this.idle.onIdleEnd.observers.length = 0;
+      this.idle.onTimeoutWarning.observers.length = 0;
+    })
+
     this.idle.onIdleEnd.subscribe(() => {
-      this.idle.watch();
     });
 
     // Se ejecuta cuando el tiempo se acaba
     this.idle.onTimeout.subscribe(() => {
+      stop();
       this.sessionAlert.dismiss();
       this.menu.enable(false);
       this.logout();
@@ -145,7 +150,7 @@ export class AuthenticationService {
       this.helpersService.successMessage(
         'Aun estas ahi?',
         'Tu sesión se cerrará pronto'
-      ).then( alert => {
+      ).then(alert => {
         this.sessionAlert = alert;
         this.sessionAlert.present();
       });
@@ -153,9 +158,13 @@ export class AuthenticationService {
 
     // Se puede usar para hacer un conteo regresivo asignando countdown
     this.idle.onTimeoutWarning.subscribe((countdown: string) => {
-      console.log(countdown);
+      // console.log('onTimeoutWarning', this.idle.isRunning());
     });
-    this.idle.watch();
+
+    if (!this.idle.isRunning()) {
+      this.idle.watch();
+    }
+
   }
 
   public isAuthenticated() {
