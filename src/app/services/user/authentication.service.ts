@@ -18,8 +18,8 @@ import { CodesService } from '@services/catalogs/codes.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  timetoSessionAlert = 5;
-  timetoSessionClose = 5;
+  timetoSessionAlert = 90;
+  timetoSessionClose = 30;
   sessionAlert = null;
   authState = new BehaviorSubject(false);
   timedOut = false;
