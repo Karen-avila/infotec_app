@@ -161,7 +161,7 @@ export class AuthenticationService {
       // console.log('onTimeoutWarning', this.idle.isRunning());
     });
 
-    if (!this.idle.isRunning()) {
+    if (!this.idle.isRunning() && environment.production) {
       this.idle.watch();
     }
 
