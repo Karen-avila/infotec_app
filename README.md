@@ -14,7 +14,7 @@ Install dependencies:
 
 Run development web-server:
 
-    $ ionic serve
+    $ npm run serve
 
 Folder structure 
 
