@@ -64,10 +64,6 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
-    console.log('Dashboard page init...');
-=======
->>>>>>> 1e64b2e2b2cea9660f91dfa32ec9fee79d8b2155
     this.menuCtrl.enable(true);
     this.authentication.startIdleTimer();
   }
