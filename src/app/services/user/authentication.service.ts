@@ -14,36 +14,32 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { environment } from '@env';
 import { TranslateService } from '@ngx-translate/core';
 import { CodesService } from '@services/catalogs/codes.service';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  timetoSessionAlert = 90;
+  timetoSessionClose = 30;
+  sessionAlert = null;
   authState = new BehaviorSubject(false);
-
-  idleState = 'Not started.';
   timedOut = false;
   lastPing?: Date = null;
   title = 'angular-idle-timeout';
 
-  constructor(private httpClient: HttpClient,
+  constructor(
+    private httpClient: HttpClient,
     private storage: Storage,
     public toastController: ToastController,
     private clientsService: ClientsService,
     private navCtrl: NavController,
     private userService: UserService,
-    private idle: Idle, 
+    private idle: Idle,
     private helpersService: HelpersService,
     private translate: TranslateService,
     private alertController: AlertController,
     private codesService: CodesService,
     private menu: MenuController
-  ) {
-    // this.platform.ready().then(() => {
-    //   this.ifLoggedIn();
-    // });
-  }
+  ) {}
 
   // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
   public login(user: User, askForPin: boolean): Promise<any> {
@@ -51,18 +47,14 @@ export class AuthenticationService {
     this.storage.remove('token');
     this.storage.remove('personal-info');
     this.storage.remove('login-info');
-
     this.helpersService.presentLoading();
-
     return this.httpClient.post(ENDPOINTS.authentication, user)
       .toPromise()
       .then((login: LoginInfo) => {
         console.log(login);
         console.log(login.base64EncodedAuthenticationKey);
-
-        this.storage.set('token', login.base64EncodedAuthenticationKey)
-        this.storage.set('login-info', login)
-
+        this.storage.set('token', login.base64EncodedAuthenticationKey);
+        this.storage.set('login-info', login);
         return this.storage.set('token', login.base64EncodedAuthenticationKey)
           .then(() => {
             console.log('<here>');
@@ -72,30 +64,24 @@ export class AuthenticationService {
       .then((client: PersonalInfo) => {
         this.authState.next(true);
         this.storage.set('personal-info', client);
-
         this.userService.username = user.username;
         this.userService.password = user.password;
         this.userService.displayName = client.displayName;
-
-        const displayName = client.displayName.trim().replace(/ +(?= )/g,'').split(' ');
-        const shortName = `${displayName[0]}${ displayName[1] ? ' '+displayName[1] : '' }`;
+        const displayName = client.displayName.trim().replace(/ +(?= )/g, '').split(' ');
+        const shortName = `${displayName[0]}${ displayName[1] ? ' ' + displayName[1] : '' }`;
         this.userService.shortName = shortName;
         this.storage.set('last-client', shortName);
-
-        this.clientsService.getSelfie(client.id+'').toPromise()
+        this.clientsService.getSelfie(client.id + '').toPromise()
           .then( imageUrl => this.storage.set('image-profile', imageUrl) )
           .catch( err => {
-            if (!(err.status && err.status === 200 && err.error.text)) return;
-            this.storage.set('image-profile', err.error.text.replace(/\s/g,''));
-          } )
-
+            if (!(err.status && err.status === 200 && err.error.text)) { return; }
+            this.storage.set('image-profile', err.error.text.replace(/\s/g, ''));
+          } );
         return this.codesService.getMOBILE().toPromise();
       }).then( globals => {
-        
         this.storage.set('globals', globals);
         console.log(globals);
-        if (askForPin) this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]);
-        else this.navCtrl.navigateRoot(['dashboard']);
+        if (askForPin) { this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]); } else { this.navCtrl.navigateRoot(['dashboard']); }
         this.storage.remove('timeLeft');
         return true;
       } )
@@ -119,42 +105,66 @@ export class AuthenticationService {
   }
 
   public async logout(removeAllStorage: boolean = false) {
-  
     const keep: string[] = ['user-hash', 'last-client'];
     const saved: any[] = [];
-    
     if (!removeAllStorage) {
       for (const key in keep) {
         const value = await this.storage.get(keep[key]);
         saved.push({ key: keep[key], value });
       }
     }
-
     this.storage.clear();
-
     for (const key in saved) {
       this.storage.set(saved[key].key, saved[key].value);
-    }    
-
+    }
     this.authState.next(false);
     this.navCtrl.navigateRoot(['/login']);
-
   }
 
   public startIdleTimer() {
-    
-     this.idle.setIdle(5);
-     this.idle.setTimeout(120);
-     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
- 
-     this.idle.onIdleEnd.subscribe(() => this.idle.watch());
-     this.idle.onTimeout.subscribe(() => {
-       this.logout();
-       this.menu.enable(false);
-      });
+    this.idle.setIdle(this.timetoSessionAlert);
+    this.idle.setTimeout(this.timetoSessionClose);
+    this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
-     this.idle.watch();
- 
+    const stop = (() => {
+      this.idle.stop();
+      this.idle.onTimeout.observers.length = 0;
+      this.idle.onIdleStart.observers.length = 0;
+      this.idle.onIdleEnd.observers.length = 0;
+      this.idle.onTimeoutWarning.observers.length = 0;
+    })
+
+    this.idle.onIdleEnd.subscribe(() => {
+    });
+
+    // Se ejecuta cuando el tiempo se acaba
+    this.idle.onTimeout.subscribe(() => {
+      stop();
+      this.sessionAlert.dismiss();
+      this.menu.enable(false);
+      this.logout();
+    });
+
+    // Crea mensaje de alerta
+    this.idle.onIdleStart.subscribe(() => {
+      this.helpersService.successMessage(
+        'Aun estas ahi?',
+        'Tu sesión se cerrará pronto'
+      ).then(alert => {
+        this.sessionAlert = alert;
+        this.sessionAlert.present();
+      });
+    });
+
+    // Se puede usar para hacer un conteo regresivo asignando countdown
+    this.idle.onTimeoutWarning.subscribe((countdown: string) => {
+      // console.log('onTimeoutWarning', this.idle.isRunning());
+    });
+
+    if (!this.idle.isRunning()) {
+      this.idle.watch();
+    }
+
   }
 
   public isAuthenticated() {

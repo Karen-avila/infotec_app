@@ -88,8 +88,8 @@ export class AppComponent implements OnInit {
     this.translate.setDefaultLang(navigator.language.substring(0, 2));
     this.translate.get('Mobile Banking - Banco del Bienestar').subscribe((res: string) => this.titleService.setTitle(res));
     this.platform.ready().then(() => {
-      this.statusBar.backgroundColorByHexString("##002c22");
-      this.splashScreen.hide();      
+      this.statusBar.backgroundColorByHexString('##002c22');
+      this.splashScreen.hide();
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).catch( () => {} );
     });
 
