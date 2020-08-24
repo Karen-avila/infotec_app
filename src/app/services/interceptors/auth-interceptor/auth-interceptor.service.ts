@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
 
           return next.handle(request).pipe(
+            timeout(30000),
             catchError((err: HttpErrorResponse) => {
 
               console.log(err);
