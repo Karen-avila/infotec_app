@@ -12,7 +12,6 @@ import { PersonalInfo } from '@globals/interfaces/personal-info';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { environment } from '@env';
-import { TranslateService } from '@ngx-translate/core';
 import { CodesService } from '@services/catalogs/codes.service';
 @Injectable({
   providedIn: 'root'
@@ -35,8 +34,6 @@ export class AuthenticationService {
     private userService: UserService,
     private idle: Idle,
     private helpersService: HelpersService,
-    private translate: TranslateService,
-    private alertController: AlertController,
     private codesService: CodesService,
     private menu: MenuController
   ) {}
@@ -122,10 +119,12 @@ export class AuthenticationService {
   }
 
   public startIdleTimer() {
+    // Incializa variables
     this.idle.setIdle(this.timetoSessionAlert);
     this.idle.setTimeout(this.timetoSessionClose);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
+    // Funcion que elimina los observes del idle
     const stop = (() => {
       this.idle.stop();
       this.idle.onTimeout.observers.length = 0;
@@ -134,6 +133,7 @@ export class AuthenticationService {
       this.idle.onTimeoutWarning.observers.length = 0;
     })
 
+    // Se ejecuta cuando el idle es cancelado
     this.idle.onIdleEnd.subscribe(() => {
     });
 
@@ -161,6 +161,7 @@ export class AuthenticationService {
       // console.log('onTimeoutWarning', this.idle.isRunning());
     });
 
+    // Inicia el idle
     if (!this.idle.isRunning() && environment.production) {
       this.idle.watch();
     }
