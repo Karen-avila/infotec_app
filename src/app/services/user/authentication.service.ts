@@ -162,7 +162,7 @@ export class AuthenticationService {
     });
 
     // Inicia el idle
-    if (!this.idle.isRunning()) {
+    if (!this.idle.isRunning() && environment.production) {
       this.idle.watch();
     }
 
