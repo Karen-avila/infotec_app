@@ -64,7 +64,7 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Dashboard page init...')
+    console.log('Dashboard page init...');
     this.menuCtrl.enable(true);
     if (environment.production) {
       this.authentication.startIdleTimer();
@@ -101,22 +101,22 @@ export class DashboardPage implements OnInit {
     let payload: any;
 
     this.barcodeScanner.scan({
-      //preferFrontCamera : true, // iOS and Android
-      //showFlipCameraButton : true, // iOS and Android
+      // preferFrontCamera : true, // iOS and Android
+      // showFlipCameraButton : true, // iOS and Android
       showTorchButton: true, // iOS and Android
-      //torchOn: true, // Android, launch with the torch switched on (if available)
-      //prompt : "Place a barcode inside the scan area", // Android
+      // torchOn: true, // Android, launch with the torch switched on (if available)
+      // prompt : "Place a barcode inside the scan area", // Android
       resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-      formats: "QR_CODE", // default: all but PDF_417 and RSS_EXPANDED
-      //orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
-      //disableAnimations : true, // iOS
+      formats: 'QR_CODE', // default: all but PDF_417 and RSS_EXPANDED
+      // orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+      // disableAnimations : true, // iOS
       disableSuccessBeep: true // iOS and Android
     }).then(barcodeData => {
       console.log('Barcode data', barcodeData);
       payload = JSON.stringify(barcodeData);
     }).catch(err => {
       console.log('Error', err);
-      payload = JSON.stringify({ error: "No se pudo leer correctamente el código" });
+      payload = JSON.stringify({ error: 'No se pudo leer correctamente el código' });
       // this.presentAlert();
 
     }).finally(() => {
@@ -149,7 +149,7 @@ export class DashboardPage implements OnInit {
     const modal = await this.modalController.create({
       component: MovementsPage,
       componentProps: {
-        'accountNumber': this.accountSelected.id
+        accountNumber: this.accountSelected.id
       }
     });
     return await modal.present();
@@ -158,9 +158,10 @@ export class DashboardPage implements OnInit {
   public initialize(event: any) {
 
     console.log('Enter here');
-    
-    if (!event)
+
+    if (!event) {
       this.helpersService.presentLoading();
+    }
 
     this.clientsService.getPersonalInfo()
       .then((data: PersonalInfo) => {
@@ -180,8 +181,8 @@ export class DashboardPage implements OnInit {
         return data;
       })
       .catch(err => {
-        console.log("err", err);
-        this.router.navigate(['/login'])
+        console.log('err', err);
+        this.router.navigate(['/login']);
         this.helpersService.showErrorMessage();
         throw err;
       })
@@ -201,12 +202,12 @@ export class DashboardPage implements OnInit {
       if (this.globalConfig.showSavingAccounts.description) {
         savings.forEach(element => {
           console.log(element);
-          
-          let account: CardAccount = new CardAccount(element.id, element.accountNo, element.availableBalance, this.personalInfo.displayName, 2, element.subStatus.block);
+
+          const account: CardAccount = new CardAccount(element.id, element.accountNo, element.availableBalance, this.personalInfo.displayName, 2, element.subStatus.block);
           this.accounts.push(account);
-        })
+        });
       }
-    } )
+    } );
   }
 
   // private getAccounts(): Promise<any> {
