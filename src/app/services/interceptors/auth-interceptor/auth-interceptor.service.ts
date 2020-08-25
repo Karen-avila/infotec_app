@@ -21,13 +21,18 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
     let request: HttpRequest<any> = req;
+    let headers = {
+      'Content-Type': 'application/json'
+    };
+
+    if (environment.production) {
+      headers['X-Gravitee-Api-Key'] = /\/otp\//g.test(req.url) ? environment.totpGraviteeApiKey : environment.graviteeApiKey
+    } else {
+      headers['Fineract-Platform-TenantId'] = 'default';
+    }
 
     request = request.clone({
-      setHeaders: {
-        // 'Fineract-Platform-TenantId': 'default',
-        'Content-Type': 'application/json',
-        'X-Gravitee-Api-Key': /\/otp\//g.test(req.url) ? environment.totpGraviteeApiKey : environment.graviteeApiKey,
-      }
+      setHeaders: headers
     });
 
     return from(this.storage.get('token'))

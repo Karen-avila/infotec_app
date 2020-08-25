@@ -1,22 +1,26 @@
 import { environment } from '@env';
 
-const MOBILE = 'fineract-protected-movil';
-const TOTP = 'banbi';
+let baseUrl: string = environment.baseUrl;
+let totpUrl: string = `${baseUrl}/banbi`;
 
-export const ENDPOINTS = {
-  authentication: `${environment.baseUrl}/${MOBILE}/authentication`,
-  clients: `${environment.baseUrl}/${MOBILE}/clients`,
-  beneficiarytpt: `${environment.baseUrl}/${MOBILE}/beneficiaries/tpt`,
-  beneficiaryext: `${environment.baseUrl}/${MOBILE}/beneficiaries/ext`,
-  accounts: `${environment.baseUrl}/${MOBILE}/clients/{clientId}/accounts`,
-  changeData: `${environment.baseUrl}/${MOBILE}/user`,
-  savingsAccountsTransactions: `${environment.baseUrl}/${MOBILE}/savingsaccounts/{savingAccount}?associations=transactions`,
-  accountTransfers: `${environment.baseUrl}/${MOBILE}/accounttransfers`,
-  registration: `${environment.baseUrl}/${MOBILE}/registration`,
-  office: `${environment.baseUrl}/${MOBILE}/office`,
-  codesOptions: `${environment.baseUrl}/${MOBILE}/codes`,
-  socialPrograms: `${environment.baseUrl}/${MOBILE}/socialprogram`,
-  savingsAccounts: `${environment.baseUrl}/${MOBILE}/savingsaccounts`,
-  password: `${environment.baseUrl}/${MOBILE}/password`,
-  totp: `${environment.baseUrl}/${TOTP}/otp`,
+if (environment.production) { 
+  baseUrl = `${baseUrl}/fineract-protected-movil`;
+}
+
+export let ENDPOINTS = {
+  authentication: `${baseUrl}/authentication`,
+  clients: `${baseUrl}/clients`,
+  beneficiarytpt: `${baseUrl}/beneficiaries/tpt`,
+  beneficiaryext: `${baseUrl}/beneficiaries/ext`,
+  accounts: `${baseUrl}/clients/{clientId}/accounts`,
+  changeData: `${baseUrl}/user`,
+  savingsAccountsTransactions: `${baseUrl}/savingsaccounts/{savingAccount}?associations=transactions`,
+  accountTransfers: `${baseUrl}/accounttransfers`,
+  registration: `${baseUrl}/registration`,
+  office: `${baseUrl}/office`,
+  codesOptions: `${baseUrl}/codes`,
+  socialPrograms: `${baseUrl}/socialprogram`,
+  savingsAccounts: `${baseUrl}/savingsaccounts`,
+  password: `${baseUrl}/password`,
+  totp: `${totpUrl}/otp`,
 }
