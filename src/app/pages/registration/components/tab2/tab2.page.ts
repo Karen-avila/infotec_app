@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController, AlertController, ToastController, LoadingController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -66,10 +66,11 @@ export class Tab2Page implements OnInit {
     private authenticationService: AuthenticationService,
     public loadingController: LoadingController,
     public helpersService: HelpersService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.registerForm = formBuilder.group({
-      curp: ["", Validators.compose([
+      uniqueId: ["", Validators.compose([
         Validators.required,
         Validators.maxLength(18),
         CustomValidators.ValidateCurp
@@ -90,8 +91,13 @@ export class Tab2Page implements OnInit {
     this.start();
   }
 
+  ionViewWillEnter() {
+    const { accept } = this.activatedRoute.snapshot.queryParams;
+    this.acceptTermsConditions = !!accept;
+  }
+
   async start() {
-    const curp = this.registerForm.get('curp');
+    const curp = this.registerForm.get('uniqueId');
     curp.valueChanges.subscribe(value => curp.setValue(value.toUpperCase(), { emitEvent: false }));
 
     const deviceMemory = (navigator as any).deviceMemory;

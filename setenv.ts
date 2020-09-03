@@ -3,9 +3,9 @@ const { argv } = require('yargs');
 const dotenv = require('dotenv');
 
 const environment = argv.env;
-const envPath = `./env/${ environment ? '.'+environment : '' }.env`;
+const envPath = `env/${ environment ? '.'+environment : '' }.env`;
 const envConfig = dotenv.parse(fs.readFileSync(envPath));
-const targetPath = `./src/environments/environment.ts`;
+const targetPath = `src/environments/environment.ts`;
 
 
 let vars: string = '';
