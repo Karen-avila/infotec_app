@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, from, forkJoin } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
-import { HelpersService } from '@services/helpers/helpers.service';
+import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from '@env';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(
     private storage: Storage, 
-    private router: Router,
-    private helpersService: HelpersService
+    private router: Router
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -48,6 +47,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
 
           return next.handle(request).pipe(
+            timeout(30000),
             catchError((err: HttpErrorResponse) => {
 
               console.log(err);
