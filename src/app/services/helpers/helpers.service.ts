@@ -156,6 +156,23 @@ export class HelpersService {
     });
   }
 
+  public successMessage(header: string, message: string, routerLink?: string): Promise<any> {
+    return this.translate.get([header, message, 'Accept']).toPromise().then(translate => {
+      return this.alertController.create({
+        header: translate[header],
+        message: translate[message],
+        buttons: [
+          {
+            text: translate['Accept'],
+            handler: () => {
+              if (routerLink) {this.navCtrl.navigateRoot([routerLink])}
+            }
+          }
+        ]
+      });
+    });
+  }
+
   public async showErrorMessage(title?: string, text?: string): Promise<any> {
     const message = text ? text : 'Can not proccess the request right now. Try again later'
     const header = title ? title : 'Error'

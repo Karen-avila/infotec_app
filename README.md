@@ -1,4 +1,4 @@
-# banca-por-internet
+# banca-movil
 
 ## Getting started
 
@@ -8,13 +8,13 @@ Clone the project:
 
 Install dependencies:
 
-    $ cd banca-por-internet
+    $ cd banca-movil
     
     $ npm install
 
 Run development web-server:
 
-    $ ionic serve
+    $ npm run serve
 
 Folder structure 
 

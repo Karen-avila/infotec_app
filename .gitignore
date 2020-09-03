@@ -35,3 +35,5 @@ npm-debug.log*
 firebase.json
 manifest.webmanifest
 ngsw-config.json
+/temporales
+src/environments/*.ts
