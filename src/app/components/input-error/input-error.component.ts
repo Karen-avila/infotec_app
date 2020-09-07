@@ -11,11 +11,11 @@ enum ErrorMessages {
   email = 'The email format is invalid',
   mustMatch = 'Passwords do not match',
   curp = 'The curp is invalid',
-  accountNumber = 'The client number is invalid',
+  accountNumber = 'The account number is invalid',
   password = 'The password must contain at least one uppercase, one lowercase, a number and a length of 8 characters',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
   accountNotFound = 'Account not found',
-  transferAmountLimit = 'Amount greather than transfer limit',
+  transferAmountLimit = 'Amount greather than transfer limit of {{value}}',
   transferAmountExceeded = 'Transfer amount greather than account balance',
   integer = "You must write an integer",
   text = 'You must write text',
@@ -28,7 +28,8 @@ enum ErrorMessages {
   passwordContainsRepeatDesNumbers = 'The password must not contain more than 2 descending numbers',
   passwordContainsInstitutionName = 'The password should not contain the name of the institution',
   passwordContainsRepeatAscLetters = 'The password must not contain more than 2 ascending letters',
-  passwordStartLetter = 'The password must start with a letter'
+  passwordStartLetter = 'The password must start with a letter',
+  clientNumber = 'The client number is invalid',
 }
 
 @Component({

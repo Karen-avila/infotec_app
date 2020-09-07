@@ -127,16 +127,18 @@ export class ChangePinPage implements OnInit {
       case 'confirm-pin':
         this.encryptPIN();
         this.helpersService.hideLoading()
-        this.helpersService.showSuccessMessage('Successful change','Your PIN has been modified correctly', '/dashboard')
+        this.helpersService.showSuccessMessage('Successful change','Your PIN has been modified correctly', '/settings')
         break;
     }
   }
 
   public headerTitle() {
     if (this.type === 'pin') return 'Enter current pin';
-    if (this.type === 'change-pin') return 'Set new PIN to login';
-    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) return 'PIN confirmation is incorrect';
-    if (this.type === 'confirm-pin') return 'Confirm new PIN';
+    if (this.type === 'change-pin') return 'New PIN';
+    if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) {
+      this.incorrectPin = true;
+    };
+    if (this.type === 'confirm-pin') return 'Confirm PIN';
 
   }
 
@@ -180,7 +182,7 @@ export class ChangePinPage implements OnInit {
       .catch(err => {
         console.log(err);
         //alert("El PIN ingresado es incorrecto");
-        this.helpersService.showErrorMessage();
+        // this.helpersService.showErrorMessage();
         this.incorrectPin = true;
         this.seletedNumbers = [];
         this.errorNumberCount++;

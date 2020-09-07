@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, from, forkJoin } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { catchError, mergeMap, map, switchMap } from 'rxjs/operators';
-import { HelpersService } from '@services/helpers/helpers.service';
+import { catchError, switchMap } from 'rxjs/operators';
+import { environment } from '@env';
 import { timeout } from 'rxjs/operators';
 
 @Injectable({
@@ -14,19 +14,19 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(
     private storage: Storage, 
-    private router: Router,
-    private helpersService: HelpersService
+    private router: Router
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
     let request: HttpRequest<any> = req;
+    let headers = {
+      'Content-Type': 'application/json',
+      'X-Gravitee-Api-Key': /\/otp\//g.test(req.url) ? environment.totpGraviteeApiKey : environment.graviteeApiKey
+    };
 
     request = request.clone({
-      setHeaders: {
-        'Fineract-Platform-TenantId': 'default',
-        'Content-Type': 'application/json'
-      }
+      setHeaders: headers
     });
 
     return from(this.storage.get('token'))
