@@ -102,7 +102,7 @@
               <ion-item>
                 <ion-label position="stacked"> {{ 'Reference' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="transferDescription" maxlength="15" required inputmode="text" type="text"></ion-input>
+                <ion-input formControlName="transferDescription" type = "number" onKeyPress="if(this.value.length==7) return false;"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferDescription"></app-input-error>
 
