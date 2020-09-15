@@ -141,7 +141,11 @@ export class ManageAccountPage implements OnInit {
 
         this.storage.get('globals').then( globals => {
           if (globals && globals.transferLimit) {
-            this.form.setValidators(CustomValidators.ValidateTransferAmountLimit('transferLimit', parseInt(globals.transferLimit.description)));
+            this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries),
+            CustomValidators.ValidateAccountNumberBeneficiaryExist('accountNumber', this.userService.beneficiaries),
+            CustomValidators.ValidateOwnAccountNumberExist('accountNumber', this.userService.myAccounts),
+            CustomValidators.ValidateTransferAmountLimit('transferLimit', parseInt(globals.transferLimit.description))
+          ]);
           }
         } );
 
@@ -337,3 +341,4 @@ export class ManageAccountPage implements OnInit {
       .finally(() => this.helpersService.hideLoading())
   }
 }
+
