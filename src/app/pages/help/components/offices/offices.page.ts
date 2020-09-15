@@ -4,6 +4,9 @@ import L from "leaflet";
 import { ToastController } from '@ionic/angular';
 import { OfficeService } from '@services/office/office.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { HelpersService } from '@services/helpers/helpers.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,19 +26,62 @@ export class OfficesPage implements OnInit {
       private toastCtrl: ToastController,
       private geolocation: Geolocation,
       private office: OfficeService,
-      private translate: TranslateService
+      private translate: TranslateService,
+      private locationAccuracy: LocationAccuracy,
+      private helpersService: HelpersService,
+      private router: Router,
     ) {
   }
 
   ngOnInit() {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp);
-      this.center = [resp.coords.latitude, resp.coords.longitude];
-      this.myPosition = {lat: resp.coords.latitude, lng: resp.coords.longitude};
-    }).catch( () => {
-        this.center = [19.4284706, -99.1276627];
-    }).finally( () => setTimeout(() => this.start(), 200) );
+    this.startInit();    
   }
+
+  ionViewWillLeave() {
+    this.helpersService.hideLoading();
+  }
+
+  async startInit() {
+
+    try {
+
+      // const canRequest = await this.locationAccuracy.canRequest();
+      let locationActivated: boolean = false;
+      
+      locationActivated = await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).catch( () => {
+        return false;
+      });  
+  
+      if (!locationActivated) {
+        throw new Error('No se pudo activar la ubicación');
+      }
+
+      this.helpersService.presentLoading();
+      
+      const geolocation = await this.geolocation.getCurrentPosition();
+
+      if (!geolocation.coords) {
+        throw new Error('No se pudo obtener la ubicación');
+      }
+  
+      this.center = [geolocation.coords.latitude, geolocation.coords.longitude];
+      this.myPosition = {lat: geolocation.coords.latitude, lng: geolocation.coords.longitude};
+
+      setTimeout(() => this.start(), 350);
+
+    } catch(e) {
+      await this.helpersService.hideLoading();
+      await this.helpersService.showSuccessMessage('Check your location', 'You need to activate your location to continue');
+      this.router.navigateByUrl('/help');
+    }
+
+    this.helpersService.hideLoading();
+  }
+
+  throwError() {
+    
+  }
+  
 
   getNearOffices() {
     this.office.postNearOffices(this.myPosition.lat, this.myPosition.lng).toPromise().then( (offices: any[]) => {
@@ -64,6 +110,8 @@ export class OfficesPage implements OnInit {
     }
 
     this.setMapMarker(this.myPosition.lat, this.myPosition.lng, this.myPositionIcon);
+
+    this.helpersService.hideLoading();
 
     this.translate.get('Visit us at the office closest to you.')
       .subscribe( (resp: any) => this.mensaje(resp) );

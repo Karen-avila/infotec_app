@@ -80,15 +80,21 @@ export class LoginPage implements OnInit {
   }
 
   sendUnblockMail() {
-    console.log('sendUnblockMail');
+    this.helpersService.sendUnblockMailMessage([
+      () => this.getCodeMail(),
+    ]);
   }
 
   getCodeMail() {
-
+    this.helpersService.getCodeMailMessage([
+      () => this.unblockSuccess(),
+    ]);
   }
 
-  UnblockSuccess() {
-
+  unblockSuccess() {
+    this.helpersService.unblockSuccessMessage([
+      () => {},
+    ]);
   }
 
   viewPassword() {

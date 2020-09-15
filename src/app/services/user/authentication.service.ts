@@ -82,9 +82,12 @@ export class AuthenticationService {
         this.storage.remove('timeLeft');
         return true;
       } )
-      .catch(err => {
-        console.log(err);
-        this.helpersService.showErrorMessage('Login Error', 'The credentials entered are incorrect');
+      .catch( async err => {
+        if (err.status === 504 || err.status === 0) {
+          await this.helpersService.showNoInternet();
+        } else {
+          this.helpersService.showErrorMessage('Incorrect Access', 'The credentials entered are incorrect');
+        }
         throw err;
       }).finally( () => this.helpersService.hideLoading() );
   }
@@ -148,8 +151,8 @@ export class AuthenticationService {
     // Crea mensaje de alerta
     this.idle.onIdleStart.subscribe(() => {
       this.helpersService.successMessage(
-        'Aun estas ahi?',
-        'Tu sesión se cerrará pronto'
+        'Are you still there?',
+        'Your session will be closed soon'
       ).then(alert => {
         this.sessionAlert = alert;
         this.sessionAlert.present();

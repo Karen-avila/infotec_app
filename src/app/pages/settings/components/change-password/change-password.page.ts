@@ -97,22 +97,20 @@ export class ChangePasswordPage implements OnInit {
       this.helpersService.presentLoading();
 
       const data = {
-        "password": CryptoJS.SHA256(form.newPassword).toString(CryptoJS.enc.Hex),
-        "repeatPassword": CryptoJS.SHA256(form.confirmPassword).toString(CryptoJS.enc.Hex)
+        shaded: true,
+        password: CryptoJS.SHA256(form.newPassword).toString(CryptoJS.enc.Hex),
+        repeatPassword: CryptoJS.SHA256(form.confirmPassword).toString(CryptoJS.enc.Hex)
       }
 
       this.userService.changeData(data)
         .toPromise()
         .then( async () => {
           await this.helpersService.showSuccessMessage('Successful change','Your password has been modified correctly');
-          this.authenticationService.logout();
+          this.authenticationService.logout(true);
         })
         .catch( async error => {
           if (error.status === 504 || error.status === 0) {
-            await this.helpersService.showErrorMessage(
-              'No internet connection', 
-              'You need to be connected to the internet, check your connection and try again'
-            );
+            await this.helpersService.showNoInternet();
           } else {
             this.helpersService.showErrorMessage();
           }

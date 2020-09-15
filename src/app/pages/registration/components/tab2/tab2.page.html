@@ -20,16 +20,16 @@
           <p style="text-align: center;" translate="Detecting face..."></p>
         </div>
         <div *ngSwitchCase="0">
-          <p style="text-align: center; color: #EB445A;" translate="No face was detected*"></p>
+          <p style="text-align: center; color: #EB445A; max-width: 250px; margin: auto;" translate="No face was detected*"></p>
         </div>
         <div *ngSwitchCase="1">
-          <p style="text-align: center; color: #285D4D;" translate="A face was detected correctly*"></p>
+          <p style="text-align: center; color: #285D4D; max-width: 250px; margin: auto;" translate="A face was detected correctly*"></p>
         </div>
         <div *ngSwitchCase="null">
-          <p style="text-align: center;" translate="Take a selfie*"></p>
+          <p style="text-align: center; max-width: 250px; margin: auto;" translate="Take a selfie*"></p>
         </div>
         <div *ngSwitchDefault>
-          <p style="text-align: center; color: rgb(219, 164, 0);"
+          <p style="text-align: center; color: rgb(219, 164, 0); max-width: 250px; margin: auto;"
             translate="Only one face should appear in the selfie*"></p>
         </div>
       </div>
@@ -53,9 +53,9 @@
 
           <ion-item>
             <ion-icon name="person-circle-outline"></ion-icon>
-            <ion-input (input)="toOnlyRegex('curp', '[^0-9a-zA-ZñÑ]')" type="text" maxlength="18" placeholder="{{ 'CURP' | translate }}" formControlName="curp" clearInput></ion-input>
+            <ion-input (input)="toOnlyRegex('uniqueId', '[^0-9a-zA-ZñÑ]')" type="text" maxlength="18" placeholder="{{ 'CURP' | translate }}" formControlName="uniqueId" clearInput></ion-input>
           </ion-item>
-          <app-input-error [control]="registerForm.controls.curp"></app-input-error>
+          <app-input-error [control]="registerForm.controls.uniqueId"></app-input-error>
 
           <ion-item>
             <ion-label position="stacked">{{ 'Birthdate' | translate }}<ion-text color="danger">*</ion-text>
@@ -73,18 +73,19 @@
 
   </ion-card>
 
+  <br>
+
+  <div class="ion-padding">
+    <div style="text-align: center;margin: 0.9rem auto;font-size: small;">
+      <span>Aceptar </span> <a style="text-decoration: none; margin-right: 0.5rem;" [routerLink]="['/information-text']" [queryParams]="{backUrl: '/registration/client/tab2'}">Términos y Condiciones</a>  
+      <ion-checkbox style="vertical-align: bottom;" [(ngModel)]="acceptTermsConditions" color="tertiary" slot="end"></ion-checkbox>
+    </div>
+    <ion-button type="button" style="margin-top: 0.6rem;" (click)="register()" [disabled]="registerForm.invalid || (facesDetected !== 1 && canRecognizeFace) || waiting || !acceptTermsConditions"
+      expand="block" color="primary">{{ 'To Register' | translate }}</ion-button>
+    <ion-button [routerLink]="['/login']" style="margin-top: 0.6rem;" routerDirection="backward" expand="block" color="medium">
+      {{ 'Cancel' | translate }}</ion-button>
+  </div>
 
 </ion-content>
-
-<div class="ion-padding">
-  <div style="text-align: center;margin: 0.9rem auto;font-size: small;">
-    <span>Aceptar </span> <a style="text-decoration: none; margin-right: 0.5rem;" target="_blank" href="https://www.gob.mx/terminos">Términos y Condiciones</a>  
-    <ion-checkbox style="vertical-align: bottom;" [(ngModel)]="acceptTermsConditions" color="tertiary" slot="end"></ion-checkbox>
-  </div>
-  <ion-button type="button" (click)="register()" [disabled]="registerForm.invalid || facesDetected !== 1 || waiting || !acceptTermsConditions"
-    expand="block" color="primary">{{ 'To Register' | translate }}</ion-button>
-  <ion-button [routerLink]="['/login']" routerDirection="backward" expand="block" color="medium">
-    {{ 'Cancel' | translate }}</ion-button>
-</div>
 
 <app-footer></app-footer>

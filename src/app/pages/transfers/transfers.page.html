@@ -95,21 +95,21 @@
               <ion-item>
                 <ion-label position="stacked"> {{ 'Amount' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="transferAmount" required inputmode="decimal" type="number"></ion-input>
+                <ion-input formControlName="transferAmount" maxlength="9" required inputmode="decimal" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferAmount"></app-input-error>
 
               <ion-item>
                 <ion-label position="stacked"> {{ 'Reference' | translate }} <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-input formControlName="transferDescription" required inputmode="text" type="text"></ion-input>
+                <ion-input formControlName="transferDescription" maxlength="15" required inputmode="text" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferDescription"></app-input-error>
 
               <ion-item>
                 <ion-label position="stacked"> {{ 'Concept' | translate }}
                 </ion-label>
-                <ion-input formControlName="concept" inputmode="text" type="text"></ion-input>
+                <ion-input formControlName="concept" maxlength="15" inputmode="text" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.concept"></app-input-error>
 

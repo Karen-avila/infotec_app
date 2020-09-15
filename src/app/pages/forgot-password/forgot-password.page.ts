@@ -29,6 +29,7 @@ export class ForgotPasswordPage implements OnInit {
             ) {
 
     this.forgotForm = formBuilder.group({
+      channel: ["Movil"],
       curp: ["", Validators.compose([
         Validators.required,
         CustomValidators.ValidateCurp

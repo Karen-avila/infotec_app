@@ -24,6 +24,7 @@ export class ChangePhonePage implements OnInit {
     ) {
 
     this.form = formBuilder.group({
+      shaded: true,
       phone: ["", Validators.compose([
         Validators.required,
         CustomValidators.ValidatePhoneNumber
@@ -46,12 +47,15 @@ export class ChangePhonePage implements OnInit {
     this.userService.changeData(form)
       .toPromise()
       .then(() => {
-        this.updatePhone(form.phone)
-        this.helpersService.showSuccessMessage('Successful change', 'Your phone has been modified correctly', '/dashboard')
+        this.updatePhone(form.phone);
+        this.helpersService.showSuccessMessage('Successful change', 'Your phone has been modified correctly')
       })
-      .catch(err => {
-        console.log(err)
-        this.helpersService.showErrorMessage();
+      .catch( async error => {
+        if (error.status === 504 || error.status === 0) {
+          await this.helpersService.showNoInternet();
+        } else {
+          this.helpersService.showErrorMessage();
+        }
       })
       .finally(() => this.helpersService.hideLoading())
   }

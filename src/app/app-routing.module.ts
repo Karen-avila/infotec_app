@@ -104,8 +104,11 @@ const routes: Routes = [
     path: 'automatic-token',
     loadChildren: () => import('./pages/automatic-token/automatic-token.module').then( m => m.AutomaticTokenPageModule)
   },
+  {
+    path: 'information-text',
+    loadChildren: () => import('./pages/information-text/information-text.module').then( m => m.InformationTextPageModule)
+  },
   { path: "**", redirectTo: "not-found" },
-
 ];
 
 @NgModule({

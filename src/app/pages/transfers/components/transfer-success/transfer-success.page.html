@@ -8,12 +8,16 @@
     <div class="header svg-correction ion-no-border" [ngStyle]="{'margin-bottom': '80px' }" no-border>
       <img style="z-index: 105" class="profile-photo ion-img" src="/assets/header-icons/transferir-exitoso.png">
       <ion-toolbar>
-        <ion-button (click)="modalController.dismiss()" style="--background: none; --box-shadow: none;" slot="end">
+        <ion-buttons (click)="modalController.dismiss()" style="color:white; margin-right: 1.2rem; --background: none; --box-shadow: none;" slot="end">
           <ion-icon name="close"></ion-icon>
-        </ion-button>
+        </ion-buttons>
+        <ion-buttons style="color:white; margin-left: 1.2rem; --background: none; --box-shadow: none;" (click)="onShare()" slot="start">
+          <ion-icon name="share-social-sharp"></ion-icon>
+        </ion-buttons>
       </ion-toolbar>
       <ion-title color="secondary">
         <div style="white-space: normal; text-align: center; text-transform: uppercase;">{{'Transfer Success' | translate}}</div></ion-title>
+      
     </div>
 
     <div class="container-big" style="font-size: xx-large; text-align: center;">
@@ -43,11 +47,11 @@
   
     <br><br>
   
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
       <ion-fab-button (click)="onShare()" color="light">
         <ion-icon style="font-size: xx-large;color: #3880FF; margin: auto;" name="share-social-sharp"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
+    </ion-fab> -->
   </div>
 
 </ion-content>

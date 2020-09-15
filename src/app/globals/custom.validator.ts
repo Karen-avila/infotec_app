@@ -22,9 +22,9 @@ export function ValidateRfc(control: AbstractControl) {
     return null;
 }
 
-export function ValidateAccountNumber(control: AbstractControl) {
+export function ValidateClientNumber(control: AbstractControl) {
     if (!(/^([0-9]{8,9}|[0-9]{11})$/.test(control.value))) {
-        return { accountNumber: true };
+        return { clientNumber: true };
     }
     return null;
 }
@@ -151,8 +151,8 @@ export function ValidateTransferAmountLimit(controlName: string, transferLimit: 
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         if (!control.value) { return null }
-        if (control.value > transferLimit)
-            control.setErrors({ transferAmountLimit: true });
+        if (parseFloat(control.value.replace(/,/g, '')) > transferLimit)
+            control.setErrors({ transferAmountLimit: { transferAmountLimit: '$'+transferLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") } });
         return null;
     }
 }
