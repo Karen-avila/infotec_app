@@ -123,15 +123,255 @@ export class LoginPage implements OnInit {
   }
 
   sendUnblockMail() {
-
+    this.helpersService.sendUnblockMail(
+      'Desbloquear Cuenta',
+      'INGRESA TUS DATOS!'
+    ).then(async alert => {
+      const wrapper: any = document.querySelector('.alert-wrapper');
+      wrapper.innerHTML = '';
+      wrapper.style.borderRadius = '20px';
+      wrapper.style.position = 'relative';
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
+        <ion-text style="position: absolute;
+                          top: 7%;
+                          left: 8%;
+                          width: 85%;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Desbloquear Cuenta').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 38%;
+                          left: 14%;
+                          width: 72%;
+                          text-transform: uppercase;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Ingresa tus datos!').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 45%;
+                          left: 10%;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('Para continuar con el proceso de desbloueo...').toPromise()}
+        </ion-text>
+        <ion-input type="text" placeholder="Escribe tu CURP"
+                  style="position: absolute;
+                          top: 55%;
+                          left: 10%;
+                          border-buttom: 1px solid black;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('- ').toPromise()}
+        </ion-input>
+        <ion-input type="text" placeholder="Escribe tu correo"
+                  style="position: absolute;
+                          top: 65%;
+                          left: 10%;
+                          border-buttom: 1px solid black;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('- ').toPromise()}
+        </ion-input>
+        <ion-button expand="block"
+                    id=""
+                    color="primary"
+                    style="position: absolute;
+                    top: 73%;
+                    left: 14%;
+                    width: 72%;
+                    text-transform:
+                    uppercase;">
+          ${ await this.translate.get('VALIDAR').toPromise()}
+        </ion-button>
+        <ion-button expand="block"
+                    id="btnClose"
+                    color="medium"
+                    style="position: absolute;
+                    top: 85%;
+                    left: 14%;
+                    width: 72%;
+                    text-transform: uppercase;">
+          ${ await this.translate.get('CANCELAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnClose').addEventListener('click', () => {
+        console.log('destruir');
+        alert.dismiss();
+      });
+      alert.present();
+    });
   }
 
   getCodeMail() {
-
+    this.helpersService.getCodeMail(
+      'Sólo un paso más',
+      'REVISA TU CORREO!'
+    ).then(async alert => {
+      const wrapper: any = document.querySelector('.alert-wrapper');
+      wrapper.innerHTML = '';
+      wrapper.style.borderRadius = '20px';
+      wrapper.style.position = 'relative';
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img style="width: 100%;
+                    height: auto;
+                    " src="./assets/sin-internet.png"
+                    alt="Sin internet">
+        <ion-text style="position: absolute;
+                          top: 7%;
+                          left: 8%;
+                          width: 85%;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Sólo un paso más').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 25%;
+                          left: 14%;
+                          width: 72%;
+                          text-transform: uppercase;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Revisa tu correo!').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 35%;
+                          left: 10%;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('Para finalizar el proceso de desbloqueo, revisa tu correo, te deberá haber llegado un código de desbloqueo que deberás proporcionar a continuación').toPromise()}
+        </ion-text>
+        <ion-input type="text" placeholder="Escribe tu código"
+                  style="position: absolute;
+                          top: 50%;
+                          left: 10%;
+                          border-buttom: 1px solid black;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('- ').toPromise()}
+        </ion-input>
+        <ion-input type="text" placeholder="Escribe tu contraseña"
+                  style="position: absolute;
+                          top: 57%;
+                          left: 10%;
+                          border-buttom: 1px solid black;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('- ').toPromise()}
+        </ion-input>
+        <ion-input type="text" placeholder="Confirma tu contraseña"
+                  style="position: absolute;
+                          top: 64%;
+                          left: 10%;
+                          border-buttom: 1px solid black;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('- ').toPromise()}
+        </ion-input>
+        <ion-button expand="block"
+                    id=""
+                    color="primary"
+                    style="position: absolute;
+                    top: 73%;
+                    left: 14%;
+                    width: 72%;
+                    text-transform:
+                    uppercase;">
+          ${ await this.translate.get('ACEPTAR').toPromise()}
+        </ion-button>
+        <ion-button expand="block"
+                    id="btnClose"
+                    color="medium"
+                    style="position: absolute;
+                    top: 85%;
+                    left: 14%;
+                    width: 72%;
+                    text-transform: uppercase;">
+          ${ await this.translate.get('CANCELAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnClose').addEventListener('click', () => {
+        console.log('destruir');
+        alert.dismiss();
+      });
+      alert.present();
+    });
   }
 
   UnblockSuccess() {
-
+    this.helpersService.UnblockSuccess(
+      'Desbloqueo Exitoso',
+      'YA PUEDES INGRESAR!'
+    ).then(async alert => {
+      const wrapper: any = document.querySelector('.alert-wrapper');
+      wrapper.innerHTML = '';
+      wrapper.style.borderRadius = '20px';
+      wrapper.style.position = 'relative';
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img style="width: 100%;
+                    height: auto;
+                    " src="./assets/sin-internet.png"
+                    alt="Sin internet">
+        <ion-text style="position: absolute;
+                          top: 7%;
+                          left: 8%;
+                          width: 85%;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Desbloqueo Exitoso').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 38%;
+                          left: 14%;
+                          width: 72%;
+                          text-transform: uppercase;
+                          text-align: center;
+                          font-weight: bold">
+          ${ await this.translate.get('Ya puedes ingresar!').toPromise()}
+        </ion-text>
+        <ion-text style="position: absolute;
+                          top: 45%;
+                          left: 10%;
+                          width: 80%;
+                          font-size: 90%;
+                          text-align: center;
+                          text-align: justify;">
+          ${ await this.translate.get('El proceso de desbloqueo de tu cuenta se completó exitosamente, ya puedes ingresar a tu Banca Móvil con tu usuario y nueva contraseña').toPromise()}
+        </ion-text>
+        <ion-button expand="block"
+                    id=""
+                    color="primary"
+                    style="position: absolute;
+                    top: 75%;
+                    left: 14%;
+                    width: 72%;
+                    text-transform:
+                    uppercase;">
+          ${ await this.translate.get('ACEPTAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnClose').addEventListener('click', () => {
+        console.log('destruir');
+        alert.dismiss();
+      });
+      alert.present();
+    });
   }
 
   viewPassword() {
