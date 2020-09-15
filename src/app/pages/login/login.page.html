@@ -1,11 +1,9 @@
 <app-header [svg]="true" [bottomTitle]="textTitle"></app-header>
 
 <ion-content>
-
   <div  *ngIf="showImage" class="container-image" style="width: 60%;margin:auto; margin-bottom: -1rem;">
     <ion-img src="/assets/logo-banbi-green.png" alt="Logo"></ion-img>
   </div>
-
   <ion-grid>
     <div class="container">
       <form [formGroup]="loginForm" (ngSubmit)="signIn()">

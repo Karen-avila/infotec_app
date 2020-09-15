@@ -75,7 +75,7 @@ export class TransfersPage implements OnInit {
 
   public savedAccounts: Beneficiarie[] = []
   public savedAccountsFiltered: Beneficiarie[] = []
-
+  public myAccounts: Beneficiarie[] = [];
   public transferForm: FormGroup;
 
   public isBeneficiarieSelected = false;
@@ -161,6 +161,8 @@ export class TransfersPage implements OnInit {
         this.globalConfig = res[4];
 
         await this.getAccounts();
+        
+        this.userService.myAccounts = this.myAccounts;
         return res;
       })
       .catch(err => {
@@ -243,7 +245,11 @@ export class TransfersPage implements OnInit {
       this.helpersService.showErrorMessage('Origin account blocked', 'The origin account selected is blocked. Please select another to transfer to the selected beneficiary' )
       return;
     }
-
+    if (this.accountSelected.accountNo == item.accountNumber) {
+      // se agrega la validación para no hacer una transferencia a su misma cuenta seleccionada
+     this.helpersService.showErrorMessage('Same account', 'You cannot transfer to the same account. Please select another to transfer to the selected beneficiary' )
+     return;
+   }
     const prevSelected = this.savedAccountsFiltered.find((account: Beneficiarie) => account.selected);
     if (prevSelected) {
       prevSelected.color = '';
@@ -409,8 +415,11 @@ export class TransfersPage implements OnInit {
 
             let ownBeneficiarieAccount: Beneficiarie = new Beneficiarie(this.personalInfo.displayName, translate['Own Account'], element.id,
               element.accountNo, 2, this.loginInfo.clientId, this.personalInfo.displayName, this.personalInfo.officeId, this.personalInfo.officeName);
-            this.savedAccounts.push(ownBeneficiarieAccount);
-          })
+            if (savings.length > 1) { // solo agrega las cuentas propias a mostrar si tiene mas de una cuenta
+                this.savedAccounts.push(ownBeneficiarieAccount);
+                }
+            this.myAccounts.push(ownBeneficiarieAccount);
+            });
 
           let accountNumberDefault = this.accounts[0].accountNo;
 
