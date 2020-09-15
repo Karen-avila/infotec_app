@@ -11,7 +11,9 @@ ion-card .list-ios {
 ion-list{
     background-color: transparent;
 }
-
+.text {
+    text-align: justify;  
+}
 .background-input {
     ion-item {
         --border-color: transparent!important;

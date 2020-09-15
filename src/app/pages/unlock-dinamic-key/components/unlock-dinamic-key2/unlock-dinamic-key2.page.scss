@@ -14,6 +14,9 @@ ion-list{
 b {
     color:#151313bf;
 }
+.text {
+    text-align: justify;  
+}
 ion-content{   
 --background: rgba(255,255,255,1);
 --background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 1%, rgba(255,255,255,1) 1%, rgba(255,255,255,1) 2%, rgba(255,255,255,1) 13%, rgba(232,216,190,1) 100%);
