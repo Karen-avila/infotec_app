@@ -8,8 +8,7 @@
       <ion-list>
 
         <ion-item>
-          <ion-label position="stacked"> {{ 'Account' | translate }} <ion-text color="danger">*
-            </ion-text>
+          <ion-label position="stacked"> {{ 'Account' | translate }} 
           </ion-label>
           <ion-input formControlName="accountNumber" maxlength="11" (input)="toOnlyRegex('accountNumber', '[^0-9]')" required type="tel"></ion-input>
           <ion-icon *ngIf="searchButtonEnabled" (click)="search()"
@@ -19,7 +18,7 @@
         <app-input-error [control]="form.controls.accountNumber"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked">{{ "Beneficiary's name" | translate }} <ion-text color="danger">*</ion-text>
+          <ion-label position="stacked">{{ "Beneficiary's name" | translate }}
           </ion-label>
           <ion-input formControlName="name" required inputmode="text" type="text"></ion-input>
         </ion-item>
@@ -27,12 +26,12 @@
 
         <ion-item>
           <ion-label position="stacked">Alias</ion-label>
-          <ion-input formControlName="alias" inputmode="text" type="text"></ion-input>
+          <ion-input maxlength="30" formControlName="alias" inputmode="text" type="text"></ion-input>
         </ion-item>
         <app-input-error [control]="form.controls.alias"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked"> {{ 'Kind of product' | translate }} <ion-text color="danger">*</ion-text>
+          <ion-label position="stacked"> {{ 'Kind of product' | translate }} 
           </ion-label>
           <ion-select formControlName="accountType" [cancelText]="cancelText" [interfaceOptions]="accountTypeOption"
             interface="action-sheet" placeholder="{{ 'Select an option' | translate }}">
@@ -43,7 +42,7 @@
         <app-input-error [control]="form.controls.accountType"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked"> {{ 'Bank / Institution' |  translate }} <ion-text color="danger">*</ion-text>
+          <ion-label position="stacked"> {{ 'Bank / Institution' |  translate }} 
           </ion-label>
           <ion-select formControlName="bankId" [cancelText]="cancelText" [interfaceOptions]="bankIdOption"
             interface="action-sheet" placeholder="{{ 'Select an option' | translate }}">
@@ -53,7 +52,7 @@
         <app-input-error [control]="form.controls.bankId"></app-input-error>
 
         <ion-item>
-          <ion-label position="stacked"> {{ 'Transfer limit' | translate }} <ion-text color="danger">*</ion-text>
+          <ion-label position="stacked"> {{ 'Transfer limit' | translate }} 
           </ion-label>
           <ion-input (input)="toOnlyRegex('transferLimit', '[^0-9]')" maxlength="5" formControlName="transferLimit" required inputmode="number" type="text"></ion-input>
         </ion-item>
