@@ -9,7 +9,7 @@ import { environment } from '@env';
 })
 export class HelpersService {
 
-  flagNoInternetOpen: boolean = false;
+  flagNoInternetOpen = false;
 
   isLoading = false;
 
@@ -33,7 +33,7 @@ export class HelpersService {
         // duration: 5000,
       }).then(a => {
         a.present().then(() => {
-          //console.log('presented');
+          // console.log('presented');
           if (!this.isLoading) {
             a.dismiss().then(() => console.log('abort presenting'));
           }
@@ -56,6 +56,12 @@ export class HelpersService {
       return;
     }
     this.isLoading = false;
+<<<<<<< HEAD
+=======
+    return await this.loadingController.dismiss().then(() => {}// console.log('dismissed'
+    );
+  }
+>>>>>>> 81c925413ef15b63d835e5310fa18569465e275a
 
     return new Promise(resolve => {
       setTimeout(() => this.loadingController.dismiss().then(() => resolve()), 300);
@@ -83,8 +89,8 @@ export class HelpersService {
             ]
           });
           await alert.present();
-        })
-    })
+        });
+    });
 
   }
 
@@ -100,14 +106,13 @@ export class HelpersService {
       const alert = await this.alertController.create({
         cssClass: 'no-internet-class',
         backdropDismiss: false,
-        buttons: translate['Accept']
+        buttons: translate.Accept
       }).then(async (data) => {
         console.log(data);
 
         const wrapper: any = document.querySelector('.alert-wrapper');
 
         wrapper.innerHTML = '';
-
         wrapper.style.borderRadius = '20px';
         wrapper.style.position = 'relative';
 
@@ -121,7 +126,7 @@ export class HelpersService {
         <ion-text style="position: absolute; top: 62%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
           ${ await this.translate.get('Check your connection to continue').toPromise() }
         </ion-text>
-        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button> 
+        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button>
       `);
 
         document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
@@ -145,9 +150,9 @@ export class HelpersService {
         message: translate[message],
         buttons: [
           {
-            text: translate['Accept'],
+            text: translate.Accept,
             handler: () => {
-              if (routerLink) { this.navCtrl.navigateRoot([routerLink]) }
+              if (routerLink) { this.navCtrl.navigateRoot([routerLink]); }
             }
           }
         ]
@@ -163,9 +168,9 @@ export class HelpersService {
         message: translate[message],
         buttons: [
           {
-            text: translate['Accept'],
+            text: translate.Accept,
             handler: () => {
-              if (routerLink) {this.navCtrl.navigateRoot([routerLink])}
+              if (routerLink) {this.navCtrl.navigateRoot([routerLink]);}
             }
           }
         ]
@@ -173,15 +178,25 @@ export class HelpersService {
     });
   }
 
+  public blockYourAccountMessage(header: string, message: string, routerLink?: any): Promise<any> {
+    return this.translate.get([header, message, 'Accept']).toPromise().then(async translate => {
+      return this.alertController.create({
+        header: translate[header],
+        message: translate[message],
+        cssClass: 'no-internet-class',
+      });
+    });
+  }
+
   public async showErrorMessage(title?: string, text?: string): Promise<any> {
-    const message = text ? text : 'Can not proccess the request right now. Try again later'
-    const header = title ? title : 'Error'
+    const message = text ? text : 'Can not proccess the request right now. Try again later';
+    const header = title ? title : 'Error';
     return this.translate.get([title, message, 'Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
         header: translate[header],
         message: translate[message],
         buttons: [
-          translate['Accept']
+          translate.Accept
         ]
       });
       return await alert.present();
