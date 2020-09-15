@@ -155,12 +155,13 @@ export class TransfersPage implements OnInit {
         console.log(res);
         this.savedAccounts = [...res[0], ...res[1]];
         this.userService.beneficiaries = this.savedAccounts;
+        this.savedAccountsFiltered = this.savedAccounts;
         this.personalInfo = res[2];
         this.loginInfo = res[3];
         this.globalConfig = res[4];
 
         await this.getAccounts();
-        this.savedAccountsFiltered = this.savedAccounts;
+        
         this.userService.myAccounts = this.myAccounts;
         return res;
       })
