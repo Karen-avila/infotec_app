@@ -199,8 +199,9 @@ export class SecondLoginPage implements OnInit {
   async openUnlock() {
        const modal = await this.modalCtrl.create({
           component: UnlockDinamicKeyPage,
+          cssClass: 'modal'
         });
 
-        await modal.present();
+        return await modal.present();
   }
 }

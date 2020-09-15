@@ -31,9 +31,10 @@ export class UnlockDinamicKeyPage implements OnInit {
   async openUnlock2() {
     const modal = await this.modalController.create({
        component: UnlockDinamicKey2Page,
+       cssClass: 'modal'
      });
 
-     await modal.present();
+    return await modal.present();
 }
 
 
