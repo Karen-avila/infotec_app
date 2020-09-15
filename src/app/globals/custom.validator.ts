@@ -124,6 +124,32 @@ export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
     }
     return { accountNumber: true };
 }
+// custom validator para evistar que de alta como beneficiario una cuenta ya existente
+export function ValidateAccountNumberBeneficiaryExist(controlName: string, beneficiaries: Beneficiarie[]) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
+        for (var i = 0; i < (beneficiaries || []).length; i++) {
+            if (beneficiaries[i].accountNumber == control.value) {
+                control.setErrors({ beneficiaryAccountAlreadyRegistered: true });
+            }
+        }
+        return null;
+    }
+}
+// custom validator para evistar que de alta como beneficiario una cuenta propia
+export function ValidateOwnAccountNumberExist(controlName: string, beneficiaries: Beneficiarie[]) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        if (!control.value) { return null }
+        for (var i = 0; i < (beneficiaries || []).length; i++) {
+            if (beneficiaries[i].accountNumber == control.value) {
+                control.setErrors({ ownAccountAlreadyRegistered: true });
+            }
+        }
+        return null;
+    }
+}
 
 
 export function ValidateBeneficiarieName(control: AbstractControl) {

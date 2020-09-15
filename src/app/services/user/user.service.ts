@@ -16,6 +16,7 @@ export class UserService {
   public shortName: string;
   //public accountMovementsSelected: CardAccount;
   public beneficiaries: Beneficiarie[];
+  public myAccounts: Beneficiarie[];
   public programaSocialSelected: Programs;
 
   constructor(private httpClient: HttpClient) { }
