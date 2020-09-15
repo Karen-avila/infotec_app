@@ -14,6 +14,8 @@ enum ErrorMessages {
   accountNumber = 'The account number is invalid',
   password = 'The password must contain at least one uppercase, one lowercase, a number and a length of 8 characters',
   beneficiaryAlreadyRegistered = 'The beneficiary name is already registered. Choose another.',
+  beneficiaryAccountAlreadyRegistered = 'The beneficiary account is already registered. Choose another.',
+  ownAccountAlreadyRegistered = 'You cannot register your own accounts.',
   accountNotFound = 'Account not found',
   transferAmountLimit = 'Amount greather than transfer limit of {{value}}',
   transferAmountExceeded = 'Transfer amount greather than account balance',

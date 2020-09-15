@@ -112,7 +112,10 @@ export class ManageAccountPage implements OnInit {
 
       bankId: ['', Validators.required]
     }, {
-      validator: CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries)
+      validator: [CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries),
+      CustomValidators.ValidateAccountNumberBeneficiaryExist('accountNumber', this.userService.beneficiaries),
+      CustomValidators.ValidateOwnAccountNumberExist('accountNumber', this.userService.myAccounts)
+    ]
     });
 
     this.form.controls['accountType'].disable();
