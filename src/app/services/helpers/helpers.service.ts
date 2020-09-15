@@ -231,20 +231,15 @@ export class HelpersService {
         >
           ${ await this.translate.get('Para continuar con el proceso de desbloqueo...').toPromise()}
         </ion-text>
-        <ion-input
-          type="text"
-          placeholder="Escribe tu CURP"
-          style="position: absolute; top: 53%; left: 10%; border-buttom: 1px solid black; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('- ').toPromise()}
-        </ion-input>
-        <ion-input
-          type="text"
-          placeholder="Escribe tu correo"
-          style="position: absolute; top: 60%; left: 10%; border-buttom: 1px solid black; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('- ').toPromise()}
-        </ion-input>
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 50%;">
+          <ion-input type="text" placeholder="Escribe tu CURP">
+            ${ await this.translate.get('<ion-icon name="newspaper-outline"></ion-icon>').toPromise()}
+          </ion-input>
+        </ion-item>
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%;">
+          <ion-icon name="mail-outline"></ion-icon>
+          <ion-input type="text" placeholder="Escribe tu correo"></ion-input>
+        </ion-item>
         <ion-button
           expand="block"
           id="btnNext"
@@ -296,31 +291,25 @@ export class HelpersService {
         >
           ${ await this.translate.get('Para finalizar el proceso de desbloqueo, revisa tu correo, te deberá haber llegado un código de desbloqueo que deberás proporcionar a continuación').toPromise()}
         </ion-text>
-        <ion-input
-          type="text"
-          placeholder="Escribe tu código"
-          style="position: absolute; top: 52%; left: 10%; border-buttom: 1px solid black; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('- ').toPromise()}
-        </ion-input>
-        <ion-input
-          type="text"
-          placeholder="Escribe tu contraseña"
-          style="position: absolute; top: 58%; left: 10%; border-buttom: 1px solid black; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('- ').toPromise()}
-        </ion-input>
-        <ion-input 
-          type="text" 
-          placeholder="Confirma tu contraseña"
-          style="position: absolute; top: 64%; left: 10%; border-buttom: 1px solid black; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('- ').toPromise()}
-        </ion-input>
+          <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 50%;">
+            <ion-input type="text" placeholder="Escribe tu código">
+              ${ await this.translate.get('<ion-icon name="document-outline"></ion-icon>').toPromise()}
+            </ion-input>
+          </ion-item>
+          <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%;">
+            <ion-input type="text" placeholder="Escribe tu contraseña">
+              ${ await this.translate.get('<ion-icon name="lock-closed-outline"></ion-icon>').toPromise()}
+            </ion-input>
+          </ion-item>
+          <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 70%;">
+            <ion-input type="text" placeholder="Confirma tu contraseña">
+              ${ await this.translate.get('<ion-icon name="lock-closed-outline"></ion-icon>').toPromise()}
+            </ion-input>
+          </ion-item>
         <ion-button expand="block"
           id="btnNext"
           color="primary"
-          style="position: absolute; top: 73%; left: 14%; width: 72%; text-transform: uppercase;"
+          style="position: absolute; top: 80%; left: 14%; width: 72%; text-transform: uppercase;"
         >
           ${ await this.translate.get('ACEPTAR').toPromise()}
         </ion-button>
@@ -328,7 +317,7 @@ export class HelpersService {
           expand="block"
           id="btnClose"
           color="medium"
-          style="position: absolute; top: 85%; left: 14%; width: 72%; text-transform: uppercase;"
+          style="position: absolute; top: 90%; left: 14%; width: 72%; text-transform: uppercase;"
         >
           ${ await this.translate.get('CANCELAR').toPromise()}
         </ion-button>
