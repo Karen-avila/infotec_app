@@ -4,6 +4,9 @@ import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { NavController } from '@ionic/angular';
 import { UserService } from '@services/user/user.service';
+import { ModalController } from '@ionic/angular';
+import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
+import { UnlockDinamicKeyPage } from '../unlock-dinamic-key/unlock-dinamic-key.page';
 
 var CryptoJS = require("crypto-js");
 
@@ -35,7 +38,8 @@ export class SecondLoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: Storage,
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    public modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -191,5 +195,12 @@ export class SecondLoginPage implements OnInit {
           this.navCtrl.navigateRoot(['/login']);
         }
       });
+  }
+  async openUnlock() {
+       const modal = await this.modalCtrl.create({
+          component: UnlockDinamicKeyPage,
+        });
+
+        await modal.present();
   }
 }
