@@ -74,56 +74,13 @@ export class LoginPage implements OnInit {
   }
 
   blockYourAccount(form) {
-    this.helpersService.blockYourAccountMessage(
-      'Inicio de sesión bloqueado',
-      'Recuperar'
-    ).then(async alert => {
-      const wrapper: any = document.querySelector('.alert-wrapper');
-      wrapper.innerHTML = '';
-      wrapper.style.borderRadius = '20px';
-      wrapper.style.position = 'relative';
-      wrapper.insertAdjacentHTML('afterbegin', `
-        <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
-        <ion-text
-          style="position: absolute; top: 7%; left: 8%; width: 85%; text-transform: uppercase; text-align: center; font-weight: bold"
-        >
-          ${ await this.translate.get('Inicio de sesión bloqueado').toPromise() }
-        </ion-text>
-        <ion-text
-          style="position: absolute; top: 38%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold"
-        >
-          ${ await this.translate.get('Recuperar!').toPromise() }
-        </ion-text>
-        <ion-text
-          style="position: absolute; top: 45%; left: 10%; width: 80%; font-size: 90%; text-align: center; text-align: justify;"
-        >
-          ${ await this.translate.get('Has bloqueado tu banca móvil por 3 intentos fallidos de inicio de sesión, para desbloquear tu cuenta oprime el boton de DESBLOQUEAR y sigue los pasos del proceso de desbloqueo de tu cuentna').toPromise() }
-        </ion-text>
-        <ion-button
-          expand="block"
-          id=""
-          color="primary"
-          style="position: absolute; top: 73%; left: 14%; width: 72%; text-transform: uppercase;"
-        >${ await this.translate.get('DESBLOQUEAR').toPromise() }
-        </ion-button>
-        <ion-button
-          expand="block"
-          id="btnClose"
-          color="medium"
-          style="position: absolute; top: 85%; left: 14%; width: 72%; text-transform: uppercase;"
-        >${ await this.translate.get('CANCELAR').toPromise() }
-        </ion-button>
-      `);
-      document.querySelector('#btnClose').addEventListener('click', () => {
-        console.log('destruir');
-        alert.dismiss();
-      });
-      alert.present();
-    });
+    this.helpersService.blockYourAccountMessage([
+      () => this.sendUnblockMail(),
+    ]);
   }
 
   sendUnblockMail() {
-
+    console.log('sendUnblockMail');
   }
 
   getCodeMail() {

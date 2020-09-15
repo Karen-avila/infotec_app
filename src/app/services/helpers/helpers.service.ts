@@ -166,13 +166,48 @@ export class HelpersService {
     });
   }
 
-  public blockYourAccountMessage(header: string, message: string, routerLink?: any): Promise<any> {
-    return this.translate.get([header, message, 'Accept']).toPromise().then(async translate => {
-      return this.alertController.create({
-        header: translate[header],
-        message: translate[message],
-        cssClass: 'no-internet-class',
+  public blockYourAccountMessage(next?: any): Promise<any> {
+    return this.translate.get(['Accept']).toPromise().then(async translate => {
+      const alert = await this.alertController.create({
+        cssClass: 'blockYourAccountMessage',
       });
+      await alert.present();
+      const wrapper = document.querySelector('.blockYourAccountMessage .alert-wrapper');
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img style="width: 100%; height: auto;" src="./assets/blockAccount.png" alt="Sin internet">
+        <ion-text
+          style="position: absolute; top: 7%; left: 8%; width: 85%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${ await this.translate.get('Inicio de sesión bloqueado').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 32%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${ await this.translate.get('Recuperar!').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 42%; left: 10%; width: 80%; font-size: 95%; text-align: center; text-align: justify;"
+        >
+          ${ await this.translate.get('Has bloqueado tu banca móvil por 3 intentos fallidos de inicio de sesión, para desbloquear tu cuenta oprime el boton de DESBLOQUEAR y sigue los pasos del proceso de desbloqueo de tu cuentna').toPromise()}
+        </ion-text>
+        <ion-button
+          expand="block"
+          id="btnNext"
+          color="primary"
+          style="position: absolute; top: 73%; left: 14%; width: 72%; text-transform: uppercase;"
+        >${ await this.translate.get('DESBLOQUEAR').toPromise()}
+        </ion-button>
+        <ion-button
+          expand="block"
+          id="btnClose"
+          color="medium"
+          style="position: absolute; top: 85%; left: 14%; width: 72%; text-transform: uppercase;"
+        >${ await this.translate.get('CANCELAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnNext').addEventListener('click', () => alert.dismiss());
+      document.querySelector('#btnNext').addEventListener('click', next[0]);
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
     });
   }
 
