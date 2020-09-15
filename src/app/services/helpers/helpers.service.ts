@@ -62,7 +62,6 @@ export class HelpersService {
   }
 
   public async showAlert(header: string, message: string): Promise<any> {
-
     return new Promise((resolve, reject) => {
       this.translate.get(['Cancel', 'Accept'])
         .subscribe(async (resp: any) => {
@@ -83,33 +82,25 @@ export class HelpersService {
           await alert.present();
         });
     });
-
   }
 
   public async showNoInternet() {
     if (this.flagNoInternetOpen) {
       return;
     }
-
     this.flagNoInternetOpen = true;
-
     this.translate.get(['Accept']).subscribe(async translate => {
-
       const alert = await this.alertController.create({
         cssClass: 'no-internet-class',
         backdropDismiss: false,
         buttons: translate.Accept
       }).then(async (data) => {
         console.log(data);
-
         const wrapper: any = document.querySelector('.alert-wrapper');
-
         wrapper.innerHTML = '';
         wrapper.style.borderRadius = '20px';
         wrapper.style.position = 'relative';
-
         const text = await this.translate.get('Close').toPromise();
-
         wrapper.insertAdjacentHTML('afterbegin', `
         <img style="width: 100%; height: auto;" src="./assets/sin-internet.png" alt="Sin internet">
         <ion-text style="position: absolute; top: 13%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
@@ -120,19 +111,12 @@ export class HelpersService {
         </ion-text>
         <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button>
       `);
-
         document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
-
         return data;
-
       });
       alert.onDidDismiss().then(() => this.flagNoInternetOpen = false);
-
       await alert.present();
-
     });
-
-
   }
 
   public async showSuccessMessage(header: string, message: string, routerLink?: string): Promise<any> {
