@@ -287,5 +287,6 @@
     "Terms and Conditions": "Términos y Condiciones",
     "Are you still there?": "¿Aún Estás Ahí?",
     "Your session will be closed soon": "Tu sesión se cerrará pronto",
-    "Incorrect Access": "Acceso Incorrecto"
+    "Incorrect Access": "Acceso Incorrecto",
+    "INTERBANK_TRANSFER": "SPEI"
 }
