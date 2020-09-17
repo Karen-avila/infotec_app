@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
     form.password = CryptoJS.SHA256(form.password).toString(CryptoJS.enc.Hex);
     this.authenticationService.login(form, true).catch( async err => {
       if (err.error && err.error.userMessageGlobalisationCode === 'error.msg.not.authenticated') {
-        this.blockYourAccount(form);
+        //this.blockYourAccount(form);
       }
     });
   }
