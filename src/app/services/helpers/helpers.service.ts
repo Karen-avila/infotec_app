@@ -369,6 +369,159 @@ export class HelpersService {
     });
   }
 
+  public unlockDinamicKeyMessage(next?: any): Promise<any> {
+    return this.translate.get(['Accept']).toPromise().then(async translate => {
+      const alert = await this.alertController.create({
+        cssClass: 'unlockDinamicKeyMessage',
+      });
+      await alert.present();
+      const wrapper = document.querySelector('.unlockDinamicKeyMessage .alert-wrapper');
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img
+          style="width: 100%; height: auto;"
+          src="./assets/unlockDinamicKey.png"
+          alt="UnBlock"
+        >
+        <ion-text
+          style="position: absolute; top: 7%; left: 8%; width: 85%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('Clave Dinámica Bloqueada').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 28%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('DESBLOQUEAR').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 34%; left: 10%; width: 80%; font-size: 95%; text-align: center; text-align: justify;"
+        >
+          ${ await this.translate.get('Has bloqueado tu Clave Dinámica por 5 intentos fallidos de uso en tu Banca por Internet, para desbloquear tu Clave Dinámica escribe tu PIN y oprime el botón de <b> DESBLOQUEAR </b> y sigue los pasos de desbloqueo').toPromise()}
+        </ion-text>
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 62%; left: 7%;">
+          <ion-input type="text" placeholder="Escribe tu PIN">
+            ${ await this.translate.get('<ion-icon name="document-outline"></ion-icon>').toPromise()}
+          </ion-input>
+        </ion-item>
+        <ion-button
+          expand="block"
+          id="btnNext"
+          color="primary"
+          style="position: absolute; top: 77%; left: 14%; width: 72%; text-transform: uppercase;"
+        >
+          ${await this.translate.get('DESBLOQUEAR').toPromise()}
+        </ion-button>
+        <ion-button
+          expand="block"
+          id="btnClose"
+          color="medium"
+          style="position: absolute; top: 87%; left: 14%; width: 72%; text-transform: uppercase;"
+        >
+          ${ await this.translate.get('CANCELAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnNext').addEventListener('click', () => alert.dismiss());
+      document.querySelector('#btnNext').addEventListener('click', next[0]);
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
+    });
+  }
+
+  public codeMailMessage(next?: any): Promise<any> {
+    return this.translate.get(['Accept']).toPromise().then(async translate => {
+      const alert = await this.alertController.create({
+        cssClass: 'codeMailMessage',
+      });
+      await alert.present();
+      const wrapper = document.querySelector('.codeMailMessage .alert-wrapper');
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img
+          style="width: 100%; height: auto;"
+          src="./assets/codeMail.png"
+          alt="UnBlock"
+        >
+        <ion-text
+          style="position: absolute; top: 7%; left: 8%; width: 85%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('Solo un paso más').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 30%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('REVISA TU CORREO!').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 36%; left: 10%; width: 80%; font-size: 95%; text-align: center; text-align: justify;"
+        >
+          ${await this.translate.get('Para finalizar el proceso de desbloqueo, revisa tu correo, te deberá haber llegado un código de desbloqueo que deberieras proporcionar a continuación').toPromise()}
+        </ion-text>
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%; left: 7%;">
+          <ion-input type="text" placeholder="Escribe tu código">
+            ${await this.translate.get('<ion-icon name="document-outline"></ion-icon>').toPromise()}
+          </ion-input>
+        </ion-item>
+        <ion-button
+          expand="block"
+          id="btnNext"
+          color="primary"
+          style="position: absolute; top: 77%; left: 14%; width: 72%; text-transform: uppercase;"
+        >
+          ${await this.translate.get('ACEPTAR').toPromise()}
+        </ion-button>
+        <ion-button
+          expand="block"
+          id="btnClose"
+          color="medium"
+          style="position: absolute; top: 87%; left: 14%; width: 72%; text-transform: uppercase;"
+        >
+          ${await this.translate.get('CANCELAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnNext').addEventListener('click', () => alert.dismiss());
+      document.querySelector('#btnNext').addEventListener('click', next[0]);
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
+    });
+  }
+
+  public unblockSuccessTokenMessage(next?: any): Promise<any> {
+    return this.translate.get(['Accept']).toPromise().then(async translate => {
+      const alert = await this.alertController.create({
+        cssClass: 'unblockSuccessMessage',
+      });
+      await alert.present();
+      const wrapper = document.querySelector('.unblockSuccessMessage .alert-wrapper');
+      wrapper.insertAdjacentHTML('afterbegin', `
+        <img
+          style="width: 100%; height: auto;"
+          src="./assets/unblockSuccess.png"
+          alt="UnBlock"
+        >
+        <ion-text
+          style="position: absolute; top: 7%; left: 8%; width: 85%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('Desbloqueo Exitoso').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 30%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold"
+        >
+          ${await this.translate.get('YA PUEDES INGRESAR!').toPromise()}
+        </ion-text>
+        <ion-text
+          style="position: absolute; top: 36%; left: 10%; width: 80%; font-size: 95%; text-align: center; text-align: justify;"
+        >
+          ${await this.translate.get('El proceso de desbloqueo de tu <b>CLAVE DINÁMICA</b> se completo exitosamente, ya puedes ingresar nuevamente a tu Banca Móvil y/o usarla para completar operaciones en tu Banca por Internet').toPromise()}
+        </ion-text>
+        <ion-button
+          expand="block"
+          id="btnClose"
+          color="primary"
+          style="position: absolute; top: 77%; left: 14%; width: 72%; text-transform: uppercase;"
+        >
+          ${await this.translate.get('ACEPTAR').toPromise()}
+        </ion-button>
+      `);
+      document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
+    });
+  }
+
   public async showErrorMessage(title?: string, text?: string): Promise<any> {
     const message = text ? text : 'Can not proccess the request right now. Try again later';
     const header = title ? title : 'Error';
