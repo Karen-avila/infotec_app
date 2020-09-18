@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import L from "leaflet";
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { OfficeService } from '@services/office/office.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
@@ -30,6 +30,7 @@ export class OfficesPage implements OnInit {
       private locationAccuracy: LocationAccuracy,
       private helpersService: HelpersService,
       private router: Router,
+      public platform: Platform
     ) {
   }
 
@@ -46,14 +47,17 @@ export class OfficesPage implements OnInit {
     try {
 
       // const canRequest = await this.locationAccuracy.canRequest();
-      let locationActivated: boolean = false;
+
+      if (this.platform.is('android')) {
+        let locationActivated: boolean = false;
       
-      locationActivated = await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).catch( () => {
-        return false;
-      });  
-  
-      if (!locationActivated) {
-        throw new Error('No se pudo activar la ubicación');
+        locationActivated = await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).catch( () => {
+          return false;
+        });  
+    
+        if (!locationActivated) {
+          throw new Error('No se pudo activar la ubicación');
+        }
       }
 
       this.helpersService.presentLoading();

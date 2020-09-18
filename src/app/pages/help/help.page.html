@@ -16,12 +16,15 @@
     </p>
   </div>
   <ion-list class="container-big">
-    <ion-item *ngFor="let item of questions" routerLink="answer" [queryParams]="{question: item.name, answer: item.description}">
+    <ion-item *ngFor="let item of questions" routerLink="answer" style="text-align: justify; margin-bottom: 0.5rem;" [queryParams]="{question: item.name, answer: item.description}">
       <ion-label>
         <h4>{{ item.name }}</h4>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <br>
+  
 </ion-content>
   <ion-toolbar class="shadow">
     <ion-tabs>
