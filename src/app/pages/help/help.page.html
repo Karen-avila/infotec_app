@@ -9,8 +9,6 @@
 
 <app-header [svg]="true" [menu]="true" [title]="'Help'" [defaultHref]="'home'" [img]="'/assets/header-icons/ayuda.png'"></app-header>
 
-
-
 <ion-content>
   <div style="text-align: center; font-size: 16px; font-weight: 700; color: #193931; margin: 0 0 30px 0;">
     <p style="text-transform: uppercase;">
@@ -18,15 +16,16 @@
     </p>
   </div>
   <ion-list class="container-big">
-    <ion-item *ngFor="let item of questions" routerLink="answer" [queryParams]="{question: item.name, answer: item.description}">
+    <ion-item *ngFor="let item of questions" routerLink="answer" style="text-align: justify; margin-bottom: 0.5rem;" [queryParams]="{question: item.name, answer: item.description}">
       <ion-label>
         <h4>{{ item.name }}</h4>
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <br>
   
 </ion-content>
-
   <ion-toolbar class="shadow">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
@@ -34,12 +33,10 @@
           <ion-icon src="./assets/icon/phone-outline.svg"></ion-icon>
           <ion-label translate="Call now"></ion-label>
         </ion-tab-button>
-    
         <!-- <ion-tab-button (click)="presentAlertPrompt()">
           <ion-icon src="./assets/icon/mail-outline.svg"></ion-icon>
           <ion-label translate="Leave an email"></ion-label>
         </ion-tab-button> -->
-    
         <ion-tab-button routerLink="/help/offices">
           <ion-icon src="./assets/icon/pin-outline.svg"></ion-icon>
           <ion-label translate="Find locations"></ion-label>
@@ -47,6 +44,3 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
-   
-     
-

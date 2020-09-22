@@ -12,8 +12,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SvgModule } from '@components/svg/svg.module';
 import { FooterModule } from '@components/footer/footer.module';
 import { HeaderModule } from '@components/header/header.module';
-
 @NgModule({
+  entryComponents: [
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,7 +25,7 @@ import { HeaderModule } from '@components/header/header.module';
     TranslateModule,
     SvgModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
   ],
   declarations: [SecondLoginPage]
 })

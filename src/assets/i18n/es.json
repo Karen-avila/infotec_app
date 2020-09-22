@@ -22,6 +22,8 @@
     "This transfer does not generate charge": "Esta transferencia no genera comisión",
     "Your operational soft token is:": "Tu clave dinámica para realizar tu operación es:",
     "Soft Token": "Clave Dinámica",
+    "Unlock Soft Token": "DESBLOQUEAR CLAVE DINÁMICA",
+    "Unlock": "DESBLOQUEAR",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
     "Reference": "Referencia",
@@ -124,6 +126,8 @@
     "About Us": "Nosotros",
     "Back": "Atrás",
     "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado. Seleccione otro.",
+    "The beneficiary account is already registered. Choose another.": "La cuenta del beneficiario ya está registrado. Seleccione otro.",
+    "You cannot register your own accounts.": "No puedes registrar tus propias cuentas.",
     "Account not found": "Cuenta no encontrada",
     "Account already registered": "Cuenta ya registrada",
     "Create Beneficiary": "Crear Beneficiario",
@@ -209,6 +213,8 @@
     "I want to be client": "Quiero ser cliente",
     "Origin account blocked": "Cuenta origen bloqueada",
     "The origin account selected is blocked. Please select another to transfer to the selected beneficiary": "La cuenta origen seleccionada está bloqueada. Por favor seleccione otra para transferir al beneficiario seleccionado",
+    "Same account": "Misma cuenta",
+    "You cannot transfer to the same account. Please select another to transfer to the selected beneficiary": "No puedes tarsferir a la misma cuenta. Por favor seleccione otra para transferir al beneficiario seleccionado",
     "Enter current pin": "Ingrese su PIN",
     "Set new PIN to login": "Ingrese su nuevo PIN",
     "Confirm new PIN": "Confirmar nuevo PIN",
@@ -256,7 +262,7 @@
     "The password was updated correctly, you can now access mobile banking with your new password": "La contraseña se actualizó correctamente, ya puedes acceder a tu banca móvil con tu nueva contraseña",
     "Updated password": "Contraseña actualizada",
     "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
-    "Cash": "Efectivo", 
+    "Cash": "Efectivo",
     "Account": "Cuenta",
     "New Phone": "Nuevo número de celular",
     "The password must not contain more than 2 consecutive equal numbers and/or letters": "La contraseña no debe contener más de 2 números y/o letras consecutivas iguales",
@@ -281,5 +287,6 @@
     "Terms and Conditions": "Términos y Condiciones",
     "Are you still there?": "¿Aún Estás Ahí?",
     "Your session will be closed soon": "Tu sesión se cerrará pronto",
-    "Incorrect Access": "Acceso Incorrecto"
+    "Incorrect Access": "Acceso Incorrecto",
+    "INTERBANK_TRANSFER": "SPEI"
 }
