@@ -12,11 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SvgModule } from '@components/svg/svg.module';
 import { FooterModule } from '@components/footer/footer.module';
 import { HeaderModule } from '@components/header/header.module';
-import { UnlockDinamicKeyPageModule } from '../unlock-dinamic-key/unlock-dinamic-key.module';
-import { UnlockDinamicKeyPage } from '@pages/unlock-dinamic-key/unlock-dinamic-key.page';
 @NgModule({
   entryComponents: [
-    UnlockDinamicKeyPage
   ],
   imports: [
     CommonModule,
@@ -29,7 +26,6 @@ import { UnlockDinamicKeyPage } from '@pages/unlock-dinamic-key/unlock-dinamic-k
     SvgModule,
     FooterModule,
     HeaderModule,
-    UnlockDinamicKeyPageModule
   ],
   declarations: [SecondLoginPage]
 })
