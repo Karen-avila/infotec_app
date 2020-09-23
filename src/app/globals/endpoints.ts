@@ -19,4 +19,5 @@ export let ENDPOINTS = {
   savingsAccounts: `${baseUrl}/savingsaccounts`,
   password: `${baseUrl}/password`,
   totp: `${totpUrl}/otp`,
+  validateTotp: `${baseUrl}/totp`,
 }

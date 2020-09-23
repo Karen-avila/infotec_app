@@ -127,7 +127,7 @@ export class SoftTokenPage implements OnInit {
       const bytes = CryptoJS.AES.decrypt(encryptedUser, pin);
       var usuario = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
      
-      return Promise.resolve(usuario);
+      return Promise.resolve({username: usuario.username, password: usuario.password});
 
     } catch(error) {
       

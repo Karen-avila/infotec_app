@@ -22,7 +22,7 @@
     "This transfer does not generate charge": "Esta transferencia no genera comisión",
     "Your operational soft token is:": "Tu clave dinámica para realizar tu operación es:",
     "Soft Token": "Clave Dinámica",
-    "Unlock Soft Token": "DESBLOQUEAR CLAVE DINÁMICA",
+    "Unlock Soft Token": "CLAVE DINÁMICA BLOQUEADA",
     "Unlock": "DESBLOQUEAR",
     "Beneficiary": "Beneficiario",
     "Concept": "Concepto",
@@ -264,6 +264,7 @@
     "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
     "Cash": "Efectivo",
     "Account": "Cuenta",
+    "Account / CLABE": "Cuenta / CLABE",
     "New Phone": "Nuevo número de celular",
     "The password must not contain more than 2 consecutive equal numbers and/or letters": "La contraseña no debe contener más de 2 números y/o letras consecutivas iguales",
     "The password must not contain the letter Ñ": "La contraseña no debe contener la letra Ñ",
@@ -288,5 +289,6 @@
     "Are you still there?": "¿Aún Estás Ahí?",
     "Your session will be closed soon": "Tu sesión se cerrará pronto",
     "Incorrect Access": "Acceso Incorrecto",
-    "INTERBANK_TRANSFER": "SPEI"
+    "INTERBANK_TRANSFER": "SPEI",
+    "Code is required": "El código es requerido"
 }

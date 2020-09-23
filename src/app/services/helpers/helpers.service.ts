@@ -3,6 +3,10 @@ import { LoadingController, AlertController, NavController } from '@ionic/angula
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 import { environment } from '@env';
+import { Storage } from '@ionic/storage';
+import { UserService } from '@services/user/user.service';
+const CryptoJS = require('crypto-js');
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +21,9 @@ export class HelpersService {
     protected loadingController: LoadingController,
     protected translate: TranslateService,
     protected alertController: AlertController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private storage: Storage,
+    private userService: UserService
   ) { }
 
   async presentLoading(text?: string) {
@@ -331,9 +337,10 @@ export class HelpersService {
   public unblockSuccessMessage(next?: any): Promise<any> {
     return this.translate.get(['Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
+        backdropDismiss: false,
         cssClass: 'unblockSuccessMessage',
       });
-      await alert.present();
+      
       const wrapper = document.querySelector('.unblockSuccessMessage .alert-wrapper');
       wrapper.insertAdjacentHTML('afterbegin', `
         <img
@@ -365,6 +372,7 @@ export class HelpersService {
           ${ await this.translate.get('ACEPTAR').toPromise()}
         </ion-button>
       `);
+      await alert.present();
       document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
     });
   }
@@ -372,9 +380,10 @@ export class HelpersService {
   public unlockDinamicKeyMessage(next?: any): Promise<any> {
     return this.translate.get(['Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
+        backdropDismiss: false,
         cssClass: 'unlockDinamicKeyMessage',
       });
-      await alert.present();
+      
       const wrapper = document.querySelector('.unlockDinamicKeyMessage .alert-wrapper');
       wrapper.insertAdjacentHTML('afterbegin', `
         <img
@@ -397,11 +406,17 @@ export class HelpersService {
         >
           ${ await this.translate.get('Has bloqueado tu Clave Dinámica por 5 intentos fallidos de uso en tu Banca por Internet, para desbloquear tu Clave Dinámica escribe tu PIN y oprime el botón de <b> DESBLOQUEAR </b> y sigue los pasos de desbloqueo').toPromise()}
         </ion-text>
-        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 62%; left: 7%;">
-          <ion-input type="text" placeholder="Escribe tu PIN">
-            ${ await this.translate.get('<ion-icon name="document-outline"></ion-icon>').toPromise()}
-          </ion-input>
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%; left: 12%; width: 76%">
+          <ion-input id="pin" type="password" maxlength="4" placeholder="Escribe tu PIN"></ion-input>
         </ion-item>
+
+        <ion-text
+          id="text-error"
+          style="position: absolute; top: 69.5%; left: 8%; width: 85%; text-align: center; color: #EB445A; display: none;"
+        >
+          ${await this.translate.get('PIN is required').toPromise()}
+        </ion-text>
+        
         <ion-button
           expand="block"
           id="btnNext"
@@ -419,8 +434,58 @@ export class HelpersService {
           ${ await this.translate.get('CANCELAR').toPromise()}
         </ion-button>
       `);
-      document.querySelector('#btnNext').addEventListener('click', () => alert.dismiss());
-      document.querySelector('#btnNext').addEventListener('click', next[0]);
+      await alert.present();
+      document.querySelector('#btnNext').addEventListener('click', async() => {
+      
+        try {
+
+          const pin = (document.getElementById('pin') as any).value;
+
+          document.getElementById('text-error').style.display = pin ? 'none' : 'inline';
+
+          if (!pin) return;
+         
+          const encryptedUser = await this.storage.get('user-hash');
+          const bytes = CryptoJS.AES.decrypt(encryptedUser, pin);
+          var user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+          this.presentLoading();
+
+          this.userService.recoverPassword({
+            channel: 'TOTP',
+            curp: user.curp, 
+            email: user.email
+          }, 'request').toPromise().then( resp => {
+            alert.dismiss();
+            next[0]();
+          } ).catch( async error => {
+      
+            if (error.status === 504 || error.status === 0) {
+              await this.showErrorMessage(
+                'No internet connection', 
+                'You need to be connected to the internet, check your connection and try again'
+              );
+            } else {
+              await this.showErrorMessage(
+                'Incorrect data', 
+                'We did not find any user with the data provided'
+              );
+            } 
+            
+          } ) .finally( () => this.hideLoading() );
+    
+        } catch(error) {
+          
+          if (error.message !== 'NO-PIN') {
+            (document.getElementById('pin') as any).value = null;
+            await this.showErrorMessage("Incorrect PIN", "Please verify that your PIN is correct and try again");
+          } 
+    
+          //this.router.navigateByUrl('/login');
+  
+        }
+
+      });
       document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
     });
   }
@@ -428,9 +493,10 @@ export class HelpersService {
   public codeMailMessage(next?: any): Promise<any> {
     return this.translate.get(['Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
+        backdropDismiss: false,
         cssClass: 'codeMailMessage',
       });
-      await alert.present();
+      
       const wrapper = document.querySelector('.codeMailMessage .alert-wrapper');
       wrapper.insertAdjacentHTML('afterbegin', `
         <img
@@ -453,11 +519,17 @@ export class HelpersService {
         >
           ${await this.translate.get('Para finalizar el proceso de desbloqueo, revisa tu correo, te deberá haber llegado un código de desbloqueo que deberieras proporcionar a continuación').toPromise()}
         </ion-text>
-        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%; left: 7%;">
-          <ion-input type="text" placeholder="Escribe tu código">
+        <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%; left: 12%; width: 76%">
+          <ion-input type="text" id="token" maxlength="10" placeholder="Escribe tu código">
             ${await this.translate.get('<ion-icon name="document-outline"></ion-icon>').toPromise()}
           </ion-input>
         </ion-item>
+        <ion-text
+          id="text-error"
+          style="position: absolute; top: 69.5%; left: 8%; width: 85%; text-align: center; color: #EB445A; display: none;"
+        >
+          ${await this.translate.get('Code is required').toPromise()}
+        </ion-text>
         <ion-button
           expand="block"
           id="btnNext"
@@ -475,8 +547,39 @@ export class HelpersService {
           ${await this.translate.get('CANCELAR').toPromise()}
         </ion-button>
       `);
-      document.querySelector('#btnNext').addEventListener('click', () => alert.dismiss());
-      document.querySelector('#btnNext').addEventListener('click', next[0]);
+      await alert.present();
+      
+      document.querySelector('#btnNext').addEventListener('click', () => {
+
+        const form = { 
+          token: (document.getElementById('token') as any).value
+        };
+
+        document.getElementById('text-error').style.display = form.token ? 'none' : 'inline';
+
+        if (!form.token) return;
+    
+        this.presentLoading();
+        this.userService.recoverPassword(form, 'renew').toPromise().then( async() => {
+          alert.dismiss();
+          next[0]();
+        } ).catch( async error => {
+    
+          if (error.status === 504 || error.status === 0) {
+            await this.showErrorMessage(
+              'No internet connection', 
+              'You need to be connected to the internet, check your connection and try again'
+            );
+          } else {
+            await this.showErrorMessage(
+              'Incorrect data', 
+              'The provided authentication code is incorrect'
+            );
+          } 
+          
+        } ) .finally( () => this.hideLoading() );
+
+      });
       document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
     });
   }
@@ -484,9 +587,10 @@ export class HelpersService {
   public unblockSuccessTokenMessage(next?: any): Promise<any> {
     return this.translate.get(['Accept']).toPromise().then(async translate => {
       const alert = await this.alertController.create({
+        backdropDismiss: false,
         cssClass: 'unblockSuccessMessage',
       });
-      await alert.present();
+      
       const wrapper = document.querySelector('.unblockSuccessMessage .alert-wrapper');
       wrapper.insertAdjacentHTML('afterbegin', `
         <img
@@ -518,6 +622,7 @@ export class HelpersService {
           ${await this.translate.get('ACEPTAR').toPromise()}
         </ion-button>
       `);
+      await alert.present();
       document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
     });
   }

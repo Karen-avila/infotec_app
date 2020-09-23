@@ -119,7 +119,7 @@ export function ValidateText(control: AbstractControl) {
 
 
 export function ValidateAccountNumberBeneficiaries(control: AbstractControl) {
-    if ((`${control.value}`).length === 11 || (`${control.value}`).length === 16 || (`${control.value}`).length === 18) {
+    if ((`${control.value}`).length === 11 || (`${control.value}`).length === 18) {
         return null;
     }
     return { accountNumber: true };
