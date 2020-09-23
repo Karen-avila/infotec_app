@@ -2,6 +2,7 @@ import { environment } from '@env';
 
 let baseUrl: string = `${environment.baseUrl}${environment.production ? '/fineract-protected-movil' : '' }`;
 let totpUrl: string = `${environment.baseUrl}/banbi`;
+
 export let ENDPOINTS = {
   authentication: `${baseUrl}/authentication`,
   clients: `${baseUrl}/clients`,
