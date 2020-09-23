@@ -50,6 +50,7 @@ export class AuthenticationService {
       .then((login: LoginInfo) => {
         console.log(login);
         console.log(login.base64EncodedAuthenticationKey);
+        this.userService.email = login.email;
         this.storage.set('token', login.base64EncodedAuthenticationKey);
         this.storage.set('login-info', login);
         return this.storage.set('token', login.base64EncodedAuthenticationKey)
@@ -64,10 +65,12 @@ export class AuthenticationService {
         this.userService.username = user.username;
         this.userService.password = user.password;
         this.userService.displayName = client.displayName;
+        this.userService.curp = client.uniqueId;
         const displayName = client.displayName.trim().replace(/ +(?= )/g, '').split(' ');
         const shortName = `${displayName[0]}${ displayName[1] ? ' ' + displayName[1] : '' }`;
         this.userService.shortName = shortName;
         this.storage.set('last-client', shortName);
+        this.storage.set('username', user.username);
         this.clientsService.getSelfie(client.id + '').toPromise()
           .then( imageUrl => this.storage.set('image-profile', imageUrl) )
           .catch( err => {
@@ -105,7 +108,7 @@ export class AuthenticationService {
   }
 
   public async logout(removeAllStorage: boolean = false) {
-    const keep: string[] = ['user-hash', 'last-client'];
+    const keep: string[] = ['user-hash', 'last-client', 'username'];
     const saved: any[] = [];
     if (!removeAllStorage) {
       for (const key in keep) {

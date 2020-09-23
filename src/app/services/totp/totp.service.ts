@@ -14,6 +14,10 @@ interface TotpConfirm {
   code: string
 }
 
+interface TotpValidate {
+  token: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +31,14 @@ export class TotpService {
 
   public signupConfirmSecret(data: TotpConfirm): Observable<any> {
     return this.httpClient.post(`${ENDPOINTS.totp}/signup-confirm-secret`, data);
+  }
+
+  public validate(data: TotpValidate): Observable<any> {
+    return this.httpClient.post(`${ENDPOINTS.validateTotp}/validate`, data);
+  }
+
+  public verify(data: TotpConfirm): Observable<any> {
+    return this.httpClient.post(`${ENDPOINTS.totp}/verify-totp`, data);
   }
 
 }

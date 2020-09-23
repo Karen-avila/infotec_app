@@ -1,5 +1,9 @@
 <app-header [svg]="true" [title]="headerTitle()" [backButton]="showBackButton()"></app-header>
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="checkSoftTokenBlocked($event)" >
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
     <ion-grid>
       <div style="width: 80%; margin: 0 auto; margin-top: 0.8rem;">
     <div style="text-align: center; font-size: 1.1rem; font-weight: 450; color: #4b4b4b;">
@@ -108,8 +112,14 @@
 
     <ng-container *ngIf="showSignInButton()">
         <div  class="soft-token">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <ion-button [routerLink]="['/soft-token']" type="button" expand="block" color="primary">{{ 'Soft Token' | translate }}</ion-button>
+            <ng-container *ngIf="softTokenBlocked; else elseSoftToken">
+                <ion-icon class="btn-color" name="lock-closed-outline"></ion-icon>
+                <ion-button (click)="openUnlock()" type="button" expand="block" color="danger">{{ 'Unlock Soft Token' | translate }}</ion-button>
+            </ng-container>
+            <ng-template #elseSoftToken>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <ion-button [routerLink]="['/soft-token']" type="button" expand="block" color="primary">{{ 'Soft Token' | translate }}</ion-button>
+            </ng-template>
         </div>
         <a style="text-decoration: none; font-size: 12px; margin: 0.7rem auto; display: block;" (click)="goLogin()"
             class="small-text">{{ 'Login with username and password' | translate }}</a>
@@ -117,10 +127,6 @@
     <!-- <div class="soft-token">
         <ion-icon name="lock-closed-outline"></ion-icon>
         <ion-button [routerLink]="['/soft-token']" type="button" expand="block" color="primary">{{ 'Soft Token' | translate }}</ion-button>
-    </div> -->
-    <!--<div class="soft-token">
-        <ion-icon class="btn-color" name="lock-closed-outline"></ion-icon>
-        <ion-button (click)="openUnlock()" type="button" expand="block" color="danger">{{ 'Unlock Soft Token' | translate }}</ion-button>
     </div> -->
 </div>
 

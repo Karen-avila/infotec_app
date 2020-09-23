@@ -1,8 +1,7 @@
 import { environment } from '@env';
 
 let baseUrl: string = `${environment.baseUrl}${environment.production ? '/fineract-protected-movil' : '' }`;
-let totpUrl: string = `${baseUrl}/banbi`;
-
+let totpUrl: string = `${environment.baseUrl}/banbi`;
 export let ENDPOINTS = {
   authentication: `${baseUrl}/authentication`,
   clients: `${baseUrl}/clients`,
@@ -19,4 +18,5 @@ export let ENDPOINTS = {
   savingsAccounts: `${baseUrl}/savingsaccounts`,
   password: `${baseUrl}/password`,
   totp: `${totpUrl}/otp`,
+  validateTotp: `${baseUrl}/totp`,
 }

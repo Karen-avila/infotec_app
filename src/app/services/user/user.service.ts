@@ -14,6 +14,8 @@ export class UserService {
   public password: string;
   public displayName: string;
   public shortName: string;
+  public curp: string;
+  public email: string;
   //public accountMovementsSelected: CardAccount;
   public beneficiaries: Beneficiarie[];
   public myAccounts: Beneficiarie[];

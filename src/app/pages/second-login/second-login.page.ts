@@ -7,6 +7,7 @@ import { UserService } from '@services/user/user.service';
 import { ModalController } from '@ionic/angular';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
+import { TotpService } from '@services/totp/totp.service';
 
 const CryptoJS = require('crypto-js');
 
@@ -25,6 +26,7 @@ export class SecondLoginPage implements OnInit {
   private errorNumberCount = 0;
   public incorrectPin = false;
   public lastClientLogin = '';
+  public softTokenBlocked = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,7 +36,9 @@ export class SecondLoginPage implements OnInit {
     private userService: UserService,
     private helpersService: HelpersService,
     public modalCtrl: ModalController,
-  ) { }
+    private totpService: TotpService
+  ) { 
+  }
 
   ngOnInit() {
     const { type } = this.activatedRoute.snapshot.params;
@@ -46,6 +50,8 @@ export class SecondLoginPage implements OnInit {
     }
     this.pin = code || '';
     this.storage.get('last-client').then( lastCient => this.lastClientLogin = lastCient );
+
+    this.checkSoftTokenBlocked();
   }
 
   get lenSelectedNumbers(): number {
@@ -141,7 +147,12 @@ export class SecondLoginPage implements OnInit {
 
   private async encryptPIN() {
     const PIN = this.seletedNumbers.join('');
-    const user = { username: this.userService.username, password: this.userService.password };
+    const user = { 
+      username: this.userService.username, 
+      password: this.userService.password,
+      curp: this.userService.curp,
+      email: this.userService.email 
+    };
     const userString = JSON.stringify(user);
     const ciphertext = CryptoJS.AES.encrypt(userString, PIN).toString();
     this.storage.set('user-hash', ciphertext);
@@ -158,7 +169,7 @@ export class SecondLoginPage implements OnInit {
       .then(encryptedUser => {
         const bytes = CryptoJS.AES.decrypt(encryptedUser, PIN);
         const usuario = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-        this.authenticationService.login(usuario, false);
+        this.authenticationService.login({username: usuario.username, password: usuario.password}, false);
       })
       .catch(err => {
         console.log(err);
@@ -174,6 +185,18 @@ export class SecondLoginPage implements OnInit {
       });
   }
 
+  async checkSoftTokenBlocked(event?: any) {
+
+    if (this.type !== 'login') return;
+    const username = await this.storage.get('username');
+    if (!username) return;
+
+    this.totpService.verify({code: '000000', username}).toPromise()
+      .then( resp => this.softTokenBlocked = resp === 'LOCKED')
+      .catch( () => this.softTokenBlocked = false )
+      .finally( () => event ? event.target.complete() : null );
+  }
+
   openUnlock() {
     this.helpersService.unlockDinamicKeyMessage([
       () => this.codeMail(),
@@ -182,13 +205,16 @@ export class SecondLoginPage implements OnInit {
 
   codeMail() {
     this.helpersService.codeMailMessage([
-      () => this.unblockSuccessToken(),
+      () => {
+        this.unblockSuccessToken();
+        this.checkSoftTokenBlocked();
+      },
     ]);
   }
 
   unblockSuccessToken() {
     this.helpersService.unblockSuccessTokenMessage([
-      // () => this.sendUnblockMail(),
+      () => {},
     ]);
   }
 
