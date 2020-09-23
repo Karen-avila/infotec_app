@@ -264,6 +264,7 @@
     "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
     "Cash": "Efectivo",
     "Account": "Cuenta",
+    "Account / CLABE": "Cuenta / CLABE",
     "New Phone": "Nuevo número de celular",
     "The password must not contain more than 2 consecutive equal numbers and/or letters": "La contraseña no debe contener más de 2 números y/o letras consecutivas iguales",
     "The password must not contain the letter Ñ": "La contraseña no debe contener la letra Ñ",
