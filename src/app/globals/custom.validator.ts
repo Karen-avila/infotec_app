@@ -141,15 +141,23 @@ export function ValidateAccountNumberBeneficiaryExist(controlName: string, benef
 export function ValidateOwnAccountNumberExist(controlName: string, beneficiaries: Beneficiarie[]) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
-        if (!control.value) { return null }
-        for (var i = 0; i < (beneficiaries || []).length; i++) {
-            if (beneficiaries[i].accountNumber == control.value) {
+        if (!control.value) { return null; }
+
+        let value = control.value;
+        // 166 es Banco del Bienestar
+        if (value.length == 18 && value.substring(0, 3) == "166") { 
+            value = value.substring(6).substring(0, value.substring(6).length - 1);
+        }
+
+        for (let i = 0; i < (beneficiaries || []).length; i++) {
+            if (beneficiaries[i].accountNumber == value) {
                 control.setErrors({ ownAccountAlreadyRegistered: true });
             }
         }
         return null;
-    }
+    };
 }
+
 
 
 export function ValidateBeneficiarieName(control: AbstractControl) {
