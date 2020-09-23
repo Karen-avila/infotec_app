@@ -10,7 +10,7 @@
         <ion-item>
           <ion-label position="stacked"> {{ 'Account' | translate }} 
           </ion-label>
-          <ion-input formControlName="accountNumber" maxlength="11" (input)="toOnlyRegex('accountNumber', '[^0-9]')" required type="tel"></ion-input>
+          <ion-input formControlName="accountNumber" maxlength="18" (input)="toOnlyRegex('accountNumber', '[^0-9]')" required type="tel"></ion-input>
           <ion-icon *ngIf="searchButtonEnabled" (click)="search()"
             style=" position: relative; top: 29px; left: 4px; font-size: 22px; margin: 0px;" name="search" slot="end">
           </ion-icon>

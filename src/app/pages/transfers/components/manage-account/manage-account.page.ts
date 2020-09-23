@@ -202,16 +202,23 @@ export class ManageAccountPage implements OnInit {
     let possibleBank = x.substring(0, 3);
     const possibleBanks = this.banks.filter(u => u.name == possibleBank);
     if (x.length == 11) {
-      const possibleBanks = this.banks.filter(u => u.name == '000');
       this.searchButtonEnabled = true;
+      // La clave de BanBi es 166
+      const possibleBanks = this.banks.filter(u => u.name == '166');
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
-    } else if (x.length == 16) {
-      this.form.controls['bankId'].enable();
-      this.form.controls['name'].enable();
-      this.searchButtonEnabled = false;
+    // } else if (x.length == 16) {
+    //   this.form.controls['bankId'].enable();
+    //   this.form.controls['name'].enable();
+    //   this.searchButtonEnabled = false;
     } else if (x.length == 18) {
-      this.searchButtonEnabled = false;
-      this.form.controls['name'].enable();
+      if (x.substring(0, 3) == "166") {
+        this.searchButtonEnabled = true;
+        this.form.controls['name'].disable();
+      } else {
+        this.searchButtonEnabled = false;
+        this.form.controls['name'].enable();
+      }
+      const possibleBanks = this.banks.filter(u => u.name.padStart(3, "0") == x.substring(0, 3));
       return possibleBanks.length == 1 ? this.form.controls['bankId'].setValue(possibleBanks[0].id.toString(), { onlySelf: true }) : this.form.controls['accountNumber'].setErrors({ accountNumber: true });
     } else {
       this.form.controls['name'].disable();
@@ -233,12 +240,16 @@ export class ManageAccountPage implements OnInit {
   }
 
   async search() {
-    this.helpersService.presentLoading('Searching client...');
     const form = { ...this.form.value };
-    //TODO borrar cuando las accounts number tengan 11 digitos
-    // let accountNumber = form.accountNumber.substring(2);
-    let accountNumber = form.accountNumber;
-    this.clientsService.searchAccount(accountNumber)
+
+    let accountNumber: string = form.accountNumber;
+    let parametro = accountNumber;
+    // si es una cuenta del banco 166 que es bienestar, borramos los primeros 6 digitos y el último para obtener la cuenta a ir al backend a buscar información
+    if (accountNumber.length == 18 && accountNumber.substring(0, 3) == "166") {
+      parametro = accountNumber.substring(6).substring(0, accountNumber.substring(6).length - 1);
+    }
+
+    this.clientsService.searchAccount(parametro)
       .toPromise()
       .then((res: Beneficiarie[]) => {
         console.log(res);
