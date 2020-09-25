@@ -26,6 +26,8 @@
   <br>
   
 </ion-content>
+
+<ion-footer>
   <ion-toolbar class="shadow">
     <ion-tabs>
       <ion-tab-bar slot="bottom">
@@ -33,10 +35,10 @@
           <ion-icon src="./assets/icon/phone-outline.svg"></ion-icon>
           <ion-label translate="Call now"></ion-label>
         </ion-tab-button>
-        <!-- <ion-tab-button (click)="presentAlertPrompt()">
+        <ion-tab-button (click)="presentAlertPrompt()">
           <ion-icon src="./assets/icon/mail-outline.svg"></ion-icon>
           <ion-label translate="Leave an email"></ion-label>
-        </ion-tab-button> -->
+        </ion-tab-button>
         <ion-tab-button routerLink="/help/offices">
           <ion-icon src="./assets/icon/pin-outline.svg"></ion-icon>
           <ion-label translate="Find locations"></ion-label>
@@ -44,3 +46,4 @@
       </ion-tab-bar>
     </ion-tabs>
   </ion-toolbar>
+</ion-footer>

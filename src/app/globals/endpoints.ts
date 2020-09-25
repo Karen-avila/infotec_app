@@ -20,4 +20,5 @@ export let ENDPOINTS = {
   password: `${baseUrl}/password`,
   totp: `${totpUrl}/otp`,
   validateTotp: `${baseUrl}/totp`,
+  notification: `${environment.baseUrl}/banbi/email`
 }

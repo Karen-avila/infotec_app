@@ -290,5 +290,7 @@
     "Your session will be closed soon": "Tu sesión se cerrará pronto",
     "Incorrect Access": "Acceso Incorrecto",
     "INTERBANK_TRANSFER": "SPEI",
-    "Code is required": "El código es requerido"
+    "Code is required": "El código es requerido",
+    "Mail Sent Successfully": "Correo Enviado Exitosamente",
+    "Your email was successfully sent to the support team, we will follow up on your case as soon as possible and we will communicate with you via email or your phone number": "Tu correo electrónico fue enviado exitosamente al equipo de soporte, daremos seguimiento a tú caso lo antes posible y nos comunicaremos contigo por correo electrónico o a tú número de teléfono"
 }
