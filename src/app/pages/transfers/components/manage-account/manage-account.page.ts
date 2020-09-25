@@ -277,7 +277,7 @@ export class ManageAccountPage implements OnInit {
     if (this.form.invalid) { return }
 
     let accountClassificaction = 'TPT' || 'EXT';
-    accountClassificaction = (form.accountNumber.length == 9 || form.accountNumber.length == 11) ? 'TPT' : 'EXT';
+    accountClassificaction = (form.accountNumber.length == 11 || form.accountNumber.substring(0, 3) == "166") ? 'TPT' : 'EXT';
     let promise: any;
     let beneficiary: any;
     const message = this.type == 'Create' ? "Creating beneficiary..." : "Updating beneficiary..."
@@ -289,9 +289,8 @@ export class ManageAccountPage implements OnInit {
         "locale": "es",
         "name": form.name,
         "alias": form.alias,
-        //TODO borrar el substring cuando admita 11 parametros
-        // "accountNumber": form.accountNumber.substring(2),
-        "accountNumber": form.accountNumber,
+        // como es TPT (porque tiene 11 digitos o, comienza con 166 y es de 18 digitos) hacemos substring para sacar la cuenta
+        "accountNumber": form.accountNumber.length == 11 ? form.accountNumber : form.accountNumber.substring(6).substring(0, form.accountNumber.substring(6).length - 1),
         "officeName": this.officeNameFound,
         "accountType": this.accountTypeFound,
         "transferLimit": form.transferLimit
