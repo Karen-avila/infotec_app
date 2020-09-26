@@ -146,6 +146,7 @@ export class AuthenticationService {
     // Se ejecuta cuando el tiempo se acaba
     this.idle.onTimeout.subscribe(() => {
       stop();
+      this.cleanAllModals();
       this.sessionAlert.dismiss();
       this.menu.enable(false);
       this.logout();
@@ -170,6 +171,20 @@ export class AuthenticationService {
     // Inicia el idle
     if (!this.idle.isRunning() && environment.production) {
       this.idle.watch();
+    }
+
+  }
+
+  private cleanAllModals() {
+    let modals = document.getElementsByClassName('show-modal');
+
+    if (modals.length >= 1) {
+      setTimeout(() => {
+        try {
+          modals[0].remove();
+          this.cleanAllModals();
+        } catch (error) { }
+      }, 100);
     }
 
   }

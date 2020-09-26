@@ -25,7 +25,13 @@ export class AuthInterceptorService implements HttpInterceptor {
     };
 
     if (environment.production) {
-      headers['X-Gravitee-Api-Key'] = /\/otp\//g.test(req.url) ? environment.totpGraviteeApiKey : environment.graviteeApiKey;
+      if (/\/otp\//g.test(req.url)) {
+        headers['X-Gravitee-Api-Key'] = environment.totpGraviteeApiKey;
+      } else if (/\/banbi\//g.test(req.url)) {
+        headers['X-Gravitee-Api-Key'] = environment.banbiGraviteeApiKey;
+      } else {
+        headers['X-Gravitee-Api-Key'] = environment.graviteeApiKey;
+      }
     } else {
       headers['Fineract-Platform-TenantId'] = 'default';
     }
