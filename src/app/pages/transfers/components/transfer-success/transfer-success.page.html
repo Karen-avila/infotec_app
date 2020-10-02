@@ -1,6 +1,3 @@
-<!-- <app-header [svg]="true" [dismissButton]="true" [title]="'Transfer Success'"
-  [img]="'/assets/header-icons/transferir-exitoso.png'"></app-header> -->
-
 <ion-content>
 
   <div style="background-color: white;" #pageShare>
@@ -8,21 +5,20 @@
     <div class="header svg-correction ion-no-border" [ngStyle]="{'margin-bottom': '80px' }" no-border>
       <img style="z-index: 105" class="profile-photo ion-img" src="/assets/header-icons/transferir-exitoso.png">
       <ion-toolbar>
-        <ion-buttons (click)="modalController.dismiss()" style="color:white; margin-right: 1.2rem; --background: none; --box-shadow: none;" slot="end">
+        <ion-buttons (click)="modalController.dismiss()" style="color:white; margin-right: 1rem; --background: none; --box-shadow: none;" slot="end">
           <ion-icon name="close"></ion-icon>
         </ion-buttons>
-        <ion-buttons style="color:white; margin-left: 1.2rem; --background: none; --box-shadow: none;" (click)="onShare()" slot="start">
+        <ion-buttons style="color:white; margin-left: 1rem; --background: none; --box-shadow: none;" (click)="onShare()" slot="start">
           <ion-icon name="share-social-sharp"></ion-icon>
         </ion-buttons>
       </ion-toolbar>
-      <ion-title color="secondary">
-        <div style="white-space: normal; text-align: center; text-transform: uppercase;">{{'Transfer Success' | translate}}</div></ion-title>
+      <div style="white-space: normal; text-align: center; text-transform: uppercase; color: white; font-size: small; margin-top: -0.6rem;">{{'Transfer Success' | translate}}</div>
       
     </div>
 
     <div class="container-big" style="font-size: xx-large; text-align: center;">
       <div>
-        <span style="font-size: 20px; font-weight: 600; color: #464646; display: block;margin-bottom: 0.5rem;">{{fecha}}</span>
+        <span style="font-size: 17px; font-weight: 600; color: #464646; display: block;margin-bottom: 0.5rem;">{{fecha}}</span>
         <!-- <h1><b>$ {{transferAmount | number : '1.2-2'}}</b></h1> -->
         <app-money-format [amount]="transferAmount"></app-money-format>
       </div>
