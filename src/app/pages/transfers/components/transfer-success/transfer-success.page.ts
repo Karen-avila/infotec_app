@@ -75,7 +75,7 @@ export class TransferSuccessPage implements OnInit {
       }
     })
       .then( (dataUrl) => {
-          this.socialSharing.share(`${textSuccess} | Banco del Bienestar`, null, dataUrl);
+          this.socialSharing.share(null, null, dataUrl);
       }).catch( (error) => {
           console.error('oops, something went wrong!', error);
       });

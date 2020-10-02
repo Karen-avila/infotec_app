@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ISettings } from '@components/card-account/card-account.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
-import { ManageAccountPage } from './components/manage-account/manage-account.page';
+import { Bank, ManageAccountPage } from './components/manage-account/manage-account.page';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -85,6 +85,8 @@ export class TransfersPage implements OnInit {
 
   private beneficiarieSelected: Beneficiarie;
 
+  public banks = {};
+
   public flag: boolean = false;
   public showRFC: boolean = false;
   public beneficiarieSearch: string = "";
@@ -148,7 +150,8 @@ export class TransfersPage implements OnInit {
 
       this.clientsService.getPersonalInfo(),
       this.clientsService.getLoginInfo(),
-      this.storage.get('globals')
+      this.storage.get('globals'),
+      this.clientsService.getBanks().toPromise()
     ]
     )
       .then(async res => {
@@ -159,7 +162,8 @@ export class TransfersPage implements OnInit {
         this.personalInfo = res[2];
         this.loginInfo = res[3];
         this.globalConfig = res[4];
-
+        res[5].map( (bank: Bank) => this.banks[bank.id] = bank );
+        
         await this.getAccounts();
         
         this.userService.myAccounts = this.myAccounts;
