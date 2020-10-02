@@ -62,7 +62,7 @@ export class TransferSuccessPage implements OnInit {
 
     const element = this.pageShare.nativeElement;
     const textSuccess = await this.translate.get('Transfer Success').toPromise();
-    const scale = 750 / element.offsetWidth;
+    const scale = 500 / element.offsetWidth;
     
     domtoimage.toPng(element, {
       height: element.offsetHeight * scale,

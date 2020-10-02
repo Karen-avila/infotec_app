@@ -46,7 +46,7 @@
 
             <ion-item (click)="selectAccount(index, item)" [color]="item.color">
               <ion-label>
-                <h3>{{ item.alias }} - {{ item.name }}</h3>
+                <h3>{{ (item.alias || item.name) | uppercase }}</h3>
                 <h4 style="color: rgb(92, 92, 92);">{{ item.bankId }}</h4>
                 <h5 style="font-size: x-small; color: grey;">{{ item.accountNumber }}</h5>
               </ion-label>
@@ -102,14 +102,14 @@
               <ion-item>
                 <ion-label position="stacked"> {{ 'Reference' | translate }}
                 </ion-label>
-                <ion-input formControlName="transferDescription" type = "number" onKeyPress="if(this.value.length==7) return false;"></ion-input>
+                <ion-input (input)="toOnlyRegex('transferDescription', '[^0-9]')" formControlName="transferDescription" type="tel" maxlength="7"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.transferDescription"></app-input-error>
 
               <ion-item>
                 <ion-label position="stacked"> {{ 'Concept' | translate }}
                 </ion-label>
-                <ion-input formControlName="concept" maxlength="15" inputmode="text" type="text"></ion-input>
+                <ion-input (input)="toOnlyRegex('concept', '[^0-9A-Za-z ]')" formControlName="concept" maxlength="20" inputmode="text" type="text"></ion-input>
               </ion-item>
               <app-input-error [control]="transferForm.controls.concept"></app-input-error>
 
