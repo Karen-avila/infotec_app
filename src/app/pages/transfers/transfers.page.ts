@@ -183,6 +183,11 @@ export class TransfersPage implements OnInit {
     return item.accountNumber;
   }
 
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
+    const inputName = this.transferForm.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? (value || '').toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
+  }
+
   async onManageAccount(index?: number) {
     console.log(index);
 
@@ -269,7 +274,7 @@ export class TransfersPage implements OnInit {
     // agrego validador de rfc si corresponde
     if (this.showRFC) { 
       this.transferForm.controls['rfc'].setValidators([Validators.required, CustomValidators.ValidateRfc]);
-      this.toUpperCase('rfc');
+      this.toOnlyRegex('rfc', '[^0-9A-Za-z]');
     } else { this.transferForm.controls['rfc'].clearValidators() }
     // reseteo valores de formulario
     this.transferForm.reset();
@@ -480,8 +485,4 @@ export class TransfersPage implements OnInit {
     this.beneficiarieSearch = "";
   }
 
-  toUpperCase(controlName: string) {
-    const control = this.transferForm.get(controlName);
-    control.valueChanges.subscribe( value => control.setValue((value || '').toUpperCase(), {emitEvent: false}) );
-  }
 }
