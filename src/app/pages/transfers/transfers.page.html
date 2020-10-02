@@ -47,7 +47,7 @@
             <ion-item (click)="selectAccount(index, item)" [color]="item.color">
               <ion-label>
                 <h3>{{ (item.alias || item.name) | uppercase }}</h3>
-                <h4 style="color: rgb(92, 92, 92);">{{ item.bankId }}</h4>
+                <h4 style="color: grey; font-size: x-small; font-weight: bold;">{{ item.bankEntity ? (banks[item.bankEntity] && banks[item.bankEntity].description || '') : 'BANCO DEL BIENESTAR'  }}</h4>
                 <h5 style="font-size: x-small; color: grey;">{{ item.accountNumber }}</h5>
               </ion-label>
             </ion-item>
