@@ -18,7 +18,7 @@
 
     <div class="container-big" style="font-size: xx-large; text-align: center;">
       <div>
-        <span style="font-size: 17px; font-weight: 600; color: #464646; display: block;margin-bottom: 0.5rem;">{{fecha}}</span>
+        <span style="font-size: 17px; font-weight: 600; color: #464646; display: block;margin-bottom: 0.5rem;">{{dateFormat}}</span>
         <!-- <h1><b>$ {{transferAmount | number : '1.2-2'}}</b></h1> -->
         <app-money-format [amount]="transferAmount"></app-money-format>
       </div>
@@ -29,12 +29,15 @@
   
     <div class="container-big" style="margin-top:20px">
      
-      <h4>{{'Beneficiary' | translate}}:<span> {{clientName}}</span></h4>
-      <h4>{{'Origin Account' | translate}}:<span> {{hideAccountNumber(accountNoSelected)}}</span></h4>
-      <h4>{{'Destination Account' | translate}}:<span> {{hideAccountNumber(accountNumber)}}</span></h4>
-      <h4>{{'Concept' | translate}}:<span> {{ (concept || 'Doesn´t apply') | translate }}</span></h4>
-      <h4>{{'Reference' | translate}}:<span> {{reference}}</span></h4>
-      <h4>{{'Invoice' | translate}}:<span> {{folio}}</span></h4>
+      <h4>{{'Cuenta Origen' | translate}}:<span> {{hideAccountNumber(accountNoSelected)}}</span></h4>
+      <h4 *ngIf="beneficiary">{{'Nombre de Beneficiario' | translate}}:<span> {{beneficiary}}</span></h4>
+      <h4 *ngIf="destinationBank">{{'Banco Destino' | translate}}:<span> {{destinationBank}}</span></h4>
+      <h4>{{'Cuenta Destino' | translate}}:<span> {{hideAccountNumber(accountNumber)}}</span></h4>
+      <!-- <h4>{{'Importe de operación' | translate}}:<span> {{transferAmount}}</span></h4> -->
+      <h4>{{'Concepto de operación' | translate}}:<span> {{concept}}</span></h4>
+      <h4>{{'Referencia de operación' | translate}}:<span> {{reference}}</span></h4>
+      <!-- <h4>{{'Fecha de operación' | translate}}:<span> {{dateFormat}}</span></h4> -->
+      <h4>{{'Número de movimiento' | translate}}:<span> {{folio}}</span></h4>
       <!-- <div *ngIf="rfc">
           <h4>{{'RFC' | translate}}:<span> {{rfc}}</span></h4>
       </div> -->

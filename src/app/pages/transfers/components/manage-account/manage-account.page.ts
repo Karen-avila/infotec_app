@@ -122,7 +122,7 @@ export class ManageAccountPage implements OnInit {
     this.form.controls['bankId'].disable();
     this.form.controls['name'].disable();
 
-    this.helpersService.presentLoading();
+    //this.helpersService.presentLoading();
 
     Promise.all([
       this.clientsService.getPersonalInfo(),
@@ -178,7 +178,7 @@ export class ManageAccountPage implements OnInit {
       })
       .finally(() => {
         this.flag = true
-        this.helpersService.hideLoading();
+        //this.helpersService.hideLoading();
       })
 
     // Si el valor cambia => configuramos las variables necesarias

@@ -13,7 +13,7 @@ import { HelpersService } from '@services/helpers/helpers.service';
 export class MovementsPage implements OnInit {
 
   public movements: Transaction[];
-  public flag: boolean = false;
+  public isLoading: boolean = true;
 
   constructor(public modalController: ModalController, private clientsService: ClientsService, private helpersService: HelpersService, private navParams: NavParams) {
     this.initialize();
@@ -30,7 +30,8 @@ export class MovementsPage implements OnInit {
   private initialize() {
     const { accountNumber } = this.navParams.data;
 
-    this.helpersService.presentLoading()
+    //this.helpersService.presentLoading()
+    this.isLoading = true;
     this.clientsService.getMovements(accountNumber).toPromise()
       .then(response => {
         console.log(response);
@@ -42,8 +43,8 @@ export class MovementsPage implements OnInit {
         console.log(err)
       })
       .finally(() => {
-        this.flag = true;
-        this.helpersService.hideLoading();
+        this.isLoading = false;
+        //this.helpersService.hideLoading();
       }
       )
   }

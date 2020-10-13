@@ -154,3 +154,44 @@ ion-searchbar {
     }
     
 }
+
+ion-spinner.main-spinner {
+    --color: #285d4d;
+    transform: scale(2);
+    position: absolute; 
+    top: 37%; 
+    left: 47%;
+}
+
+ion-spinner.header {
+    top: 31% !important;
+}
+
+$color-base: rgb(233, 233, 233);
+$color-highlight: rgb(219, 219, 219);
+
+ion-skeleton-text[animated] {
+  position: relative;
+  overflow: hidden;
+  background: $color-base;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, $color-base, $color-highlight, $color-base);
+    animation: progress 1s ease-in-out infinite;
+  }
+}
+
+@keyframes progress {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}

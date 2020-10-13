@@ -43,6 +43,7 @@ export class DashboardPage implements OnInit {
   private accountSelected: CardAccount;
   private personalInfo: PersonalInfo;
   private globalConfig: any;
+  public isLoading: boolean = false;
 
   public loginInfo: LoginInfo;
 
@@ -65,7 +66,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.menuCtrl.enable(true);
-    this.authentication.startIdleTimer();
+    //this.authentication.startIdleTimer();
   }
 
   ionViewDidEnter() {
@@ -155,7 +156,8 @@ export class DashboardPage implements OnInit {
   public initialize(event: any) {
 
     if (!event) {
-      this.helpersService.presentLoading();
+      this.isLoading = true;
+      //this.helpersService.presentLoading();
     }
 
     this.clientsService.getPersonalInfo()
@@ -185,7 +187,8 @@ export class DashboardPage implements OnInit {
         if (event) {
           event.target.complete();
         } else {
-          this.helpersService.hideLoading();
+          this.isLoading = false;
+          //this.helpersService.hideLoading();
         }
       });
 
