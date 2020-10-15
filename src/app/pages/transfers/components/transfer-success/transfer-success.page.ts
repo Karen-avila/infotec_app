@@ -48,7 +48,7 @@ export class TransferSuccessPage implements OnInit {
     this.concept = concept;
     this.folio = folio;
     this.reference = reference;
-    this.transferAmount = transferAmount;
+    this.transferAmount = transferAmount.toString().replace(/,/g, '');
     this.rfc = rfc;
     this.accountNoSelected = accountNoSelected;
     this.beneficiary = beneficiary;

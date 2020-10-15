@@ -168,12 +168,12 @@ export function ValidateBeneficiarieName(control: AbstractControl) {
     return { accountNumber: true };
 }
 
-export function ValidateNameBeneficiary(controlName: string, beneficiaries: Beneficiarie[]) {
+export function ValidateNameBeneficiary(controlName: string, beneficiaries: Beneficiarie[], id: number) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         if (!control.value) { return null }
         for (var i = 0; i < (beneficiaries || []).length; i++) {
-            if (beneficiaries[i].name.toLowerCase() == control.value.toLowerCase()) {
+            if (beneficiaries[i].name.toLowerCase() == control.value.toLowerCase() && id !== beneficiaries[i].id) {
                 control.setErrors({ beneficiaryAlreadyRegistered: true });
             }
         }

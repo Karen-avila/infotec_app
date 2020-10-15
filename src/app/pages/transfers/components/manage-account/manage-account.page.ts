@@ -62,6 +62,8 @@ export class ManageAccountPage implements OnInit {
 
   public cancelText: string;
 
+  public id: number;
+
   constructor(
     protected modalController: ModalController,
     protected activatedRoute: ActivatedRoute,
@@ -74,7 +76,6 @@ export class ManageAccountPage implements OnInit {
     private helpersService: HelpersService,
     private storage: Storage
   ) {
-    this.initializeApp();
   }
 
   ngOnInit() {
@@ -82,6 +83,7 @@ export class ManageAccountPage implements OnInit {
     const { type } = this.navParams.data;
 
     this.type = type;
+    this.initializeApp();
   }
 
   private initializeApp() {
@@ -95,6 +97,9 @@ export class ManageAccountPage implements OnInit {
 
     })
 
+    const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
+
+    this.id = id;
 
     this.form = this.formBuilder.group({
       id: [''],
@@ -112,7 +117,7 @@ export class ManageAccountPage implements OnInit {
 
       bankId: ['', Validators.required]
     }, {
-      validator: [CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries),
+      validator: [CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries, this.id),
       CustomValidators.ValidateAccountNumberBeneficiaryExist('accountNumber', this.userService.beneficiaries),
       CustomValidators.ValidateOwnAccountNumberExist('accountNumber', this.userService.myAccounts)
     ]
@@ -137,11 +142,10 @@ export class ManageAccountPage implements OnInit {
         //Cargamos catalogo de beneficiary account types
         this.beneficiaryAccountTypes = response[2];
 
-        const { id, name, alias, accountNumber, transferLimit, officeName, accountType, bankEntity } = this.navParams.data;
 
         this.storage.get('globals').then( globals => {
           if (globals && globals.transferLimit) {
-            this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries),
+            this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries, this.id),
             CustomValidators.ValidateAccountNumberBeneficiaryExist('accountNumber', this.userService.beneficiaries),
             CustomValidators.ValidateOwnAccountNumberExist('accountNumber', this.userService.myAccounts),
             CustomValidators.ValidateTransferAmountLimit('transferLimit', parseInt(globals.transferLimit.description))
@@ -170,7 +174,7 @@ export class ManageAccountPage implements OnInit {
         this.form.controls['alias'].disable();
         this.searchButtonEnabled = false;
 
-        this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries.filter(i => i.id != id))])
+        this.form.setValidators([CustomValidators.ValidateNameBeneficiary('name', this.userService.beneficiaries, this.id)])
       })
       .catch(err => {
         console.log(err);

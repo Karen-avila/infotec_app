@@ -136,6 +136,7 @@ export class AuthenticationService {
 
 
   public startIdleTimer() {
+    this.stopIdleTimer();
     // Incializa variables
     this.idle.setIdle(this.timetoSessionAlert);
     this.idle.setTimeout(this.timetoSessionClose);

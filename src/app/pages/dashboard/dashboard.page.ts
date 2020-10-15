@@ -66,7 +66,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.menuCtrl.enable(true);
-    //this.authentication.startIdleTimer();
+    this.authentication.startIdleTimer();
   }
 
   ionViewDidEnter() {
