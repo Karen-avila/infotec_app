@@ -3,6 +3,7 @@ import { NavParams, ModalController } from '@ionic/angular';
 import { environment } from '@env';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
 
 
 declare var domtoimage: any;
@@ -19,10 +20,14 @@ export class TransferSuccessPage implements OnInit {
   public concept: string;
   public folio: number;
   public reference: string;
-  public transferAmount: number;
+  public transferAmount: string;
   public fecha: string;
   public rfc: string;
   public accountNoSelected: string;
+  public beneficiary: string; 
+  public ownerFullName: string; 
+  public destinationBank: string;
+  public dateFormat: string;
 
   @ViewChild('pageShare',{static:true}) pageShare: ElementRef;
 
@@ -36,22 +41,26 @@ export class TransferSuccessPage implements OnInit {
   ngOnInit() {
     console.log("transfer data", this.navParams.data);
 
-    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc, accountNoSelected } = this.navParams.data;
+    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc, accountNoSelected, beneficiary, ownerFullName, destinationBank } = this.navParams.data;
 
     this.accountNumber = accountNumber;
     this.clientName = clientName;
     this.concept = concept;
     this.folio = folio;
     this.reference = reference;
-    this.transferAmount = transferAmount;
+    this.transferAmount = transferAmount.toString().replace(/,/g, '');
     this.rfc = rfc;
     this.accountNoSelected = accountNoSelected;
+    this.beneficiary = beneficiary;
+    this.ownerFullName = ownerFullName;
+    this.destinationBank = destinationBank;
 
     const date = new Date();
     const formattedDate = date.toLocaleDateString(environment.locale, {
       day: '2-digit', month: 'short', year: 'numeric'
     })
     this.fecha = formattedDate;
+    this.dateFormat = formatDate(date, 'dd/MM/y h:mm:ss a', environment.locale);
   }
 
   hideAccountNumber(accountNumber: string): string {

@@ -1,7 +1,13 @@
 <app-header [svg]="true" [dismissButton]="true" title="{{ type }} Beneficiary"
   [img]="'/assets/header-icons/crear-cuenta.png'"></app-header>
 <ion-content>
-  <ion-card *ngIf="flag">
+
+  <ng-template #elseTemplateSpinner>
+    <!-- Dots -->
+    <ion-spinner  class="main-spinner header" name="dots"></ion-spinner>
+  </ng-template>
+
+  <ion-card *ngIf="flag; else elseTemplateSpinner">
 
     <form class="container-small" [formGroup]="form" (ngSubmit)="submit()">
 
@@ -73,4 +79,4 @@
 
 </ion-content>
 
-<app-footer></app-footer>
+<app-footer *ngIf="flag"></app-footer>

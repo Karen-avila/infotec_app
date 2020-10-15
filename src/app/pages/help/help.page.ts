@@ -16,6 +16,8 @@ import { UserService } from '@services/user/user.service';
 export class HelpPage implements OnInit {
 
   questions: any[] = [];
+  skeleton: any[] = Array(5);
+  isLoading: boolean = false;
 
   constructor(
     private alertController: AlertController, 
@@ -28,8 +30,10 @@ export class HelpPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.codesService.getFAQS().toPromise()
       .then( questions => this.questions = questions )
+      .finally( () => this.isLoading = false );
   }
 
   public showAnswer(text: string): void {

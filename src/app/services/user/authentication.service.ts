@@ -13,6 +13,7 @@ import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { environment } from '@env';
 import { CodesService } from '@services/catalogs/codes.service';
+import { TranslateService } from '@ngx-translate/core';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +36,8 @@ export class AuthenticationService {
     private idle: Idle,
     private helpersService: HelpersService,
     private codesService: CodesService,
-    private menu: MenuController
+    private menu: MenuController,
+    private translate: TranslateService
   ) {}
 
   // la variable booleana sirve para ver si autenticamos directos o le hacemos ingresar el pin al usuario porque es un logeo nuevo
@@ -124,28 +126,32 @@ export class AuthenticationService {
     this.navCtrl.navigateRoot(['/login']);
   }
 
+  public stopIdleTimer() {
+    this.idle.stop();
+    this.idle.onTimeout.observers.length = 0;
+    this.idle.onIdleStart.observers.length = 0;
+    this.idle.onIdleEnd.observers.length = 0;
+    this.idle.onTimeoutWarning.observers.length = 0;
+  }
+
+
   public startIdleTimer() {
+    this.stopIdleTimer();
     // Incializa variables
     this.idle.setIdle(this.timetoSessionAlert);
     this.idle.setTimeout(this.timetoSessionClose);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
-    // Funcion que elimina los observes del idle
-    const stop = (() => {
-      this.idle.stop();
-      this.idle.onTimeout.observers.length = 0;
-      this.idle.onIdleStart.observers.length = 0;
-      this.idle.onIdleEnd.observers.length = 0;
-      this.idle.onTimeoutWarning.observers.length = 0;
-    })
-
     // Se ejecuta cuando el idle es cancelado
     this.idle.onIdleEnd.subscribe(() => {
+      const elem = document.getElementById('countdown');
+      if (elem) {
+        elem.innerText = ``;
+      }
     });
 
     // Se ejecuta cuando el tiempo se acaba
     this.idle.onTimeout.subscribe(() => {
-      stop();
       this.cleanAllModals();
       this.sessionAlert.dismiss();
       this.menu.enable(false);
@@ -153,10 +159,14 @@ export class AuthenticationService {
     });
 
     // Crea mensaje de alerta
-    this.idle.onIdleStart.subscribe(() => {
+    this.idle.onIdleStart.subscribe( async() => {
+      
+      if (this.sessionAlert) {
+        this.sessionAlert.dismiss();
+      }
       this.helpersService.successMessage(
         'Are you still there?',
-        'Your session will be closed soon'
+        await this.translate.get('Your session will be closed soon').toPromise() + ' <b id="countdown">(30 s)</b>'
       ).then(alert => {
         this.sessionAlert = alert;
         this.sessionAlert.present();
@@ -165,11 +175,14 @@ export class AuthenticationService {
 
     // Se puede usar para hacer un conteo regresivo asignando countdown
     this.idle.onTimeoutWarning.subscribe((countdown: string) => {
-      // console.log('onTimeoutWarning', this.idle.isRunning());
+      const elem = document.getElementById('countdown');
+      if (elem) {
+        elem.innerText = `(${countdown} s)`;
+      }
     });
 
     // Inicia el idle
-    if (!this.idle.isRunning() && environment.production) {
+    if (!this.idle.isRunning()) {
       this.idle.watch();
     }
 

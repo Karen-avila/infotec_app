@@ -125,8 +125,8 @@
     "Visit us at the office closest to you.": "Visítanos en la sucursal más cercana a tí.",
     "About Us": "Nosotros",
     "Back": "Atrás",
-    "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado. Seleccione otro.",
-    "The beneficiary account is already registered. Choose another.": "La cuenta del beneficiario ya está registrado. Seleccione otro.",
+    "The beneficiary name is already registered. Choose another.": "El nombre del beneficiario ya está registrado",
+    "The beneficiary account is already registered. Choose another.": "La cuenta del beneficiario ya está registrada",
     "You cannot register your own accounts.": "No puedes registrar tus propias cuentas.",
     "Account not found": "Cuenta no encontrada",
     "Account already registered": "Cuenta ya registrada",
@@ -263,6 +263,7 @@
     "Updated password": "Contraseña actualizada",
     "The provided authentication code is incorrect": "El código de autenticación proporcionado es incorrecto",
     "Cash": "Efectivo",
+    "CASH": "Efectivo",
     "Account": "Cuenta",
     "Account / CLABE": "Cuenta / CLABE",
     "New Phone": "Nuevo número de celular",
@@ -289,8 +290,9 @@
     "Are you still there?": "¿Aún Estás Ahí?",
     "Your session will be closed soon": "Tu sesión se cerrará pronto",
     "Incorrect Access": "Acceso Incorrecto",
-    "INTERBANK_TRANSFER": "SPEI",
+    "INTERBANK_TRANSFER": "Transferencia",
     "Code is required": "El código es requerido",
     "Mail Sent Successfully": "Correo Enviado Exitosamente",
-    "Your email was successfully sent to the support team, we will follow up on your case as soon as possible and we will communicate with you via email or your phone number": "Tu correo electrónico fue enviado exitosamente al equipo de soporte, daremos seguimiento a tú caso lo antes posible y nos comunicaremos contigo por correo electrónico o a tú número de teléfono"
+    "Your email was successfully sent to the support team, we will follow up on your case as soon as possible and we will communicate with you via email or your phone number": "Tu correo electrónico fue enviado exitosamente al equipo de soporte, daremos seguimiento a tú caso lo antes posible y nos comunicaremos contigo por correo electrónico o a tú número de teléfono",
+    "DEBIT_CARD": "Tarjeta de débito"
 }

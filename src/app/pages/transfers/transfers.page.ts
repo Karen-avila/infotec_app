@@ -142,7 +142,7 @@ export class TransfersPage implements OnInit {
   private initialize() {
     this.flag = false;
     this.isBeneficiarieSelected = false;
-    this.helpersService.presentLoading();
+    //this.helpersService.presentLoading();
 
     Promise.all([
       this.clientsService.getBeneficiariesTPT().toPromise(),
@@ -175,7 +175,7 @@ export class TransfersPage implements OnInit {
       })
       .finally(() => {
         this.flag = true;
-        this.helpersService.hideLoading();
+        //this.helpersService.hideLoading();
       })
   }
 
@@ -375,6 +375,10 @@ export class TransfersPage implements OnInit {
     transferSuccess.concept = form.concept;
     transferSuccess.rfc = form.rfc;
     transferSuccess.accountNoSelected = this.accountSelected.accountNo;
+    transferSuccess.beneficiary = this.beneficiarieSelected.isOwnAccount ? null : transferSuccess.clientName;
+    transferSuccess.ownerFullName = this.personalInfo.displayName;
+    transferSuccess.destinationBank = accountClassificaction === 'EXT' && this.banks[this.beneficiarieSelected.bankEntity] && this.banks[this.beneficiarieSelected.bankEntity].description || null;
+    
 
     this.helpersService.presentLoading('Transfering...');
 

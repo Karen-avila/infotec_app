@@ -5,11 +5,13 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "serve": "ts-node ./setenv.ts && ionic serve",
-    "preprod": "ts-node ./setenv.ts --env=preprod && ionic serve",
+    "preprod": "ts-node ./setenv.ts --env=preprod && ionic serve --prod",
     "config": "ts-node ./setenv.ts ${@:1}",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ts-node ./setenv.ts && ionic cordova build",
+    "build-preprod": "ts-node ./setenv.ts --env=preprod && ionic cordova build --prod",
+    "build-prod": "ts-node ./setenv.ts --env=prod && ionic cordova build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
