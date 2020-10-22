@@ -6,7 +6,9 @@ import { ENDPOINTS } from '@globals/endpoints';
 interface Totp {
   username: string,
   password: string,
-  renew?: boolean
+  renew?: boolean,
+  newPassword?: string,
+  renewPassword?: boolean,
 }
 
 interface TotpConfirm {

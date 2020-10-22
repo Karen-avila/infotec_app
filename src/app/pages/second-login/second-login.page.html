@@ -4,11 +4,35 @@
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
 
+      <div class="container-image" style="width: 50%;margin:auto; margin-bottom: -1rem;">
+        <ion-img src="/assets/logo-banbi-green.png" alt="Logo"></ion-img>
+      </div>
+
     <ion-grid>
       <div style="width: 80%; margin: 0 auto; margin-top: 0.8rem;">
-    <div style="text-align: center; font-size: 1.1rem; font-weight: 450; color: #4b4b4b;">
+    <div style="text-align: center; font-size: 1.1rem; font-weight: 450; color: #4b4b4b; margin-top: 2rem;">
                 {{ (showSignInButton() ? 'Hello' : 'Welcome') | translate | titlecase }} {{ lastClientLogin | titlecase }}
             </div>
+
+                <br>
+                <br>
+           
+                <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+                  
+                  <ion-item>
+                    <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+                    <ion-input (input)="toOnlyRegex('password', '[^A-Za-z0-9]', false)" maxlength="8" formControlName="password" [type]="inputType" placeholder="{{ 'Password' | translate }}"
+                      clearInput></ion-input>
+                    <ion-icon *ngIf="icon; else elseTemplate" (click)="viewPassword()" name="eye-off-outline" slot="end">
+                    </ion-icon>
+                    <ng-template #elseTemplate>
+                      <ion-icon (click)="viewPassword()" name="eye-outline" slot="end"></ion-icon>
+                    </ng-template>
+                  </ion-item>
+                  <app-input-error [control]="loginForm.controls.password"></app-input-error>
+                </form>
+
+            <!--
             <ion-grid style="text-align: center; width: 70%; margin-bottom: -1rem;margin-top: 0.5rem;">
                 <ion-row>
                     <ion-col>
@@ -99,6 +123,7 @@
 
             </ion-grid>
             <div *ngIf="incorrectPin" class="custom-error-message">{{'Incorrect PIN' | translate}}</div>
+            -->
         </div>
     </ion-grid>
 </ion-content>
@@ -107,7 +132,7 @@
 <!-- <ion-button *ngIf="showRegisterButton()" [routerLink]="['/registration']" class="btn-second" expand="block"
     color="medium">{{ 'Register ' | translate }}</ion-button> -->
 
-<ion-button (click)="goToRoute()" [disabled]="buttonDisabled" class="btn-second" expand="block" color="primary"
+<ion-button (click)="goToRoute()" [disabled]="loginForm.invalid" class="btn-second" expand="block" color="primary"
     [translate]="buttonText"></ion-button>
 
     <ng-container *ngIf="showSignInButton()">

@@ -122,9 +122,10 @@ export class SoftTokenPage implements OnInit {
       if (!pin) {
         throw new Error('NO-PIN')
       }
-     
+      
+      const password = CryptoJS.SHA256(pin).toString(CryptoJS.enc.Hex);
       const encryptedUser = await this.storage.get('user-hash');
-      const bytes = CryptoJS.AES.decrypt(encryptedUser, pin);
+      const bytes = CryptoJS.AES.decrypt(encryptedUser, password);
       var usuario = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
      
       return Promise.resolve({username: usuario.username, password: usuario.password});
@@ -132,7 +133,7 @@ export class SoftTokenPage implements OnInit {
     } catch(error) {
       
       if (error.message !== 'NO-PIN') {
-        await this.helpersService.showErrorMessage("Incorrect PIN", "Please verify that your PIN is correct and try again");
+        await this.helpersService.showErrorMessage("Contraseña incorrecta", "Por favor verifica tu contraseña e intenta de nuevo");
       } 
 
       this.router.navigateByUrl('/login');
@@ -148,16 +149,16 @@ export class SoftTokenPage implements OnInit {
 
       const translate = await this.translate.get([
         'To continue',
-        'Enter your security PIN',
-        'PIN is required',
-        'Write your PIN',
+        'Ingresa tu contraseña',
+        'Contraseña requerida',
+        'Escribe tu contraseña',
         'Cancel',
         'Accept'
       ]).toPromise();
 
       const alert = await this.alertController.create({
         header: translate['To continue'],
-        subHeader: translate['Enter your security PIN'],
+        subHeader: translate['Ingresa tu contraseña'],
         backdropDismiss: false,
         // message: translate[message],
         inputs: [
@@ -165,7 +166,7 @@ export class SoftTokenPage implements OnInit {
             name: 'pin',
             id: 'pin',
             type: 'password',
-            placeholder: translate['Write your PIN'],
+            placeholder: translate['Escribe tu contraseña'],
           }
         ],
         buttons: [
@@ -186,7 +187,7 @@ export class SoftTokenPage implements OnInit {
 
               if (!document.getElementById('text-error')) {
                 document.getElementById('pin')
-                  .insertAdjacentHTML('afterend', `<span id="text-error" style="color: #EB445A">${translate['PIN is required']}<span>`);
+                  .insertAdjacentHTML('afterend', `<span id="text-error" style="color: #EB445A">${translate['Contraseña requerida']}<span>`);
               }
 
               return false;
@@ -197,8 +198,7 @@ export class SoftTokenPage implements OnInit {
       });
 
       alert.present().then( () => {
-        document.getElementById('pin').setAttribute('inputmode', 'tel');
-        document.getElementById('pin').setAttribute('maxlength', '4');
+        document.getElementById('pin').setAttribute('maxlength', '8');
       } );
     })
 

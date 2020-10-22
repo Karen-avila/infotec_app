@@ -1,6 +1,6 @@
 import { environment } from '@env';
 
-let baseUrl: string = `${environment.baseUrl}${environment.production ? '/fineract-protected-movil' : '' }`;
+let baseUrl: string = `${environment.baseUrl}${environment.graviteeEndpoints ? '/fineract-protected-movil' : '' }`;
 let totpUrl: string = `${environment.baseUrl}/banbi`;
 
 export let ENDPOINTS = {

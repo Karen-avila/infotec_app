@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
 import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
 import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from '@env';
 import { timeout } from 'rxjs/operators';
+import { AuthenticationService } from '@services/user/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(
     private storage: Storage, 
-    private router: Router
+    private authentication: AuthenticationService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,7 +24,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       'Content-Type': 'application/json'
     };
 
-    if (environment.production) {
+    if (environment.graviteeEndpoints) {
       if (/\/otp\//g.test(req.url)) {
         headers['X-Gravitee-Api-Key'] = environment.totpGraviteeApiKey;
       } else if (/\/banbi\//g.test(req.url)) {
@@ -60,7 +60,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
               switch(err.status) {
                 case 401: 
-                  this.router.navigateByUrl('/login');
+                  this.authentication.logout();
                   break; 
                 case 504: 
                   // this.helpersService.showNoInternet();
