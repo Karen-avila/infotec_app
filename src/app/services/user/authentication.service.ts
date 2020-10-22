@@ -14,6 +14,9 @@ import { HelpersService } from '@services/helpers/helpers.service';
 import { environment } from '@env';
 import { CodesService } from '@services/catalogs/codes.service';
 import { TranslateService } from '@ngx-translate/core';
+
+const CryptoJS = require('crypto-js');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -83,7 +86,9 @@ export class AuthenticationService {
       }).then( globals => {
         this.storage.set('globals', globals);
         console.log(globals);
-        if (askForPin) { this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]); } else { this.navCtrl.navigateRoot(['dashboard']); }
+        //if (askForPin) { this.navCtrl.navigateRoot(['second-login', { type: 'pin' }]); } else { this.navCtrl.navigateRoot(['dashboard']); }
+        this.encryptPassword(user.password);
+        this.navCtrl.navigateRoot(['dashboard']);
         this.storage.remove('timeLeft');
         return true;
       } )
@@ -95,6 +100,18 @@ export class AuthenticationService {
         }
         throw err;
       }).finally( () => this.helpersService.hideLoading() );
+  }
+
+  private async encryptPassword(currentPassword: string) {
+    const user = { 
+      username: this.userService.username, 
+      password: this.userService.password,
+      curp: this.userService.curp,
+      email: this.userService.email 
+    };
+    const userString = JSON.stringify(user);
+    const ciphertext = CryptoJS.AES.encrypt(userString, currentPassword).toString();
+    this.storage.set('user-hash', ciphertext);
   }
 
   public ifLoggedIn() {
@@ -112,6 +129,7 @@ export class AuthenticationService {
   public async logout(removeAllStorage: boolean = false) {
     const keep: string[] = ['user-hash', 'last-client', 'username'];
     const saved: any[] = [];
+    this.stopIdleTimer();
     if (!removeAllStorage) {
       for (const key in keep) {
         const value = await this.storage.get(keep[key]);

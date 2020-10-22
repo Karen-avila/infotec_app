@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '@services/user/authentication.service';
 import { NavController } from '@ionic/angular';
 import { UserService } from '@services/user/user.service';
 import { ModalController } from '@ionic/angular';
 import { HelpersService } from '@services/helpers/helpers.service';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { TotpService } from '@services/totp/totp.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 const CryptoJS = require('crypto-js');
 
@@ -27,6 +27,10 @@ export class SecondLoginPage implements OnInit {
   public incorrectPin = false;
   public lastClientLogin = '';
   public softTokenBlocked = false;
+  public loginForm: FormGroup;
+  public icon = true;
+  public inputType = 'password';
+  
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,7 +40,8 @@ export class SecondLoginPage implements OnInit {
     private userService: UserService,
     private helpersService: HelpersService,
     public modalCtrl: ModalController,
-    private totpService: TotpService
+    private totpService: TotpService,
+    public formBuilder: FormBuilder
   ) { 
   }
 
@@ -50,6 +55,21 @@ export class SecondLoginPage implements OnInit {
     }
     this.pin = code || '';
     this.storage.get('last-client').then( lastCient => this.lastClientLogin = lastCient );
+
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(10)
+      ])],
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])]
+    });
+
+    this.storage.get('username').then( username => {
+      this.loginForm.get('username').setValue(username);
+    } );
 
     this.checkSoftTokenBlocked();
   }
@@ -84,7 +104,7 @@ export class SecondLoginPage implements OnInit {
         label = 'Accept';
         break;
       case 'login':
-        label = 'Login with PIN';
+        label = 'Sign in';
         break;
     }
 
@@ -109,6 +129,16 @@ export class SecondLoginPage implements OnInit {
     console.log(this.seletedNumbers);
   }
 
+  viewPassword() {
+    if (this.icon) {
+      this.icon = false;
+      this.inputType = 'text';
+    } else {
+      this.icon = true;
+      this.inputType = 'password';
+    }
+  }
+
   public goToRoute(): void {
     switch (this.type) {
       case 'pin':
@@ -119,13 +149,14 @@ export class SecondLoginPage implements OnInit {
         this.navCtrl.navigateRoot(['/dashboard']);
         break;
       case 'login':
-        this.decryptUser();
+        //this.decryptUser();
+        this.signIn();
         break;
     }
   }
 
   public headerTitle() {
-    if (this.type === 'login') { return 'Enter PIN'; }
+    if (this.type === 'login') { return ''; }
     if (this.type === 'pin') { return 'Set PIN'; }
     if (this.type === 'confirm-pin' && this.limitSelected === this.lenSelectedNumbers && this.buttonDisabled) {
       this.incorrectPin = true;
@@ -185,6 +216,16 @@ export class SecondLoginPage implements OnInit {
       });
   }
 
+  signIn() {
+    const form = { ...this.loginForm.value };
+    form.password = CryptoJS.SHA256(form.password).toString(CryptoJS.enc.Hex);
+    this.authenticationService.login(form, true).catch( async err => {
+      if (err.error && err.error.userMessageGlobalisationCode === 'error.msg.not.authenticated') {
+        //this.blockYourAccount(form);
+      }
+    });
+  }
+
   async checkSoftTokenBlocked(event?: any) {
 
     if (this.type !== 'login') return;
@@ -216,6 +257,12 @@ export class SecondLoginPage implements OnInit {
     this.helpersService.unblockSuccessTokenMessage([
       () => {},
     ]);
+  }
+
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
+    const inputName = this.loginForm.get(key);
+    // tslint:disable-next-line: max-line-length
+    inputName.valueChanges.subscribe(value => inputName.setValue((uppercase ? value.toUpperCase() : value).replace(new RegExp(regex, 'g'), ''), { emitEvent: false }));
   }
 
   // async openUnlock() {

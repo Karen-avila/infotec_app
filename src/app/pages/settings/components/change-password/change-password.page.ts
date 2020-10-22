@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
 import { HelpersService } from '@services/helpers/helpers.service';
-import { ClientsService } from '@services/clients/clients.service';
-import { Storage } from '@ionic/storage';
 import { MenuController } from '@ionic/angular';
 import { AuthenticationService } from '@services/user/authentication.service';
 
@@ -40,11 +38,9 @@ export class ChangePasswordPage implements OnInit {
     public menuCtrl: MenuController, 
     private userService: UserService, 
     private helpersService: HelpersService,
-    private storage: Storage,
     private authenticationService: AuthenticationService
   ) {
     this.form = formBuilder.group({
-      pin: ["", Validators.required],
       newPassword: ["",
         Validators.compose([
           Validators.required,
@@ -58,9 +54,6 @@ export class ChangePasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    // TODO revisar porque estaba esto, si se descomenta rompe el menu en la pagina de settings cuando volves para atras
-    //  this.menuCtrl.enable(false);
-    //  this.menuCtrl.swipeGesture(false);
   }
 
 
@@ -81,17 +74,6 @@ export class ChangePasswordPage implements OnInit {
 
   async changePassword() {
 
-    console.log('enter here');
-    
-    try {
-
-      const PIN = this.form.get('pin').value;
-      const encryptedUser = await this.storage.get('user-hash');
-      const bytes = CryptoJS.AES.decrypt(encryptedUser, PIN);
-      var usuario = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      const id = (await this.storage.get('login-info')).userId;
-      console.log(usuario);
-      
       const form = { ...this.form.value };
 
       this.helpersService.presentLoading();
@@ -117,9 +99,6 @@ export class ChangePasswordPage implements OnInit {
         })
         .finally( () => this.helpersService.hideLoading() );
 
-    } catch(error) {
-      this.helpersService.showErrorMessage("Incorrect PIN", "Please verify that your PIN is correct and try again");
-    }
     
   }
 
