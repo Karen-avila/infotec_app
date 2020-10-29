@@ -109,10 +109,7 @@ export class HelpPage implements OnInit {
                 console.log('ocurrio un error', err);
                 
                 if (err.status === 504 || err.status === 0) {
-                  await this.helpersService.showErrorMessage(
-                    'No internet connection', 
-                    'You need to be connected to the internet, check your connection and try again'
-                  );
+              
                 } else {
                   await this.helpersService.showErrorMessage();
                 }

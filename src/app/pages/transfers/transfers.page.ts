@@ -34,6 +34,7 @@ export class accountTransferTPT {
   dateFormat: string = environment.dateFormat;
   locale: string = environment.locale;
   transferDate: string;
+  note: string;
 
   transferAmount: number;
   transferDescription: string;
@@ -336,6 +337,7 @@ export class TransfersPage implements OnInit {
       //TODO revisar aca porque SIEMPRE es 2
       transfer.fromAccountType = this.accountSelected.accountType;
       transfer.fromAccountId = this.accountSelected.id;
+      transfer.note = form.concept;
 
       transfer.toOfficeId = this.beneficiarieSelected.officeId;
       transfer.toClientId = this.beneficiarieSelected.clientId;

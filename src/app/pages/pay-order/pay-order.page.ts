@@ -43,12 +43,12 @@ export class PayOrderPage implements OnInit {
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       transactionDate: [formatDate(new Date(), 'yyyy-MM-dd', 'es-MX')],
-      transactionAmount: ['',  [Validators.required, CustomValidators.ValidateInteger]],
+      transactionAmount: ['',  [Validators.required, CustomValidators.ValidateInteger, Validators.maxLength(4)]],
       dateFormat: "yyyy-MM-dd",
       locale: "es",
       savingAccount: [null, [Validators.required]],
       // concept: ['', [Validators.required, Validators.minLength(5)]],
-      routingCode: ['', [Validators.maxLength(5)]],
+      routingCode: ['', [Validators.maxLength(7)]],
     });
 
     this.translate.get(['Cancel', 'My Accounts']).subscribe(translate => {
@@ -75,6 +75,11 @@ export class PayOrderPage implements OnInit {
       }
     } ).finally( () => this.loadingData = false );
 
+  }
+
+  toOnlyRegex(key: string, regex: string, uppercase: boolean = true) {
+    const inputName = this.formGroup.get(key);
+    inputName.valueChanges.subscribe(value => inputName.setValue( (uppercase ? (value || '').toUpperCase() : value).replace(new RegExp(regex, 'g'), ""), { emitEvent: false }));
   }
 
   protected validateBalance() {

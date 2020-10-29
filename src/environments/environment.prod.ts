@@ -1,6 +1,7 @@
 
 export const environment = {
     production: true,
+	graviteeEndpoints: true,
 	baseUrl: "https://sandbox-api.bancodelbienestar.com.mx/V1.0",
 	dateFormat: "dd MMMM yyyy h:mm:ss a",
 	locale: "es-MX",

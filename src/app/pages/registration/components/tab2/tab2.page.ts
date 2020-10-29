@@ -288,10 +288,7 @@ export class Tab2Page implements OnInit {
         );
 
       } else if (error.status === 504 || error.status === 0) {
-        await this.helpersService.showErrorMessage(
-          'No internet connection', 
-          'To register you need to be connected to the internet, check your connection and try again'
-        );
+        
       } else if (!error.error || error.error.userMessageGlobalisationCode !== 'error.msg.resource.not.found') {
         const text = await this.translate.get('Could not register user, please try again later').toPromise();
         this.presentToast(text);

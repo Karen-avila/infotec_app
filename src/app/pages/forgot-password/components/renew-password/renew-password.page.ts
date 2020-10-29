@@ -59,10 +59,7 @@ export class RenewPasswordPage implements OnInit {
     } ).catch( async error => {
 
       if (error.status === 504 || error.status === 0) {
-        await this.helpersService.showErrorMessage(
-          'No internet connection', 
-          'You need to be connected to the internet, check your connection and try again'
-        );
+        
       } else {
         await this.helpersService.showErrorMessage(
           'Incorrect data', 

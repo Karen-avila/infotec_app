@@ -51,7 +51,7 @@ export class ChangeEmailPage implements OnInit {
       })
       .catch( async error => {
         if (error.status === 504 || error.status === 0) {
-          await this.helpersService.showNoInternet();
+          
         } else if (error.error && error.error.userMessageGlobalisationCode === 'error.msg.unknown.data.integrity.issue') {
           await this.helpersService.showErrorMessage(
             'Email already exists', 
