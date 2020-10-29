@@ -112,10 +112,10 @@ export class HelpersService {
         <ion-text style="position: absolute; top: 13%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
           ${ await this.translate.get('No internet connection').toPromise() }
         </ion-text>
-        <ion-text style="position: absolute; top: 62%; left: 14%; width: 72%; text-transform: uppercase; text-align: center; font-weight: bold">
-          ${ await this.translate.get('Check your connection to continue').toPromise() }
+        <ion-text style="position: absolute; top: 62%; left: 14%; width: 72%; text-align: center; font-weight: bold; font-size: 13px">
+          ${ await this.translate.get('Can not proccess the request right now. Try again later').toPromise() }
         </ion-text>
-        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 75%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button>
+        <ion-button expand="block" id="btnClose" color="primary" style="position: absolute; top: 77%; left: 14%; width: 72%; text-transform: uppercase;">${text}</ion-button>
       `);
         document.querySelector('#btnClose').addEventListener('click', () => alert.dismiss());
         return data;
@@ -404,10 +404,10 @@ export class HelpersService {
         <ion-text
           style="position: absolute; top: 34%; left: 10%; width: 80%; font-size: 95%; text-align: center; text-align: justify;"
         >
-          ${ await this.translate.get('Has bloqueado tu Clave Dinámica por 5 intentos fallidos de uso en tu Banca por Internet, para desbloquear tu Clave Dinámica escribe tu PIN y oprime el botón de <b> DESBLOQUEAR </b> y sigue los pasos de desbloqueo').toPromise()}
+          ${ await this.translate.get('Has bloqueado tu Clave Dinámica por 5 intentos fallidos de uso en tu Banca por Internet, para desbloquear tu Clave Dinámica escribe tu Contraseña y oprime el botón de <b> DESBLOQUEAR </b> y sigue los pasos de desbloqueo').toPromise()}
         </ion-text>
         <ion-item style="--background: rgba(205, 205, 205, 0); position: absolute; top: 60%; left: 12%; width: 76%">
-          <ion-input id="pin" type="password" maxlength="4" placeholder="Escribe tu PIN"></ion-input>
+          <ion-input id="pin" type="password" maxlength="8" placeholder="Escribe tu Contraseña"></ion-input>
         </ion-item>
 
         <ion-text
@@ -444,9 +444,10 @@ export class HelpersService {
           document.getElementById('text-error').style.display = pin ? 'none' : 'inline';
 
           if (!pin) return;
-         
+          
+          const password = CryptoJS.SHA256(pin).toString(CryptoJS.enc.Hex);
           const encryptedUser = await this.storage.get('user-hash');
-          const bytes = CryptoJS.AES.decrypt(encryptedUser, pin);
+          const bytes = CryptoJS.AES.decrypt(encryptedUser, password);
           var user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
           this.presentLoading();
@@ -461,10 +462,7 @@ export class HelpersService {
           } ).catch( async error => {
       
             if (error.status === 504 || error.status === 0) {
-              await this.showErrorMessage(
-                'No internet connection', 
-                'You need to be connected to the internet, check your connection and try again'
-              );
+              
             } else {
               await this.showErrorMessage(
                 'Incorrect data', 
@@ -478,7 +476,7 @@ export class HelpersService {
           
           if (error.message !== 'NO-PIN') {
             (document.getElementById('pin') as any).value = null;
-            await this.showErrorMessage("Incorrect PIN", "Please verify that your PIN is correct and try again");
+            await this.showErrorMessage("Contraseña incorrecta", "Por favor verifica tu contraseña e intenta de nuevo");
           } 
     
           //this.router.navigateByUrl('/login');
@@ -566,10 +564,7 @@ export class HelpersService {
         } ).catch( async error => {
     
           if (error.status === 504 || error.status === 0) {
-            await this.showErrorMessage(
-              'No internet connection', 
-              'You need to be connected to the internet, check your connection and try again'
-            );
+            
           } else {
             await this.showErrorMessage(
               'Incorrect data', 

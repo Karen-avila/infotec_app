@@ -93,8 +93,11 @@ export class AuthenticationService {
         return true;
       } )
       .catch( async err => {
+        console.log('error authentication');
+        
+        
         if (err.status === 504 || err.status === 0) {
-          await this.helpersService.showNoInternet();
+          
         } else {
           this.helpersService.showErrorMessage('Incorrect Access', 'The credentials entered are incorrect');
         }
@@ -206,9 +209,9 @@ export class AuthenticationService {
 
   }
 
-  private cleanAllModals() {
-    let modals = document.getElementsByClassName('show-modal');
-
+  public cleanAllModals() {
+    let modals = document.querySelectorAll('.show-modal, ion-alert, ion-backdrop');
+    
     if (modals.length >= 1) {
       setTimeout(() => {
         try {

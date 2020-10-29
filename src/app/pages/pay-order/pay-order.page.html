@@ -29,7 +29,7 @@
           
           <ion-item>
             <ion-label position="floating" translate>Amount</ion-label>
-            <ion-input (paste)="onPaste($event)" maxlength="8" formControlName="transactionAmount" required inputmode="tel" type="number"></ion-input>
+            <ion-input (paste)="onPaste($event)" (input)="toOnlyRegex('transactionAmount', '[^0-9]')" maxlength="4" formControlName="transactionAmount" required inputmode="numeric" type="text"></ion-input>
           </ion-item>
           <div style="padding-left: 20px;">
             <app-input-error colorClass="danger" [control]="formControls.transactionAmount"></app-input-error>
@@ -45,7 +45,7 @@
     
           <ion-item>
             <ion-label position="floating" translate>Reference</ion-label>
-            <ion-input formControlName="routingCode" maxlength="5" inputmode="text" type="text"></ion-input>
+            <ion-input formControlName="routingCode" (input)="toOnlyRegex('routingCode', '[^0-9]')" maxlength="7" inputmode="numeric" type="text"></ion-input>
           </ion-item>
           <div style="padding-left: 20px;">
             <app-input-error colorClass="danger" [control]="formControls.routingCode"></app-input-error>

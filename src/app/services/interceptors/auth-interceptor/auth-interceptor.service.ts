@@ -6,6 +6,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { environment } from '@env';
 import { timeout } from 'rxjs/operators';
 import { AuthenticationService } from '@services/user/authentication.service';
+import { HelpersService } from '@services/helpers/helpers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(
     private storage: Storage, 
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private helpersService: HelpersService
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -56,17 +58,15 @@ export class AuthInterceptorService implements HttpInterceptor {
             timeout(30000),
             catchError((err: HttpErrorResponse) => {
 
-              console.log(err);
-
-              switch(err.status) {
-                case 401: 
-                  this.authentication.logout();
-                  break; 
-                case 504: 
-                  // this.helpersService.showNoInternet();
-                  break;
-                default: 
-                  break;
+              if (err.status === 401) {
+                this.authentication.logout();
+              } else if (err.status === 0 || err.status === 504 || err.message === 'Timeout has occurred') {
+                
+                setTimeout(() => {
+                  this.authentication.cleanAllModals();
+                  this.helpersService.hideLoading();    
+                }, 300);
+                setTimeout(() => this.helpersService.showNoInternet(), 750);
               }
       
               return throwError( err );

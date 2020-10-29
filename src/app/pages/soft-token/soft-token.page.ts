@@ -41,18 +41,25 @@ export class SoftTokenPage implements OnInit {
     this.totpSignUp();
   }
 
-  startToken() {
-
+  async startToken() {
+    await this.timeout(750);
+    this.dynamicToken = await this.refreshToken();
     this.interval = setInterval( async () => {
-        if (this.seconds === 30) {
-          this.dynamicToken = (await Authenticator.generateToken(this.key)).replace(/(\d{3})/g, '$1 ').trim();
-        }
         this.seconds--;
         if (this.seconds === 0) {
           this.seconds = 30;
+          this.dynamicToken = await this.refreshToken();
         }
     }, 1000 );
 
+  }
+
+  async timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async refreshToken() {
+    return (await Authenticator.generateToken(this.key)).replace(/(\d{3})/g, '$1 ').trim();
   }
 
   async totpSignUp() {
@@ -99,7 +106,7 @@ export class SoftTokenPage implements OnInit {
       } )
       .catch( async error => {
         if (error.status === 504 || error.status === 0) {
-          await this.helpersService.showNoInternet();
+          
         } else {
           await this.helpersService.showErrorMessage();
         }

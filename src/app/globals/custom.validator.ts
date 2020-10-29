@@ -23,7 +23,7 @@ export function ValidateRfc(control: AbstractControl) {
 }
 
 export function ValidateClientNumber(control: AbstractControl) {
-    if (!(/^([0-9]{8,9}|[0-9]{11})$/.test(control.value))) {
+    if (!(/^([0-9]{8,10})$/.test(control.value))) {
         return { clientNumber: true };
     }
     return null;

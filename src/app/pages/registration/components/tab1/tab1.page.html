@@ -39,7 +39,7 @@
           <ng-container *ngIf="registrationType === 'client'">
             <ion-item>
               <ion-icon name="document-outline"></ion-icon>
-              <ion-input (input)="toOnlyRegex('accountNumber', '[^0-9]')" type="tel" maxlength="11" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
+              <ion-input (input)="toOnlyRegex('accountNumber', '[^0-9]')" type="tel" maxlength="10" placeholder="{{ 'Client number' | translate }}" formControlName="accountNumber"
                 clearInput></ion-input>
             </ion-item>
             <app-input-error [control]="registerForm.controls.accountNumber"></app-input-error>

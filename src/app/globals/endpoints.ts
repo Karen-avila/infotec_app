@@ -1,7 +1,7 @@
 import { environment } from '@env';
 
 let baseUrl: string = `${environment.baseUrl}${environment.graviteeEndpoints ? '/fineract-protected-movil' : '' }`;
-let totpUrl: string = `${environment.baseUrl}/banbi`;
+let banbiUrl: string = `${environment.baseUrl}/banbi`;
 
 export let ENDPOINTS = {
   authentication: `${baseUrl}/authentication`,
@@ -18,7 +18,7 @@ export let ENDPOINTS = {
   socialPrograms: `${baseUrl}/socialprogram`,
   savingsAccounts: `${baseUrl}/savingsaccounts`,
   password: `${baseUrl}/password`,
-  totp: `${totpUrl}/otp`,
+  totp: `${banbiUrl}/otp`,
   validateTotp: `${baseUrl}/totp`,
-  notification: `${environment.baseUrl}/banbi/email`
+  notification: `${banbiUrl}/email`
 }

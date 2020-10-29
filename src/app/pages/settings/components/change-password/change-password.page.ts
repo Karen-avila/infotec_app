@@ -92,7 +92,7 @@ export class ChangePasswordPage implements OnInit {
         })
         .catch( async error => {
           if (error.status === 504 || error.status === 0) {
-            await this.helpersService.showNoInternet();
+            
           } else {
             this.helpersService.showErrorMessage();
           }

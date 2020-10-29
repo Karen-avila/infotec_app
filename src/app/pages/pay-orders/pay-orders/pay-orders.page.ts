@@ -73,11 +73,46 @@ export class PayOrdersPage implements OnInit {
 
   }
 
+  public digitVerifier(code: string): string {
+
+    let sumImpar: number = 0;
+    let sumPar: number = 0;
+    const len = code.length;
+     
+    if (len > 12) {
+      code = code.substring(0, 12);
+    } else if (len < 12) {
+      return code;
+    }
+    
+    let arrayCode: string[] = code.split('');
+
+    for (const key in  arrayCode) {
+      if (parseInt(key) % 2) {
+        sumImpar += parseInt( arrayCode[key] );
+      } else {
+        sumPar += parseInt( arrayCode[key] );
+      }
+    }
+
+    const sumResult = sumPar + (sumImpar * 3);
+    let aux = sumResult/10;
+    let calDecimal = aux > parseInt(aux+'') ? ((parseInt(aux+'') + 1) * 10) : sumResult;
+    
+    return code + (calDecimal - sumResult);
+    
+  }
+
+
   get filterPayOrders(): any[] {
     if (this.payOrderStatus === 0) {
-      return this.payOrders.sort( (a, b) => b.id-a.id );
+      return this.payOrders.sort( (a, b) => {
+          return (new Date(b.createdOn)).getTime() - (new Date(a.createdOn)).getTime();
+      } );
     }
-    return this.payOrders.filter( item => item.status === this.payOrderStatus ).sort( (a, b) => b.id-a.id );
+    return this.payOrders.filter( item => item.status === this.payOrderStatus ).sort( (a, b) => {
+          return (new Date(b.createdOn)).getTime() - (new Date(a.createdOn)).getTime();
+      } );
   }
 
   public goToBarcode(item: any) {
@@ -87,7 +122,7 @@ export class PayOrdersPage implements OnInit {
       queryParams: {
         transactionAmount: item.amount, 
         code: item.code, 
-        routingCode: item.concept || '',
+        routingCode: item.routingCode || '',
         showBackButton: 'true'
       }
     });

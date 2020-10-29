@@ -347,7 +347,7 @@ export class ManageAccountPage implements OnInit {
     })
       .catch(err => {
         if (err.status === 504 || err.status === 0) {
-          this.helpersService.showNoInternet();
+          
         } else {
           this.helpersService.showErrorMessage();
         }
