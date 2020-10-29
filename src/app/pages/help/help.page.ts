@@ -59,14 +59,14 @@ export class HelpPage implements OnInit {
             name: 'name1',
             id: 'subject',
             type: 'text',
-            placeholder: translate['Subject'] + '*'
+            placeholder: translate['Subject']
           },
           // multiline input.
           {
             name: 'paragraph',
             id: 'paragraph',
             type: 'textarea',
-            placeholder: translate['Message'] + '*'
+            placeholder: translate['Message']
           }
         ],
         buttons: [
