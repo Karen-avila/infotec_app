@@ -25,6 +25,7 @@ export class TransferSuccessPage implements OnInit {
   public rfc: string;
   public accountNoSelected: string;
   public beneficiary: string; 
+  public transactionId: string; 
   public ownerFullName: string; 
   public destinationBank: string;
   public dateFormat: string;
@@ -41,7 +42,7 @@ export class TransferSuccessPage implements OnInit {
   ngOnInit() {
     console.log("transfer data", this.navParams.data);
 
-    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc, accountNoSelected, beneficiary, ownerFullName, destinationBank } = this.navParams.data;
+    const { accountNumber, clientName, concept, folio, reference, transferAmount, rfc, accountNoSelected, beneficiary, ownerFullName, destinationBank, transactionId } = this.navParams.data;
 
     this.accountNumber = accountNumber;
     this.clientName = clientName;
@@ -54,6 +55,7 @@ export class TransferSuccessPage implements OnInit {
     this.beneficiary = beneficiary;
     this.ownerFullName = ownerFullName;
     this.destinationBank = destinationBank;
+    this.transactionId = transactionId;
 
     const date = new Date();
     const formattedDate = date.toLocaleDateString(environment.locale, {

@@ -388,6 +388,7 @@ export class TransfersPage implements OnInit {
       .then((response: any) => {
         console.log(response)
         transferSuccess.folio = response.resourceId;
+        transferSuccess.transactionId = response.transactionId;
         this.openSuccessModal(transferSuccess);
       })
       .catch(err => {

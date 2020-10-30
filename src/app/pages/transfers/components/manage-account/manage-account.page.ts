@@ -11,6 +11,7 @@ import { Beneficiarie } from '@globals/interfaces/beneficiarie';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { Storage } from '@ionic/storage';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
 
 export interface Bank {
   id: number;
@@ -279,6 +280,14 @@ export class ManageAccountPage implements OnInit {
     const form = { ...this.form.getRawValue() };
 
     if (this.form.invalid) { return }
+
+    const modal = await this.modalController.create({
+      component: AutomaticTokenPage
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    
+    if (!data.accept) return;
 
     let accountClassificaction = 'TPT' || 'EXT';
     accountClassificaction = (form.accountNumber.length == 11 || form.accountNumber.substring(0, 3) == "166") ? 'TPT' : 'EXT';

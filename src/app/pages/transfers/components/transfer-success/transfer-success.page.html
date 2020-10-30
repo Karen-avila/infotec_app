@@ -38,6 +38,7 @@
       <h4>{{'Referencia de operación' | translate}}:<span> {{reference}}</span></h4>
       <!-- <h4>{{'Fecha de operación' | translate}}:<span> {{dateFormat}}</span></h4> -->
       <h4>{{'Número de movimiento' | translate}}:<span> {{folio}}</span></h4>
+      <h4 *ngIf="transactionId">{{'Clave de rastreo' | translate}}:<span> {{transactionId}}</span></h4>
       <!-- <div *ngIf="rfc">
           <h4>{{'RFC' | translate}}:<span> {{rfc}}</span></h4>
       </div> -->
