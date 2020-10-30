@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { AutomaticTokenPageModule } from '@pages/automatic-token/automatic-token.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { FooterModule } from '@components/footer/footer.module';
     ReactiveFormsModule,
     InputErrorModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    AutomaticTokenPageModule
   ],
   declarations: [ManageAccountPage],
   entryComponents: [ManageAccountPage]

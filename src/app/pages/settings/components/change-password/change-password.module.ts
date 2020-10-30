@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InputErrorModule } from '@components/input-error/input-error.module';
 import { FooterModule } from '@components/footer/footer.module';
 import { HeaderModule } from '@components/header/header.module';
+import { AutomaticTokenPageModule } from '@pages/automatic-token/automatic-token.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { HeaderModule } from '@components/header/header.module';
     TranslateModule,
     InputErrorModule,
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    AutomaticTokenPageModule
   ],
   declarations: [ChangePasswordPage]
 })

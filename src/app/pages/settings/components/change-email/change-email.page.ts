@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlertController, MenuController, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import * as CustomValidators from '@globals/custom.validator';
 import { UserService } from '@services/user/user.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Storage } from '@ionic/storage';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { ClientsService } from '@services/clients/clients.service';
 import { HelpersService } from '@services/helpers/helpers.service';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
 
 
 @Component({
@@ -20,7 +19,14 @@ export class ChangeEmailPage implements OnInit {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private navCtrl: NavController, private userService: UserService, private storage: Storage, private clientsService: ClientsService, private helpersService: HelpersService) {
+  constructor(
+      public formBuilder: FormBuilder, 
+      private userService: UserService, 
+      private storage: Storage, 
+      private clientsService: ClientsService, 
+      private helpersService: HelpersService,
+      protected modalController: ModalController,
+    ) {
 
     this.form = formBuilder.group({
       shaded: true,
@@ -40,7 +46,16 @@ export class ChangeEmailPage implements OnInit {
       });
   }
 
-  changeEmail() {
+  async changeEmail() {
+
+    const modal = await this.modalController.create({
+      component: AutomaticTokenPage
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    
+    if (!data.accept) return;
+
     const form = { ...this.form.value };
     this.helpersService.presentLoading()
     this.userService.changeData(form)

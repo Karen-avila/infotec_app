@@ -6,6 +6,8 @@ import { ClientsService } from '@services/clients/clients.service';
 import { HelpersService } from '@services/helpers/helpers.service';
 import { LoginInfo } from '@globals/interfaces/login-info';
 import { Storage } from '@ionic/storage';
+import { AutomaticTokenPage } from '@pages/automatic-token/automatic-token.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-change-phone',
@@ -17,6 +19,7 @@ export class ChangePhonePage implements OnInit {
   form: FormGroup;
 
   constructor(public formBuilder: FormBuilder,
+    protected modalController: ModalController,
     private userService: UserService,
     private clientsService: ClientsService,
     private helpersService: HelpersService,
@@ -41,7 +44,18 @@ export class ChangePhonePage implements OnInit {
       });
   }
 
-  changePhone() {
+  async changePhone() {
+    
+    if (this.form.invalid) { return }
+
+    const modal = await this.modalController.create({
+      component: AutomaticTokenPage
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    
+    if (!data.accept) return;
+
     const form = { ...this.form.value };
     this.helpersService.presentLoading()
     this.userService.changeData(form)

@@ -11,6 +11,7 @@ import { ChangePhonePage } from './change-phone.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderModule } from '@components/header/header.module';
 import { FooterModule } from '@components/footer/footer.module';
+import { AutomaticTokenPageModule } from '@pages/automatic-token/automatic-token.module';
 
 @NgModule({
   imports: [
@@ -20,9 +21,10 @@ import { FooterModule } from '@components/footer/footer.module';
     ReactiveFormsModule,
     ChangePhonePageRoutingModule,
     InputErrorModule,
-      TranslateModule,
-      HeaderModule,
-      FooterModule
+    TranslateModule,
+    HeaderModule,
+    FooterModule,
+    AutomaticTokenPageModule
   ],
   declarations: [ChangePhonePage]
 })
