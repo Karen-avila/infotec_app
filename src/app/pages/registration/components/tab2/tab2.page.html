@@ -80,7 +80,7 @@
       <span>Aceptar </span> <a style="text-decoration: none; margin-right: 0.5rem;" [routerLink]="['/information-text']" [queryParams]="{backUrl: '/registration/client/tab2'}">Términos y Condiciones</a>  
       <ion-checkbox style="vertical-align: bottom;" [(ngModel)]="acceptTermsConditions" color="tertiary" slot="end"></ion-checkbox>
     </div>
-    <ion-button type="button" style="margin-top: 0.6rem;" (click)="register()" [disabled]="registerForm.invalid || (facesDetected !== 1 && canRecognizeFace) || waiting || !acceptTermsConditions"
+    <ion-button type="button" style="margin-top: 0.6rem;" (click)="register()" [disabled]="registerForm.invalid || waiting || !acceptTermsConditions"
       expand="block" color="primary">{{ 'To Register' | translate }}</ion-button>
     <ion-button [routerLink]="['/login']" style="margin-top: 0.6rem;" routerDirection="backward" expand="block" color="medium">
       {{ 'Cancel' | translate }}</ion-button>

@@ -193,6 +193,14 @@ export class Tab2Page implements OnInit {
             'Email already exists', 
             'Please try to register with a different email'
           );
+        } else if (
+          error.error.errors.length && 
+          error.error.errors[0].userMessageGlobalisationCode === 'error.msg.service.is.not.enable.for.client'
+        ) {
+          await this.helpersService.showErrorMessage(
+            'E-banking Disabled', 
+            'Please go to your nearest branch and contract the E-banking service'
+          );
         } else {
           const text = await this.translate.get('Customer details are incorrect, please contact support area').toPromise();
           this.presentToast(text); 
