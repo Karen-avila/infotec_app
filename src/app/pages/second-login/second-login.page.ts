@@ -240,16 +240,17 @@ export class SecondLoginPage implements OnInit {
 
   openUnlock() {
     this.helpersService.unlockDinamicKeyMessage([
-      () => this.codeMail(),
+      (params) => this.codeMail(params),
     ]);
   }
 
-  codeMail() {
+  codeMail(params) {
     this.helpersService.codeMailMessage([
       () => {
         this.unblockSuccessToken();
         this.checkSoftTokenBlocked();
       },
+      params
     ]);
   }
 
